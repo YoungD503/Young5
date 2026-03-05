@@ -2,102 +2,902 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sergio E Gonzalez </title>
+  <title>Sergio E. Gonzalez</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --off-white: #f5f0e8;
+      --cream: #ede7d9;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --dark-gray: #1a1a1a;
+      --mid-gray: #3a3a3a;
+      --text-muted: #7a7266;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--off-white);
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.25s ease, width 0.2s, height 0.2s, border-color 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    body:hover .cursor-ring.hover {
+      width: 48px; height: 48px;
+      border-color: var(--gold);
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 48px;
+      mix-blend-mode: normal;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      position: relative;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    #home {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 0 48px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at 70% 50%, black 30%, transparent 70%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-name {
+      font-size: clamp(64px, 9vw, 130px);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-subtitle {
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+    }
+    .hero-desc {
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.6);
+      max-width: 480px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.8s forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 18px 36px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 1s forwards;
+    }
+    .hero-cta:hover {
+      background: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+    .hero-cta-arrow { transition: transform 0.3s; }
+    .hero-cta:hover .hero-cta-arrow { transform: translateX(6px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      right: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+    .scroll-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    .hero-year {
+      position: absolute;
+      bottom: 40px;
+      left: 48px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 120px 48px;
+      position: relative;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 60px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 60px;
+      opacity: 0.5;
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--dark-gray);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1100px;
+    }
+    .about-text {
+      font-size: 22px;
+      line-height: 1.75;
+      font-weight: 300;
+      color: rgba(245,240,232,0.8);
+    }
+    .about-text p + p { margin-top: 24px; }
+    .about-stats {
+      display: grid;
+      gap: 40px;
+      padding-top: 16px;
+    }
+    .stat-item {
+      border-left: 1px solid rgba(201,168,76,0.3);
+      padding-left: 24px;
+    }
+    .stat-number {
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* VENTURES */
+    #ventures {
+      background: var(--black);
+    }
+    .ventures-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+    }
+    .venture-card {
+      background: var(--dark-gray);
+      padding: 52px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .venture-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+    .venture-card:hover { background: #1e1c18; }
+    .venture-card:hover::before { width: 100%; }
+    .venture-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      opacity: 0.6;
+      letter-spacing: 0.2em;
+      margin-bottom: 28px;
+    }
+    .venture-name {
+      font-size: 32px;
+      font-weight: 300;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .venture-desc {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .venture-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .venture-card:hover .venture-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .venture-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .venture-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 5px 12px;
+    }
+
+    /* SKILLS */
+    #skills {
+      background: var(--dark-gray);
+    }
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      align-items: start;
+    }
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .skill-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      transition: border-color 0.3s;
+    }
+    .skill-row:hover { border-color: rgba(201,168,76,0.4); }
+    .skill-row:first-child { border-top: 1px solid rgba(201,168,76,0.1); }
+    .skill-name {
+      font-size: 24px;
+      font-weight: 300;
+    }
+    .skill-bar-wrap {
+      width: 120px;
+      height: 1px;
+      background: rgba(201,168,76,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-bar {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      background: var(--gold);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .skill-bar.animate { transform: scaleX(1); }
+
+    .skills-philosophy {
+      padding: 48px;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.02);
+    }
+    .philosophy-quote {
+      font-size: 26px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.55;
+      color: rgba(245,240,232,0.7);
+      margin-bottom: 32px;
+    }
+    .philosophy-attr {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* VISION */
+    #vision {
+      background: var(--black);
+      text-align: center;
+      padding: 160px 48px;
+    }
+    .vision-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .vision-quote {
+      font-size: clamp(28px, 4vw, 50px);
+      font-weight: 300;
+      line-height: 1.4;
+      font-style: italic;
+      color: rgba(245,240,232,0.85);
+      margin-bottom: 52px;
+    }
+    .vision-quote strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .vision-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin: 0 auto 52px;
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--dark-gray);
+      padding: 120px 48px;
+    }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      align-items: start;
+    }
+    .contact-left .section-title { margin-bottom: 24px; }
+    .contact-desc {
+      font-size: 20px;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.6);
+      margin-bottom: 48px;
+    }
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      background: var(--gold);
+      padding: 20px 40px;
+      transition: background 0.3s;
+    }
+    .contact-cta:hover { background: var(--gold-light); }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-top: 16px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 16px;
+    }
+    .contact-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .contact-item-value {
+      font-size: 18px;
+      color: var(--off-white);
+    }
+    .contact-item-value a {
+      color: var(--off-white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-item-value a:hover { color: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+    }
+    .footer-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.3; transform: scaleY(0.6); }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .section { padding: 80px 24px; }
+      #home { padding: 0 24px; }
+      .hero-scroll, .hero-year { display: none; }
+      .about-grid, .contact-layout, .skills-layout { grid-template-columns: 1fr; gap: 48px; }
+      .ventures-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-logo { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="logo">S</div>
-  <nav id="navMenu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#ventures">Ventures</a>
-    <a href="#skills">Skills</a>
-    <a href="#vision">Vision</a>
-    <a href="#contact">Contact</a>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">S.E.G.</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ventures">Ventures</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </nav>
-  <div class="menu-btn" id="menuBtn">☰</div>
-</header>
 
-<!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-content">
-    <h1>Sergio E Gonzalez</h1>
-    <h2>Entrepreneur • Investor • Leader</h2>
-    <p>25-year-old business builder focused on finance, technology, and scalable ventures.</p>
-    <a href="#contact" class="btn">Connect With Me</a>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section">
-  <h3>About Me</h3>
-  <p>
-    I’m a 25-year-old entrepreneur passionate about building technology-driven businesses, 
-    financial systems, and digital platforms that empower people to grow. 
-    My mission is to combine business strategy, software, and leadership to create scalable impact and build teams
-    and develop leaders around this new generation of new thinkers.
-  </p>
-</section>
-
-<!-- VENTURES -->
-<section id="ventures" class="section">
-  <h3>Current Ventures</h3>
-  <div class="cards">
-
-    <div class="card">
-      <h4>YoungTrader</h4>
-      <p>Futures trading education platform and performance tracking systems.</p>
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Entrepreneur · Investor · Builder</p>
+      <h1 class="hero-name">Sergio<br><em>E. Gonzalez</em></h1>
+      <p class="hero-subtitle">Finance · Technology · Leadership</p>
+      <p class="hero-desc">25-year-old business builder crafting scalable ventures across finance, technology, and digital platforms.</p>
+      <a href="#contact" class="hero-cta">
+        Connect With Me
+        <span class="hero-cta-arrow">→</span>
+      </a>
     </div>
-
-    <div class="card">
-      <h4>YoungDesert Finance</h4>
-      <p>Personal finance and wealth tracking web applications.</p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
     </div>
+    <div class="hero-year">© 2026</div>
+  </section>
 
-    <div class="card">
-      <h4>Tech & Hardware Ventures</h4>
-      <p>Block-Chain Node, cybersecurity services, and international product sourcing.</p>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="reveal">
+      <p class="section-label">// 001 — About</p>
+      <h2 class="section-title">The <em>Builder</em><br>Behind the Work</h2>
     </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a 25-year-old entrepreneur passionate about building technology-driven businesses, financial systems, and digital platforms that empower people to grow.</p>
+        <p>My mission is to combine business strategy, software, and leadership to create scalable impact — building teams and developing leaders for this new generation of thinkers.</p>
+        <p>Every venture I build starts with a question: <em>how does this give someone else a better shot at success?</em></p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Active Ventures</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Growth Mindset</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">25</div>
+          <div class="stat-label">Years Young</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  </div>
-</section>
+  <!-- VENTURES -->
+  <section id="ventures" class="section">
+    <div class="reveal">
+      <p class="section-label">// 002 — Ventures</p>
+      <h2 class="section-title">Current<br><em>Projects</em></h2>
+    </div>
+    <div class="ventures-grid reveal">
 
-<!-- SKILLS -->
-<section id="skills" class="section">
-  <h3>Core Skills</h3>
-  <div class="skills">
-    <span>Business Strategy</span>
-    <span>Personal Finance</span>
-    <span>Web Development</span>
-    <span>Leadership</span>
-    <span>Marketing</span>
-    <span>Automation</span>
-  </div>
-</section>
+      <a href="#contact" class="venture-card">
+        <div class="venture-number">01</div>
+        <h3 class="venture-name">YoungTrader</h3>
+        <p class="venture-desc">Futures trading education platform and performance tracking systems built for the next generation of traders.</p>
+        <div class="venture-tags">
+          <span class="venture-tag">Fintech</span>
+          <span class="venture-tag">Education</span>
+          <span class="venture-tag">SaaS</span>
+        </div>
+        <div class="venture-link">Learn More →</div>
+      </a>
 
-<!-- VISION -->
-<section id="vision" class="section">
-  <h3>Vision</h3>
-  <p>
-    To build a global ecosystem of digital platforms, financial tools, and educational systems 
-    that help young entrepreneurs achieve financial independence and purpose-driven growth.
-  </p>
-</section>
+      <a href="#contact" class="venture-card">
+        <div class="venture-number">02</div>
+        <h3 class="venture-name">YoungDesert Finance</h3>
+        <p class="venture-desc">Personal finance and wealth tracking web applications designed to give users real clarity over their financial future.</p>
+        <div class="venture-tags">
+          <span class="venture-tag">Finance</span>
+          <span class="venture-tag">Web App</span>
+          <span class="venture-tag">Wealth</span>
+        </div>
+        <div class="venture-link">Learn More →</div>
+      </a>
 
-<!-- CONTACT -->
-<section id="contact" class="section contact">
-  <h3>Contact</h3>
-  <p>Let’s build something impactful together.</p>
-  <a href="mailto:your@email.com" class="btn">Email Me</a>
-</section>
+      <a href="#contact" class="venture-card">
+        <div class="venture-number">03</div>
+        <h3 class="venture-name">Tech & Hardware</h3>
+        <p class="venture-desc">Blockchain node infrastructure, cybersecurity services, and international product sourcing at the intersection of hardware and innovation.</p>
+        <div class="venture-tags">
+          <span class="venture-tag">Blockchain</span>
+          <span class="venture-tag">Cybersecurity</span>
+          <span class="venture-tag">Hardware</span>
+        </div>
+        <div class="venture-link">Learn More →</div>
+      </a>
 
-<footer>
-  © 2026 Sergio E Gonzalez — All Rights Reserved
-</footer>
+    </div>
+  </section>
 
-<script src="app.js"></script>
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="reveal">
+      <p class="section-label">// 003 — Skills</p>
+      <h2 class="section-title">Core<br><em>Competencies</em></h2>
+    </div>
+    <div class="skills-layout reveal">
+      <div class="skills-list">
+        <div class="skill-row">
+          <span class="skill-name">Business Strategy</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.92"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Personal Finance</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.95"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Web Development</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.80"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Leadership</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.88"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Marketing</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.82"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Automation</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" data-width="0.75"></div></div>
+        </div>
+      </div>
+      <div class="skills-philosophy">
+        <p class="philosophy-quote">"The most dangerous person in any room is the one who refuses to stop learning."</p>
+        <p class="philosophy-attr">— Core Principle</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section id="vision" class="section">
+    <div class="vision-inner reveal">
+      <p class="section-label">// 004 — Vision</p>
+      <div class="vision-line"></div>
+      <p class="vision-quote">
+        To build a <strong>global ecosystem</strong> of digital platforms, financial tools, and educational systems that help young entrepreneurs achieve <strong>financial independence</strong> and purpose-driven growth.
+      </p>
+      <a href="#ventures" class="hero-cta">Explore My Work →</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="contact-layout">
+      <div class="contact-left reveal">
+        <p class="section-label">// 005 — Contact</p>
+        <h2 class="section-title">Let's Build<br><em>Together</em></h2>
+        <p class="contact-desc">Have a project, partnership, or idea worth exploring? I'm always open to conversations that lead somewhere meaningful.</p>
+        <a href="mailto:sergio@youngdesertfinance.com" class="contact-cta">Send a Message →</a>
+      </div>
+      <div class="contact-right reveal">
+        <div class="contact-item">
+          <div class="contact-icon">@</div>
+          <div>
+            <p class="contact-item-label">Email</p>
+            <p class="contact-item-value"><a href="mailto:sergio@youngdesertfinance.com">sergio@youngdesertfinance.com</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">in</div>
+          <div>
+            <p class="contact-item-label">LinkedIn</p>
+            <p class="contact-item-value"><a href="https://linkedin.com/in/sergio-gonzalez" target="_blank">linkedin.com/in/sergio-gonzalez</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">↗</div>
+          <div>
+            <p class="contact-item-label">YoungTrader</p>
+            <p class="contact-item-value"><a href="#" target="_blank">youngtrader.io</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">↗</div>
+          <div>
+            <p class="contact-item-label">YoungDesert Finance</p>
+            <p class="contact-item-value"><a href="#" target="_blank">youngdesertfinance.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-copy">© 2026 Sergio E. Gonzalez — All Rights Reserved</p>
+    <div class="footer-logo">S.E.G.</div>
+    <p class="footer-tagline">Build. Invest. Lead.</p>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => obs.observe(el));
+
+    // Skill bars on reveal
+    const skillObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-bar').forEach((bar, i) => {
+            const w = parseFloat(bar.dataset.width);
+            setTimeout(() => {
+              bar.style.transform = `scaleX(${w})`;
+            }, 200 + i * 100);
+          });
+          skillObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skills-list').forEach(el => skillObs.observe(el));
+
+    // Smooth nav
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
 </body>
 </html>
