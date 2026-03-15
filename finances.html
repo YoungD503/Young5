@@ -6,6 +6,7 @@
     <title>WealthFlow — Personal Finance</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --void:   #050505;
@@ -588,7 +589,7 @@
         </div>
         <div class="brand-name">Wealth<span>Flow</span></div>
     </div>
-    <div class="pill" onclick="openSettingsModal()" id="wagePill">$25.25/hr · 40h ✎</div>
+    <div class="pill" onclick="openSettingsModal()" id="wagePill">$0.00/hr · 40h ✎</div>
 </header>
 
 <!-- ═══ SETTINGS MODAL ═══ -->
@@ -601,7 +602,7 @@
             <label class="form-label">Hourly Rate ($)</label>
             <div class="input-prefix-wrap">
                 <span class="input-prefix">$</span>
-                <input type="number" id="s_wage" step="0.01" min="0" placeholder="25.25" oninput="previewSettings()">
+                <input type="number" id="s_wage" step="0.01" min="0" placeholder="0.00" oninput="previewSettings()">
             </div>
         </div>
         <div class="form-row">
@@ -866,6 +867,15 @@
             <div class="card-value c-lime" id="remainingCash">$2,720.00</div>
             <div class="card-sub">After expenses &amp; scheduled investment</div>
             <div class="chart-wrap"><canvas id="miniChart"></canvas></div>
+        </div>
+
+        <!-- DOWNLOAD PDF BUTTON -->
+        <div style="margin-top:4px;margin-bottom:4px;">
+            <button onclick="downloadBalanceSheet()" id="pdfBtn" style="width:100%;padding:16px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.28)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='transparent';">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export Balance Sheet — PDF
+            </button>
+            <div style="text-align:center;font-size:.58rem;color:var(--dim);margin-top:8px;letter-spacing:.06em;">Formal financial summary · all sections included</div>
         </div>
     </div>
 
@@ -1223,8 +1233,8 @@ const LS = {
 
 // ── State ────────────────────────────────────────────
 const TAX=0.85, INV_P=0.20;
-let hourlyWage   = LS.get('wf_wage',   1.25);
-let hoursPerWeek = LS.get('wf_hours',  40);
+let hourlyWage   = LS.get('wf_wage',   0.00);
+let hoursPerWeek = LS.get('wf_hours',  0);
 let categories   = LS.get('wf_cats',   []);
 let extraIncomes = LS.get('wf_incomes',[]);
 let holdings     = LS.get('wf_holdings',[]);
@@ -2037,6 +2047,390 @@ function runCalcExtra(){
         <div class="calc-result-row"><span class="calc-result-label">New payoff time</span><span class="calc-result-value c-green">${yrs>0?yrs+"y ":""}${mos}m</span></div>
         <div class="calc-result-row"><span class="calc-result-label">Time saved</span><span class="calc-result-value c-green">${savedMonths} month(s) less</span></div>
         <div class="calc-result-row"><span class="calc-result-label">Interest saved</span><span class="calc-result-value c-green">${fmt(savedMoney)}</span></div>`;
+}
+
+// ── PDF Balance Sheet ─────────────────────────────────
+function downloadBalanceSheet(){
+    const btn = document.getElementById('pdfBtn');
+    btn.textContent = 'Generating...';
+    btn.style.opacity = '0.6';
+    btn.disabled = true;
+
+    setTimeout(()=>{
+        try { buildPDF(); } catch(e){ console.error(e); }
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Balance Sheet — PDF`;
+        btn.style.opacity = '1';
+        btn.disabled = false;
+    }, 80);
+}
+
+function buildPDF(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation:'portrait', unit:'pt', format:'letter' });
+
+    // ── Design constants ───────────────────────────────
+    const PW = 612, PH = 792;
+    const ML = 56, MR = 56, TM = 56;
+    const CW = PW - ML - MR; // content width
+    const COL2 = ML + CW / 2 + 8;
+    const COLW2 = CW / 2 - 8;
+
+    // Colors
+    const C = {
+        black:  [10,  10,  10],
+        ink:    [30,  30,  30],
+        mid:    [80,  80,  80],
+        muted:  [130, 130, 130],
+        light:  [200, 200, 200],
+        rule:   [220, 220, 220],
+        bg:     [248, 248, 246],
+        bgAlt:  [240, 240, 238],
+        accent: [20,  20,  20],
+        green:  [0,   140, 90],
+        red:    [190, 40,  40],
+        blue:   [30,  90,  160],
+    };
+
+    // Helpers
+    const setFont = (style='normal', size=9, color=C.ink) => {
+        doc.setFont('helvetica', style);
+        doc.setFontSize(size);
+        doc.setTextColor(...color);
+    };
+    const hline = (y, x1=ML, x2=PW-MR, w=0.5, color=C.rule) => {
+        doc.setDrawColor(...color);
+        doc.setLineWidth(w);
+        doc.line(x1, y, x2, y);
+    };
+    const rect = (x,y,w,h,fill,stroke=null) => {
+        if(fill){ doc.setFillColor(...fill); doc.rect(x,y,w,h,'F'); }
+        if(stroke){ doc.setDrawColor(...stroke); doc.setLineWidth(0.5); doc.rect(x,y,w,h,'S'); }
+    };
+    const money = n => {
+        const abs = Math.abs(n);
+        const s = '$' + abs.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+        return n < 0 ? '(' + s + ')' : s;
+    };
+    const dateStr = () => new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+    // ── Gather data ────────────────────────────────────
+    const base   = baseSalary();
+    const extra  = extraMonthly();
+    const total  = base + extra;
+    const inv    = inversion();
+    const spent  = categories.reduce((s,c)=>s+c.amount,0);
+    const remain = total - spent - inv;
+
+    const portCurrent = holdings.reduce((s,h)=>s+h.current,0);
+    const portCost    = holdings.reduce((s,h)=>s+h.cost,0);
+    const portGain    = portCurrent - portCost;
+
+    const totalDebt   = debts.reduce((s,d)=>s+d.balance,0);
+    const netWorth    = portCurrent - totalDebt;
+    const totalContribActual = contribs.reduce((s,c)=>s+c.amount,0);
+
+    const projContribAmt = getProjectionContrib();
+    let projFinal = 0;
+    { let p=0; for(let m=1;m<=projYears*12;m++) p=(p+projContribAmt)*(1+projRate/100/12); projFinal=Math.round(p); }
+
+    let curY = TM;
+
+    // ═══════════════════════════════════════════════════
+    // PAGE HEADER
+    // ═══════════════════════════════════════════════════
+    // Top black bar
+    rect(0, 0, PW, 6, C.black);
+
+    curY = 36;
+    // Company/app name
+    setFont('bold', 22, C.black);
+    doc.text('WEALTHFLOW', ML, curY);
+
+    setFont('normal', 8, C.muted);
+    doc.text('PERSONAL FINANCIAL STATEMENT', ML, curY + 14);
+
+    // Date block top-right
+    setFont('normal', 8, C.muted);
+    doc.text('PREPARED ON', PW - MR, curY - 4, {align:'right'});
+    setFont('bold', 9, C.ink);
+    doc.text(dateStr(), PW - MR, curY + 8, {align:'right'});
+    setFont('normal', 8, C.muted);
+    doc.text('FISCAL PERIOD · MONTHLY', PW - MR, curY + 20, {align:'right'});
+
+    curY += 36;
+    hline(curY, ML, PW-MR, 1.5, C.black);
+    curY += 16;
+
+    // ═══════════════════════════════════════════════════
+    // EXECUTIVE SUMMARY ROW (3 KPIs)
+    // ═══════════════════════════════════════════════════
+    const kpiW = CW / 3;
+    const kpis = [
+        { label:'NET WORTH',    value: money(netWorth),   color: netWorth>=0?C.green:C.red },
+        { label:'MONTHLY INCOME', value: money(total),    color: C.ink },
+        { label:'AVAILABLE CASH', value: money(remain),   color: remain>=0?C.green:C.red },
+    ];
+
+    kpis.forEach((k,i)=>{
+        const x = ML + i * kpiW;
+        rect(x, curY, kpiW-4, 52, i%2===0 ? C.bg : C.bgAlt);
+        setFont('normal', 7, C.muted);
+        doc.text(k.label, x+10, curY+14);
+        setFont('bold', 14, k.color);
+        doc.text(k.value, x+10, curY+34);
+        if(i>0){ doc.setDrawColor(...C.rule); doc.setLineWidth(0.5); doc.line(x,curY,x,curY+52); }
+    });
+    curY += 62;
+
+    // ═══════════════════════════════════════════════════
+    // SECTION HELPER
+    // ═══════════════════════════════════════════════════
+    const sectionHead = (title, subtitle='') => {
+        curY += 14;
+        rect(ML, curY, CW, 20, C.black);
+        setFont('bold', 8.5, [255,255,255]);
+        doc.text(title, ML+10, curY+13);
+        if(subtitle){
+            setFont('normal', 7.5, [180,180,180]);
+            doc.text(subtitle, PW-MR-8, curY+13, {align:'right'});
+        }
+        curY += 26;
+    };
+
+    const tableRow = (label, value, bold=false, bgColor=null, indent=0, valueColor=C.ink) => {
+        const rowH = 16;
+        if(bgColor) rect(ML, curY, CW, rowH, bgColor);
+        setFont(bold?'bold':'normal', 8.5, C.mid);
+        doc.text(label, ML+10+indent, curY+11);
+        setFont(bold?'bold':'normal', 8.5, valueColor);
+        doc.text(value, PW-MR-10, curY+11, {align:'right'});
+        hline(curY+rowH, ML, PW-MR, 0.3, C.rule);
+        curY += rowH;
+    };
+
+    const subHead = (label) => {
+        setFont('bold', 7.5, C.muted);
+        doc.text(label.toUpperCase(), ML+10, curY+9);
+        curY += 14;
+    };
+
+    const totalRow = (label, value, topRule=true, valueColor=C.ink) => {
+        if(topRule) hline(curY, ML, PW-MR, 0.8, C.ink);
+        curY += 2;
+        rect(ML, curY, CW, 18, C.bgAlt);
+        setFont('bold', 9, C.black);
+        doc.text(label, ML+10, curY+12);
+        setFont('bold', 9, valueColor);
+        doc.text(value, PW-MR-10, curY+12, {align:'right'});
+        curY += 22;
+    };
+
+    const checkPage = (needed=80) => {
+        if(curY + needed > PH - 60) {
+            doc.addPage();
+            curY = TM;
+            // thin top rule on new page
+            rect(0, 0, PW, 3, C.black);
+            curY += 10;
+        }
+    };
+
+    // ═══════════════════════════════════════════════════
+    // SECTION 1 — INCOME STATEMENT
+    // ═══════════════════════════════════════════════════
+    sectionHead('I. INCOME STATEMENT', 'Monthly');
+
+    subHead('Revenue');
+    tableRow('Base Salary (net of taxes)', money(base), false, null, 0);
+    extraIncomes.forEach(e => tableRow(e.name + ' (' + FREQ_LABEL[e.freq] + ')', money(e.monthly), false, null, 16, C.ink));
+    totalRow('TOTAL MONTHLY INCOME', money(total), true, C.blue);
+
+    curY += 8;
+    subHead('Appropriations');
+    tableRow('Scheduled Investment (20%)', money(inv), false, null, 0, C.green);
+
+    curY += 4;
+    subHead('Fixed Expenses');
+    const fixedExp = categories.filter(c=>c.type==='needs');
+    const varExp   = categories.filter(c=>c.type==='wants');
+    if(!fixedExp.length) tableRow('No fixed expenses logged', '—', false, null, 16, C.muted);
+    fixedExp.forEach(c => tableRow(c.name, money(c.amount), false, null, 16));
+
+    curY += 4;
+    subHead('Variable Expenses');
+    if(!varExp.length) tableRow('No variable expenses logged', '—', false, null, 16, C.muted);
+    varExp.forEach(c => tableRow(c.name, money(c.amount), false, null, 16));
+
+    totalRow('TOTAL EXPENSES', money(spent), true, C.red);
+    totalRow('NET AVAILABLE BALANCE', money(remain), false, remain>=0?C.green:C.red);
+
+    // ═══════════════════════════════════════════════════
+    // SECTION 2 — BALANCE SHEET (Assets & Liabilities)
+    // ═══════════════════════════════════════════════════
+    checkPage(160);
+    sectionHead('II. BALANCE SHEET', 'Current Positions');
+
+    // Assets
+    subHead('Assets — Investment Portfolio');
+    if(!holdings.length){
+        tableRow('No assets recorded', '—', false, null, 16, C.muted);
+    } else {
+        holdings.forEach(h => {
+            const g = h.current - h.cost;
+            const gStr = (g>=0?'+':'')+money(g);
+            tableRow(h.name + '  (' + (ASSET_LABEL[h.type]||'Other') + ')', money(h.current), false, null, 16, C.ink);
+        });
+        tableRow('Cost Basis', money(portCost), false, null, 16, C.muted);
+        tableRow('Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 16, portGain>=0?C.green:C.red);
+    }
+    totalRow('TOTAL ASSETS', money(portCurrent), true, C.green);
+
+    curY += 6;
+    // Liabilities
+    subHead('Liabilities — Outstanding Debts');
+    checkPage(debts.length*18 + 80);
+    if(!debts.length){
+        tableRow('No debts recorded', '—', false, null, 16, C.muted);
+    } else {
+        debts.forEach(d => {
+            const paidPct = d.originalBalance > 0 ? Math.round((d.originalBalance-d.balance)/d.originalBalance*100) : 0;
+            tableRow(d.name + '  (' + (DEBT_LABEL[d.type]||'Other') + '  ' + d.rate + '% p.a.)', money(d.balance), false, null, 16, C.red);
+        });
+        const monthlyInt = debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
+        tableRow('Est. Monthly Interest Burden', money(monthlyInt), false, null, 16, C.red);
+    }
+    totalRow('TOTAL LIABILITIES', money(totalDebt), true, C.red);
+
+    // Net Worth summary
+    curY += 4;
+    hline(curY, ML, PW-MR, 1, C.black);
+    curY += 4;
+    rect(ML, curY, CW, 24, netWorth>=0 ? [235,248,241] : [250,235,235]);
+    setFont('bold', 10, C.black);
+    doc.text('NET WORTH  (Total Assets − Total Liabilities)', ML+10, curY+16);
+    setFont('bold', 12, netWorth>=0?C.green:C.red);
+    doc.text(money(netWorth), PW-MR-10, curY+16, {align:'right'});
+    curY += 28;
+
+    // ═══════════════════════════════════════════════════
+    // SECTION 3 — INVESTMENT PORTFOLIO DETAIL
+    // ═══════════════════════════════════════════════════
+    checkPage(120);
+    sectionHead('III. INVESTMENT PORTFOLIO', 'Holdings & Contributions');
+
+    tableRow('Total Portfolio Market Value', money(portCurrent), false, C.bg);
+    tableRow('Total Cost Basis', money(portCost), false, null);
+    tableRow('Total Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 0, portGain>=0?C.green:C.red);
+    tableRow('Total Contributions Logged', money(totalContribActual), false, null);
+    tableRow('Suggested Monthly Investment', money(inv), false, null, 0, C.green);
+
+    curY += 6;
+    if(contribs.length){
+        subHead('Recent Contribution History (last 5)');
+        contribs.slice(0,5).forEach(c => {
+            const dt = c.date ? new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}) : '—';
+            tableRow(c.name + '  ·  ' + dt, money(c.amount), false, null, 16, C.green);
+        });
+    }
+
+    // ═══════════════════════════════════════════════════
+    // SECTION 4 — DEBT SCHEDULE
+    // ═══════════════════════════════════════════════════
+    checkPage(120);
+    sectionHead('IV. DEBT SCHEDULE', 'Amortization Summary');
+
+    if(!debts.length){
+        setFont('italic', 8.5, C.muted);
+        doc.text('No debts recorded. Debt-free position.', ML+10, curY+11);
+        curY += 20;
+    } else {
+        // Column headers
+        rect(ML, curY, CW, 14, C.bgAlt);
+        setFont('bold', 7, C.muted);
+        doc.text('DEBT NAME', ML+10, curY+10);
+        doc.text('BALANCE', ML+240, curY+10, {align:'right'});
+        doc.text('RATE', ML+310, curY+10, {align:'right'});
+        doc.text('MIN PMT', ML+380, curY+10, {align:'right'});
+        doc.text('EST. PAYOFF', PW-MR-10, curY+10, {align:'right'});
+        curY += 16;
+
+        debts.forEach((d,i) => {
+            if(i%2===0) rect(ML, curY, CW, 16, C.bg);
+            const res = calcPayoff(d.balance, d.rate, d.minpay);
+            const payStr = res&&!res.error ? Math.floor(res.months/12)+'y '+res.months%12+'m' : '—';
+            setFont('normal', 8, C.ink);
+            // truncate long names
+            const nm = d.name.length > 28 ? d.name.slice(0,26)+'…' : d.name;
+            doc.text(nm, ML+10, curY+11);
+            doc.text(money(d.balance), ML+240, curY+11, {align:'right'});
+            doc.text(d.rate+'%', ML+310, curY+11, {align:'right'});
+            doc.text(money(d.minpay||0), ML+380, curY+11, {align:'right'});
+            setFont('normal', 8, res&&!res.error?C.mid:C.muted);
+            doc.text(payStr, PW-MR-10, curY+11, {align:'right'});
+            hline(curY+16, ML, PW-MR, 0.3, C.rule);
+            curY += 16;
+        });
+
+        const totInt = debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
+        totalRow('TOTAL OUTSTANDING DEBT', money(totalDebt), true, C.red);
+        tableRow('Monthly Interest Burden', money(totInt), false, null, 0, C.red);
+        const totPaid = payments.reduce((s,p)=>s+p.amount,0);
+        tableRow('Total Payments Made to Date', money(totPaid), false, null, 0, C.green);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // SECTION 5 — WEALTH PROJECTION
+    // ═══════════════════════════════════════════════════
+    checkPage(140);
+    sectionHead('V. WEALTH PROJECTION', projYears+'-Year Forecast  ·  '+projRate+'% Annual Return');
+
+    tableRow('Monthly Contribution Assumed', money(projContribAmt), false, C.bg);
+    tableRow('Annual Return Rate', projRate.toFixed(2)+'%', false, null);
+    tableRow('Investment Horizon', projYears+' years', false, null);
+    tableRow('Total Capital Contributed', money(projContribAmt * projYears * 12), false, null);
+    tableRow('Total Projected Growth (Returns)', money(Math.max(0,projFinal - projContribAmt*projYears*12)), false, null, 0, C.green);
+
+    curY += 4;
+    hline(curY, ML, PW-MR, 1, C.black);
+    curY += 4;
+    rect(ML, curY, CW, 26, C.bgAlt);
+    setFont('bold', 11, C.black);
+    doc.text('PROJECTED PORTFOLIO VALUE AT YEAR '+projYears, ML+10, curY+18);
+    setFont('bold', 13, C.green);
+    doc.text(money(projFinal), PW-MR-10, curY+18, {align:'right'});
+    curY += 30;
+
+    // Milestones table
+    curY += 4;
+    subHead('Growth Milestones');
+    const step = Math.max(1, Math.floor(projYears/5));
+    const milYears = [];
+    for(let y=step; y<=projYears; y+=step) milYears.push(y);
+    if(!milYears.includes(projYears)) milYears.push(projYears);
+
+    milYears.forEach((y,i) => {
+        let p=0;
+        for(let m=1;m<=y*12;m++) p=(p+projContribAmt)*(1+projRate/100/12);
+        tableRow('Year '+y, money(Math.round(p)), false, i%2===0?C.bg:null, 16, C.green);
+    });
+
+    // ═══════════════════════════════════════════════════
+    // FOOTER ON EVERY PAGE
+    // ═══════════════════════════════════════════════════
+    const pageCount = doc.getNumberOfPages();
+    for(let i=1; i<=pageCount; i++){
+        doc.setPage(i);
+        rect(0, PH-36, PW, 36, C.black);
+        setFont('normal', 7, [160,160,160]);
+        doc.text('WEALTHFLOW · PERSONAL FINANCIAL STATEMENT · CONFIDENTIAL', ML, PH-20);
+        doc.text('Page '+i+' of '+pageCount, PW-MR, PH-20, {align:'right'});
+        setFont('normal', 6.5, [100,100,100]);
+        doc.text('This document is for personal informational purposes only and does not constitute financial advice.', PW/2, PH-10, {align:'center'});
+    }
+
+    // Save
+    const filename = 'WealthFlow_Balance_Sheet_'+new Date().toISOString().slice(0,10)+'.pdf';
+    doc.save(filename);
 }
 
 // ── Init ──────────────────────────────────────────────
