@@ -4,1072 +4,1342 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MercadoBTC | Institutional Digital Payments</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink:    #09090b;
-      --dark:   #111118;
-      --card:   #16161e;
-      --orange: #f7931a;
-      --orange-dim: rgba(247,147,26,0.12);
-      --orange-glow: rgba(247,147,26,0.35);
-      --muted:  #71717a;
-      --border: rgba(255,255,255,0.07);
-      --white:  #fafafa;
-      --radius: 16px;
+      --orange:       #f7931a;
+      --orange-dark:  #d97706;
+      --orange-glow:  rgba(247,147,26,0.15);
+      --orange-faint: rgba(247,147,26,0.06);
+      --ink:          #0a0a0c;
+      --ink2:         #18181b;
+      --muted:        #6b6b78;
+      --soft:         #a1a1aa;
+      --border:       #e4e4e7;
+      --border2:      #f0f0f2;
+      --bg:           #ffffff;
+      --bg2:          #fafafa;
+      --bg3:          #f5f5f7;
+      --surface:      #ffffff;
+      --r-sm:         8px;
+      --r-md:         14px;
+      --r-lg:         24px;
+      --r-xl:         32px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      background: var(--dark);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.7;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Geist', system-ui, sans-serif;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ─── NOISE OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 9999;
+    /* ══════════════════════════════════
+       MARQUEE TOP BAR
+    ══════════════════════════════════ */
+    .top-bar {
+      background: var(--ink);
+      overflow: hidden;
+      height: 36px;
+      display: flex;
+      align-items: center;
     }
 
-    /* ─── NAVIGATION ─── */
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 0 3rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .marquee-item strong {
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .marquee-sep {
+      color: rgba(255,255,255,0.15);
+      margin: 0 1rem;
+    }
+
+    /* ══════════════════════════════════
+       NAV
+    ══════════════════════════════════ */
     nav {
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 500;
+      height: 68px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.4rem 7%;
-      background: rgba(17,17,24,0.7);
-      backdrop-filter: blur(20px);
+      padding: 0 6%;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(24px) saturate(180%);
       border-bottom: 1px solid var(--border);
-      animation: fadeDown 0.7s ease both;
+      animation: navIn 0.5s ease both;
     }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
+    @keyframes navIn {
+      from { opacity: 0; transform: translateY(-8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .logo {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Fraunces', serif;
       font-weight: 700;
-      font-size: 1.65rem;
-      letter-spacing: 0.01em;
-      color: var(--white);
-      text-decoration: none;
-    }
-    .logo span { color: var(--orange); }
-
-    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--white); }
-
-    .btn-primary {
-      background: var(--orange);
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
       color: var(--ink);
-      padding: 0.7rem 1.5rem;
-      border-radius: 8px;
       text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 0 0 var(--orange-glow);
+      display: flex;
+      align-items: center;
+      gap: 2px;
     }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 28px var(--orange-glow);
+    .logo-accent { color: var(--orange); }
+
+    .logo-live {
+      width: 7px; height: 7px;
+      background: var(--orange);
+      border-radius: 50%;
+      margin-left: 6px;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
-    /* ─── HERO ─── */
-    header.hero {
-      min-height: 92vh;
-      padding: 8rem 7% 6rem;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--orange-glow); }
+      50%       { opacity: 0.7; box-shadow: 0 0 0 5px transparent; }
+    }
+
+    .nav-links {
+      display: flex;
       align-items: center;
-      gap: 6rem;
+      gap: 2.2rem;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--ink);
+      color: #fff;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid var(--ink);
+    }
+    .nav-cta:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--orange-glow);
+    }
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    .hero {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: calc(100vh - 104px);
       position: relative;
       overflow: hidden;
     }
 
-    /* animated mesh gradient */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 75% 40%, rgba(247,147,26,0.13) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 70% at 20% 80%, rgba(247,147,26,0.05) 0%, transparent 60%),
-        linear-gradient(170deg, #111118 0%, #0d0d13 100%);
-      animation: meshPulse 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes meshPulse {
-      from { opacity: 0.8; }
-      to   { opacity: 1; }
-    }
-
-    /* subtle grid lines */
-    .hero-bg::after {
+    /* subtle grid bg */
+    .hero::before {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(var(--border2) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border2) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 0%, transparent 75%);
+      pointer-events: none;
     }
 
-    .hero-content { position: relative; z-index: 1; }
+    .hero-left {
+      padding: 6% 6% 6% 6%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      animation: heroIn 0.7s 0.1s ease both;
+    }
 
-    .badge {
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 6px 16px;
-      background: var(--orange-dim);
-      border: 1px solid rgba(247,147,26,0.25);
-      border-radius: 30px;
-      font-size: 0.72rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
       font-weight: 500;
-      color: var(--orange);
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--orange);
+      background: var(--orange-faint);
+      border: 1px solid rgba(247,147,26,0.2);
+      padding: 5px 13px;
+      border-radius: 100px;
       margin-bottom: 2rem;
-      animation: fadeUp 0.8s 0.2s ease both;
+      width: fit-content;
     }
 
-    .badge::before {
-      content: '';
-      width: 6px; height: 6px;
+    .badge-dot {
+      width: 5px; height: 5px;
       background: var(--orange);
       border-radius: 50%;
-      animation: pulse 1.8s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 var(--orange-glow); }
-      50%       { box-shadow: 0 0 0 6px transparent; }
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.2rem, 6vw, 5.5rem);
+    .hero-h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
       font-weight: 300;
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 0.3em;
-      animation: fadeUp 0.8s 0.35s ease both;
-      letter-spacing: -0.01em;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.6rem;
     }
 
-    h1 strong {
-      font-weight: 700;
+    .hero-h1 em {
       font-style: italic;
       color: var(--orange);
+    }
+
+    .hero-h1 .word-block {
       display: block;
     }
 
-    .hero-sub {
+    .hero-desc {
       font-size: 1rem;
       color: var(--muted);
-      margin-bottom: 2.8rem;
+      line-height: 1.75;
       max-width: 460px;
-      font-weight: 300;
-      line-height: 1.8;
-      animation: fadeUp 0.8s 0.5s ease both;
+      margin-bottom: 2.8rem;
+      font-weight: 400;
     }
 
     .hero-actions {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      animation: fadeUp 0.8s 0.65s ease both;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
     }
 
-    .btn-ghost {
+    .btn-main {
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.9rem 2rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 20px var(--orange-glow);
+      transition: all 0.25s;
+    }
+
+    .btn-main:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(247,147,26,0.3);
+    }
+
+    .btn-main svg { transition: transform 0.2s; }
+    .btn-main:hover svg { transform: translateX(3px); }
+
+    .btn-ghost-link {
+      font-size: 0.85rem;
+      font-weight: 500;
       color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.3rem;
       transition: color 0.2s;
     }
-    .btn-ghost:hover { color: var(--white); }
-    .btn-ghost svg { transition: transform 0.2s; }
-    .btn-ghost:hover svg { transform: translateX(4px); }
+    .btn-ghost-link:hover { color: var(--ink); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* stat row */
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
     }
 
-    /* ─── HERO CARD ─── */
-    .hero-visual {
+    .hero-stat-val {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+
+    .hero-stat-lbl {
+      font-size: 0.72rem;
+      color: var(--soft);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* HERO RIGHT — card stack */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4% 5% 4% 2%;
       position: relative;
       z-index: 1;
-      animation: fadeUp 0.9s 0.45s ease both;
+      animation: heroIn 0.7s 0.25s ease both;
     }
 
-    .btc-card {
-      background: linear-gradient(145deg, #1c1c26, #14141c);
+    .card-stack {
+      width: 100%;
+      max-width: 360px;
+      position: relative;
+    }
+
+    /* ghost card behind */
+    .card-ghost {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fff8f0, #fff);
+      border: 1px solid rgba(247,147,26,0.2);
+      border-radius: var(--r-xl);
+      transform: rotate(3deg) translateY(8px) scale(0.97);
+      z-index: 0;
+    }
+
+    .card-ghost-2 {
+      position: absolute;
+      inset: 0;
+      background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 2.5rem;
+      border-radius: var(--r-xl);
+      transform: rotate(-1.5deg) translateY(4px) scale(0.985);
+      z-index: 1;
+    }
+
+    /* main card */
+    .main-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
       box-shadow:
-        0 40px 80px rgba(0,0,0,0.6),
-        0 0 0 1px rgba(255,255,255,0.04) inset;
+        0 0 0 1px rgba(0,0,0,0.02),
+        0 20px 60px rgba(0,0,0,0.06),
+        0 4px 12px rgba(0,0,0,0.04);
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-top {
+      padding: 1.6rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg2);
+    }
+
+    .card-brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .card-brand span { color: var(--orange); }
+
+    .card-network {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      color: #16a34a;
+      font-weight: 500;
+      background: rgba(22, 163, 74, 0.08);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .net-dot {
+      width: 6px; height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    .card-body { padding: 1.8rem; }
+
+    .card-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-amount {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-btc {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--orange);
+      margin-bottom: 1.8rem;
+    }
+
+    /* mini chart */
+    .mini-chart {
+      height: 56px;
+      background: linear-gradient(to bottom, var(--orange-faint), transparent);
+      border-radius: 10px;
+      margin-bottom: 1.6rem;
       position: relative;
       overflow: hidden;
     }
 
-    .btc-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(247,147,26,0.18), transparent 70%);
-    }
-
-    .card-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .card-sub {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--orange);
+    .mini-chart svg {
+      width: 100%;
+      height: 100%;
     }
 
     .card-divider {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 1.8rem 0;
+      margin: 0 0 1.6rem;
     }
+
+    .card-rows { display: flex; flex-direction: column; gap: 0.7rem; }
 
     .card-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
     }
-    .card-row:last-child { margin-bottom: 0; }
 
-    .card-key {
-      font-size: 0.78rem;
+    .crow-key {
+      font-size: 0.8rem;
       color: var(--muted);
     }
 
-    .card-val {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--white);
+    .crow-val {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .crow-val.green { color: #16a34a; }
+    .crow-val.orange { color: var(--orange); }
+
+    /* pill tag */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 100px;
     }
 
     .pill-green {
-      background: rgba(34,197,94,0.15);
-      color: #4ade80;
-      font-size: 0.7rem;
-      font-weight: 500;
-      padding: 3px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(74,222,128,0.2);
+      background: rgba(22,163,74,0.1);
+      color: #16a34a;
     }
 
-    .qr-placeholder {
-      width: 100%;
-      margin-top: 1.8rem;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.1);
+    .card-footer {
+      padding: 1.2rem 1.8rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      gap: 1rem;
     }
 
-    .qr-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 10px);
-      grid-template-rows: repeat(5, 10px);
-      gap: 3px;
+    .cf-label { font-size: 0.72rem; color: var(--soft); }
+    .cf-val {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--ink);
+      font-weight: 500;
     }
-    .qr-grid span {
-      width: 10px; height: 10px;
-      border-radius: 2px;
-      background: var(--orange);
-      opacity: 0;
-      animation: qrReveal 0.1s ease forwards;
-    }
-    .qr-grid span:nth-child(1)  { opacity:1; }
-    .qr-grid span:nth-child(2)  { opacity:1; }
-    .qr-grid span:nth-child(3)  { opacity:1; }
-    .qr-grid span:nth-child(4)  { opacity:0.2; }
-    .qr-grid span:nth-child(5)  { opacity:1; }
-    .qr-grid span:nth-child(6)  { opacity:1; }
-    .qr-grid span:nth-child(7)  { opacity:0.2; }
-    .qr-grid span:nth-child(8)  { opacity:1; }
-    .qr-grid span:nth-child(9)  { opacity:0.2; }
-    .qr-grid span:nth-child(10) { opacity:1; }
-    .qr-grid span:nth-child(11) { opacity:0.2; }
-    .qr-grid span:nth-child(12) { opacity:1; }
-    .qr-grid span:nth-child(13) { opacity:0.2; }
-    .qr-grid span:nth-child(14) { opacity:1; }
-    .qr-grid span:nth-child(15) { opacity:0.2; }
-    .qr-grid span:nth-child(16) { opacity:1; }
-    .qr-grid span:nth-child(17) { opacity:0.2; }
-    .qr-grid span:nth-child(18) { opacity:1; }
-    .qr-grid span:nth-child(19) { opacity:1; }
-    .qr-grid span:nth-child(20) { opacity:0.2; }
-    .qr-grid span:nth-child(21) { opacity:1; }
-    .qr-grid span:nth-child(22) { opacity:1; }
-    .qr-grid span:nth-child(23) { opacity:1; }
-    .qr-grid span:nth-child(24) { opacity:0.2; }
-    .qr-grid span:nth-child(25) { opacity:1; }
 
-    .qr-info { text-align: left; }
-    .qr-info p { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
-    .qr-info strong { font-family: 'DM Mono', monospace; color: var(--orange); font-size: 0.7rem; }
-
-    /* floating stat chips */
-    .stat-chip {
+    /* floating badges */
+    .float-chip {
       position: absolute;
-      background: var(--card);
+      background: #fff;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 0.7rem 1.1rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      padding: 0.55rem 0.9rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      z-index: 10;
     }
 
-    .stat-chip-left {
-      left: -2.5rem;
-      bottom: 3.5rem;
-      animation: float 4s ease-in-out infinite;
+    .fc-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
     }
 
-    .stat-chip-top {
-      right: -1.5rem;
-      top: 2.5rem;
-      animation: float 4s ease-in-out infinite 1.5s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
-
-    .chip-val {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--white);
-    }
-
-    .chip-label {
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    /* ─── STATS TICKER ─── */
-    .ticker-bar {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      padding: 1rem 0;
-      background: rgba(255,255,255,0.015);
-    }
-
-    .ticker-track {
-      display: flex;
-      gap: 5rem;
-      animation: ticker 20s linear infinite;
-      width: max-content;
-    }
-
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      white-space: nowrap;
-    }
-
-    .ticker-label {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+    .fc-lbl {
+      font-size: 0.62rem;
+      color: var(--soft);
+      letter-spacing: 0.04em;
       text-transform: uppercase;
+      margin-top: 2px;
     }
 
-    .ticker-value {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      color: var(--white);
+    .chip-tl {
+      top: -1.2rem;
+      left: -2rem;
+      animation: floatA 4s ease-in-out infinite;
     }
 
-    .ticker-up   { color: #4ade80; font-size: 0.75rem; }
-    .ticker-dot  { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
-
-    /* ─── SECTION COMMONS ─── */
-    .section-pad { padding: 110px 7%; }
-
-    .section-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.2rem;
+    .chip-br {
+      bottom: 0.5rem;
+      right: -1.8rem;
+      animation: floatB 5s ease-in-out infinite;
     }
 
-    .eyebrow-line {
-      width: 30px;
-      height: 1px;
-      background: var(--orange);
+    @keyframes floatA {
+      0%,100% { transform: translateY(0) rotate(-1deg); }
+      50%      { transform: translateY(-8px) rotate(1deg); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: translateY(0) rotate(1deg); }
+      50%      { transform: translateY(6px) rotate(-1deg); }
     }
 
-    .eyebrow-text {
-      font-size: 0.72rem;
-      color: var(--orange);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4vw, 3.8rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--white);
-      max-width: 600px;
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--orange);
-    }
-
-    /* ─── PROCESS ─── */
-    #process { position: relative; }
-
-    .process-grid {
+    /* ══════════════════════════════════
+       FEATURES STRIP
+    ══════════════════════════════════ */
+    .features-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .process-card {
-      background: var(--card);
-      padding: 2.5rem;
+    .fs-item {
+      padding: 3rem 3rem;
+      border-right: 1px solid var(--border);
       transition: background 0.3s;
       position: relative;
       overflow: hidden;
     }
 
-    .process-card::before {
+    .fs-item:last-child { border-right: none; }
+
+    .fs-item::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 2px;
+      height: 3px;
       background: var(--orange);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.4s ease;
     }
 
-    .process-card:hover::before { transform: scaleX(1); }
-    .process-card:hover { background: #1a1a24; }
+    .fs-item:hover { background: var(--orange-faint); }
+    .fs-item:hover::after { transform: scaleX(1); }
 
-    .card-img {
-      width: 100%;
-      height: 200px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(30%) brightness(0.75);
-      transition: filter 0.4s ease, transform 0.5s ease;
-    }
-
-    .process-card:hover .card-img img {
-      filter: grayscale(0%) brightness(0.9);
-      transform: scale(1.04);
-    }
-
-    .card-img-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(20,20,28,0.6), transparent);
-    }
-
-    .step-badge {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--orange);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .step-badge span {
-      width: 18px; height: 18px;
-      background: var(--orange-dim);
-      border: 1px solid rgba(247,147,26,0.25);
-      border-radius: 4px;
+    .fs-icon {
+      width: 40px; height: 40px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6rem;
+      font-size: 1.1rem;
+      margin-bottom: 1.6rem;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    .process-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.8rem;
-      line-height: 1.2;
+    .fs-item:hover .fs-icon {
+      background: rgba(247,147,26,0.1);
+      border-color: rgba(247,147,26,0.25);
     }
 
-    .process-card p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.75;
+    .fs-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.01em;
     }
 
-    /* ─── COMPARISON ─── */
-    #comparison {
-      background: linear-gradient(180deg, var(--dark) 0%, #0d0d13 100%);
-    }
-
-    .comp-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 4rem;
-    }
-
-    .comp-col {
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .comp-col-header {
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .comp-col.mercado .comp-col-header {
-      background: var(--orange-dim);
-      border: 1px solid rgba(247,147,26,0.2);
-      border-bottom: none;
-    }
-
-    .comp-col.trad .comp-col-header {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-bottom: none;
-    }
-
-    .comp-col-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .comp-col-tag {
-      margin-left: auto;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .comp-col.mercado .comp-col-tag { color: var(--orange); }
-    .comp-col.trad .comp-col-tag { color: var(--muted); }
-
-    .comp-col-body {
-      padding: 0 2rem 2rem;
-    }
-
-    .comp-col.mercado .comp-col-body {
-      background: var(--orange-dim);
-      border: 1px solid rgba(247,147,26,0.2);
-      border-top: none;
-    }
-
-    .comp-col.trad .comp-col-body {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-top: none;
-    }
-
-    .comp-metric {
-      padding: 1.2rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .comp-metric:last-child { border-bottom: none; }
-
-    .metric-label {
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
-    }
-
-    .metric-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1;
-    }
-
-    .comp-col.mercado .metric-value { color: var(--orange); }
-
-    .metric-sub {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-
-    /* ─── FEATURE STRIP ─── */
-    .feature-strip {
-      padding: 80px 7%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--border);
-    }
-
-    .feature-item {
-      background: var(--dark);
-      padding: 2.5rem 2rem;
-      transition: background 0.3s;
-    }
-
-    .feature-item:hover { background: #13131a; }
-
-    .feature-icon {
-      width: 36px; height: 36px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.3rem;
-      font-size: 1rem;
-    }
-
-    .feature-item h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-item p {
-      font-size: 0.82rem;
+    .fs-desc {
+      font-size: 0.875rem;
       color: var(--muted);
       line-height: 1.7;
     }
 
-    /* ─── FOOTER ─── */
+    /* ══════════════════════════════════
+       PROCESS — DARK ISLAND
+    ══════════════════════════════════ */
+    .process-wrap {
+      padding: 3rem 3%;
+    }
+
+    .process-island {
+      background: var(--ink2);
+      border-radius: 28px;
+      padding: 5rem 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative radial glow */
+    .process-island::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,147,26,0.12), transparent 65%);
+      pointer-events: none;
+    }
+
+    .process-island::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 10%;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,147,26,0.06), transparent 65%);
+      pointer-events: none;
+    }
+
+    .process-eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .process-eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--orange); }
+
+    .process-h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 4rem;
+      max-width: 500px;
+      letter-spacing: -0.02em;
+    }
+
+    .process-h2 em { font-style: italic; color: var(--orange); }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* connector line between steps */
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: calc(16.66% + 16px);
+      right: calc(16.66% + 16px);
+      height: 1px;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.1) 0px,
+        rgba(255,255,255,0.1) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    }
+
+    .process-step {
+      padding: 0 2.5rem 0 0;
+    }
+
+    .step-circle {
+      width: 44px; height: 44px;
+      background: rgba(247,147,26,0.12);
+      border: 1px solid rgba(247,147,26,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.01em;
+    }
+
+    .step-desc {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+
+    /* ══════════════════════════════════
+       COMPARISON
+    ══════════════════════════════════ */
+    .compare-section {
+      padding: 6rem 6%;
+      border-top: 1px solid var(--border);
+    }
+
+    .compare-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .compare-eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .compare-eyebrow::after { content: ''; width: 20px; height: 1px; background: var(--orange); }
+
+    .compare-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 300;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .compare-title em { font-style: italic; color: var(--orange); }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+
+    .compare-table th {
+      padding: 1.2rem 1.8rem;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--soft);
+    }
+
+    .compare-table th.col-us {
+      background: var(--orange);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .compare-table td {
+      padding: 1.1rem 1.8rem;
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--border2);
+      vertical-align: middle;
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .compare-table td:first-child {
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+
+    .compare-table td:nth-child(2) {
+      background: rgba(247,147,26,0.04);
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--orange-dark);
+      font-weight: 500;
+    }
+
+    .compare-table td:nth-child(3) {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--soft);
+    }
+
+    .check { color: #16a34a; font-size: 0.9rem; }
+    .cross { color: #dc2626; font-size: 0.9rem; }
+
+    /* ══════════════════════════════════
+       CTA
+    ══════════════════════════════════ */
+    .cta-section {
+      margin: 0 3% 4rem;
+      background: var(--ink2);
+      border-radius: 28px;
+      padding: 5rem 6%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -60px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,147,26,0.1), transparent 65%);
+    }
+
+    .cta-eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .cta-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-title em { font-style: italic; color: var(--orange); }
+
+    .cta-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .cta-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .btn-cta {
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 1rem 2.2rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s;
+      box-shadow: 0 4px 24px rgba(247,147,26,0.35);
+    }
+
+    .btn-cta:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px rgba(247,147,26,0.45);
+    }
+
+    .cta-note {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
     footer {
-      padding: 3rem 7%;
+      padding: 2.5rem 6%;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
-    footer .nav-links a {
-      font-size: 0.78rem;
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
     }
 
-    .footer-copy {
+    .footer-tagline {
+      font-size: 0.75rem;
+      color: var(--soft);
+      letter-spacing: 0.02em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .footer-links a {
       font-size: 0.78rem;
       color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    .footer-copy {
+      font-size: 0.74rem;
+      color: rgba(161,161,170,0.6);
     }
 
-    /* ─── SCROLLBAR ─── */
+    /* ══════════════════════════════════
+       SCROLLBAR
+    ══════════════════════════════════ */
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--dark); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-    /* ─── RESPONSIVE ─── */
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
     @media (max-width: 1024px) {
-      header.hero { grid-template-columns: 1fr; gap: 4rem; min-height: auto; }
-      .stat-chip { display: none; }
-      .process-grid { grid-template-columns: 1fr; }
-      .comp-grid { grid-template-columns: 1fr; }
-      .feature-strip { grid-template-columns: 1fr 1fr; }
+      .hero               { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right         { justify-content: flex-start; padding: 0 6% 5%; }
+      .process-steps      { grid-template-columns: 1fr; gap: 3rem; }
+      .process-steps::before { display: none; }
+      .process-step       { padding: 0; }
+      .features-strip     { grid-template-columns: 1fr; }
+      .fs-item            { border-right: none; border-bottom: 1px solid var(--border); }
+      .cta-section        { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
-      nav { padding: 1rem 5%; }
+      nav { padding: 0 5%; }
       .nav-links { display: none; }
-      header.hero, .section-pad { padding-left: 5%; padding-right: 5%; }
-      .feature-strip { grid-template-columns: 1fr; padding: 40px 5%; }
-      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .hero-left, .compare-section, .process-wrap { padding-left: 5%; padding-right: 5%; }
+      .compare-table th:nth-child(3),
+      .compare-table td:nth-child(3) { display: none; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-<nav>
-  <a href="#" class="logo">Mercado<span>BTC</span></a>
-  <div class="nav-links">
-    <a href="#process">Process</a>
-    <a href="#comparison">Network</a>
-    <a href="btc3in1.html">Security</a>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="marquee-track">
+    <!-- set 1 -->
+    <div class="marquee-item">
+      BTC/USD <strong>$67,420.00</strong>
+      <span class="marquee-sep">·</span>
+      Settlement <strong>~2.1s</strong>
+      <span class="marquee-sep">·</span>
+      Fee <strong>0.5% flat</strong>
+      <span class="marquee-sep">·</span>
+      Network uptime <strong>99.97%</strong>
+      <span class="marquee-sep">·</span>
+      Merchants <strong>4,800+</strong>
+      <span class="marquee-sep">·</span>
+      Transactions <strong>1.2M+</strong>
+      <span class="marquee-sep">·</span>
+    </div>
+    <!-- set 2 (duplicate for seamless loop) -->
+    <div class="marquee-item">
+      BTC/USD <strong>$67,420.00</strong>
+      <span class="marquee-sep">·</span>
+      Settlement <strong>~2.1s</strong>
+      <span class="marquee-sep">·</span>
+      Fee <strong>0.5% flat</strong>
+      <span class="marquee-sep">·</span>
+      Network uptime <strong>99.97%</strong>
+      <span class="marquee-sep">·</span>
+      Merchants <strong>4,800+</strong>
+      <span class="marquee-sep">·</span>
+      Transactions <strong>1.2M+</strong>
+      <span class="marquee-sep">·</span>
+    </div>
   </div>
-  <a href="#preorder" class="btn-primary">Get Started</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    Mercado<span class="logo-accent">BTC</span>
+    <span class="logo-live"></span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Network</a>
+    <a href="#process">Process</a>
+    <a href="#compare">Compare</a>
+    <a href="btc3in1.html">Legal</a>
+  </div>
+  <a href="#cta" class="nav-cta">Open Terminal</a>
 </nav>
 
 <!-- HERO -->
-<header class="hero">
-  <div class="hero-bg"></div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Institutional Grade Infrastructure
+    </div>
 
-  <div class="hero-content">
-    <div class="badge">Institutional Bitcoin Infrastructure</div>
-    <h1>
-      Accept payments.
-      <strong>No bank required.</strong>
+    <h1 class="hero-h1">
+      <span class="word-block">High-velocity</span>
+      <span class="word-block"><em>Bitcoin</em></span>
+      <span class="word-block">Settlement.</span>
     </h1>
-    <p class="hero-sub">
-      MercadoBTC empowers businesses to settle transactions instantly through a non-custodial, enterprise-grade digital payment network built on Bitcoin.
+
+    <p class="hero-desc">
+      A modern financial interface for the world's most secure network. Execute cross-border payments instantly with 0.5% flat fees — no bank account required, no chargebacks, ever.
     </p>
+
     <div class="hero-actions">
-      <a href="#preorder" class="btn-primary">Reserve Early Access</a>
-      <a href="#process" class="btn-ghost">
+      <a href="#cta" class="btn-main">
+        Get Started Now
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#process" class="btn-ghost-link">
         How it works
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M6 2.5v7M2.5 6l3.5 3.5L9.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </a>
     </div>
+
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-val">~2s</span>
+        <span class="hero-stat-lbl">Settlement</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">0.5%</span>
+        <span class="hero-stat-lbl">Flat Fee</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">4,800+</span>
+        <span class="hero-stat-lbl">Merchants</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">$0</span>
+        <span class="hero-stat-lbl">Setup Cost</span>
+      </div>
+    </div>
   </div>
 
-  <div class="hero-visual">
-    <div class="btc-card">
-      <div class="card-label">Total Balance</div>
-      <div class="card-amount">$12,480.00</div>
-      <div class="card-sub">≈ 0.18540000 BTC · Lightning</div>
+  <div class="hero-right">
+    <div class="card-stack">
+      <div class="card-ghost"></div>
+      <div class="card-ghost-2"></div>
 
-      <hr class="card-divider">
-
-      <div class="card-row">
-        <span class="card-key">Network</span>
-        <span class="card-val">Lightning ⚡</span>
-      </div>
-      <div class="card-row">
-        <span class="card-key">Settlement</span>
-        <span class="card-val">~2.3 seconds</span>
-      </div>
-      <div class="card-row">
-        <span class="card-key">Fee</span>
-        <span class="card-val">0.5% flat</span>
-      </div>
-      <div class="card-row">
-        <span class="card-key">Status</span>
-        <span class="pill-green">● Active</span>
+      <div class="float-chip chip-tl">
+        <div class="fc-val">+$1,200</div>
+        <div class="fc-lbl">Settled Today</div>
       </div>
 
-      <div class="qr-placeholder">
-        <div class="qr-grid">
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
+      <div class="float-chip chip-br">
+        <div class="fc-val">⚡ 1.8s</div>
+        <div class="fc-lbl">Last Payment</div>
+      </div>
+
+      <div class="main-card">
+        <div class="card-top">
+          <span class="card-brand">Mercado<span>BTC</span></span>
+          <span class="card-network">
+            <span class="net-dot"></span>Lightning
+          </span>
         </div>
-        <div class="qr-info">
-          <p><strong>lnbc124800n1pjke...</strong></p>
-          <p>Scan to pay via<br>Lightning Network</p>
+
+        <div class="card-body">
+          <div class="card-label">Verified Balance</div>
+          <div class="card-amount">$64,280</div>
+          <div class="card-btc">0.95420000 BTC · Non-custodial</div>
+
+          <!-- sparkline chart -->
+          <div class="mini-chart">
+            <svg viewBox="0 0 320 56" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f7931a" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#f7931a" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 48 C20 46 40 44 60 38 C80 32 90 40 110 34 C130 28 140 20 160 22 C180 24 200 30 220 22 C240 14 260 8 280 10 C300 12 310 10 320 6" stroke="#f7931a" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M0 48 C20 46 40 44 60 38 C80 32 90 40 110 34 C130 28 140 20 160 22 C180 24 200 30 220 22 C240 14 260 8 280 10 C300 12 310 10 320 6 L320 56 L0 56Z" fill="url(#chartGrad)"/>
+            </svg>
+          </div>
+
+          <hr class="card-divider">
+
+          <div class="card-rows">
+            <div class="card-row">
+              <span class="crow-key">Recent Activity</span>
+              <span class="crow-val green">+$1,200.00</span>
+            </div>
+            <div class="card-row">
+              <span class="crow-key">Network</span>
+              <span class="crow-val orange">⚡ Lightning</span>
+            </div>
+            <div class="card-row">
+              <span class="crow-key">Status</span>
+              <span class="pill pill-green">
+                ● Synchronized
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div>
+            <div class="cf-label">Settlement</div>
+            <div class="cf-val">~2.1s avg</div>
+          </div>
+          <div>
+            <div class="cf-label">Fee</div>
+            <div class="cf-val">0.5% flat</div>
+          </div>
+          <div>
+            <div class="cf-label">Custody</div>
+            <div class="cf-val">Self-held</div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="stat-chip stat-chip-left">
-      <div class="chip-val">+$3,210</div>
-      <div class="chip-label">Today's Volume</div>
-    </div>
-
-    <div class="stat-chip stat-chip-top">
-      <div class="chip-val">0.5%</div>
-      <div class="chip-label">Flat Fee</div>
-    </div>
-  </div>
-</header>
-
-<!-- TICKER -->
-<div class="ticker-bar">
-  <div class="ticker-track">
-    <!-- first set -->
-    <div class="ticker-item">
-      <span class="ticker-label">BTC / USD</span>
-      <span class="ticker-value">$67,240.00</span>
-      <span class="ticker-up">▲ 2.4%</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Settlement</span>
-      <span class="ticker-value">2.3s avg</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Network Fee</span>
-      <span class="ticker-value">0.5% flat</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Uptime</span>
-      <span class="ticker-value">99.97%</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Transactions</span>
-      <span class="ticker-value">1.2M+</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Merchants</span>
-      <span class="ticker-value">4,800+</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <!-- duplicate for infinite scroll -->
-    <div class="ticker-item">
-      <span class="ticker-label">BTC / USD</span>
-      <span class="ticker-value">$67,240.00</span>
-      <span class="ticker-up">▲ 2.4%</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Settlement</span>
-      <span class="ticker-value">2.3s avg</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Network Fee</span>
-      <span class="ticker-value">0.5% flat</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Uptime</span>
-      <span class="ticker-value">99.97%</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Transactions</span>
-      <span class="ticker-value">1.2M+</span>
-    </div>
-    <div class="ticker-dot"></div>
-    <div class="ticker-item">
-      <span class="ticker-label">Merchants</span>
-      <span class="ticker-value">4,800+</span>
-    </div>
-  </div>
-</div>
-
-<!-- FEATURES STRIP -->
-<div class="feature-strip">
-  <div class="feature-item">
-    <div class="feature-icon">⚡</div>
-    <h4>Lightning Fast</h4>
-    <p>Transactions confirm in under 3 seconds, 24/7, with no bank windows or cutoffs.</p>
-  </div>
-  <div class="feature-item">
-    <div class="feature-icon">🔐</div>
-    <h4>Self-Sovereign</h4>
-    <p>Non-custodial by design. Your keys, your funds — no third party can freeze your balance.</p>
-  </div>
-  <div class="feature-item">
-    <div class="feature-icon">🌐</div>
-    <h4>Borderless</h4>
-    <p>Accept payments from anywhere on Earth with the same flat fee and instant finality.</p>
-  </div>
-  <div class="feature-item">
-    <div class="feature-icon">📊</div>
-    <h4>Analytics Included</h4>
-    <p>Real-time dashboards, export to CSV, and webhook integrations for your stack.</p>
-  </div>
-</div>
-
-<!-- PROCESS -->
-<section class="section-pad" id="process">
-  <div class="section-eyebrow">
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">The Workflow</span>
-  </div>
-  <h2 class="section-title">A simpler way<br>to <em>settle</em> value.</h2>
-
-  <div class="process-grid">
-    <div class="process-card">
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=700" alt="Onboarding">
-        <div class="card-img-overlay"></div>
-      </div>
-      <div class="step-badge"><span>01</span> Merchant Onboarding</div>
-      <h3>Start in minutes,<br>not weeks.</h3>
-      <p>Download the terminal app and initialize your non-custodial wallet. No credit checks, no banking history, no gatekeepers.</p>
-    </div>
-
-    <div class="process-card">
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&q=80&w=700" alt="Payment">
-        <div class="card-img-overlay"></div>
-      </div>
-      <div class="step-badge"><span>02</span> Generate Transaction</div>
-      <h3>Enter amount,<br>share QR.</h3>
-      <p>Enter your local currency amount. The system generates a precision Lightning QR code — customers pay in seconds.</p>
-    </div>
-
-    <div class="process-card">
-      <div class="card-img">
-        <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&q=80&w=700" alt="Settlement">
-        <div class="card-img-overlay"></div>
-      </div>
-      <div class="step-badge"><span>03</span> Instant Liquidity</div>
-      <h3>Funds clear.<br>Instantly.</h3>
-      <p>Withdraw to cold storage or use your balance for inventory — with no 48-hour settlement window ever again.</p>
     </div>
   </div>
 </section>
 
-<!-- COMPARISON -->
-<section class="section-pad" id="comparison">
-  <div class="section-eyebrow">
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Why MercadoBTC</span>
+<!-- FEATURES STRIP -->
+<section class="features-strip" id="features">
+  <div class="fs-item">
+    <div class="fs-icon">⚡</div>
+    <h3 class="fs-title">Lightning Finality</h3>
+    <p class="fs-desc">Settle transactions in milliseconds — 24/7. No batch windows, no banking hours, no 3-day holds.</p>
   </div>
-  <h2 class="section-title">Built for a world<br>that moves <em>fast.</em></h2>
+  <div class="fs-item">
+    <div class="fs-icon">💎</div>
+    <h3 class="fs-title">Pure Self-Custody</h3>
+    <p class="fs-desc">Your keys, your coins. MercadoBTC never holds or touches your private keys at any point.</p>
+  </div>
+  <div class="fs-item">
+    <div class="fs-icon">🌍</div>
+    <h3 class="fs-title">Borderless by Default</h3>
+    <p class="fs-desc">One protocol. Every country. Accept global payments with the same 0.5% fee, no FX surcharges.</p>
+  </div>
+</section>
 
-  <div class="comp-grid">
-    <div class="comp-col mercado">
-      <div class="comp-col-header">
-        <span class="comp-col-title">MercadoBTC</span>
-        <span class="comp-col-tag">Recommended</span>
+<!-- PROCESS -->
+<div class="process-wrap" id="process">
+  <div class="process-island">
+    <div class="process-eyebrow">The Workflow</div>
+    <h2 class="process-h2">Simple integration.<br><em>Instant results.</em></h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-circle">01</div>
+        <h3 class="step-title">Connect</h3>
+        <p class="step-desc">Link your node or initialize a mobile-first wallet in seconds. No bank account required. No approval process.</p>
       </div>
-      <div class="comp-col-body">
-        <div class="comp-metric">
-          <div class="metric-label">Settlement Speed</div>
-          <div class="metric-value">Instant</div>
-          <div class="metric-sub">~2–3 seconds via Lightning</div>
-        </div>
-        <div class="comp-metric">
-          <div class="metric-label">Transaction Fee</div>
-          <div class="metric-value">0.5%</div>
-          <div class="metric-sub">Flat rate, no hidden charges</div>
-        </div>
-        <div class="comp-metric">
-          <div class="metric-label">Custody Model</div>
-          <div class="metric-value">Self-Sovereign</div>
-          <div class="metric-sub">Your keys, your coins — always</div>
-        </div>
+      <div class="process-step">
+        <div class="step-circle">02</div>
+        <h3 class="step-title">Transact</h3>
+        <p class="step-desc">Generate unified QR codes for Lightning payments. Customer scans, confirms, done. The entire flow is under 5 seconds.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-circle">03</div>
+        <h3 class="step-title">Settle</h3>
+        <p class="step-desc">Receive funds directly into your wallet. No middleman, no delays. Withdraw to cold storage anytime.</p>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="comp-col trad">
-      <div class="comp-col-header">
-        <span class="comp-col-title">Traditional POS</span>
-        <span class="comp-col-tag">Legacy</span>
-      </div>
-      <div class="comp-col-body">
-        <div class="comp-metric">
-          <div class="metric-label">Settlement Speed</div>
-          <div class="metric-value" style="color: var(--muted);">48–72 hrs</div>
-          <div class="metric-sub">Bank business days only</div>
-        </div>
-        <div class="comp-metric">
-          <div class="metric-label">Transaction Fee</div>
-          <div class="metric-value" style="color: var(--muted);">2.9% + $0.30</div>
-          <div class="metric-sub">Plus chargebacks and disputes</div>
-        </div>
-        <div class="comp-metric">
-          <div class="metric-label">Custody Model</div>
-          <div class="metric-value" style="color: var(--muted);">Bank-Held</div>
-          <div class="metric-sub">Subject to freezes and limits</div>
-        </div>
-      </div>
+<!-- COMPARISON -->
+<section class="compare-section" id="compare">
+  <div class="compare-head">
+    <div>
+      <div class="compare-eyebrow">Side by Side</div>
+      <h2 class="compare-title">The numbers<br><em>speak clearly.</em></h2>
     </div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th class="col-us">⚡ MercadoBTC</th>
+        <th>Traditional POS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Settlement Speed</td>
+        <td>~2 seconds</td>
+        <td>48–72 hours</td>
+      </tr>
+      <tr>
+        <td>Transaction Fee</td>
+        <td>0.5% flat</td>
+        <td>2.9% + $0.30</td>
+      </tr>
+      <tr>
+        <td>Chargebacks</td>
+        <td><span class="check">✓</span> Impossible</td>
+        <td><span class="cross">✕</span> Up to 180 days</td>
+      </tr>
+      <tr>
+        <td>Bank Account Required</td>
+        <td><span class="check">✓</span> No</td>
+        <td><span class="cross">✕</span> Yes</td>
+      </tr>
+      <tr>
+        <td>Cross-border Fee</td>
+        <td>Same 0.5%</td>
+        <td>+1.5–3% FX</td>
+      </tr>
+      <tr>
+        <td>Who Controls Funds</td>
+        <td>You (non-custodial)</td>
+        <td>Bank / processor</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div style="position:relative; z-index:1;">
+    <div class="cta-eyebrow">Ready to switch?</div>
+    <h2 class="cta-title">The Future of<br><em>Financial Sovereignty.</em></h2>
+    <p class="cta-sub">Join 4,800+ merchants already using MercadoBTC.<br>Free to start. No bank required.</p>
+  </div>
+  <div class="cta-right">
+    <a href="#" class="btn-cta">Open Terminal →</a>
+    <span class="cta-note">Works on any smartphone<br>Setup in under 5 minutes</span>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer id="security">
-  <a href="#" class="logo">Mercado<span>BTC</span></a>
-  <span class="footer-copy">&copy; 2026 MercadoBTC Financial. All rights reserved.</span>
-  <div class="nav-links">
+<footer>
+  <div class="footer-left">
+    <a href="#" class="logo">Mercado<span class="logo-accent">BTC</span></a>
+    <span class="footer-tagline">The Future of Financial Sovereignty.</span>
+  </div>
+  <div class="footer-links">
     <a href="btc3in1.html">Privacy</a>
     <a href="btc3in1.html">Terms</a>
     <a href="btc3in1.html">Security</a>
+    <a href="#">System Status</a>
   </div>
+  <span class="footer-copy">&copy; 2026 MercadoBTC Financial</span>
 </footer>
-
-
 
 </body>
 </html>
