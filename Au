@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<title>Aura · Wallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg:#03060f; --bg1:#070d1a; --bg2:#0b1222;
+  --surface:rgba(255,255,255,0.04); --surface2:rgba(255,255,255,0.07); --surface3:rgba(255,255,255,0.10);
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --indigo:#6366f1; --indigo2:#818cf8; --indigo3:#a5b4fc; --violet:#8b5cf6;
+  --green:#10b981; --green2:#34d399; --red:#f43f5e; --amber:#f59e0b; --amber2:#fcd34d;
+  --text:#eef2ff; --muted:#3d4f6b; --muted2:#5a7089; --muted3:#7b92aa;
+  --mono:'JetBrains Mono',monospace; --body:'Outfit',sans-serif;
+  --r:16px; --r2:24px; --sidebar:240px;
+}
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--body); font-size:14px; line-height:1.5; overflow:hidden; }
+::-webkit-scrollbar { width:3px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
+@keyframes fadeUp  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+@keyframes spin    { to{transform:rotate(360deg)} }
+
+/* ═══════════ DESKTOP (≥768px) ═══════════ */
+#shell { display:grid; grid-template-columns:var(--sidebar) 1fr; height:100vh; overflow:hidden; position:relative; }
+#shell::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; background: radial-gradient(ellipse 60% 50% at 20% 0%,rgba(99,102,241,.12) 0%,transparent 60%), radial-gradient(ellipse 40% 40% at 80% 100%,rgba(16,185,129,.06) 0%,transparent 60%), radial-gradient(ellipse 30% 30% at 90% 20%,rgba(139,92,246,.07) 0%,transparent 60%); }
+#sidebar { background:rgba(7,13,26,.98); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:28px 16px 24px; position:relative; z-index:10; overflow-y:auto; }
+.logo-wrap { display:flex; align-items:center; gap:10px; padding:0 8px 28px; }
+.logo-gem  { width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg,var(--indigo),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 8px 20px rgba(99,102,241,.35); flex-shrink:0; }
+.logo-name { font-size:18px; font-weight:800; letter-spacing:-.5px; }
+.logo-sub  { font-size:9px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--muted2); }
+.sb-section{ font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); padding:0 10px; margin:16px 0 6px; }
+.sb-item   { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer; transition:all .18s; color:var(--muted3); font-weight:500; font-size:13px; margin-bottom:2px; border:1px solid transparent; position:relative; }
+.sb-item:hover { background:var(--surface); color:var(--text); }
+.sb-item.active { background:rgba(99,102,241,.1); border-color:rgba(99,102,241,.18); color:var(--indigo3); }
+.sb-item.active::before { content:''; position:absolute; left:-16px; top:50%; transform:translateY(-50%); width:3px; height:20px; background:var(--indigo); border-radius:0 3px 3px 0; }
+.sb-icon  { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+.sb-bottom{ margin-top:auto; padding-top:16px; border-top:1px solid var(--border); }
+.user-card{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer; transition:background .18s; }
+.user-card:hover { background:var(--surface); }
+.user-ava { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--indigo),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.user-name{ font-size:12px; font-weight:700; }
+.user-addr{ font-family:var(--mono); font-size:10px; color:var(--muted2); }
+#main     { overflow:hidden; position:relative; z-index:1; display:flex; flex-direction:column; }
+#topbar   { height:60px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 32px; border-bottom:1px solid var(--border); background:rgba(7,13,26,.6); backdrop-filter:blur(20px); }
+.tb-title { font-size:18px; font-weight:700; }
+.tb-right { display:flex; align-items:center; gap:12px; }
+.tb-chip  { display:flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--border); padding:6px 12px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; transition:border-color .18s; }
+.tb-chip:hover { border-color:var(--border2); }
+.tb-chip .dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+.tb-btn   { width:34px; height:34px; border-radius:10px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; transition:border-color .18s; position:relative; }
+.tb-btn:hover { border-color:var(--border2); }
+.tb-ndot  { position:absolute; top:6px; right:6px; width:5px; height:5px; background:var(--red); border-radius:50%; border:1.5px solid var(--bg1); }
+.page     { display:none; flex:1; overflow-y:auto; padding:32px; }
+.page.active { display:block; animation:fadeUp .22s ease; }
+
+/* desktop components */
+.bal-hero { background:linear-gradient(140deg,#0d1e40 0%,#081228 60%,#050d1e 100%); border:1px solid rgba(99,102,241,.2); border-radius:var(--r2); padding:32px; position:relative; overflow:hidden; margin-bottom:20px; }
+.bho { position:absolute; border-radius:50%; pointer-events:none; }
+.bho1{ width:400px;height:400px;top:-160px;right:-100px;background:radial-gradient(circle,rgba(99,102,241,.13) 0%,transparent 65%); }
+.bho2{ width:250px;height:250px;bottom:-80px;left:-60px;background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 65%); }
+.bh-inner{ display:flex; align-items:flex-start; justify-content:space-between; position:relative; z-index:1; }
+.bh-eye  { font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted2); margin-bottom:10px; }
+.bh-amt  { font-size:52px; font-weight:800; letter-spacing:-3px; line-height:1; display:flex; align-items:flex-start; gap:2px; }
+.bh-cur  { font-size:22px; font-weight:600; color:var(--indigo3); margin-top:8px; letter-spacing:0; }
+.bh-dec  { font-size:28px; font-weight:400; color:var(--muted2); margin-top:20px; }
+.bh-meta { display:flex; align-items:center; gap:12px; margin-top:14px; }
+.bh-addr { font-family:var(--mono); font-size:11px; color:var(--muted2); margin-top:8px; }
+.bh-acts { display:flex; gap:10px; }
+.bh-act  { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; min-width:72px; }
+.bh-ico  { width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:20px; transition:all .18s; }
+.bh-ico.p{ background:var(--indigo); box-shadow:0 8px 20px rgba(99,102,241,.4); }
+.bh-ico.p:hover { background:#7476f5; transform:translateY(-2px); box-shadow:0 12px 28px rgba(99,102,241,.5); }
+.bh-ico.g{ background:var(--surface2); border:1px solid var(--border2); }
+.bh-ico.g:hover { background:var(--surface3); transform:translateY(-2px); }
+.bh-lbl  { font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--muted3); }
+.chart-wrap { height:130px; margin-top:24px; }
+.chart-wrap svg { width:100%; height:100%; overflow:visible; }
+.g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.g3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.card   { background:var(--surface); border:1px solid var(--border); border-radius:var(--r2); padding:24px; }
+.cardsm { border-radius:var(--r); padding:18px 20px; }
+.stile  { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:20px; position:relative; overflow:hidden; transition:border-color .18s; }
+.stile:hover { border-color:var(--border2); }
+.st-acc { position:absolute; top:0; left:0; right:0; height:2px; border-radius:var(--r) var(--r) 0 0; }
+.slbl   { font-size:10px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--muted2); margin-bottom:4px; }
+.sval   { font-family:var(--mono); font-size:28px; font-weight:700; letter-spacing:-1px; }
+.chip   { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; font-family:var(--mono); padding:3px 8px; border-radius:20px; margin-top:6px; }
+.chip.up{ background:rgba(16,185,129,.1); color:var(--green2); border:1px solid rgba(16,185,129,.2); }
+.chip.dn{ background:rgba(244,63,94,.1);  color:#f87171;      border:1px solid rgba(244,63,94,.2); }
+.txT    { width:100%; border-collapse:collapse; }
+.txT th { text-align:left; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:0 12px 12px; border-bottom:1px solid var(--border); }
+.txR    { transition:background .15s; }
+.txR:hover { background:var(--surface); }
+.txT td { padding:12px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.txT tr:last-child td { border-bottom:none; }
+.tbadge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+.tbadge.out{ background:rgba(99,102,241,.1); color:var(--indigo2); }
+.tbadge.in { background:rgba(16,185,129,.1); color:var(--green2); }
+.spill  { display:inline-block; padding:3px 8px; border-radius:20px; font-size:10px; font-weight:700; letter-spacing:.05em; }
+.spill.confirmed{ background:rgba(16,185,129,.1); color:var(--green); }
+.spill.pending  { background:rgba(245,158,11,.1);  color:var(--amber2); }
+.acell  { font-family:var(--mono); font-size:12px; color:var(--muted3); }
+.amtc   { font-family:var(--mono); font-size:14px; font-weight:600; text-align:right; }
+.amtc.out{ color:var(--text); } .amtc.in{ color:var(--green2); }
+.dcell  { font-family:var(--mono); font-size:11px; color:var(--muted2); }
+.flayout{ display:grid; grid-template-columns:1.4fr 1fr; gap:24px; align-items:start; }
+.fcard  { background:var(--surface); border:1px solid var(--border); border-radius:var(--r2); padding:28px; }
+.fcard h3 { font-size:16px; font-weight:700; margin-bottom:6px; }
+.fsub   { font-size:13px; color:var(--muted2); margin-bottom:24px; }
+.field  { margin-bottom:18px; }
+.field label { display:block; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted2); margin-bottom:8px; }
+.finner { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:8px; transition:border-color .15s,box-shadow .15s; }
+.finner:focus-within { border-color:rgba(99,102,241,.5); box-shadow:0 0 0 3px rgba(99,102,241,.08); }
+.fi    { flex:1; background:transparent; border:none; outline:none; font-family:var(--mono); font-size:14px; color:var(--text); font-weight:500; }
+.fi::placeholder { color:var(--muted); }
+.fi::-webkit-inner-spin-button { -webkit-appearance:none; }
+.fipre { font-family:var(--mono); font-size:18px; font-weight:700; color:var(--indigo); }
+.fibig { font-size:28px; font-weight:700; color:var(--indigo2); letter-spacing:-1px; }
+.avrow { font-size:11px; color:var(--muted2); margin-top:5px; display:flex; justify-content:space-between; }
+.avrow strong { color:var(--indigo3); font-family:var(--mono); }
+.maxtag{ background:rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.22); border-radius:8px; padding:2px 8px; font-size:10px; font-weight:700; color:var(--indigo2); cursor:pointer; letter-spacing:.06em; transition:background .15s; }
+.maxtag:hover { background:rgba(99,102,241,.22); }
+.ctabtn{ width:100%; height:56px; border-radius:16px; background:var(--indigo); border:none; color:white; font-family:var(--body); font-size:15px; font-weight:700; cursor:pointer; letter-spacing:.02em; box-shadow:0 8px 24px rgba(99,102,241,.3); transition:all .2s; position:relative; overflow:hidden; }
+.ctabtn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.07); opacity:0; transition:opacity .2s; }
+.ctabtn:hover::after { opacity:1; }
+.ctabtn:hover { transform:translateY(-1px); box-shadow:0 12px 32px rgba(99,102,241,.42); }
+.ctabtn:active { transform:scale(.98); }
+.ctabtn:disabled { opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+.procwrap{ height:3px; background:var(--border); border-radius:2px; margin-top:14px; overflow:hidden; display:none; }
+.procfill{ height:100%; background:var(--indigo); border-radius:2px; width:0%; transition:width 1.6s ease; }
+.qrtile { background:var(--surface); border:1px solid var(--border); border-radius:var(--r2); padding:28px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.qrbox  { background:white; border-radius:16px; padding:14px; box-shadow:0 0 40px rgba(99,102,241,.15); }
+.netpill{ display:flex; align-items:center; gap:6px; background:rgba(16,185,129,.08); border:1px solid rgba(16,185,129,.15); border-radius:20px; padding:5px 12px; font-size:11px; font-weight:700; color:var(--green2); letter-spacing:.06em; }
+.ndot   { width:6px; height:6px; background:var(--green); border-radius:50%; animation:pulse 1.8s infinite; }
+.abox   { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:12px 14px; font-family:var(--mono); font-size:11px; color:var(--muted2); word-break:break-all; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px; transition:border-color .15s; }
+.abox:hover { border-color:var(--indigo); }
+.fbar  { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.fpill { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:7px 18px; font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--muted2); cursor:pointer; transition:all .15s; }
+.fpill.active { background:rgba(99,102,241,.12); border-color:rgba(99,102,241,.3); color:var(--indigo2); }
+.swrap { margin-left:auto; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:7px 14px; display:flex; align-items:center; gap:8px; transition:border-color .15s; }
+.swrap:focus-within { border-color:var(--border2); }
+.sinp  { background:transparent; border:none; outline:none; font-family:var(--mono); font-size:12px; color:var(--text); width:160px; }
+.sinp::placeholder { color:var(--muted); }
+.playout{ display:grid; grid-template-columns:320px 1fr; gap:24px; }
+.pcard  { background:var(--surface); border:1px solid var(--border); border-radius:var(--r2); padding:28px; display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center; }
+.pawrap { position:relative; margin-bottom:12px; }
+.pa     { width:88px; height:88px; border-radius:50%; background:linear-gradient(135deg,var(--indigo),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:36px; }
+.pa::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1px solid rgba(99,102,241,.25); }
+.pacheck{ position:absolute; bottom:2px; right:2px; width:24px; height:24px; border-radius:50%; background:var(--green); border:2px solid var(--bg1); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; }
+.pname  { font-size:20px; font-weight:800; }
+.phandle{ font-family:var(--mono); font-size:11px; color:var(--muted2); word-break:break-all; }
+.pdiv   { width:100%; height:1px; background:var(--border); margin:16px 0; }
+.pstats { display:flex; width:100%; justify-content:space-around; }
+.psval  { font-family:var(--mono); font-size:20px; font-weight:700; color:var(--indigo2); }
+.pslbl  { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:2px; }
+.srow   { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:14px; background:var(--surface); border:1px solid var(--border); margin-bottom:8px; cursor:pointer; transition:background .15s; }
+.srow:hover { background:var(--surface2); }
+.srl    { display:flex; align-items:center; gap:12px; }
+.srico  { width:36px; height:36px; border-radius:10px; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:16px; }
+.srlbl  { font-size:14px; font-weight:600; }
+.srr    { display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:12px; color:var(--indigo3); }
+.toggle { width:36px; height:20px; border-radius:10px; background:var(--indigo); position:relative; cursor:pointer; }
+.toggle::after { content:''; position:absolute; top:3px; left:3px; width:14px; height:14px; border-radius:50%; background:white; }
+.drow   { border-color:rgba(244,63,94,.2) !important; }
+.drow .srlbl { color:var(--red); }
+.tpill  { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:.04em; }
+.tpill.ind{ background:rgba(99,102,241,.1); color:var(--indigo3); border:1px solid rgba(99,102,241,.2); }
+.tpill.grn{ background:rgba(16,185,129,.1); color:var(--green2); border:1px solid rgba(16,185,129,.2); }
+.row   { display:flex; align-items:center; gap:12px; }
+.jb    { justify-content:space-between; }
+.mt8{margin-top:8px} .mt12{margin-top:12px} .mt16{margin-top:16px} .mt20{margin-top:20px} .mt24{margin-top:24px}
+.mb16{margin-bottom:16px} .mb20{margin-bottom:20px}
+.divider { height:1px; background:var(--border); margin:20px 0; }
+.ptitle { font-size:22px; font-weight:800; margin-bottom:6px; }
+.psub   { font-size:13px; color:var(--muted2); margin-bottom:24px; }
+.empty-c{ text-align:center; padding:60px; color:var(--muted2); }
+.ei     { font-size:36px; display:block; margin-bottom:10px; opacity:.2; }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE (< 768px)
+═══════════════════════════════════════════════════════ */
+#mobile-shell { display:none; }
+
+@media (max-width:767px) {
+  html,body { overflow:hidden; }
+  #shell { display:none !important; }
+  #mobile-shell { display:flex; flex-direction:column; height:100vh; width:100%; background:var(--bg1); position:relative; overflow:hidden; }
+  #mobile-shell::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0; background: radial-gradient(ellipse 80% 50% at 50% 0%,rgba(99,102,241,.12) 0%,transparent 60%), radial-gradient(ellipse 60% 40% at 80% 90%,rgba(16,185,129,.06) 0%,transparent 60%); }
+  .mstatus { flex-shrink:0; display:flex; justify-content:space-between; align-items:center; padding:14px 22px 0; position:relative; z-index:5; }
+  .msbt    { font-family:var(--mono); font-size:13px; font-weight:500; }
+  .msbic   { display:flex; gap:5px; align-items:center; }
+  .msig    { display:flex; gap:2px; align-items:flex-end; }
+  .mbar    { width:3px; background:var(--text); border-radius:1px; }
+  .mbar:nth-child(1){height:4px} .mbar:nth-child(2){height:7px} .mbar:nth-child(3){height:10px} .mbar:nth-child(4){height:13px}
+  .mbatt   { width:22px; height:11px; border:1.5px solid var(--text); border-radius:3px; position:relative; margin-left:4px; }
+  .mbatt::before { content:''; position:absolute; right:-4px; top:50%; transform:translateY(-50%); width:2.5px; height:5px; background:var(--text); border-radius:0 1px 1px 0; }
+  .mbatt::after  { content:''; position:absolute; left:2px; top:1px; bottom:1px; width:70%; background:var(--green); border-radius:1px; }
+  .mpages { flex:1; position:relative; overflow:hidden; z-index:1; }
+  .mpage  { display:none; position:absolute; inset:0; flex-direction:column; overflow:hidden; }
+  .mpage.active { display:flex; animation:fadeUp .25s cubic-bezier(.22,1,.36,1); }
+  .mnav   { flex-shrink:0; background:rgba(3,6,15,.92); backdrop-filter:blur(24px); border-top:1px solid var(--border); display:flex; padding:10px 16px 22px; gap:4px; z-index:10; }
+  .mnbtn  { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:7px 4px; border-radius:14px; border:none; background:none; color:var(--muted); transition:all .2s; position:relative; }
+  .mnbtn:hover { background:var(--surface); }
+  .mnbtn.active { color:var(--indigo2); }
+  .mnbtn.active .mnbg { position:absolute; inset:0; border-radius:14px; background:rgba(99,102,241,.1); border:1px solid rgba(99,102,241,.2); }
+  .mnbtn.active .mndot { opacity:1; }
+  .mnico  { font-size:19px; line-height:1; position:relative; z-index:1; }
+  .mntxt  { font-size:10px; font-weight:700; letter-spacing:.04em; position:relative; z-index:1; }
+  .mndot  { width:4px; height:4px; border-radius:50%; background:var(--indigo); position:absolute; bottom:4px; opacity:0; }
+  /* home */
+  .mhdr   { display:flex; justify-content:space-between; align-items:center; padding:16px 22px 0; }
+  .mupill { display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); padding:7px 12px 7px 7px; border-radius:100px; cursor:pointer; transition:border-color .2s; }
+  .mupill:hover { border-color:var(--border2); }
+  .mpava  { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--indigo),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; }
+  .mpaddr { font-family:var(--mono); font-size:11px; font-weight:600; }
+  .mnotif { width:34px; height:34px; border-radius:11px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:15px; position:relative; cursor:pointer; }
+  .mndott { position:absolute; top:7px; right:7px; width:5px; height:5px; background:var(--red); border-radius:50%; border:1.5px solid var(--bg1); }
+  .mbhero { padding:20px 22px 0; text-align:center; }
+  .mbeye  { font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted2); margin-bottom:8px; }
+  .mbmain { font-size:48px; font-weight:800; letter-spacing:-3px; line-height:1; display:flex; align-items:flex-start; justify-content:center; }
+  .mbcur  { font-size:20px; font-weight:600; color:var(--indigo3); margin-top:7px; margin-right:2px; letter-spacing:0; }
+  .mbdec  { font-size:24px; font-weight:400; color:var(--muted2); margin-top:17px; }
+  .mbcrow { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px; }
+  .mbchg  { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; font-family:var(--mono); }
+  .mbchg.up{ background:rgba(16,185,129,.1); color:var(--green2); border:1px solid rgba(16,185,129,.2); }
+  .mbchg.dn{ background:rgba(244,63,94,.1); color:#f87171; border:1px solid rgba(244,63,94,.2); }
+  .mspark { padding:14px 18px 0; height:54px; }
+  .mspark svg { width:100%; height:100%; overflow:visible; }
+  .macts  { display:flex; justify-content:center; gap:10px; padding:16px 22px; }
+  .mact   { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:7px; cursor:pointer; transition:all .18s; color:var(--text); }
+  .mact:hover { background:var(--surface2); border-color:var(--border2); transform:translateY(-2px); }
+  .mact:active { transform:scale(.95); }
+  .mact.pri { background:var(--indigo); border-color:transparent; box-shadow:0 8px 20px rgba(99,102,241,.35); }
+  .mact.pri:hover { background:#7476f5; }
+  .maic   { width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .mact.pri .maic { background:rgba(255,255,255,.15); }
+  .maic.gl{ background:var(--surface2); }
+  .malbl  { font-size:10px; font-weight:700; letter-spacing:.05em; }
+  .mpanel { background:rgba(3,6,15,.5); border-radius:32px 32px 0 0; border-top:1px solid var(--border); flex:1; overflow:hidden; display:flex; flex-direction:column; }
+  .mphead { padding:18px 22px 14px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+  .mptitl { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted2); }
+  .mplink { font-size:11px; color:var(--indigo2); cursor:pointer; font-weight:600; }
+  .mplist { flex:1; overflow-y:auto; padding:0 22px 16px; scrollbar-width:none; }
+  .mplist::-webkit-scrollbar { display:none; }
+  /* tx rows */
+  .mtx   { display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(--border); }
+  .mtx:last-child { border-bottom:none; }
+  .mtico { width:40px; height:40px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .mtico.out { background:rgba(99,102,241,.1); color:var(--indigo2); }
+  .mtico.in  { background:rgba(16,185,129,.1); color:var(--green2); }
+  .mtbody{ flex:1; min-width:0; }
+  .mtname{ font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .mtmeta{ font-family:var(--mono); font-size:10px; color:var(--muted2); }
+  .mtamt { font-family:var(--mono); font-size:13px; font-weight:700; }
+  .mtamt.out{ color:var(--text); } .mtamt.in{ color:var(--green2); }
+  .mempty{ text-align:center; padding:40px 20px; color:var(--muted2); font-size:13px; }
+  .meico { font-size:32px; display:block; margin-bottom:10px; opacity:.25; }
+  /* page headers */
+  .mphdr { display:flex; align-items:center; gap:14px; padding:16px 22px 0; flex-shrink:0; }
+  .mbback{ width:36px; height:36px; border-radius:12px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; transition:border-color .2s; }
+  .mbback:hover { border-color:var(--border2); }
+  .mphtl { font-size:16px; font-weight:700; }
+  /* send */
+  .msbody{ flex:1; overflow-y:auto; padding:20px 22px; scrollbar-width:none; }
+  .msbody::-webkit-scrollbar { display:none; }
+  .macard{ background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:24px 20px 20px; text-align:center; margin-bottom:14px; position:relative; transition:border-color .2s; }
+  .macard:focus-within { border-color:rgba(99,102,241,.4); box-shadow:0 0 0 3px rgba(99,102,241,.07); }
+  .maclbl{ font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted2); margin-bottom:14px; }
+  .macrow{ display:flex; align-items:center; justify-content:center; gap:4px; }
+  .maccur{ font-size:24px; font-weight:700; color:var(--indigo3); align-self:flex-start; margin-top:8px; }
+  .macinp{ background:transparent; border:none; outline:none; font-family:var(--mono); font-size:46px; font-weight:700; color:var(--indigo2); width:100%; text-align:center; letter-spacing:-2px; }
+  .macinp::placeholder { color:var(--muted); opacity:.3; }
+  .macinp::-webkit-inner-spin-button { -webkit-appearance:none; }
+  .mavail{ font-size:11px; color:var(--muted2); margin-top:10px; display:flex; justify-content:center; align-items:center; gap:8px; }
+  .mavail strong { color:var(--indigo3); font-family:var(--mono); }
+  .mmx   { background:rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.2); border-radius:8px; padding:2px 8px; font-size:10px; font-weight:700; color:var(--indigo2); cursor:pointer; letter-spacing:.06em; }
+  .mfcard{ background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:14px 16px; margin-bottom:12px; transition:border-color .15s; }
+  .mfcard:focus-within { border-color:rgba(99,102,241,.4); }
+  .mfclbl{ font-size:9px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .mfcinp{ width:100%; background:transparent; border:none; outline:none; font-family:var(--mono); font-size:13px; color:var(--text); font-weight:500; }
+  .mfcinp::placeholder { color:var(--muted); opacity:.5; }
+  .mntip { display:flex; align-items:center; gap:8px; margin-bottom:16px; font-size:12px; color:var(--muted2); }
+  .mctabtn{ width:100%; height:58px; border-radius:18px; background:var(--indigo); border:none; color:white; font-family:var(--body); font-size:15px; font-weight:700; cursor:pointer; letter-spacing:.02em; box-shadow:0 8px 24px rgba(99,102,241,.3); transition:all .2s; position:relative; overflow:hidden; }
+  .mctabtn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.07); opacity:0; transition:opacity .2s; }
+  .mctabtn:hover::after { opacity:1; }
+  .mctabtn:hover { transform:translateY(-1px); }
+  .mctabtn:active { transform:scale(.98); }
+  .mctabtn:disabled { opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+  .mprwrap{ height:3px; background:var(--border); border-radius:2px; margin-top:12px; overflow:hidden; display:none; }
+  .mprfill{ height:100%; background:var(--indigo); border-radius:2px; width:0%; transition:width 1.6s ease; }
+  /* receive */
+  .mrecvb { flex:1; overflow-y:auto; padding:20px 22px; scrollbar-width:none; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .mrecvb::-webkit-scrollbar { display:none; }
+  .mqcard { background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; }
+  .mqbox  { background:white; border-radius:16px; padding:14px; box-shadow:0 0 40px rgba(99,102,241,.15); }
+  .madrb  { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:12px 14px; font-family:var(--mono); font-size:11px; color:var(--muted2); word-break:break-all; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px; transition:border-color .15s; }
+  .madrb:hover { border-color:var(--indigo); }
+  .mshr   { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; }
+  .mshbtn { background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:13px 10px; display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; transition:all .18s; color:var(--text); font-size:11px; font-weight:600; }
+  .mshbtn:hover { background:var(--surface3); border-color:var(--border2); }
+  .mshico { font-size:18px; }
+  .minfo  { background:rgba(0,214,143,.05); border:1px solid rgba(0,214,143,.12); border-radius:16px; padding:14px 16px; font-size:12px; color:var(--muted2); line-height:1.7; display:flex; gap:10px; align-items:flex-start; width:100%; }
+  .minfoic{ color:var(--green2); font-size:14px; flex-shrink:0; margin-top:1px; }
+  /* history */
+  .mhistb { flex:1; overflow-y:auto; padding:16px 22px; scrollbar-width:none; }
+  .mhistb::-webkit-scrollbar { display:none; }
+  .mfrow  { display:flex; gap:8px; margin-bottom:14px; overflow-x:auto; scrollbar-width:none; }
+  .mfrow::-webkit-scrollbar { display:none; }
+  .mfpill { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--muted2); cursor:pointer; white-space:nowrap; transition:all .15s; flex-shrink:0; }
+  .mfpill.active { background:rgba(99,102,241,.12); border-color:rgba(99,102,241,.3); color:var(--indigo2); }
+  /* profile */
+  .mprofb { flex:1; overflow-y:auto; padding:20px 22px; scrollbar-width:none; }
+  .mprofb::-webkit-scrollbar { display:none; }
+  .mprofh { text-align:center; padding:8px 0 22px; }
+  .mpawrp { position:relative; display:inline-block; margin-bottom:12px; }
+  .mpa    { width:80px; height:80px; border-radius:50%; margin:0 auto; background:linear-gradient(135deg,var(--indigo),var(--violet)); display:flex; align-items:center; justify-content:center; font-size:30px; }
+  .mpa::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1px solid rgba(99,102,241,.25); }
+  .mpachk { position:absolute; bottom:0; right:0; width:22px; height:22px; border-radius:50%; background:var(--green); border:2px solid var(--bg1); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; }
+  .mpname { font-size:18px; font-weight:800; margin-bottom:4px; }
+  .mphdl  { font-family:var(--mono); font-size:11px; color:var(--muted2); word-break:break-all; }
+  .mstg   { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
+  .mstile { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 10px; text-align:center; }
+  .msval  { font-family:var(--mono); font-size:16px; font-weight:700; color:var(--indigo2); display:block; margin-bottom:3px; }
+  .mslbl  { font-size:9px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .msrow  { display:flex; align-items:center; justify-content:space-between; padding:13px 14px; border-radius:12px; background:var(--surface); border:1px solid var(--border); margin-bottom:8px; cursor:pointer; transition:background .15s; }
+  .msrow:hover { background:var(--surface2); }
+  .msrl   { display:flex; align-items:center; gap:10px; }
+  .msrico { width:32px; height:32px; border-radius:9px; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .msrlbl { font-size:13px; font-weight:600; }
+  .msrr   { font-family:var(--mono); font-size:11px; color:var(--indigo3); }
+  .mdrwow { border-color:rgba(244,63,94,.2) !important; }
+  .mdrwow .msrlbl { color:var(--red); }
+  .mdbtn  { width:100%; background:rgba(244,63,94,.08); border:1px solid rgba(244,63,94,.2); border-radius:14px; padding:14px; color:var(--red); font-family:var(--body); font-size:13px; font-weight:700; letter-spacing:.04em; cursor:pointer; transition:all .15s; }
+  .mdbtn:hover { background:rgba(244,63,94,.15); border-color:rgba(244,63,94,.35); }
+}/* end @media */
+
+/* ─── TOAST ─── */
+#toast { position:fixed; z-index:9999; pointer-events:none; display:flex; align-items:center; gap:10px; background:rgba(12,20,36,.97); backdrop-filter:blur(24px); border:1px solid var(--border2); color:var(--text); padding:13px 20px; border-radius:16px; font-size:13px; font-weight:600; box-shadow:0 8px 32px rgba(0,0,0,.5); bottom:32px; right:32px; transform:translateY(80px); opacity:0; transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .35s; }
+#toast.show { transform:translateY(0); opacity:1; }
+.tpip     { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.tpip.ok  { background:var(--green); }
+.tpip.err { background:var(--red); }
+.tpip.inf { background:var(--indigo2); }
+@media (max-width:767px) {
+  #toast { bottom:auto; right:auto; top:24px; left:50%; transform:translateX(-50%) translateY(-80px); white-space:nowrap; border-radius:100px; padding:10px 18px; }
+  #toast.show { transform:translateX(-50%) translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     DESKTOP SHELL
+══════════════════════════════════════════ -->
+<div id="shell">
+  <aside id="sidebar">
+    <div class="logo-wrap">
+      <div class="logo-gem">💎</div>
+      <div><div class="logo-name">Aura</div><div class="logo-sub">P2P Wallet</div></div>
+    </div>
+    <div class="sb-section">Main</div>
+    <div class="sb-item active" onclick="dNav('dashboard')" data-p="dashboard"><span class="sb-icon">⬡</span>Dashboard</div>
+    <div class="sb-item" onclick="dNav('dsend')"    data-p="dsend">   <span class="sb-icon">↗</span>Send Money</div>
+    <div class="sb-item" onclick="dNav('dreceive')" data-p="dreceive"><span class="sb-icon">↙</span>Receive</div>
+    <div class="sb-item" onclick="dNav('dhistory')" data-p="dhistory"><span class="sb-icon">≡</span>History</div>
+    <div class="sb-section">Account</div>
+    <div class="sb-item" onclick="dNav('dprofile')" data-p="dprofile"><span class="sb-icon">👤</span>Profile</div>
+    <div class="sb-item" onclick="doFaucet()"><span class="sb-icon">⚡</span>Faucet<span style="font-size:10px;color:var(--muted2);margin-left:auto;">+$100</span></div>
+    <div class="sb-bottom">
+      <div class="user-card" onclick="dNav('dprofile')">
+        <div class="user-ava">💎</div>
+        <div><div class="user-name">My Wallet</div><div class="user-addr" id="d-sbaddr">Loading…</div></div>
+        <span style="color:var(--muted);margin-left:auto;">⋯</span>
+      </div>
+    </div>
+  </aside>
+
+  <div id="main">
+    <div id="topbar">
+      <span class="tb-title" id="d-tbtitle">Dashboard</span>
+      <div class="tb-right">
+        <div class="tb-chip"><div class="dot"></div>Mainnet</div>
+        <div class="tb-chip" onclick="copyAddress()" style="cursor:pointer;"><span>⎘</span><span id="d-tbaddr">Loading…</span></div>
+        <div class="tb-btn">🔔<div class="tb-ndot"></div></div>
+        <div class="tb-btn" onclick="dNav('dprofile')">⚙</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="d-dashboard">
+      <div class="bal-hero">
+        <div class="bho bho1"></div><div class="bho bho2"></div>
+        <div class="bh-inner">
+          <div>
+            <div class="bh-eye">Total Balance</div>
+            <div class="bh-amt"><span class="bh-cur">$</span><span id="d-bint">500</span><span class="bh-dec">.<span id="d-bdec">00</span></span></div>
+            <div class="bh-meta"><div class="chip up" id="d-chg">▲ +$0.00</div><span style="font-size:11px;color:var(--muted)">today</span></div>
+            <div class="bh-addr" id="d-heroaddr">Loading…</div>
+          </div>
+          <div class="bh-acts">
+            <div class="bh-act" onclick="dNav('dsend')">    <div class="bh-ico p">↗</div><span class="bh-lbl">Send</span></div>
+            <div class="bh-act" onclick="dNav('dreceive')"> <div class="bh-ico g">↙</div><span class="bh-lbl">Receive</span></div>
+            <div class="bh-act" onclick="doFaucet()">       <div class="bh-ico g">⚡</div><span class="bh-lbl">Faucet</span></div>
+            <div class="bh-act" onclick="dNav('dhistory')"> <div class="bh-ico g">≡</div><span class="bh-lbl">History</span></div>
+          </div>
+        </div>
+        <div class="chart-wrap"><svg id="d-chart" preserveAspectRatio="none">
+          <defs><linearGradient id="dcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".3"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>
+          <path id="d-ca" fill="url(#dcg)"/><path id="d-cl" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg></div>
+      </div>
+      <div class="g4 mb20">
+        <div class="stile"><div class="st-acc" style="background:var(--indigo)"></div><div class="slbl">Balance</div><div class="sval" id="d-stbal">$500.00</div><div class="chip up mt8" id="d-stchg">▲ Active</div></div>
+        <div class="stile"><div class="st-acc" style="background:var(--red)"></div>  <div class="slbl">Total Sent</div><div class="sval" id="d-stsent">$0.00</div><div style="font-size:11px;color:var(--muted2);margin-top:6px" id="d-stsc">0 transactions</div></div>
+        <div class="stile"><div class="st-acc" style="background:var(--green)"></div><div class="slbl">Received</div><div class="sval" id="d-strecv">$0.00</div><div style="font-size:11px;color:var(--muted2);margin-top:6px" id="d-strc">0 transactions</div></div>
+        <div class="stile"><div class="st-acc" style="background:var(--amber)"></div><div class="slbl">Volume</div><div class="sval" id="d-stvol">$0.00</div><div style="font-size:11px;color:var(--muted2);margin-top:6px" id="d-stvc">0 total txns</div></div>
+      </div>
+      <div class="row jb mb16"><span class="slbl" style="margin:0;font-size:12px;color:var(--muted2)">Recent Activity</span><span style="font-size:12px;color:var(--indigo2);cursor:pointer;font-weight:600" onclick="dNav('dhistory')">View all →</span></div>
+      <div class="card" style="padding:0"><table class="txT"><thead><tr><th>Type</th><th>Address</th><th>Note</th><th>Date</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="d-txbody"></tbody></table></div>
+    </div>
+
+    <!-- SEND -->
+    <div class="page" id="d-dsend">
+      <div class="ptitle">Send Money</div><div class="psub">Transfer funds to any wallet address instantly.</div>
+      <div class="flayout">
+        <div class="fcard">
+          <h3>Transfer Details</h3><div class="fsub">Fill in the recipient and amount below.</div>
+          <div class="field"><label>Recipient address</label><div class="finner"><input class="fi" id="d-to" placeholder="wallet address" autocomplete="off" spellcheck="false"/></div></div>
+          <div class="field"><label>Amount</label><div class="finner"><span class="fipre">$</span><input class="fi fibig" id="d-amt" type="number" min="0.01" step="0.01" placeholder="0.00" oninput="syncDS()"/></div><div class="avrow"><span>Available: <strong id="d-avail">$500.00</strong></span><span class="maxtag" onclick="dMax()">MAX</span></div></div>
+          <div class="field"><label>Note <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">(optional)</span></label><div class="finner"><input class="fi" id="d-note" placeholder="What's this for?"/></div></div>
+          <div class="divider" style="margin:20px 0 16px"></div>
+          <div class="row" style="gap:8px;margin-bottom:12px;font-size:12px;color:var(--muted2)"><span>🔒</span><span>Transfers are instant and end-to-end secured.</span></div>
+          <button class="ctabtn" id="d-submit" onclick="dDoSend()">Confirm Transfer →</button>
+          <div class="procwrap" id="d-pw"><div class="procfill" id="d-pb"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="qrtile"><div class="netpill"><div class="ndot"></div>MAINNET · LIVE</div><div class="qrbox"><div id="d-sqr" style="width:160px;height:160px"></div></div><div class="slbl" style="margin:0">Your address</div><div class="abox" onclick="copyAddress()"><span id="d-saddr">Loading…</span><span style="opacity:.4;flex-shrink:0">⎘</span></div></div>
+          <div class="card cardsm" style="font-size:13px;color:var(--muted2);line-height:1.7;background:rgba(99,102,241,.04);border-color:rgba(99,102,241,.12)"><div style="font-weight:700;color:var(--indigo3);margin-bottom:8px;font-size:12px">💡 How transfers work</div>Enter the recipient's wallet address and amount. Funds deduct immediately and the recipient's balance updates in real time.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECEIVE -->
+    <div class="page" id="d-dreceive">
+      <div class="ptitle">Receive Funds</div><div class="psub">Share your address or QR code to receive payments.</div>
+      <div style="display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start">
+        <div class="qrtile"><div class="netpill"><div class="ndot"></div>MAINNET · LIVE</div><div class="qrbox"><div id="d-rqr" style="width:180px;height:180px"></div></div><div class="slbl" style="margin:0">Scan or copy your address</div><div class="abox" onclick="copyAddress()"><span id="d-raddr">Loading…</span><span style="opacity:.4;flex-shrink:0">⎘</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%"><button onclick="copyAddress()" style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--text);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer">⎘ Copy</button><button onclick="showToast('Link copied!','inf')" style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--text);font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer">↗ Share</button></div></div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card"><div class="slbl">Quick Stats</div><div class="mt12 g2" style="gap:12px"><div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="slbl">Received</div><div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--green2)" id="d-rvt">$0.00</div></div><div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px"><div class="slbl">Count</div><div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--indigo2)" id="d-rvc">0</div></div></div></div>
+          <div class="card" style="font-size:13px;color:var(--muted2);line-height:1.9"><div style="font-weight:700;color:var(--text);font-size:14px;margin-bottom:12px">How to receive</div><div style="display:flex;flex-direction:column;gap:10px"><div class="row"><span style="background:rgba(99,102,241,.15);color:var(--indigo3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</span><span>Share your wallet address or QR with the sender.</span></div><div class="row"><span style="background:rgba(99,102,241,.15);color:var(--indigo3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</span><span>The sender enters your address and initiates a transfer.</span></div><div class="row"><span style="background:rgba(99,102,241,.15);color:var(--indigo3);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</span><span>Funds appear in your balance instantly.</span></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="page" id="d-dhistory">
+      <div class="ptitle">Transaction History</div><div class="psub">All your past transfers and received funds.</div>
+      <div class="fbar">
+        <div class="fpill active" onclick="dSetF('all',this)">All</div>
+        <div class="fpill" onclick="dSetF('out',this)">Sent</div>
+        <div class="fpill" onclick="dSetF('in',this)">Received</div>
+        <div class="swrap"><span style="color:var(--muted);font-size:13px">⌕</span><input class="sinp" id="d-search" placeholder="Search address or note…" oninput="renderDH()"/></div>
+      </div>
+      <div class="card" style="padding:0"><table class="txT"><thead><tr><th>Type</th><th>Address</th><th>Note</th><th>Date</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead><tbody id="d-hbody"></tbody></table></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="page" id="d-dprofile">
+      <div class="ptitle">Account</div><div class="psub">Manage your wallet and preferences.</div>
+      <div class="playout">
+        <div class="pcard">
+          <div class="pawrap"><div class="pa">💎</div><div class="pacheck">✓</div></div>
+          <div class="pname">My Wallet</div>
+          <div class="phandle" id="d-phandle">Loading…</div>
+          <div class="pdiv"></div>
+          <div class="pstats">
+            <div><div class="psval" id="d-pbal">$0</div><div class="pslbl">Balance</div></div>
+            <div><div class="psval" id="d-ptxn">0</div><div class="pslbl">Txns</div></div>
+            <div><div class="psval" id="d-pvol">$0</div><div class="pslbl">Volume</div></div>
+          </div>
+          <div class="pdiv"></div>
+          <div style="width:100%;text-align:left"><div class="slbl" style="margin-bottom:8px">Wallet Address</div><div class="abox" onclick="copyAddress()"><span id="d-paddr">Loading…</span><span style="opacity:.4;flex-shrink:0">⎘</span></div></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px">Settings</div>
+          <div class="srow" onclick="copyAddress()"><div class="srl"><div class="srico">⎘</div><span class="srlbl">Copy Address</span></div><div class="srr">›</div></div>
+          <div class="srow" onclick="dNav('dreceive')"><div class="srl"><div class="srico">📲</div><span class="srlbl">Show QR Code</span></div><div class="srr">›</div></div>
+          <div class="srow"><div class="srl"><div class="srico">🔔</div><span class="srlbl">Notifications</span></div><div class="srr"><div class="toggle"></div></div></div>
+          <div class="srow"><div class="srl"><div class="srico">🛡</div><span class="srlbl">Two-Factor Auth</span></div><div class="srr"><span class="tpill ind">Enabled</span></div></div>
+          <div class="srow"><div class="srl"><div class="srico">🌐</div><span class="srlbl">Network</span></div><div class="srr"><span class="tpill grn">Mainnet</span></div></div>
+          <div class="divider"></div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px">Danger Zone</div>
+          <div class="srow drow" onclick="doReset()"><div class="srl"><div class="srico" style="background:rgba(244,63,94,.1)">🗑</div><span class="srlbl">Reset Wallet</span></div><div class="srr">›</div></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+
+<!-- ══════════════════════════════════════════
+     MOBILE SHELL
+══════════════════════════════════════════ -->
+<div id="mobile-shell">
+  <div class="mstatus">
+    <span class="msbt" id="m-clock">12:00</span>
+    <div class="msbic"><div class="msig"><div class="mbar"></div><div class="mbar"></div><div class="mbar"></div><div class="mbar"></div></div><div class="mbatt"></div></div>
+  </div>
+
+  <div class="mpages">
+    <!-- HOME -->
+    <div class="mpage active" id="m-home">
+      <div class="mhdr">
+        <div class="mupill" onclick="copyAddress()"><div class="mpava">💎</div><span class="mpaddr" id="m-pilladdr">aura…</span></div>
+        <div class="mnotif"><span>🔔</span><div class="mndott"></div></div>
+      </div>
+      <div class="mbhero">
+        <div class="mbeye">Total Balance</div>
+        <div class="mbmain"><span class="mbcur">$</span><span id="m-bint">500</span><span class="mbdec">.<span id="m-bdec">00</span></span></div>
+        <div class="mbcrow"><div class="mbchg up" id="m-chg">▲ +$0.00</div><span style="font-size:11px;color:var(--muted)">today</span></div>
+      </div>
+      <div class="mspark"><svg id="m-chart" preserveAspectRatio="none">
+        <defs><linearGradient id="mcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6366f1" stop-opacity=".3"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>
+        <path id="m-ca" fill="url(#mcg)"/><path id="m-cl" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></div>
+      <div class="macts">
+        <div class="mact pri" onclick="mNav('msend')">   <div class="maic">↗</div><span class="malbl">Send</span></div>
+        <div class="mact" onclick="mNav('mreceive')">     <div class="maic gl">↙</div><span class="malbl">Receive</span></div>
+        <div class="mact" onclick="doFaucet()">           <div class="maic gl">⚡</div><span class="malbl">Faucet</span></div>
+        <div class="mact" onclick="mNav('mhistory')">     <div class="maic gl">≡</div><span class="malbl">History</span></div>
+      </div>
+      <div class="mpanel">
+        <div class="mphead"><span class="mptitl">Activity</span><span class="mplink" onclick="mNav('mhistory')">See all</span></div>
+        <div class="mplist" id="m-homelist"></div>
+      </div>
+    </div>
+
+    <!-- SEND -->
+    <div class="mpage" id="m-msend">
+      <div class="mphdr"><div class="mbback" onclick="mNav('home')">‹</div><span class="mphtl">Send Money</span></div>
+      <div class="msbody">
+        <div class="macard">
+          <div class="maclbl">You send</div>
+          <div class="macrow"><span class="maccur">$</span><input class="macinp" id="m-amt" type="number" min="0.01" step="0.01" placeholder="0.00" oninput="syncMS()"/></div>
+          <div class="mavail">Available: <strong id="m-avail">$500.00</strong><span class="mmx" onclick="mMax()">MAX</span></div>
+        </div>
+        <div class="mfcard"><div class="mfclbl">Recipient</div><input class="mfcinp" id="m-to" placeholder="wallet address or @username" autocomplete="off" spellcheck="false"/></div>
+        <div class="mfcard"><div class="mfclbl">Note (optional)</div><input class="mfcinp" id="m-note" placeholder="What's this for?"/></div>
+        <div class="mntip"><span>🔒</span><span>Transfers are instant and end-to-end secured.</span></div>
+        <button class="mctabtn" id="m-submit" onclick="mDoSend()">Confirm Transfer →</button>
+        <div class="mprwrap" id="m-pw"><div class="mprfill" id="m-pb"></div></div>
+      </div>
+    </div>
+
+    <!-- RECEIVE -->
+    <div class="mpage" id="m-mreceive">
+      <div class="mphdr"><div class="mbback" onclick="mNav('home')">‹</div><span class="mphtl">Receive Funds</span></div>
+      <div class="mrecvb">
+        <div class="netpill" style="font-size:11px"><div class="ndot"></div>MAINNET · LIVE</div>
+        <div class="mqcard">
+          <div class="mqbox"><div id="m-qr" style="width:180px;height:180px"></div></div>
+          <div class="slbl" style="margin:0;font-size:10px">Your wallet address</div>
+          <div class="madrb" onclick="copyAddress()"><span id="m-addrfull">Loading…</span><span style="opacity:.4;flex-shrink:0">⎘</span></div>
+        </div>
+        <div class="mshr">
+          <div class="mshbtn" onclick="copyAddress()"><span class="mshico">⎘</span>Copy</div>
+          <div class="mshbtn" onclick="showToast('Link shared!','inf')"><span class="mshico">↗</span>Share</div>
+        </div>
+        <div class="minfo"><span class="minfoic">ℹ</span><span>Share your address to receive payments. Balance updates instantly upon confirmation.</span></div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="mpage" id="m-mhistory">
+      <div class="mphdr"><div class="mbback" onclick="mNav('home')">‹</div><span class="mphtl">History</span></div>
+      <div class="mhistb">
+        <div class="mfrow">
+          <div class="mfpill active" onclick="mSetF('all',this)">All</div>
+          <div class="mfpill" onclick="mSetF('out',this)">Sent</div>
+          <div class="mfpill" onclick="mSetF('in',this)">Received</div>
+        </div>
+        <div id="m-histlist"></div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="mpage" id="m-mprofile">
+      <div class="mphdr"><div style="width:36px"></div><span class="mphtl">Account</span><div style="width:36px"></div></div>
+      <div class="mprofb">
+        <div class="mprofh">
+          <div class="mpawrp"><div class="mpa">💎</div><div class="mpachk">✓</div></div>
+          <div class="mpname">My Wallet</div>
+          <div class="mphdl" id="m-profhandle">Loading…</div>
+        </div>
+        <div class="mstg">
+          <div class="mstile"><span class="msval" id="m-profbal">$0</span><span class="mslbl">Balance</span></div>
+          <div class="mstile"><span class="msval" id="m-proftxn">0</span><span class="mslbl">Txns</span></div>
+          <div class="mstile"><span class="msval" id="m-profvol">$0</span><span class="mslbl">Volume</span></div>
+        </div>
+        <div class="msrow" onclick="copyAddress()"><div class="msrl"><div class="msrico">⎘</div><span class="msrlbl">Copy Address</span></div><span class="msrr">›</span></div>
+        <div class="msrow" onclick="mNav('mreceive')"><div class="msrl"><div class="msrico">📲</div><span class="msrlbl">Show QR Code</span></div><span class="msrr">›</span></div>
+        <div class="msrow"><div class="msrl"><div class="msrico">🔔</div><span class="msrlbl">Notifications</span></div><span class="msrr" style="color:var(--green2)">On</span></div>
+        <div class="msrow"><div class="msrl"><div class="msrico">🛡</div><span class="msrlbl">Security</span></div><span style="font-size:11px;background:rgba(99,102,241,.1);color:var(--indigo3);padding:3px 8px;border-radius:20px">2FA</span></div>
+        <div style="height:12px"></div>
+        <button class="mdbtn" onclick="doReset()">Reset Wallet</button>
+      </div>
+    </div>
+  </div><!-- /mpages -->
+
+  <nav class="mnav" id="m-nav"></nav>
+</div><!-- /mobile-shell -->
+
+<div id="toast"><span class="tpip ok" id="t-pip"></span><span id="t-msg">Done</span></div>
+
+<script>
+/* ── STATE ── */
+const DEF = { address:'aura_'+Math.random().toString(36).substring(2,12), balance:500, startBalance:500, transactions:[] };
+let S = (()=>{ try{ return JSON.parse(localStorage.getItem('aura_v6'))||DEF; }catch(e){ return DEF; } })();
+let dFilt='all', mFilt='all', dCur='dashboard', mCur='home';
+function save(){ try{ localStorage.setItem('aura_v6',JSON.stringify(S)); }catch(e){} }
+
+/* ── CLOCK ── */
+function tick(){ const n=new Date(),t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0'); const el=document.getElementById('m-clock'); if(el) el.textContent=t; }
+tick(); setInterval(tick,15000);
+
+/* ── DESKTOP NAV ── */
+const DTITLES={dashboard:'Dashboard',dsend:'Send Money',dreceive:'Receive',dhistory:'History',dprofile:'Account'};
+function dNav(page){
+  document.getElementById('d-'+dCur).classList.remove('active');
+  dCur=page;
+  document.getElementById('d-'+page).classList.add('active');
+  document.querySelectorAll('.sb-item[data-p]').forEach(el=>el.classList.toggle('active',el.dataset.p===page));
+  document.getElementById('d-tbtitle').textContent=DTITLES[page]||page;
+  renderAll();
+}
+
+/* ── MOBILE NAV ── */
+const MNAVS=[{id:'home',icon:'🏠',label:'Home'},{id:'msend',icon:'↗',label:'Send'},{id:'mreceive',icon:'↙',label:'Receive'},{id:'mhistory',icon:'≡',label:'History'},{id:'mprofile',icon:'👤',label:'Account'}];
+function buildMNav(){
+  const nav=document.getElementById('m-nav');
+  nav.innerHTML=MNAVS.map(n=>`<button class="mnbtn${n.id===mCur?' active':''}" onclick="mNav('${n.id}')"><div class="mnbg"></div><span class="mnico">${n.icon}</span><span class="mntxt">${n.label}</span><span class="mndot"></span></button>`).join('');
+}
+function mNav(page){
+  document.getElementById('m-'+mCur).classList.remove('active');
+  mCur=page;
+  document.getElementById('m-'+page).classList.add('active');
+  buildMNav(); renderAll();
+}
+
+/* ── HELPERS ── */
+function fmt(n){ return Number(n).toFixed(2); }
+function fmtK(n){ return n>=1000?'$'+(n/1000).toFixed(1)+'k':'$'+fmt(n); }
+function short(a,x=10,y=5){ return a.length>x+y+1?a.substring(0,x)+'…'+a.slice(-y):a; }
+function set(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+
+/* ── RENDER ── */
+function renderAll(){
+  const bal=S.balance;
+  const bI=Number(Math.floor(Math.abs(bal))).toLocaleString(), bD=fmt(Math.abs(bal)).split('.')[1];
+  const diff=bal-S.startBalance;
+  const sent=S.transactions.filter(t=>t.type==='out');
+  const recv=S.transactions.filter(t=>t.type==='in');
+  const sT=sent.reduce((s,t)=>s+t.amount,0), rT=recv.reduce((s,t)=>s+t.amount,0), vol=sT+rT;
+
+  /* desktop */
+  set('d-bint',bI); set('d-bdec',bD);
+  setChip('d-chg',diff); setChip('d-stchg',diff,true);
+  set('d-heroaddr',S.address); set('d-sbaddr',short(S.address,8,4));
+  set('d-tbaddr',short(S.address,8,4)); set('d-saddr',S.address);
+  set('d-raddr',S.address); set('d-phandle',S.address); set('d-paddr',S.address);
+  set('d-stbal','$'+fmt(bal)); set('d-stsent','$'+fmt(sT)); set('d-strecv','$'+fmt(rT)); set('d-stvol','$'+fmt(vol));
+  set('d-stsc',sent.length+' transaction'+(sent.length!==1?'s':'')); set('d-strc',recv.length+' transaction'+(recv.length!==1?'s':'')); set('d-stvc',S.transactions.length+' total txns');
+  set('d-avail','$'+fmt(bal)); set('d-rvt','$'+fmt(rT)); set('d-rvc',recv.length);
+  set('d-pbal',fmtK(bal)); set('d-ptxn',S.transactions.length); set('d-pvol',fmtK(vol));
+  renderDTable('d-txbody',S.transactions.slice().reverse().slice(0,6)); renderDH();
+  buildChart('d-chart','d-ca','d-cl');
+  makeQR('d-sqr',S.address,160); makeQR('d-rqr',S.address,180);
+
+  /* mobile */
+  set('m-bint',bI); set('m-bdec',bD);
+  setMChip('m-chg',diff);
+  set('m-pilladdr',short(S.address,6,3)); set('m-addrfull',S.address);
+  set('m-avail','$'+fmt(bal));
+  set('m-profhandle',S.address); set('m-profbal',fmtK(bal));
+  set('m-proftxn',S.transactions.length); set('m-profvol',fmtK(vol));
+  renderMHome(); renderMH();
+  buildChart('m-chart','m-ca','m-cl');
+  makeQR('m-qr',S.address,180);
+}
+
+function setChip(id,diff,small=false){
+  const el=document.getElementById(id); if(!el) return;
+  if(small){ el.textContent=diff>=0?'▲ Active':'▼ -$'+fmt(Math.abs(diff)); el.className='chip mt8 '+(diff>=0?'up':'dn'); }
+  else{ el.textContent=diff>=0?`▲ +$${fmt(diff)}`:`▼ -$${fmt(Math.abs(diff))}`; el.className='chip '+(diff>=0?'up':'dn'); }
+}
+function setMChip(id,diff){
+  const el=document.getElementById(id); if(!el) return;
+  el.textContent=diff>=0?`▲ +$${fmt(diff)}`:`▼ -$${fmt(Math.abs(diff))}`;
+  el.className='mbchg '+(diff>=0?'up':'dn');
+}
+
+function dTxRow(tx){
+  const isIn=tx.type==='in',a=short(tx.to,14,6);
+  return `<tr class="txR"><td><span class="tbadge ${isIn?'in':'out'}">${isIn?'↙ Received':'↗ Sent'}</span></td><td class="acell">${a}</td><td style="font-size:12px;color:var(--muted2)">${tx.note||'—'}</td><td class="dcell">${tx.date}</td><td><span class="spill ${tx.status||'confirmed'}">${(tx.status||'confirmed').toUpperCase()}</span></td><td class="amtc ${isIn?'in':'out'}">${isIn?'+':'-'}$${fmt(tx.amount)}</td></tr>`;
+}
+function renderDTable(id,txs){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=txs.length?txs.map(dTxRow).join(''):`<tr><td colspan="6" class="empty-c"><span class="ei">📭</span>No transactions yet</td></tr>`;
+}
+function renderDH(){
+  const q=(document.getElementById('d-search')?.value||'').toLowerCase();
+  let txs=S.transactions.slice().reverse();
+  if(dFilt==='out') txs=txs.filter(t=>t.type!=='in');
+  if(dFilt==='in')  txs=txs.filter(t=>t.type==='in');
+  if(q) txs=txs.filter(t=>t.to.toLowerCase().includes(q)||(t.note||'').toLowerCase().includes(q));
+  renderDTable('d-hbody',txs);
+}
+function dSetF(f,el){ dFilt=f; document.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); renderDH(); }
+
+function mTxRow(tx,showDate=false){
+  const isIn=tx.type==='in',a=short(tx.to,12,5);
+  return `<div class="mtx"><div class="mtico ${isIn?'in':'out'}">${isIn?'↙':'↗'}</div><div class="mtbody"><div class="mtname">${isIn?'From':'To'} ${a}</div><div class="mtmeta">${showDate?tx.date:(tx.note||tx.date)}</div></div><div class="mtamt ${isIn?'in':'out'}">${isIn?'+':'-'}$${fmt(tx.amount)}</div></div>`;
+}
+function renderMHome(){
+  const el=document.getElementById('m-homelist'); if(!el) return;
+  const recent=S.transactions.slice().reverse().slice(0,5);
+  el.innerHTML=recent.length?recent.map(t=>mTxRow(t)).join(''):`<div class="mempty"><span class="meico">📭</span>No activity yet</div>`;
+}
+function renderMH(){
+  const el=document.getElementById('m-histlist'); if(!el) return;
+  let txs=S.transactions.slice().reverse();
+  if(mFilt==='out') txs=txs.filter(t=>t.type!=='in');
+  if(mFilt==='in')  txs=txs.filter(t=>t.type==='in');
+  el.innerHTML=txs.length?txs.map(t=>mTxRow(t,true)).join(''):`<div class="mempty"><span class="meico">🗂</span>Nothing here</div>`;
+}
+function mSetF(f,el){ mFilt=f; document.querySelectorAll('.mfpill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); renderMH(); }
+
+/* chart */
+function buildChart(svgId,areaId,lineId){
+  const svg=document.getElementById(svgId); if(!svg) return;
+  const W=svg.clientWidth||400, H=svgId==='m-chart'?50:130;
+  const txs=S.transactions.slice(-16); let r=S.startBalance; const pts=[r];
+  txs.forEach(t=>{ r+=t.type==='in'?t.amount:-t.amount; pts.push(r); });
+  if(pts[pts.length-1]!==S.balance) pts.push(S.balance);
+  const mn=Math.min(...pts)-10, mx=Math.max(...pts)+10;
+  const sx=i=>(i/(pts.length-1))*W, sy=v=>H-((v-mn)/(mx-mn))*(H-8)-4;
+  const co=pts.map((v,i)=>`${sx(i)},${sy(v)}`);
+  document.getElementById(lineId).setAttribute('d','M '+co.join(' L '));
+  document.getElementById(areaId).setAttribute('d',`M ${co[0]} L ${co.join(' L ')} L ${sx(pts.length-1)},${H} L 0,${H} Z`);
+}
+
+/* QR */
+function makeQR(id,addr,size){
+  const box=document.getElementById(id); if(!box) return;
+  const seed=addr.split('').reduce((a,c,i)=>a+c.charCodeAt(0)*(i+1),0);
+  const N=13,C=Math.floor((size-16)/N),P=Math.floor((size-N*C)/2),T=N*C+P*2;
+  let cells='';
+  for(let r=0;r<N;r++) for(let c=0;c<N;c++){
+    const cor=(r<3&&c<3)||(r<3&&c>=N-3)||(r>=N-3&&c<3); if(cor) continue;
+    if(((seed*(r*17+5)*(c*13+3)+r+c)%29)<14) cells+=`<rect x="${P+c*C}" y="${P+r*C}" width="${C-2}" height="${C-2}" rx="2" fill="#111"/>`;
+  }
+  const fp=(x,y)=>`<rect x="${x}" y="${y}" width="${C*3}" height="${C*3}" rx="5" fill="#111"/><rect x="${x+C}" y="${y+C}" width="${C}" height="${C}" rx="2" fill="white"/>`;
+  box.innerHTML=`<svg width="${T}" height="${T}" viewBox="0 0 ${T} ${T}" xmlns="http://www.w3.org/2000/svg"><rect width="${T}" height="${T}" fill="white"/>${cells}${fp(P,P)}${fp(P+(N-3)*C,P)}${fp(P,P+(N-3)*C)}</svg>`;
+}
+
+/* ── SHARED SEND LOGIC ── */
+function _send(to,amount,note,onDone,onErr){
+  if(!to)                    { onErr('Enter a recipient address'); return; }
+  if(!amount||amount<=0)     { onErr('Enter a valid amount'); return; }
+  if(amount>S.balance)       { onErr('Insufficient funds'); return; }
+  if(to===S.address)         { onErr("Can't send to yourself"); return; }
+  setTimeout(()=>{
+    S.balance=parseFloat((S.balance-amount).toFixed(2));
+    S.transactions.push({ to,amount,note,type:'out', date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}), status:'confirmed' });
+    save(); onDone();
+  },1800);
+}
+
+function dDoSend(){
+  const to=document.getElementById('d-to').value.trim(), amount=parseFloat(document.getElementById('d-amt').value), note=document.getElementById('d-note').value.trim();
+  const btn=document.getElementById('d-submit'), bar=document.getElementById('d-pb'), wrap=document.getElementById('d-pw');
+  btn.disabled=true; btn.textContent='Processing…'; wrap.style.display='block'; setTimeout(()=>bar.style.width='100%',50);
+  _send(to,amount,note,()=>{ btn.disabled=false; btn.textContent='Confirm Transfer →'; bar.style.transition='none'; bar.style.width='0%'; wrap.style.display='none'; ['d-to','d-amt','d-note'].forEach(id=>document.getElementById(id).value=''); showToast('Transfer confirmed ✓','ok'); renderAll(); setTimeout(()=>dNav('dashboard'),800); }, msg=>{ btn.disabled=false; btn.textContent='Confirm Transfer →'; bar.style.transition='none'; bar.style.width='0%'; wrap.style.display='none'; showToast(msg,'err'); });
+}
+function syncDS(){ const a=parseFloat(document.getElementById('d-amt').value)||0; document.getElementById('d-submit').disabled=a<=0||a>S.balance; }
+function dMax(){ document.getElementById('d-amt').value=fmt(S.balance); }
+
+function mDoSend(){
+  const to=document.getElementById('m-to').value.trim(), amount=parseFloat(document.getElementById('m-amt').value), note=document.getElementById('m-note').value.trim();
+  const btn=document.getElementById('m-submit'), bar=document.getElementById('m-pb'), wrap=document.getElementById('m-pw');
+  btn.disabled=true; btn.textContent='Processing…'; wrap.style.display='block'; setTimeout(()=>bar.style.width='100%',50);
+  _send(to,amount,note,()=>{ btn.disabled=false; btn.textContent='Confirm Transfer →'; bar.style.transition='none'; bar.style.width='0%'; wrap.style.display='none'; ['m-to','m-amt','m-note'].forEach(id=>document.getElementById(id).value=''); showToast('Transfer confirmed ✓','ok'); renderAll(); setTimeout(()=>mNav('home'),800); }, msg=>{ btn.disabled=false; btn.textContent='Confirm Transfer →'; bar.style.transition='none'; bar.style.width='0%'; wrap.style.display='none'; showToast(msg,'err'); });
+}
+function syncMS(){ const a=parseFloat(document.getElementById('m-amt').value)||0; document.getElementById('m-submit').disabled=a<=0||a>S.balance; }
+function mMax(){ document.getElementById('m-amt').value=fmt(S.balance); }
+
+function doFaucet(){ S.balance=parseFloat((S.balance+100).toFixed(2)); S.transactions.push({ to:'Aura Faucet',amount:100,type:'in',note:'faucet drop', date:new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}),status:'confirmed' }); save(); showToast('+$100.00 added ⚡','ok'); renderAll(); }
+function copyAddress(){ try{ navigator.clipboard.writeText(S.address); }catch(e){} showToast('Address copied ✓','inf'); }
+function doReset(){ if(confirm('Reset wallet? All data will be permanently deleted.')){ try{ localStorage.removeItem('aura_v6'); }catch(e){} location.reload(); } }
+
+/* ── TOAST ── */
+let tTmr;
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast'),pip=document.getElementById('t-pip');
+  pip.className='tpip '+type; document.getElementById('t-msg').textContent=msg;
+  t.classList.add('show'); clearTimeout(tTmr); tTmr=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ── BOOT ── */
+window.addEventListener('resize',()=>{ buildChart('d-chart','d-ca','d-cl'); buildChart('m-chart','m-ca','m-cl'); });
+buildMNav(); renderAll();
+</script>
+</body>
+</html>
