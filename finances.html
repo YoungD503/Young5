@@ -27,6 +27,8 @@
             --green2: rgba(0,200,117,0.12);
             --white:  #f5f2ec;
             --gold:   #c9a84c;
+            --violet: #a855f7;
+            --violet2:rgba(168,85,247,0.12);
         }
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
@@ -39,7 +41,6 @@
             padding-bottom: 80px;
         }
 
-        /* noise */
         body::before {
             content:''; position:fixed; inset:0;
             pointer-events:none; z-index:999; opacity:.02;
@@ -160,6 +161,103 @@
             background:radial-gradient(circle,rgba(0,200,117,0.07),transparent 70%);
         }
 
+        /* ── NET WORTH CARD ──────────────────────── */
+        .card-networth {
+            background: var(--deep);
+            border: 1px solid rgba(168,85,247,0.25);
+            padding: 24px 20px; margin-bottom:12px;
+            position:relative; overflow:hidden;
+        }
+        .card-networth::before {
+            content:''; position:absolute;
+            top:-80px; right:-80px;
+            width:220px; height:220px; border-radius:50%;
+            background:radial-gradient(circle,rgba(168,85,247,0.09),transparent 70%);
+        }
+        .card-networth::after {
+            content:''; position:absolute;
+            bottom:-60px; left:-60px;
+            width:160px; height:160px; border-radius:50%;
+            background:radial-gradient(circle,rgba(184,255,0,0.04),transparent 70%);
+        }
+        .networth-label {
+            font-size:.6rem; font-weight:500; letter-spacing:.2em;
+            text-transform:uppercase; color:rgba(168,85,247,0.6);
+            margin-bottom:6px; position:relative; z-index:1;
+            display:flex; align-items:center; gap:8px;
+        }
+        .networth-badge {
+            background: rgba(168,85,247,0.15);
+            border: 1px solid rgba(168,85,247,0.3);
+            color: var(--violet);
+            padding: 2px 8px; font-size:.55rem; letter-spacing:.1em;
+        }
+        .networth-value {
+            font-family:'Bebas Neue',sans-serif;
+            font-size:3.4rem; letter-spacing:.02em; line-height:1;
+            position:relative; z-index:1;
+            transition: color .4s ease;
+        }
+        .networth-value.positive { color: var(--violet); }
+        .networth-value.negative { color: var(--red); }
+        .networth-sub {
+            font-size:.68rem; color:rgba(168,85,247,0.4);
+            margin-top:6px; letter-spacing:.04em;
+            position:relative; z-index:1;
+        }
+        .networth-divider {
+            border:none; border-top:1px solid rgba(168,85,247,0.1);
+            margin:18px 0 16px; position:relative; z-index:1;
+        }
+        .networth-breakdown {
+            display:grid; grid-template-columns:1fr 1fr 1fr;
+            gap:8px; position:relative; z-index:1;
+        }
+        .nw-tile {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 10px 10px 10px;
+        }
+        .nw-tile-label {
+            font-size:.52rem; font-weight:500; letter-spacing:.16em;
+            text-transform:uppercase; margin-bottom:5px;
+        }
+        .nw-tile-value {
+            font-family:'Bebas Neue',sans-serif;
+            font-size:1rem; letter-spacing:.03em; line-height:1;
+        }
+        .nw-tile-icon {
+            font-size:.75rem; margin-bottom:4px; display:block;
+        }
+        .nw-assets   .nw-tile-label { color: rgba(0,200,117,0.6); }
+        .nw-assets   .nw-tile-value { color: var(--green); }
+        .nw-debts    .nw-tile-label { color: rgba(255,51,51,0.6); }
+        .nw-debts    .nw-tile-value { color: var(--red); }
+        .nw-cashflow .nw-tile-label { color: rgba(184,255,0,0.6); }
+        .nw-cashflow .nw-tile-value { color: var(--lime); }
+
+        .nw-bar-row { margin-top:16px; position:relative; z-index:1; }
+        .nw-bar-label {
+            display:flex; justify-content:space-between;
+            font-size:.58rem; color:var(--dim);
+            margin-bottom:5px; letter-spacing:.06em;
+        }
+        .nw-bar-track {
+            height:4px; background:var(--dim2);
+            overflow:hidden; position:relative;
+        }
+        .nw-bar-assets {
+            position:absolute; left:0; top:0; height:100%;
+            background:linear-gradient(90deg,var(--green),rgba(0,200,117,0.4));
+            transition:width .7s cubic-bezier(.22,1,.36,1);
+        }
+        .nw-bar-debts {
+            position:absolute; right:0; top:0; height:100%;
+            background:linear-gradient(270deg,var(--red),rgba(255,51,51,0.4));
+            transition:width .7s cubic-bezier(.22,1,.36,1);
+        }
+
+        /* existing label/value helpers */
         .card-label       { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:8px; }
         .card-label-ember { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,69,0,0.5); margin-bottom:8px; }
         .card-label-ice   { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(0,212,255,0.5); margin-bottom:8px; }
@@ -195,6 +293,7 @@
         .c-white  { color:var(--white); }
         .c-dim    { color:var(--dim); }
         .c-gold   { color:var(--gold); }
+        .c-violet { color:var(--violet); }
 
         /* ── PROGRESS ────────────────────────────── */
         .progress-track { height:3px; background:var(--dim2); margin-top:18px; overflow:hidden; }
@@ -255,6 +354,7 @@
         .ri-red    { background:var(--red); }
         .ri-lime   { background:var(--lime); }
         .ri-dim    { background:var(--dim); }
+        .ri-violet { background:var(--violet); }
         .row-info  { flex:1; }
         .row-name  { font-size:.85rem; font-weight:500; color:var(--text); letter-spacing:.02em; }
         .row-sub   { font-size:.6rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-top:3px; }
@@ -449,6 +549,23 @@
             color:var(--dim); cursor:pointer; transition:all .2s;
         }
         .tab-btn.active { background:var(--ember); color:var(--void); border-color:var(--ember); }
+
+        /* ── PROJECTION PRESETS ──────────────────── */
+        .rate-preset, .horizon-preset {
+            flex:1; padding:7px 4px;
+            border:1px solid var(--border); background:var(--surface);
+            font-family:'JetBrains Mono',monospace; font-size:.58rem;
+            font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+            color:var(--dim); cursor:pointer; transition:all .2s; white-space:nowrap;
+        }
+        .rate-preset:hover, .horizon-preset:hover {
+            border-color:rgba(184,255,0,0.3); color:var(--lime);
+        }
+        .rate-preset.active, .horizon-preset.active {
+            background:rgba(184,255,0,0.1);
+            border-color:rgba(184,255,0,0.4);
+            color:var(--lime);
+        }
 
         /* ── MINI OVERRIDES ──────────────────────── */
         .mini-stat-dark {
@@ -665,6 +782,49 @@
 
     <!-- HOME -->
     <div id="home" class="page active">
+
+        <!-- ── NET WORTH CARD ── -->
+        <div class="card-networth">
+            <div class="networth-label">
+                Total Net Worth
+                <span class="networth-badge" id="nwBadge">CALCULATING</span>
+            </div>
+            <div class="networth-value positive" id="networthValue">$0.00</div>
+            <div class="networth-sub" id="networthSub">Assets − Liabilities</div>
+
+            <hr class="networth-divider">
+
+            <div class="networth-breakdown">
+                <div class="nw-tile nw-assets">
+                    <span class="nw-tile-icon">◈</span>
+                    <div class="nw-tile-label">Portfolio</div>
+                    <div class="nw-tile-value" id="nwPortfolio">$0.00</div>
+                </div>
+                <div class="nw-tile nw-debts">
+                    <span class="nw-tile-icon">⊘</span>
+                    <div class="nw-tile-label">Debts</div>
+                    <div class="nw-tile-value" id="nwDebts">$0.00</div>
+                </div>
+                <div class="nw-tile nw-cashflow">
+                    <span class="nw-tile-icon">≡</span>
+                    <div class="nw-tile-label">Cash Flow</div>
+                    <div class="nw-tile-value" id="nwCash">$0.00</div>
+                </div>
+            </div>
+
+            <div class="nw-bar-row">
+                <div class="nw-bar-label">
+                    <span id="nwBarAssetsLabel">Assets 0%</span>
+                    <span id="nwBarDebtsLabel">Debt 0%</span>
+                </div>
+                <div class="nw-bar-track" style="height:6px;">
+                    <div class="nw-bar-assets" id="nwBarAssets" style="width:0%"></div>
+                    <div class="nw-bar-debts"  id="nwBarDebts"  style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── INCOME ── -->
         <div class="card-ember">
             <div class="card-label-ember">Total Monthly Income</div>
             <div class="card-value-ember" id="monthlyTotal">$3,400.00</div>
@@ -800,26 +960,158 @@
 
     <!-- WEALTH PROJECTION -->
     <div id="wealth" class="page">
-        <div class="section-title">25-Year Projection</div>
+        <div class="section-title" id="wealthPageTitle">25-Year Projection</div>
         <div class="section-divider"></div>
+
+        <!-- Result card -->
         <div class="card-ember" style="padding:28px 20px;">
-            <div class="card-label-ember">Projected Value · 25 Years</div>
+            <div class="card-label-ember" id="wealthCardLabel">Projected Value · 25 Years</div>
             <div class="wealth-projection" id="futureValue">$0.00</div>
             <div class="card-sub-ember" style="text-align:center;margin-top:8px;" id="wealthSub">$680/mo contribution · 10% annual return</div>
             <hr style="border-color:rgba(255,69,0,0.1);margin:20px 0;">
             <div class="card-label-ember" style="margin-bottom:14px;">Growth Milestones</div>
             <div id="milestones"></div>
         </div>
+
+        <!-- Editable projection settings -->
+        <div class="card" style="border-color:rgba(184,255,0,0.15);background:var(--deep);position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(184,255,0,0.05),transparent 70%);pointer-events:none;"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <div style="font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,255,0,0.5);">Projection Settings</div>
+                <button onclick="resetProjection()" style="background:none;border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='rgba(184,255,0,0.3)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)';this.style.color='var(--dim)';">↺ Reset</button>
+            </div>
+
+            <!-- Monthly contribution -->
+            <div class="form-row">
+                <label class="form-label" style="color:rgba(184,255,0,0.45);">Monthly Contribution ($)</label>
+                <div style="position:relative;">
+                    <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--dim);pointer-events:none;">$</span>
+                    <input type="number" id="proj_contrib" step="10" min="0" placeholder="680"
+                        style="padding-left:26px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:var(--lime);border-color:rgba(184,255,0,0.2);"
+                        oninput="liveProjection()" onfocus="this.style.borderColor='rgba(184,255,0,0.5)'" onblur="this.style.borderColor='rgba(184,255,0,0.2)'">
+                </div>
+                <div style="font-size:.6rem;color:var(--dim);margin-top:5px;" id="proj_contrib_hint">Auto-filled from your 20% investment target</div>
+            </div>
+
+            <!-- Annual return rate -->
+            <div class="form-row">
+                <label class="form-label" style="color:rgba(184,255,0,0.45);">Annual Return Rate (%)</label>
+                <div style="display:flex;gap:6px;margin-bottom:8px;" id="ratePresets">
+                    <button class="rate-preset" data-rate="6"   onclick="setRate(this)">6% Conservative</button>
+                    <button class="rate-preset" data-rate="10"  onclick="setRate(this)">10% Moderate</button>
+                    <button class="rate-preset" data-rate="14"  onclick="setRate(this)">14% Aggressive</button>
+                </div>
+                <input type="number" id="proj_rate" step="0.1" min="0.1" max="50" placeholder="10"
+                    style="border-color:rgba(184,255,0,0.2);"
+                    oninput="liveProjection()" onfocus="this.style.borderColor='rgba(184,255,0,0.5)'" onblur="this.style.borderColor='rgba(184,255,0,0.2)'">
+            </div>
+
+            <!-- Time horizon -->
+            <div class="form-row" style="margin-bottom:0;">
+                <label class="form-label" style="color:rgba(184,255,0,0.45);">Investment Horizon (Years)</label>
+                <div style="display:flex;gap:6px;margin-bottom:8px;">
+                    <button class="horizon-preset" data-yr="10"  onclick="setHorizon(this)">10 yrs</button>
+                    <button class="horizon-preset" data-yr="20"  onclick="setHorizon(this)">20 yrs</button>
+                    <button class="horizon-preset" data-yr="25"  onclick="setHorizon(this)">25 yrs</button>
+                    <button class="horizon-preset" data-yr="30"  onclick="setHorizon(this)">30 yrs</button>
+                    <button class="horizon-preset" data-yr="40"  onclick="setHorizon(this)">40 yrs</button>
+                </div>
+                <input type="number" id="proj_years" step="1" min="1" max="60" placeholder="25"
+                    style="border-color:rgba(184,255,0,0.2);"
+                    oninput="liveProjection()" onfocus="this.style.borderColor='rgba(184,255,0,0.5)'" onblur="this.style.borderColor='rgba(184,255,0,0.2)'">
+            </div>
+        </div>
+
         <div class="disclaimer-card">
             <div class="disclaimer-title">Advisory Note</div>
-            <div class="disclaimer-text">Every $100 in additional monthly savings equals approximately $270 in 10 years at the projected return rate. Discipline compounds.</div>
+            <div class="disclaimer-text" id="wealthDisclaimer">Every $100 in additional monthly savings equals approximately $270 in 10 years at the projected return rate. Discipline compounds.</div>
         </div>
+
         <div class="card">
             <div class="card-label" style="margin-bottom:4px;">Model Assumptions</div>
             <hr class="rule">
             <div class="assumption-row"><span class="assumption-label">Monthly contribution</span><span class="assumption-value c-lime" id="wealthInvDisplay">$680.00</span></div>
-            <div class="assumption-row"><span class="assumption-label">Annual return rate</span><span class="assumption-value c-lime">10.00%</span></div>
-            <div class="assumption-row"><span class="assumption-label">Investment horizon</span><span class="assumption-value c-lime">25 years</span></div>
+            <div class="assumption-row"><span class="assumption-label">Annual return rate</span><span class="assumption-value c-lime" id="wealthRateDisplay">10.00%</span></div>
+            <div class="assumption-row"><span class="assumption-label">Investment horizon</span><span class="assumption-value c-lime" id="wealthYearsDisplay">25 years</span></div>
+            <div class="assumption-row"><span class="assumption-label">Total contributed</span><span class="assumption-value c-white" id="wealthTotalContrib">—</span></div>
+            <div class="assumption-row" style="border:none;"><span class="assumption-label">Total growth (returns)</span><span class="assumption-value c-lime" id="wealthTotalGrowth">—</span></div>
+        </div>
+
+        <!-- ── CONTRIBUTION PROGRESS ── -->
+        <div class="card" style="border-color:rgba(0,200,117,0.15);background:var(--deep);position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-60px;left:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,117,0.06),transparent 70%);pointer-events:none;"></div>
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;position:relative;z-index:1;">
+                <div>
+                    <div style="font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Contribution Progress</div>
+                    <div style="font-size:.72rem;color:var(--dim);">Actual vs. target toward your goal</div>
+                </div>
+                <button onclick="openContribModal()" style="background:var(--green);color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.08em;padding:7px 14px;cursor:pointer;transition:background .2s;position:relative;z-index:1;" onmouseover="this.style.background='#00e688'" onmouseout="this.style.background='var(--green)'">+ Log</button>
+            </div>
+
+            <!-- Big actual total -->
+            <div style="position:relative;z-index:1;margin-bottom:20px;">
+                <div style="font-size:.58rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,200,117,0.45);margin-bottom:4px;">Total Actually Contributed</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:.02em;line-height:1;color:var(--green);" id="cp_actual">$0.00</div>
+                <div style="font-size:.65rem;color:var(--dim);margin-top:5px;" id="cp_actual_sub">0 contributions logged</div>
+            </div>
+
+            <!-- Progress toward projected total -->
+            <div style="position:relative;z-index:1;margin-bottom:8px;">
+                <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--dim);margin-bottom:6px;letter-spacing:.04em;">
+                    <span id="cp_pct_label">0% of projection target</span>
+                    <span id="cp_target_label">Target: $0.00</span>
+                </div>
+                <div style="height:6px;background:var(--dim2);overflow:hidden;position:relative;">
+                    <div id="cp_bar" style="position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,var(--green),#00e688);transition:width .7s cubic-bezier(.22,1,.36,1);width:0%;"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:.6rem;margin-top:6px;">
+                    <span style="color:var(--green);" id="cp_ahead_label"></span>
+                    <span style="color:var(--dim);" id="cp_remaining_label"></span>
+                </div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid rgba(0,200,117,0.1);margin:18px 0;position:relative;z-index:1;">
+
+            <!-- Stats row -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px;position:relative;z-index:1;">
+                <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
+                    <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">This Month</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--green);" id="cp_this_month">$0.00</div>
+                </div>
+                <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
+                    <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Avg / Month</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--green);" id="cp_avg_month">$0.00</div>
+                </div>
+                <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
+                    <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Streak</div>
+                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--lime);" id="cp_streak">0 mo</div>
+                </div>
+            </div>
+
+            <!-- Monthly target vs actual comparison -->
+            <div style="position:relative;z-index:1;margin-bottom:18px;">
+                <div style="font-size:.58rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Monthly Target Check</div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="flex:1;">
+                        <div style="font-size:.58rem;color:var(--dim);margin-bottom:4px;letter-spacing:.06em;">Target / mo</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:rgba(255,255,255,0.5);" id="cp_monthly_target">$0.00</div>
+                    </div>
+                    <div style="font-size:1.2rem;color:var(--dim);" id="cp_vs_icon">→</div>
+                    <div style="flex:1;text-align:right;">
+                        <div style="font-size:.58rem;color:var(--dim);margin-bottom:4px;letter-spacing:.06em;">Avg actual / mo</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;" id="cp_monthly_actual_val">$0.00</div>
+                    </div>
+                </div>
+                <div id="cp_monthly_verdict" style="margin-top:10px;font-size:.7rem;line-height:1.7;padding:8px 12px;border-left:2px solid var(--dim2);color:var(--dim);"></div>
+            </div>
+
+            <!-- Contribution history log -->
+            <div style="position:relative;z-index:1;">
+                <div style="font-size:.58rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;">Recent Contributions</div>
+                <div id="cp_history"></div>
+            </div>
         </div>
     </div>
 
@@ -931,7 +1223,7 @@ const LS = {
 
 // ── State ────────────────────────────────────────────
 const TAX=0.85, INV_P=0.20;
-let hourlyWage   = LS.get('wf_wage',   25.25);
+let hourlyWage   = LS.get('wf_wage',   1.25);
 let hoursPerWeek = LS.get('wf_hours',  40);
 let categories   = LS.get('wf_cats',   []);
 let extraIncomes = LS.get('wf_incomes',[]);
@@ -957,6 +1249,73 @@ const ASSET_COLOR = {etf:'#ff4500',stock:'#00d4ff',crypto:'#b8ff00',bond:'#00c87
 
 function toMonthly(a,f){
     return f==='monthly'?a:f==='biweekly'?a*26/12:f==='weekly'?a*52/12:a/12;
+}
+
+// ── Net Worth ─────────────────────────────────────────
+function updateNetWorth(){
+    // Assets: sum of current portfolio values
+    const portfolioVal = holdings.reduce((s,h)=>s+h.current, 0);
+    // Liabilities: sum of current debt balances
+    const totalDebt    = debts.reduce((s,d)=>s+d.balance, 0);
+    // Monthly free cash (available balance after expenses + investment)
+    const spent        = categories.reduce((s,c)=>s+c.amount, 0);
+    const inv          = inversion();
+    const freeCash     = Math.max(0, totalMonthly()-spent-inv);
+
+    const netWorth     = portfolioVal - totalDebt;
+    const totalAssets  = portfolioVal + freeCash;
+    const grandTotal   = totalAssets + totalDebt; // used for bar ratios
+
+    // Update value
+    const nwEl = document.getElementById('networthValue');
+    nwEl.textContent = fmt(Math.abs(netWorth));
+    nwEl.className = 'networth-value ' + (netWorth >= 0 ? 'positive' : 'negative');
+
+    // Prefix sign for negative
+    if(netWorth < 0){
+        nwEl.textContent = '−' + fmt(Math.abs(netWorth));
+    }
+
+    // Badge
+    const badge = document.getElementById('nwBadge');
+    if(portfolioVal === 0 && totalDebt === 0){
+        badge.textContent = 'NO DATA';
+        badge.style.background = 'rgba(90,87,80,0.2)';
+        badge.style.borderColor = 'rgba(90,87,80,0.3)';
+        badge.style.color = 'var(--dim)';
+    } else if(netWorth >= 0){
+        badge.textContent = 'POSITIVE';
+        badge.style.background = 'rgba(168,85,247,0.15)';
+        badge.style.borderColor = 'rgba(168,85,247,0.3)';
+        badge.style.color = 'var(--violet)';
+    } else {
+        badge.textContent = 'NEGATIVE';
+        badge.style.background = 'rgba(255,51,51,0.12)';
+        badge.style.borderColor = 'rgba(255,51,51,0.3)';
+        badge.style.color = 'var(--red)';
+    }
+
+    // Sub line
+    const ratio = totalDebt > 0 && portfolioVal > 0
+        ? `${((portfolioVal/totalDebt)*100).toFixed(0)}% assets vs debt`
+        : portfolioVal > 0 ? 'Debt-free · all assets'
+        : totalDebt > 0 ? 'No assets logged against debt'
+        : 'Add assets & debts to calculate';
+    document.getElementById('networthSub').textContent = ratio;
+
+    // Tiles
+    document.getElementById('nwPortfolio').textContent = fmt(portfolioVal);
+    document.getElementById('nwDebts').textContent     = fmt(totalDebt);
+    document.getElementById('nwCash').textContent      = fmt(freeCash);
+
+    // Bar
+    const barTotal = portfolioVal + freeCash + totalDebt;
+    const assetPct = barTotal > 0 ? Math.round((portfolioVal + freeCash) / barTotal * 100) : 0;
+    const debtPct  = barTotal > 0 ? Math.round(totalDebt / barTotal * 100) : 0;
+    document.getElementById('nwBarAssets').style.width = assetPct + '%';
+    document.getElementById('nwBarDebts').style.width  = debtPct  + '%';
+    document.getElementById('nwBarAssetsLabel').textContent = `Assets ${assetPct}%`;
+    document.getElementById('nwBarDebtsLabel').textContent  = `Debt ${debtPct}%`;
 }
 
 // ── Navigation ───────────────────────────────────────
@@ -1059,13 +1418,13 @@ function applyHolding(){
     holdings.push({id:Date.now(),name,type,cost,current:current||cost});
     LS.set('wf_holdings',holdings);
     ['h_name','h_cost','h_current'].forEach(i=>document.getElementById(i).value='');
-    renderInvest();
+    renderInvest(); updateNetWorth();
     closeModal('holdingModal');
 }
 function removeHolding(id){
     holdings=holdings.filter(h=>h.id!==id);
     LS.set('wf_holdings',holdings);
-    renderInvest();
+    renderInvest(); updateNetWorth();
 }
 function openUpdateModal(id){
     updateTargetId=id;
@@ -1079,7 +1438,7 @@ function applyUpdate(){
     if(!val||val<=0) return;
     const h=holdings.find(h=>h.id===updateTargetId);
     if(h){ h.current=val; LS.set('wf_holdings',holdings); }
-    renderInvest(); closeModal('updateModal');
+    renderInvest(); updateNetWorth(); closeModal('updateModal');
 }
 
 // ── Contributions ─────────────────────────────────────
@@ -1096,12 +1455,12 @@ function applyContrib(){
     contribs.unshift({id:Date.now(),name,amount,date});
     LS.set('wf_contribs',contribs);
     ['c_name','c_amount'].forEach(i=>document.getElementById(i).value='');
-    renderInvest(); closeModal('contribModal');
+    renderInvest(); renderContribProgress(); closeModal('contribModal');
 }
 function removeContrib(id){
     contribs=contribs.filter(c=>c.id!==id);
     LS.set('wf_contribs',contribs);
-    renderInvest();
+    renderInvest(); renderContribProgress();
 }
 
 // ── Render Invest ─────────────────────────────────────
@@ -1249,26 +1608,239 @@ function updateHome(){
             }
         }
     });
+    updateNetWorth();
 }
 
 // ── Wealth ────────────────────────────────────────────
+// Custom projection state (persisted)
+let projContrib = LS.get('wf_proj_contrib', null); // null = use auto
+let projRate    = LS.get('wf_proj_rate',    10);
+let projYears   = LS.get('wf_proj_years',   25);
+
+function getProjectionContrib(){
+    return projContrib !== null ? projContrib : inversion();
+}
+
 function calculateWealth(){
-    const inv=inversion(); let p=0;
-    const checkYears=[5,10,15,20,25],miles=[];
-    for(let m=1;m<=300;m++){
-        p=(p+inv)*(1+0.10/12);
-        if(m%12===0&&checkYears.includes(m/12)) miles.push({year:m/12,value:Math.round(p)});
+    const contrib = getProjectionContrib();
+    const rate    = projRate;
+    const years   = projYears;
+    const totalMonths = years * 12;
+    const monthlyRate = rate / 100 / 12;
+
+    // Build milestone checkpoints (evenly spaced, up to 6 points)
+    const step = Math.max(1, Math.floor(years / 5));
+    const checkYears = [];
+    for(let y = step; y <= years; y += step) checkYears.push(y);
+    if(!checkYears.includes(years)) checkYears.push(years);
+
+    let p = 0;
+    const miles = [];
+    for(let m = 1; m <= totalMonths; m++){
+        p = (p + contrib) * (1 + monthlyRate);
+        if(m % 12 === 0 && checkYears.includes(m / 12)){
+            miles.push({year: m/12, value: Math.round(p)});
+        }
     }
-    const maxVal=miles[miles.length-1].value;
-    document.getElementById('futureValue').textContent    = fmt(maxVal);
-    document.getElementById('wealthInvDisplay').textContent= fmt(inv);
-    document.getElementById('wealthSub').textContent      = fmt(inv)+'/mo contribution · 10% annual return';
-    document.getElementById('milestones').innerHTML=miles.map(m=>`
+
+    const finalVal  = miles.length ? miles[miles.length-1].value : 0;
+    const maxVal    = finalVal || 1;
+    const totalPaid = contrib * totalMonths;
+    const growth    = finalVal - totalPaid;
+
+    // Update page title & card label dynamically
+    document.getElementById('wealthPageTitle').textContent  = years+'-Year Projection';
+    document.getElementById('wealthCardLabel').textContent  = 'Projected Value · '+years+' Years';
+
+    document.getElementById('futureValue').textContent      = fmt(finalVal);
+    document.getElementById('wealthInvDisplay').textContent = fmt(contrib);
+    document.getElementById('wealthRateDisplay').textContent= rate.toFixed(2)+'%';
+    document.getElementById('wealthYearsDisplay').textContent= years+' years';
+    document.getElementById('wealthTotalContrib').textContent= fmt(totalPaid);
+    document.getElementById('wealthTotalGrowth').textContent = fmt(Math.max(0,growth));
+    document.getElementById('wealthSub').textContent        = fmt(contrib)+'/mo · '+rate+'% annual · '+years+' yrs';
+
+    // Advisory note adapts to rate
+    const hint = rate <= 6
+        ? 'Conservative projection. Typical of bonds or balanced funds. Lower risk, steady growth.'
+        : rate <= 10
+        ? 'Every $100 in additional monthly savings equals approximately $'+Math.round(Math.pow(1+rate/100/12,120)*100)+' in 10 years at this return rate. Discipline compounds.'
+        : 'Aggressive projection. Historically possible with equity-heavy portfolios. Higher volatility expected.';
+    document.getElementById('wealthDisclaimer').textContent = hint;
+
+    document.getElementById('milestones').innerHTML = miles.map(m=>`
         <div class="milestone-row">
-            <div class="milestone-year">Year ${m.year}</div>
+            <div class="milestone-year">Yr ${m.year}</div>
             <div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:${Math.round(m.value/maxVal*100)}%"></div></div>
             <div class="milestone-value">${fmt(m.value)}</div>
         </div>`).join('');
+
+    // Sync input fields to current values
+    syncProjectionInputs();
+    renderContribProgress();
+}
+
+function syncProjectionInputs(){
+    const contrib = getProjectionContrib();
+    document.getElementById('proj_contrib').value = contrib;
+    document.getElementById('proj_rate').value    = projRate;
+    document.getElementById('proj_years').value   = projYears;
+
+    // Hint label
+    const hint = projContrib === null
+        ? 'Auto-filled from your 20% investment target'
+        : 'Custom amount — edit freely';
+    document.getElementById('proj_contrib_hint').textContent = hint;
+
+    // Sync rate preset buttons
+    document.querySelectorAll('.rate-preset').forEach(b=>{
+        b.classList.toggle('active', parseFloat(b.dataset.rate) === projRate);
+    });
+    // Sync horizon preset buttons
+    document.querySelectorAll('.horizon-preset').forEach(b=>{
+        b.classList.toggle('active', parseInt(b.dataset.yr) === projYears);
+    });
+}
+
+function liveProjection(){
+    const c = parseFloat(document.getElementById('proj_contrib').value);
+    const r = parseFloat(document.getElementById('proj_rate').value);
+    const y = parseInt(document.getElementById('proj_years').value);
+    if(!isNaN(c) && c >= 0)  { projContrib = c; LS.set('wf_proj_contrib', c); }
+    if(!isNaN(r) && r > 0)   { projRate    = r; LS.set('wf_proj_rate',    r); }
+    if(!isNaN(y) && y >= 1)  { projYears   = y; LS.set('wf_proj_years',   y); }
+    calculateWealth();
+}
+
+function setRate(btn){
+    projRate = parseFloat(btn.dataset.rate);
+    LS.set('wf_proj_rate', projRate);
+    document.getElementById('proj_rate').value = projRate;
+    calculateWealth();
+}
+
+function setHorizon(btn){
+    projYears = parseInt(btn.dataset.yr);
+    LS.set('wf_proj_years', projYears);
+    document.getElementById('proj_years').value = projYears;
+    calculateWealth();
+}
+
+function resetProjection(){
+    projContrib = null; projRate = 10; projYears = 25;
+    LS.set('wf_proj_contrib', null);
+    LS.set('wf_proj_rate',    10);
+    LS.set('wf_proj_years',   25);
+    calculateWealth();
+}
+
+// ── Contribution Progress ─────────────────────────────
+function renderContribProgress(){
+    const contrib      = getProjectionContrib();
+    const years        = projYears;
+    const totalTarget  = contrib * years * 12; // projected total contributions
+    const actualTotal  = contribs.reduce((s,c) => s+c.amount, 0);
+    const n            = contribs.length;
+    const pct          = totalTarget > 0 ? Math.min(100, (actualTotal / totalTarget) * 100) : 0;
+
+    // Big actual
+    document.getElementById('cp_actual').textContent     = fmt(actualTotal);
+    document.getElementById('cp_actual_sub').textContent = n === 0 ? 'No contributions logged yet' : n + ' contribution' + (n===1?'':'s') + ' logged';
+    document.getElementById('cp_target_label').textContent= 'Target: ' + fmt(totalTarget);
+    document.getElementById('cp_pct_label').textContent  = pct.toFixed(1) + '% of projection target';
+    document.getElementById('cp_bar').style.width        = pct + '%';
+
+    const remaining = Math.max(0, totalTarget - actualTotal);
+    const ahead     = actualTotal - totalTarget;
+    document.getElementById('cp_remaining_label').textContent = remaining > 0 ? fmt(remaining) + ' remaining' : '';
+    document.getElementById('cp_ahead_label').textContent     = ahead > 0 ? '▲ ' + fmt(ahead) + ' ahead of target' : '';
+
+    // This month
+    const now = new Date();
+    const thisMonthTotal = contribs
+        .filter(c => { if(!c.date) return false; const d = new Date(c.date+'T12:00:00'); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); })
+        .reduce((s,c) => s+c.amount, 0);
+    document.getElementById('cp_this_month').textContent = fmt(thisMonthTotal);
+
+    // Average per month (based on unique months with any contribution)
+    let avgPerMonth = 0;
+    if(n > 0){
+        // spread total over months between first and now
+        const dates = contribs.filter(c=>c.date).map(c=>new Date(c.date+'T12:00:00')).sort((a,b)=>a-b);
+        if(dates.length){
+            const first = dates[0];
+            const monthsElapsed = Math.max(1,
+                (now.getFullYear()-first.getFullYear())*12 + (now.getMonth()-first.getMonth()) + 1
+            );
+            avgPerMonth = actualTotal / monthsElapsed;
+        }
+    }
+    document.getElementById('cp_avg_month').textContent = fmt(avgPerMonth);
+
+    // Streak — count consecutive months up to now that have at least one contribution
+    let streak = 0;
+    const check = new Date(now.getFullYear(), now.getMonth(), 1);
+    for(let i = 0; i < 120; i++){
+        const y = check.getFullYear(), mo = check.getMonth();
+        const hasContrib = contribs.some(c => {
+            if(!c.date) return false;
+            const d = new Date(c.date+'T12:00:00');
+            return d.getFullYear()===y && d.getMonth()===mo;
+        });
+        if(hasContrib){ streak++; check.setMonth(check.getMonth()-1); }
+        else break;
+    }
+    document.getElementById('cp_streak').textContent = streak + ' mo' + (streak !== 1 ? 's' : '');
+
+    // Monthly target check
+    document.getElementById('cp_monthly_target').textContent   = fmt(contrib);
+    document.getElementById('cp_monthly_actual_val').textContent= fmt(avgPerMonth);
+    const diff = avgPerMonth - contrib;
+    const vsIcon = document.getElementById('cp_vs_icon');
+    const actualEl = document.getElementById('cp_monthly_actual_val');
+    const verdictEl = document.getElementById('cp_monthly_verdict');
+    if(n === 0){
+        vsIcon.textContent = '→'; vsIcon.style.color = 'var(--dim)';
+        actualEl.style.color = 'var(--dim)';
+        verdictEl.style.borderLeftColor = 'var(--dim2)';
+        verdictEl.style.color = 'var(--dim)';
+        verdictEl.textContent = 'No contributions yet. Start logging to track your progress.';
+    } else if(diff >= 0){
+        vsIcon.textContent = '↑'; vsIcon.style.color = 'var(--green)';
+        actualEl.style.color = 'var(--green)';
+        verdictEl.style.borderLeftColor = 'var(--green)';
+        verdictEl.style.color = 'var(--green)';
+        verdictEl.textContent = '▲ You\'re averaging ' + fmt(diff) + '/mo above target. At this pace your goal arrives ' + Math.round((totalTarget/actualTotal)*years*10)/10 + ' yrs in.';
+    } else {
+        vsIcon.textContent = '↓'; vsIcon.style.color = 'var(--red)';
+        actualEl.style.color = 'var(--red)';
+        verdictEl.style.borderLeftColor = 'var(--red)';
+        verdictEl.style.color = 'rgba(255,51,51,0.7)';
+        verdictEl.textContent = '▼ You\'re averaging ' + fmt(Math.abs(diff)) + '/mo below target. Consider increasing monthly contributions to stay on track.';
+    }
+
+    // History log (most recent 8)
+    const histEl = document.getElementById('cp_history');
+    if(!n){
+        histEl.innerHTML = `<div class="empty-state" style="padding:16px 0;"><div class="empty-icon" style="margin:0 auto 10px;">📋</div><div class="empty-text">No contributions yet.<br>Tap "+ Log" to record your first.</div></div>`;
+        return;
+    }
+    const sorted = [...contribs].sort((a,b) => new Date(b.date+'T12:00:00')-new Date(a.date+'T12:00:00'));
+    histEl.innerHTML = sorted.slice(0,8).map(c => {
+        const dt = c.date ? new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}) : '';
+        const onTarget = c.amount >= contrib;
+        return `<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+            <div style="width:2px;background:${onTarget?'var(--green)':'var(--ember)'};align-self:stretch;min-height:30px;margin-right:12px;flex-shrink:0;"></div>
+            <div style="flex:1;">
+                <div style="font-size:.83rem;color:var(--text);">${c.name}</div>
+                <div style="font-size:.6rem;color:var(--dim);margin-top:2px;">${dt}</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:${onTarget?'var(--green)':'var(--ember)'};">${fmt(c.amount)}</div>
+                <div style="font-size:.58rem;margin-top:2px;color:${onTarget?'rgba(0,200,117,0.5)':'rgba(255,69,0,0.5)'};">${onTarget?'▲ on target':'▼ below target'}</div>
+            </div>
+        </div>`;
+    }).join('') + (sorted.length > 8 ? `<div style="text-align:center;padding:10px 0;font-size:.62rem;color:var(--dim);">+ ${sorted.length-8} more in Invest → Contribution Log</div>` : '');
 }
 
 // ── Debt ─────────────────────────────────────────────
@@ -1312,14 +1884,14 @@ function applyDebt(){
     LS.set('wf_debts',debts);
     ['d_name','d_balance','d_rate','d_minpay'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('debtPreviewBox').style.display='none';
-    renderDebt(); closeModal('debtModal');
+    renderDebt(); updateNetWorth(); closeModal('debtModal');
 }
 
 function removeDebt(id){
     debts=debts.filter(d=>d.id!==id);
     payments=payments.filter(p=>p.debtId!==id);
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt();
+    renderDebt(); updateNetWorth();
 }
 
 function openPaymentModal(id){
@@ -1341,14 +1913,14 @@ function applyPayment(){
     d.balance=Math.max(0,d.balance-amount);
     payments.unshift({id:Date.now(),debtId:paymentTargetId,debtName:d.name,amount,date,note});
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt(); closeModal('paymentModal');
+    renderDebt(); updateNetWorth(); closeModal('paymentModal');
 }
 
 function removePayment(id){
     const p=payments.find(p=>p.id===id);
     if(p){const d=debts.find(d=>d.id===p.debtId);if(d) d.balance=Math.min(d.originalBalance,d.balance+p.amount);LS.set('wf_debts',debts);}
     payments=payments.filter(p=>p.id!==id); LS.set('wf_payments',payments);
-    renderDebt();
+    renderDebt(); updateNetWorth();
 }
 
 let currentDebtTab='list';
