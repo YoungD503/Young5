@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WealthFlow — Know Where Every Dollar Goes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:    #040404;
+  --deep:    #080808;
+  --surface: #0f0f0e;
+  --card:    #131312;
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --text:    #e2ddd5;
+  --dim:     #5c5850;
+  --dim2:    #2e2c28;
+  --ember:   #ff4500;
+  --ember2:  #ff6b35;
+  --lime:    #b8ff00;
+  --ice:     #00d4ff;
+  --green:   #00c875;
+  --white:   #f5f2ec;
+  --gold:    #c9a84c;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--ember);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform .1s, width .2s, height .2s, background .2s;
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,69,0,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform .18s ease, width .25s, height .25s;
+}
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor { width: 18px; height: 18px; background: var(--lime); }
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring { width: 54px; height: 54px; border-color: rgba(184,255,0,0.4); }
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(4,4,4,0.88);
+  backdrop-filter: blur(24px);
+  animation: navIn .6s ease forwards;
+}
+@keyframes navIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.nav-brand-mark {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(255,69,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.nav-brand-mark::after {
+  content: '';
+  position: absolute; inset: -3px;
+  border: 1px solid rgba(255,69,0,0.15);
+  animation: rotateBorder 8s linear infinite;
+}
+@keyframes rotateBorder { to { transform: rotate(360deg); } }
+.nav-brand-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: .1em;
+  color: var(--white);
+}
+.nav-brand-name span { color: var(--ember); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: .65rem; font-weight: 500; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--dim);
+  text-decoration: none;
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 1px; background: var(--ember);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  background: var(--ember); color: var(--void);
+  border: none; padding: 10px 22px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: .1em;
+  cursor: none; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background .2s, transform .15s;
+}
+.nav-cta:hover { background: var(--ember2); transform: translateY(-1px); }
+
+/* ── TICKER BAR ── */
+.ticker-bar {
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 490;
+  height: 32px;
+  background: var(--deep);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  display: flex; align-items: center;
+}
+.ticker-track {
+  display: flex; align-items: center; gap: 0;
+  animation: tickerScroll 40s linear infinite;
+  white-space: nowrap;
+}
+@keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 28px;
+  font-size: .6rem; font-weight: 500; letter-spacing: .1em;
+  border-right: 1px solid var(--border);
+}
+.ticker-label { color: var(--dim); text-transform: uppercase; }
+.ticker-val { color: var(--white); }
+.ticker-val.up { color: var(--green); }
+.ticker-val.down { color: #ff3333; }
+.ticker-arrow { font-size: .55rem; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  padding: 160px 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid lines background */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Ember glow orb */
+.hero-glow {
+  position: absolute;
+  top: 20%; right: -10%;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,69,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowPulse 6s ease infinite;
+}
+@keyframes glowPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .6; transform: scale(1.08); } }
+
+.hero-left { position: relative; z-index: 2; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .62rem; font-weight: 500; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--ember);
+  margin-bottom: 28px;
+  opacity: 0; animation: revealUp .7s .2s ease forwards;
+}
+.hero-eyebrow-line {
+  width: 32px; height: 1px; background: var(--ember);
+}
+
+.hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  line-height: .92;
+  letter-spacing: .02em;
+  color: var(--white);
+  margin-bottom: 28px;
+  opacity: 0; animation: revealUp .8s .35s ease forwards;
+}
+.hero-h1 em {
+  font-style: normal;
+  color: var(--ember);
+  position: relative;
+}
+.hero-h1 em::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ember), transparent);
+}
+
+.hero-sub {
+  font-size: .88rem; line-height: 1.9;
+  color: var(--dim); max-width: 480px;
+  margin-bottom: 44px;
+  opacity: 0; animation: revealUp .8s .5s ease forwards;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.hero-actions {
+  display: flex; align-items: center; gap: 20px;
+  opacity: 0; animation: revealUp .8s .65s ease forwards;
+}
+.btn-hero {
+  background: var(--ember); color: var(--void);
+  border: none; padding: 16px 36px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem; letter-spacing: .12em;
+  cursor: none; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background .2s, transform .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.btn-hero::before {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transition: left .5s ease;
+}
+.btn-hero:hover { background: var(--ember2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,69,0,0.3); }
+.btn-hero:hover::before { left: 100%; }
+
+.btn-ghost {
+  background: none; color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 15px 30px;
+  font-family: 'DM Mono', monospace;
+  font-size: .75rem; font-weight: 500; letter-spacing: .12em;
+  cursor: none; text-decoration: none;
+  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color .2s, color .2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+.hero-proof {
+  display: flex; align-items: center; gap: 24px;
+  margin-top: 40px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+  opacity: 0; animation: revealUp .8s .8s ease forwards;
+}
+.hero-proof-stat { }
+.hero-proof-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: .04em;
+  color: var(--white); line-height: 1;
+}
+.hero-proof-label {
+  font-size: .58rem; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--dim);
+  margin-top: 3px;
+}
+.hero-proof-divider {
+  width: 1px; height: 40px; background: var(--border2);
+}
+
+/* ── HERO RIGHT — LIVE DASHBOARD MOCKUP ── */
+.hero-right {
+  position: relative; z-index: 2;
+  opacity: 0; animation: revealRight 1s .4s ease forwards;
+}
+@keyframes revealRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+.dashboard-frame {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.dashboard-frame::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ember), transparent);
+}
+
+.df-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--deep);
+}
+.df-dots { display: flex; gap: 6px; }
+.df-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.df-dot:nth-child(1) { background: #ff3333; }
+.df-dot:nth-child(2) { background: #ffcc00; }
+.df-dot:nth-child(3) { background: var(--green); }
+
+.df-title {
+  font-size: .6rem; font-weight: 500; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--dim);
+}
+.df-live {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .58rem; color: var(--green); letter-spacing: .12em;
+}
+.df-live-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--green);
+  animation: livepulse 1.5s ease infinite;
+}
+@keyframes livepulse { 0%,100%{opacity:1;}50%{opacity:.3;} }
+
+.df-body { padding: 20px; }
+
+.df-networth {
+  background: var(--surface);
+  border: 1px solid rgba(168,85,247,0.2);
+  padding: 18px;
+  margin-bottom: 14px;
+  position: relative; overflow: hidden;
+}
+.df-networth::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(168,85,247,0.08), transparent 70%);
+}
+.df-nw-label {
+  font-size: .55rem; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(168,85,247,0.5);
+  margin-bottom: 6px;
+}
+.df-nw-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem; letter-spacing: .02em; line-height: 1;
+  color: #a855f7;
+}
+.df-nw-sub {
+  font-size: .6rem; color: rgba(168,85,247,0.4);
+  margin-top: 4px;
+}
+
+.df-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.df-tile {
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.df-tile-label {
+  font-size: .52rem; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 6px;
+}
+.df-tile-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: .04em;
+}
+
+.df-bar-section { }
+.df-bar-label {
+  display: flex; justify-content: space-between;
+  font-size: .55rem; color: var(--dim); margin-bottom: 6px;
+  letter-spacing: .08em;
+}
+.df-bar-track { height: 4px; background: var(--dim2); overflow: hidden; }
+.df-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ember), var(--ember2));
+  animation: barGrow 2s 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes barGrow { from { width: 0% !important; } }
+
+.df-rows { margin-top: 14px; }
+.df-row {
+  display: flex; align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.df-row:last-child { border-bottom: none; }
+.df-row-ind { width: 2px; height: 26px; margin-right: 10px; flex-shrink: 0; }
+.df-row-name { flex: 1; font-size: .72rem; color: var(--text); }
+.df-row-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .95rem; letter-spacing: .04em;
+}
+
+/* floating tags on frame */
+.df-float-tag {
+  position: absolute;
+  background: var(--void);
+  border: 1px solid var(--border2);
+  padding: 8px 12px;
+  font-size: .6rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: floatTag 4s ease infinite;
+}
+@keyframes floatTag { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+.df-float-tag.tag-1 {
+  top: -16px; right: 30px;
+  color: var(--green); border-color: rgba(0,200,117,0.3);
+  animation-delay: 0s;
+}
+.df-float-tag.tag-2 {
+  bottom: 20px; left: -40px;
+  color: var(--lime); border-color: rgba(184,255,0,0.3);
+  animation-delay: 2s;
+}
+.df-float-tag.tag-3 {
+  top: 40%; right: -44px;
+  color: var(--ice); border-color: rgba(0,212,255,0.3);
+  animation-delay: 1s;
+}
+
+@keyframes revealUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── FEATURES ── */
+.features {
+  padding: 120px 48px;
+  position: relative;
+}
+.features-header {
+  text-align: center; margin-bottom: 80px;
+}
+.section-eyebrow {
+  font-size: .62rem; font-weight: 500; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--ember);
+  margin-bottom: 16px; display: block;
+}
+.section-h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 5rem); letter-spacing: .03em;
+  color: var(--white); line-height: .95;
+}
+.section-h2 em { font-style: italic; color: var(--ember); font-family: 'DM Serif Display', serif; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: border-color .3s, transform .3s;
+  cursor: none;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.feature-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+.feature-card:hover::before { transform: scaleX(1); }
+
+.feature-card.c-ember::before { background: var(--ember); }
+.feature-card.c-green::before { background: var(--green); }
+.feature-card.c-ice::before { background: var(--ice); }
+.feature-card.c-lime::before { background: var(--lime); }
+.feature-card.c-gold::before { background: var(--gold); }
+.feature-card.c-violet::before { background: #a855f7; }
+
+.feature-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; letter-spacing: .04em; line-height: 1;
+  opacity: .08; color: var(--white);
+  margin-bottom: 20px;
+  user-select: none;
+}
+.feature-icon {
+  font-size: 1.6rem; margin-bottom: 16px; display: block;
+  filter: grayscale(0.2);
+}
+.feature-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: .06em;
+  color: var(--white); margin-bottom: 10px;
+}
+.feature-desc {
+  font-size: .78rem; line-height: 1.9; color: var(--dim);
+}
+.feature-tag {
+  display: inline-block; margin-top: 18px;
+  font-size: .58rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; padding: 4px 10px;
+}
+.feature-tag.basic { background: rgba(255,69,0,0.1); color: var(--ember); }
+.feature-tag.pro   { background: rgba(184,255,0,0.08); color: var(--lime); }
+.feature-tag.free  { background: rgba(255,255,255,0.05); color: var(--dim); }
+
+/* ── HOW IT WORKS ── */
+.how {
+  padding: 120px 48px;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.how-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: center;
+}
+.how-steps { }
+.how-step {
+  display: flex; gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.how-step:last-child { border-bottom: none; }
+.how-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem; letter-spacing: .04em; line-height: 1;
+  color: var(--dim2); flex-shrink: 0; width: 52px;
+  transition: color .3s;
+}
+.how-step:hover .how-step-num { color: var(--ember); }
+.how-step-body { }
+.how-step-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem; letter-spacing: .06em; color: var(--white);
+  margin-bottom: 8px;
+}
+.how-step-desc { font-size: .78rem; line-height: 1.9; color: var(--dim); }
+
+.how-visual {
+  position: relative;
+}
+.how-visual-card {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  padding: 28px;
+  position: relative; overflow: hidden;
+}
+.how-visual-card::after {
+  content: '';
+  position: absolute; bottom: 0; right: 0;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,69,0,0.05), transparent 70%);
+  pointer-events: none;
+}
+.hvcard-label {
+  font-size: .58rem; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 20px;
+}
+.hvcard-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.hvcard-row:last-of-type { border-bottom: none; }
+.hvcard-name { font-size: .8rem; color: var(--text); }
+.hvcard-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: .04em;
+}
+.hvcard-total {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid rgba(255,69,0,0.2);
+}
+.hvcard-total-label {
+  font-size: .65rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ember);
+}
+.hvcard-total-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: .04em; color: var(--ember);
+}
+
+/* animated counter bar */
+.hv-counter-bar { margin-top: 24px; }
+.hvc-item { margin-bottom: 14px; }
+.hvc-meta {
+  display: flex; justify-content: space-between;
+  font-size: .6rem; color: var(--dim); margin-bottom: 5px; letter-spacing: .06em;
+}
+.hvc-track { height: 3px; background: var(--dim2); overflow: hidden; }
+.hvc-fill { height: 100%; transition: none; }
+
+/* ── PRICING ── */
+.pricing {
+  padding: 120px 48px;
+  position: relative; overflow: hidden;
+}
+.pricing::before {
+  content: '';
+  position: absolute; top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(255,69,0,0.04), transparent 70%);
+  pointer-events: none;
+}
+.pricing-header {
+  text-align: center; margin-bottom: 60px;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: transform .3s, border-color .3s;
+}
+.pricing-card:hover { transform: translateY(-4px); }
+.pricing-card.featured {
+  border-color: rgba(255,69,0,0.35);
+  background: var(--surface);
+}
+.pricing-card.featured::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ember), transparent);
+}
+
+.pricing-badge {
+  font-size: .55rem; font-weight: 500; letter-spacing: .18em;
+  text-transform: uppercase; padding: 3px 10px;
+  display: inline-block; margin-bottom: 20px;
+}
+.pricing-badge.free  { background: rgba(255,255,255,0.05); color: var(--dim); }
+.pricing-badge.basic { background: rgba(255,69,0,0.12); color: var(--ember); }
+.pricing-badge.pro   { background: rgba(184,255,0,0.1); color: var(--lime); }
+
+.pricing-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.8rem; letter-spacing: .02em; line-height: 1;
+  margin-bottom: 4px;
+}
+.pricing-price.free  { color: var(--white); }
+.pricing-price.basic { color: var(--ember); }
+.pricing-price.pro   { color: var(--lime); }
+
+.pricing-period {
+  font-size: .65rem; color: var(--dim); letter-spacing: .1em;
+  margin-bottom: 28px;
+}
+
+.pricing-features { list-style: none; margin-bottom: 36px; }
+.pricing-features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: .78rem; color: var(--text);
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  line-height: 1.5;
+}
+.pricing-features li:last-child { border-bottom: none; }
+.pf-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 5px;
+}
+.pf-dot.free  { background: var(--dim); }
+.pf-dot.basic { background: var(--ember); }
+.pf-dot.pro   { background: var(--lime); }
+
+.pricing-features .dim { color: var(--dim); }
+
+.btn-pricing {
+  width: 100%; padding: 13px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: .12em;
+  border: none; cursor: none;
+  text-decoration: none; display: block; text-align: center;
+  transition: background .2s, transform .15s;
+}
+.btn-pricing:hover { transform: translateY(-1px); }
+.btn-pricing.free  { background: var(--surface); color: var(--dim); border: 1px solid var(--border2); }
+.btn-pricing.free:hover { background: var(--card); color: var(--text); }
+.btn-pricing.basic { background: var(--ember); color: var(--void); }
+.btn-pricing.basic:hover { background: var(--ember2); }
+.btn-pricing.pro   { background: var(--lime); color: var(--void); }
+.btn-pricing.pro:hover { background: #ccff22; }
+
+/* ── STATS STRIP ── */
+.stats-strip {
+  padding: 80px 48px;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.stat-block {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.stat-block:last-child { border-right: none; }
+.stat-block-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; letter-spacing: .02em; line-height: 1;
+  color: var(--white); margin-bottom: 8px;
+}
+.stat-block-num span { color: var(--ember); }
+.stat-block-label {
+  font-size: .62rem; font-weight: 500; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--dim);
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials {
+  padding: 120px 48px;
+}
+.testimonials-header { text-align: center; margin-bottom: 60px; }
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.testi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  position: relative;
+}
+.testi-card::before {
+  content: '"';
+  position: absolute; top: 20px; right: 24px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 4rem; color: var(--ember); opacity: .15;
+  line-height: 1;
+}
+.testi-text {
+  font-size: .82rem; line-height: 1.9;
+  color: var(--text); margin-bottom: 24px;
+}
+.testi-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.testi-avatar {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: .9rem;
+  color: var(--ember);
+  flex-shrink: 0;
+}
+.testi-name { font-size: .78rem; font-weight: 500; color: var(--white); }
+.testi-role { font-size: .6rem; color: var(--dim); letter-spacing: .08em; margin-top: 2px; }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  padding: 120px 48px;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(255,69,0,0.07), transparent 70%);
+  pointer-events: none;
+}
+.cta-banner-h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem); letter-spacing: .02em;
+  color: var(--white); line-height: .95; margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.cta-banner-h2 em {
+  font-style: normal; color: var(--ember);
+  font-family: 'DM Serif Display', serif; font-style: italic;
+}
+.cta-banner-sub {
+  font-size: .85rem; color: var(--dim); line-height: 1.8;
+  max-width: 520px; margin: 0 auto 44px;
+  position: relative; z-index: 1;
+}
+.cta-banner-actions {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  position: relative; z-index: 1;
+}
+.cta-note {
+  font-size: .6rem; color: var(--dim); letter-spacing: .1em;
+  margin-top: 20px; position: relative; z-index: 1;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--void);
+  border-top: 1px solid var(--border);
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+.footer-brand-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: .1em; color: var(--white);
+  margin-bottom: 12px;
+}
+.footer-brand-name span { color: var(--ember); }
+.footer-brand-desc {
+  font-size: .72rem; line-height: 1.8; color: var(--dim); max-width: 260px;
+}
+.footer-col-title {
+  font-size: .6rem; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--dim);
+  margin-bottom: 16px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+  font-size: .75rem; color: var(--dim);
+  text-decoration: none; transition: color .2s;
+}
+.footer-links a:hover { color: var(--text); }
+.footer-bottom {
+  grid-column: 1 / -1;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-size: .62rem; color: var(--dim); letter-spacing: .08em;
+}
+.footer-legal {
+  font-size: .6rem; color: var(--dim); letter-spacing: .06em;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 140px 28px 60px; }
+  .hero-right { display: none; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .how-inner { grid-template-columns: 1fr; gap: 48px; }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  .stats-strip { grid-template-columns: 1fr 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  nav .nav-links { display: none; }
+  .hero { padding: 120px 20px 60px; }
+  .features { padding: 80px 20px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .how, .pricing, .testimonials, .cta-banner { padding: 80px 20px; }
+  .stats-strip { grid-template-columns: 1fr 1fr; padding: 48px 20px; }
+  footer { grid-template-columns: 1fr; padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-brand-mark">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff4500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+        <polyline points="16 7 22 7 22 13"/>
+      </svg>
+    </div>
+    <div class="nav-brand-name">Wealth<span>Flow</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    Start Free
+  </a>
+</nav>
+
+<!-- Ticker Bar -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="tickerTrack">
+    <!-- JS fills this -->
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      Personal Finance Intelligence
+    </div>
+    <h1 class="hero-h1">
+      KNOW WHERE<br>
+      EVERY <em>DOLLAR</em><br>
+      GOES.
+    </h1>
+    <p class="hero-sub">
+      WealthFlow gives you a <strong>real-time command center</strong> for your money. Track income, expenses, debts, and investments — and see exactly where you stand, every single day.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-hero">
+        Start Tracking Free
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#how" class="btn-ghost">See How It Works</a>
+    </div>
+    <div class="hero-proof">
+      <div class="hero-proof-stat">
+        <div class="hero-proof-num" id="heroStatUsers">0</div>
+        <div class="hero-proof-label">Users Tracking</div>
+      </div>
+      <div class="hero-proof-divider"></div>
+      <div class="hero-proof-stat">
+        <div class="hero-proof-num" id="heroStatDollars">$0</div>
+        <div class="hero-proof-label">Dollars Tracked</div>
+      </div>
+      <div class="hero-proof-divider"></div>
+      <div class="hero-proof-stat">
+        <div class="hero-proof-num" id="heroStatDebts">$0</div>
+        <div class="hero-proof-label">Debt Eliminated</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="df-float-tag tag-1">▲ +$340 this month</div>
+    <div class="df-float-tag tag-2">Net Worth +12.4%</div>
+    <div class="df-float-tag tag-3">0 debt alerts</div>
+
+    <div class="dashboard-frame">
+      <div class="df-topbar">
+        <div class="df-dots">
+          <div class="df-dot"></div>
+          <div class="df-dot"></div>
+          <div class="df-dot"></div>
+        </div>
+        <div class="df-title">WealthFlow · Dashboard</div>
+        <div class="df-live"><div class="df-live-dot"></div>Live</div>
+      </div>
+      <div class="df-body">
+        <div class="df-networth">
+          <div class="df-nw-label">Total Net Worth</div>
+          <div class="df-nw-value" id="dfNetWorth">$24,840</div>
+          <div class="df-nw-sub">Assets − Liabilities · updated now</div>
+        </div>
+        <div class="df-grid">
+          <div class="df-tile">
+            <div class="df-tile-label">Monthly Income</div>
+            <div class="df-tile-value" style="color:var(--ember);" id="dfIncome">$3,400</div>
+          </div>
+          <div class="df-tile">
+            <div class="df-tile-label">Invest 20%</div>
+            <div class="df-tile-value" style="color:var(--green);" id="dfInvest">$680</div>
+          </div>
+          <div class="df-tile">
+            <div class="df-tile-label">Total Expenses</div>
+            <div class="df-tile-value" style="color:#ff3333;" id="dfExpenses">$1,850</div>
+          </div>
+          <div class="df-tile">
+            <div class="df-tile-label">Free Balance</div>
+            <div class="df-tile-value" style="color:var(--lime);" id="dfFree">$870</div>
+          </div>
+        </div>
+        <div class="df-bar-section">
+          <div class="df-bar-label">
+            <span>Budget used this month</span>
+            <span style="color:var(--ember);">54%</span>
+          </div>
+          <div class="df-bar-track">
+            <div class="df-bar-fill" style="width:54%;"></div>
+          </div>
+        </div>
+        <div class="df-rows">
+          <div class="df-row">
+            <div class="df-row-ind" style="background:var(--ember);"></div>
+            <div class="df-row-name">Rent</div>
+            <div class="df-row-val" style="color:var(--text);">$1,200</div>
+          </div>
+          <div class="df-row">
+            <div class="df-row-ind" style="background:var(--ice);"></div>
+            <div class="df-row-name">Subscriptions</div>
+            <div class="df-row-val" style="color:var(--text);">$87</div>
+          </div>
+          <div class="df-row">
+            <div class="df-row-ind" style="background:var(--green);"></div>
+            <div class="df-row-name">S&P 500 ETF</div>
+            <div class="df-row-val" style="color:var(--green);">+$340</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Strip -->
+<div class="stats-strip">
+  <div class="stat-block reveal">
+    <div class="stat-block-num"><span id="s1">0</span>%</div>
+    <div class="stat-block-label">Of users reduce impulse spending in month 1</div>
+  </div>
+  <div class="stat-block reveal">
+    <div class="stat-block-num">$<span id="s2">0</span></div>
+    <div class="stat-block-label">Average extra saved per month after 90 days</div>
+  </div>
+  <div class="stat-block reveal">
+    <div class="stat-block-num"><span id="s3">0</span>x</div>
+    <div class="stat-block-label">Faster debt payoff with avalanche tracking</div>
+  </div>
+  <div class="stat-block reveal">
+    <div class="stat-block-num"><span id="s4">0</span>yr</div>
+    <div class="stat-block-label">Compound growth projected with 20% rule</div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="features-header reveal">
+    <span class="section-eyebrow">What's Inside</span>
+    <h2 class="section-h2">EVERY TOOL<br>YOUR MONEY <em>NEEDS</em></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card c-ember reveal">
+      <div class="feature-num">01</div>
+      <span class="feature-icon">⊞</span>
+      <div class="feature-title">Income Dashboard</div>
+      <div class="feature-desc">Set your hourly rate, weekly hours, and instantly see your monthly take-home, investment target, and free cash — updated in real time as you type.</div>
+      <span class="feature-tag free">Free</span>
+    </div>
+    <div class="feature-card c-green reveal">
+      <div class="feature-num">02</div>
+      <span class="feature-icon">≡</span>
+      <div class="feature-title">Expense Tracker</div>
+      <div class="feature-desc">Log fixed and variable expenses. Instantly see what percentage of your income is going where — and spot exactly what to cut.</div>
+      <span class="feature-tag basic">Basic</span>
+    </div>
+    <div class="feature-card c-ice reveal">
+      <div class="feature-num">03</div>
+      <span class="feature-icon">◈</span>
+      <div class="feature-title">Investment Portfolio</div>
+      <div class="feature-desc">Track every asset — stocks, ETFs, crypto, real estate. See real gain/loss, allocation breakdowns, and contribution history at a glance.</div>
+      <span class="feature-tag pro">Pro</span>
+    </div>
+    <div class="feature-card c-lime reveal">
+      <div class="feature-num">04</div>
+      <span class="feature-icon">↗</span>
+      <div class="feature-title">25-Year Projection</div>
+      <div class="feature-desc">Model your wealth trajectory with custom return rates and horizons. See exactly how much discipline compounds into — in year 5, 10, 25.</div>
+      <span class="feature-tag pro">Pro</span>
+    </div>
+    <div class="feature-card c-gold reveal">
+      <div class="feature-num">05</div>
+      <span class="feature-icon">⊘</span>
+      <div class="feature-title">Debt Eliminator</div>
+      <div class="feature-desc">Log every debt, track payoff progress, and use the avalanche or snowball calculator to see exactly how much interest you'll save.</div>
+      <span class="feature-tag basic">Basic</span>
+    </div>
+    <div class="feature-card c-violet reveal">
+      <div class="feature-num">06</div>
+      <span class="feature-icon">↓</span>
+      <div class="feature-title">PDF Balance Sheet</div>
+      <div class="feature-desc">Export a full formal financial statement — income, assets, liabilities, net worth, and projections — in one professional PDF document.</div>
+      <span class="feature-tag pro">Pro</span>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-steps">
+      <div style="margin-bottom:48px;" class="reveal">
+        <span class="section-eyebrow">How It Works</span>
+        <h2 class="section-h2">UP AND RUNNING<br>IN <em>3 MINUTES</em></h2>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">01</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Set Your Income</div>
+          <div class="how-step-desc">Enter your hourly rate and weekly hours. WealthFlow instantly calculates your monthly take-home, your 20% investment target, and your real spending power.</div>
+        </div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">02</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Log Your Expenses & Debts</div>
+          <div class="how-step-desc">Add your fixed and variable expenses in seconds. Log any debts — cards, loans, mortgages — and watch your net worth update live.</div>
+        </div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">03</div>
+        <div class="how-step-body">
+          <div class="how-step-title">Watch Your Future Build</div>
+          <div class="how-step-desc">The 25-year projection engine shows you exactly where discipline takes you. Adjust the rate, the horizon, the contribution — and see the number change in real time.</div>
+        </div>
+      </div>
+    </div>
+    <div class="how-visual reveal">
+      <div class="how-visual-card">
+        <div class="hvcard-label">Monthly Budget Breakdown</div>
+        <div class="hvcard-row">
+          <span class="hvcard-name">Rent / Mortgage</span>
+          <span class="hvcard-amount" style="color:var(--text);">$1,200</span>
+        </div>
+        <div class="hvcard-row">
+          <span class="hvcard-name">Utilities</span>
+          <span class="hvcard-amount" style="color:var(--text);">$120</span>
+        </div>
+        <div class="hvcard-row">
+          <span class="hvcard-name">Groceries</span>
+          <span class="hvcard-amount" style="color:var(--text);">$340</span>
+        </div>
+        <div class="hvcard-row">
+          <span class="hvcard-name">Transport</span>
+          <span class="hvcard-amount" style="color:var(--text);">$190</span>
+        </div>
+        <div class="hvcard-total">
+          <span class="hvcard-total-label">Total Expenses</span>
+          <span class="hvcard-total-val">$1,850</span>
+        </div>
+        <div class="hv-counter-bar" style="margin-top:24px;">
+          <div class="hvc-item">
+            <div class="hvc-meta"><span>Expenses</span><span style="color:#ff3333;">54%</span></div>
+            <div class="hvc-track"><div class="hvc-fill" id="hvBar1" style="width:0%;background:#ff3333;"></div></div>
+          </div>
+          <div class="hvc-item">
+            <div class="hvc-meta"><span>Investment</span><span style="color:var(--green);">20%</span></div>
+            <div class="hvc-track"><div class="hvc-fill" id="hvBar2" style="width:0%;background:var(--green);"></div></div>
+          </div>
+          <div class="hvc-item">
+            <div class="hvc-meta"><span>Free Balance</span><span style="color:var(--lime);">26%</span></div>
+            <div class="hvc-track"><div class="hvc-fill" id="hvBar3" style="width:0%;background:var(--lime);"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header reveal">
+    <span class="section-eyebrow">Pricing</span>
+    <h2 class="section-h2">SIMPLE.<br><em>HONEST.</em> AFFORDABLE.</h2>
+  </div>
+  <div class="pricing-grid">
+    <!-- Free -->
+    <div class="pricing-card reveal">
+      <div class="pricing-badge free">Free</div>
+      <div class="pricing-price free">$0</div>
+      <div class="pricing-period">Forever free</div>
+      <ul class="pricing-features">
+        <li><span class="pf-dot free"></span>Income calculator</li>
+        <li><span class="pf-dot free"></span>Net worth overview</li>
+        <li><span class="pf-dot free"></span>20% investment target</li>
+        <li><span class="pf-dot free"></span><span class="dim">No expense tracking</span></li>
+        <li><span class="pf-dot free"></span><span class="dim">No debt tracker</span></li>
+        <li><span class="pf-dot free"></span><span class="dim">No portfolio</span></li>
+      </ul>
+      <a href="finances.html" class="btn-pricing free">Get Started</a>
+    </div>
+    <!-- Basic -->
+    <div class="pricing-card featured reveal">
+      <div class="pricing-badge basic">Basic</div>
+      <div class="pricing-price basic">$0.99</div>
+      <div class="pricing-period">per month · cancel anytime</div>
+      <ul class="pricing-features">
+        <li><span class="pf-dot basic"></span>Everything Free</li>
+        <li><span class="pf-dot basic"></span>Unlimited expense tracking</li>
+        <li><span class="pf-dot basic"></span>Full debt tracker</li>
+        <li><span class="pf-dot basic"></span>Payment logging</li>
+        <li><span class="pf-dot basic"></span>Amortization calculator</li>
+        <li><span class="pf-dot basic"></span><span class="dim">No portfolio tracking</span></li>
+      </ul>
+      <a href="#" class="btn-pricing basic">Unlock Basic</a>
+    </div>
+    <!-- Pro -->
+    <div class="pricing-card reveal">
+      <div class="pricing-badge pro">Pro</div>
+      <div class="pricing-price pro">$1.99</div>
+      <div class="pricing-period">per month · cancel anytime</div>
+      <ul class="pricing-features">
+        <li><span class="pf-dot pro"></span>Everything Basic</li>
+        <li><span class="pf-dot pro"></span>Full investment portfolio</li>
+        <li><span class="pf-dot pro"></span>25-year wealth projection</li>
+        <li><span class="pf-dot pro"></span>Extra income sources</li>
+        <li><span class="pf-dot pro"></span>Contribution tracker</li>
+        <li><span class="pf-dot pro"></span>PDF balance sheet export</li>
+      </ul>
+      <a href="#" class="btn-pricing pro">Unlock Pro</a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="testimonials-header reveal">
+    <span class="section-eyebrow">Real Users</span>
+    <h2 class="section-h2">WHAT HAPPENS WHEN<br>YOU ACTUALLY <em>LOOK</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <p class="testi-text">"I had no idea I was spending $340 a month on subscriptions I'd forgotten about. WealthFlow showed me in literally 2 minutes. Cancelled 6 of them the same day."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">MR</div>
+        <div>
+          <div class="testi-name">Marcus R.</div>
+          <div class="testi-role">Freelance Designer · Basic Plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text">"The 25-year projection hit different. Seeing that $500/month compounds to $600k made discipline feel less like sacrifice and more like strategy."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SL</div>
+        <div>
+          <div class="testi-name">Sofia L.</div>
+          <div class="testi-role">Software Engineer · Pro Plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <p class="testi-text">"I paid off $8,200 in credit card debt using the avalanche tracker. Watching that balance go to zero every month kept me motivated the whole time."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">JT</div>
+        <div>
+          <div class="testi-name">James T.</div>
+          <div class="testi-role">Teacher · Basic Plan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="cta-banner">
+  <h2 class="cta-banner-h2">YOUR MONEY DOESN'T<br>NEED A <em>MIRACLE.</em><br>IT NEEDS A MAP.</h2>
+  <p class="cta-banner-sub">Stop guessing. Start tracking. In 3 minutes you'll know exactly where every dollar is going — and what to do about it.</p>
+  <div class="cta-banner-actions">
+    <a href="#pricing" class="btn-hero">
+      Start Free Today
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <a href="#features" class="btn-ghost">See All Features</a>
+  </div>
+  <div class="cta-note">No credit card required for free plan · Cancel Basic/Pro anytime · Secure checkout via Stripe</div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <div class="footer-brand-name">Wealth<span>Flow</span></div>
+    <div class="footer-brand-desc">A personal finance command center built for people who want to know exactly where their money goes — and where it's headed.</div>
+  </div>
+  <div>
+    <div class="footer-col-title">Product</div>
+    <ul class="footer-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#how">How It Works</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Plans</div>
+    <ul class="footer-links">
+      <li><a href="#">Free</a></li>
+      <li><a href="#">Basic — $0.99</a></li>
+      <li><a href="#">Pro — $1.99</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Legal</div>
+    <ul class="footer-links">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+      <li><a href="#">Refund Policy</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 WealthFlow. All rights reserved.</div>
+    <div class="footer-legal">For informational purposes only · Not financial advice · Payments secured by Stripe</div>
+  </div>
+</footer>
+
+<script>
+// ── CURSOR ──────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animateCursor() {
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
+})();
+
+// ── TICKER ──────────────────────────────────────
+const tickerData = [
+  { label: 'NET WORTH', val: '+$24,840', cls: 'up' },
+  { label: 'SAVINGS RATE', val: '26%', cls: 'up' },
+  { label: 'DEBT REMAINING', val: '$4,200', cls: 'down' },
+  { label: 'PORTFOLIO', val: '+$680/mo', cls: 'up' },
+  { label: 'INVEST TARGET', val: '$680', cls: '' },
+  { label: 'FREE CASH', val: '$870', cls: 'up' },
+  { label: 'EXPENSES', val: '$1,850', cls: 'down' },
+  { label: '25-YR PROJECTION', val: '$612,440', cls: 'up' },
+  { label: 'DEBT PAYOFF', val: '14 MONTHS', cls: '' },
+  { label: 'MONTHLY INCOME', val: '$3,400', cls: '' },
+];
+function buildTicker() {
+  const track = document.getElementById('tickerTrack');
+  const doubled = [...tickerData, ...tickerData]; // duplicate for seamless loop
+  track.innerHTML = doubled.map(d =>
+    `<div class="ticker-item">
+      <span class="ticker-label">${d.label}</span>
+      <span class="ticker-val ${d.cls}">${d.val}</span>
+      ${d.cls === 'up' ? '<span class="ticker-arrow" style="color:var(--green)">▲</span>' : d.cls === 'down' ? '<span class="ticker-arrow" style="color:#ff3333">▼</span>' : ''}
+    </div>`
+  ).join('');
+}
+buildTicker();
+
+// ── COUNTER ANIMATIONS ───────────────────────────
+function animateCount(el, target, prefix='', suffix='', duration=1800) {
+  let start = null;
+  const step = ts => {
+    if(!start) start = ts;
+    const p = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = prefix + Math.floor(ease * target).toLocaleString() + suffix;
+    if(p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Hero proof stats
+setTimeout(() => {
+  animateCount(document.getElementById('heroStatUsers'), 2847, '', '+');
+  animateCount(document.getElementById('heroStatDollars'), 4200000, '$', '', 2200);
+  animateCount(document.getElementById('heroStatDebts'), 890000, '$', '', 2500);
+}, 800);
+
+// Stats strip counters
+const stripObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      animateCount(document.getElementById('s1'), 78, '', '', 1200);
+      animateCount(document.getElementById('s2'), 340, '', '', 1400);
+      animateCount(document.getElementById('s3'), 3, '', '', 1000);
+      animateCount(document.getElementById('s4'), 25, '', '', 1200);
+      stripObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const stripEl = document.querySelector('.stats-strip');
+if(stripEl) stripObserver.observe(stripEl);
+
+// Budget bars
+const barObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      const bars = [
+        { el: document.getElementById('hvBar1'), w: 54 },
+        { el: document.getElementById('hvBar2'), w: 20 },
+        { el: document.getElementById('hvBar3'), w: 26 },
+      ];
+      bars.forEach((b, i) => {
+        setTimeout(() => {
+          if(b.el) {
+            b.el.style.transition = 'width .9s cubic-bezier(.22,1,.36,1)';
+            b.el.style.width = b.w + '%';
+          }
+        }, i * 180);
+      });
+      barObserver.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const barSection = document.querySelector('.hv-counter-bar');
+if(barSection) barObserver.observe(barSection);
+
+// ── SCROLL REVEAL ───────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── DASHBOARD LIVE NUMBERS ──────────────────────
+// Subtle micro-animation: numbers nudge every few seconds
+function nudge(id, base, range, prefix='$') {
+  const el = document.getElementById(id);
+  if(!el) return;
+  setInterval(() => {
+    const val = base + Math.floor((Math.random() - 0.5) * range);
+    el.textContent = prefix + val.toLocaleString();
+  }, 3000 + Math.random() * 2000);
+}
+nudge('dfNetWorth', 24840, 400, '$');
+nudge('dfFree', 870, 100, '$');
+</script>
+</body>
+</html>
