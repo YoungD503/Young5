@@ -33,7 +33,6 @@
         }
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         html{scroll-behavior:smooth;}
-
         body {
             background: var(--void);
             color: var(--text);
@@ -41,15 +40,12 @@
             min-height: 100vh;
             padding-bottom: 80px;
         }
-
         body::before {
             content:''; position:fixed; inset:0;
             pointer-events:none; z-index:999; opacity:.02;
             background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             background-size:200px;
         }
-
-        /* ── TOP BAR ── */
         .top-bar {
             background: rgba(5,5,5,0.92);
             backdrop-filter: blur(20px);
@@ -88,14 +84,10 @@
             cursor: pointer; transition: background .2s;
         }
         .pill:hover { background: rgba(255,69,0,0.2); }
-
-        /* ── PAGES ── */
         .container { max-width:480px; margin:0 auto; padding:24px 16px; }
         .page { display:none; animation:fadeIn .3s ease; }
         .page.active { display:block; }
         @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-        /* ── TYPOGRAPHY ── */
         .section-title {
             font-family:'Bebas Neue',sans-serif;
             font-size:2.4rem; letter-spacing:.04em;
@@ -106,8 +98,6 @@
             background: linear-gradient(90deg,var(--ember),transparent);
             margin-bottom:24px;
         }
-
-        /* ── CARDS ── */
         .card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -161,8 +151,6 @@
             width:200px; height:200px; border-radius:50%;
             background:radial-gradient(circle,rgba(0,200,117,0.07),transparent 70%);
         }
-
-        /* ── NET WORTH CARD ── */
         .card-networth {
             background: var(--deep);
             border: 1px solid rgba(168,85,247,0.25);
@@ -256,8 +244,6 @@
             background:linear-gradient(270deg,var(--red),rgba(255,51,51,0.4));
             transition:width .7s cubic-bezier(.22,1,.36,1);
         }
-
-        /* label/value helpers */
         .card-label       { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:8px; }
         .card-label-ember { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,69,0,0.5); margin-bottom:8px; }
         .card-label-ice   { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(0,212,255,0.5); margin-bottom:8px; }
@@ -273,8 +259,6 @@
         .card-sub-ice     { font-size:.68rem; color:rgba(0,212,255,0.4); margin-top:6px; letter-spacing:.04em; position:relative; z-index:1; }
         .card-sub-green   { font-size:.68rem; color:rgba(0,200,117,0.4); margin-top:6px; letter-spacing:.04em; position:relative; z-index:1; }
         .card-sub-red     { font-size:.68rem; color:rgba(255,51,51,0.4); margin-top:6px; letter-spacing:.04em; position:relative; z-index:1; }
-
-        /* ── STATS GRID ── */
         .stats-grid   { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
         .stats-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:12px; }
         .stat-tile {
@@ -293,16 +277,12 @@
         .c-dim    { color:var(--dim); }
         .c-gold   { color:var(--gold); }
         .c-violet { color:var(--violet); }
-
-        /* ── PROGRESS ── */
         .progress-track { height:3px; background:var(--dim2); margin-top:18px; overflow:hidden; }
         .progress-fill  { height:100%; background:linear-gradient(90deg,var(--ember),var(--ember2)); transition:width .7s cubic-bezier(.22,1,.36,1); }
         .progress-label { font-size:.62rem; margin-top:7px; display:flex; justify-content:space-between; color:var(--dim); letter-spacing:.05em; }
         .chart-wrap    { height:168px; margin-top:20px; }
         .chart-wrap-sm { height:140px; margin-top:16px; }
         .rule { border:none; border-top:1px solid var(--border); margin:14px 0; }
-
-        /* ── FORMS ── */
         .form-row { margin-bottom:12px; }
         .form-label {
             font-size:.6rem; font-weight:500; letter-spacing:.18em;
@@ -337,8 +317,6 @@
         .btn-primary:hover { background:var(--ember2); transform:translateY(-1px); }
         .btn-green { background:var(--green); color:var(--void); }
         .btn-green:hover { background:#00e688; }
-
-        /* ── LIST ROWS ── */
         .list-row {
             display:flex; align-items:center;
             padding:14px 0;
@@ -367,23 +345,17 @@
             margin-top:3px; display:block; transition:color .2s;
         }
         .row-action:hover { color:var(--red); }
-
-        /* ── INVEST BADGES ── */
         .inv-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; font-size:.62rem; font-weight:500; letter-spacing:.06em; margin-top:4px; }
         .inv-badge.up   { background:var(--green2); color:var(--green); }
         .inv-badge.down { background:var(--red2);   color:var(--red); }
         .inv-badge.flat { background:rgba(255,255,255,0.05); color:var(--dim); }
         .contrib-date { font-size:.62rem; color:var(--dim); margin-top:2px; }
-
-        /* ── ALLOC ── */
         .alloc-row { margin-bottom:12px; }
         .alloc-header { display:flex; justify-content:space-between; margin-bottom:5px; }
         .alloc-name { font-size:.78rem; font-weight:500; color:var(--text); }
         .alloc-pct  { font-size:.72rem; color:var(--dim); }
         .alloc-track { height:5px; background:var(--dim2); overflow:hidden; }
         .alloc-fill  { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
-
-        /* ── SUB HEADERS ── */
         .sub-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
         .sub-header-title { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); }
         .add-btn {
@@ -396,8 +368,6 @@
         .add-btn:hover { background:var(--ember2); }
         .add-btn.green { background:var(--green); }
         .add-btn.green:hover { background:#00e688; }
-
-        /* ── EMPTY STATE ── */
         .empty-state { text-align:center; padding:28px 16px; }
         .empty-icon {
             width:44px; height:44px;
@@ -406,8 +376,6 @@
             margin-bottom:12px; font-size:1.2rem;
         }
         .empty-text { font-size:.75rem; line-height:1.8; color:var(--dim); letter-spacing:.02em; }
-
-        /* ── WEALTH PROJECTION ── */
         .wealth-projection {
             font-family:'Bebas Neue',sans-serif;
             font-size:3.4rem; letter-spacing:.02em;
@@ -431,8 +399,6 @@
         .assumption-row:last-child { border-bottom:none; }
         .assumption-label { font-size:.78rem; color:var(--dim); }
         .assumption-value { font-size:.78rem; font-weight:500; color:var(--text); }
-
-        /* ── DEBT ── */
         .debt-progress-track { height:4px; background:var(--dim2); margin-top:8px; overflow:hidden; }
         .debt-progress-fill  { height:100%; background:linear-gradient(90deg,var(--red),#ff6666); transition:width .6s cubic-bezier(.22,1,.36,1); }
         .debt-progress-fill.safe { background:linear-gradient(90deg,var(--green),#00e688); }
@@ -458,8 +424,6 @@
         .debt-tab.active { background:var(--ember); color:var(--void); }
         .calc-box { background:var(--surface); border:1px solid var(--border); padding:16px; margin-top:12px; }
         .calc-box-title { font-size:.6rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:12px; }
-
-        /* ── NAV BAR ── */
         .nav-bar {
             position:fixed; bottom:0; left:0; right:0;
             height:72px;
@@ -485,8 +449,6 @@
         .nav-item.active .nav-icon { transform:scale(1.15); }
         .nav-dot { width:3px; height:3px; border-radius:50%; background:var(--ember); box-shadow:0 0 4px var(--ember); margin:1px auto 0; opacity:0; transition:opacity .2s; }
         .nav-item.active .nav-dot { opacity:1; }
-
-        /* ── LOCK BADGE ON NAV ── */
         .nav-lock {
             display: flex;
             align-items: center;
@@ -501,8 +463,6 @@
         }
         .nav-item:hover .nav-lock { opacity: 0.85; }
         .nav-lock svg { width: 10px; height: 10px; }
-
-        /* ── MODAL ── */
         .modal-overlay {
             display:none; position:fixed; inset:0; z-index:500;
             background:rgba(0,0,0,0.75); backdrop-filter:blur(8px);
@@ -558,8 +518,6 @@
             color:var(--dim); cursor:pointer; transition:all .2s;
         }
         .tab-btn.active { background:var(--ember); color:var(--void); border-color:var(--ember); }
-
-        /* ── PROJECTION PRESETS ── */
         .rate-preset, .horizon-preset {
             flex:1; padding:7px 4px;
             border:1px solid var(--border); background:var(--surface);
@@ -581,9 +539,9 @@
             padding:12px; position:relative; z-index:1;
         }
 
-        /* ═══════════════════════════════════════
+        /* ═══════════════════════════════
            PAYWALL MODAL
-        ═══════════════════════════════════════ */
+        ═══════════════════════════════ */
         .paywall-overlay {
             display: none;
             position: fixed; inset: 0; z-index: 600;
@@ -593,7 +551,6 @@
             justify-content: center;
         }
         .paywall-overlay.open { display: flex; animation: overlayIn .25s ease; }
-
         .paywall-sheet {
             background: var(--deep);
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -602,10 +559,7 @@
             animation: sheetUp .35s cubic-bezier(.22,1,.36,1);
             max-height: 94vh; overflow-y: auto;
         }
-
         .pw-handle { width:36px; height:3px; background:var(--dim2); margin:0 auto 24px; }
-
-        /* lock icon top */
         .pw-lock-circle {
             width: 52px; height: 52px;
             border: 1px solid rgba(255,69,0,0.3);
@@ -613,7 +567,6 @@
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 16px;
         }
-
         .pw-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2rem; letter-spacing: .06em;
@@ -626,10 +579,7 @@
             line-height: 1.7; margin-bottom: 28px;
         }
         .pw-sub span { color: var(--ember); }
-
-        /* tier cards */
         .pw-tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-
         .pw-tier {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -651,7 +601,6 @@
         .pw-tier.pro-tier { border-color: rgba(184,255,0,0.2); }
         .pw-tier.pro-tier:hover { border-color: rgba(184,255,0,0.5); }
         .pw-tier.pro-tier.selected { border-color: var(--lime); background: rgba(184,255,0,0.05); }
-
         .pw-tier-badge {
             font-size: .52rem; font-weight: 500; letter-spacing: .16em;
             text-transform: uppercase; margin-bottom: 10px;
@@ -659,7 +608,6 @@
         }
         .pw-tier-badge.basic { background: rgba(255,69,0,0.12); color: var(--ember); }
         .pw-tier-badge.pro   { background: rgba(184,255,0,0.1);  color: var(--lime); }
-
         .pw-tier-price {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2.2rem; letter-spacing: .02em; line-height: 1;
@@ -667,12 +615,10 @@
         }
         .pw-tier-price.basic { color: var(--ember); }
         .pw-tier-price.pro   { color: var(--lime); }
-
         .pw-tier-period {
             font-size: .6rem; color: var(--dim);
             letter-spacing: .08em; margin-bottom: 14px;
         }
-
         .pw-tier-feature {
             display: flex; align-items: flex-start; gap: 7px;
             font-size: .68rem; color: var(--text);
@@ -687,8 +633,6 @@
         }
         .pw-tier-feature .dot.basic { background: var(--ember); }
         .pw-tier-feature .dot.pro   { background: var(--lime); }
-
-        /* pro glow */
         .pw-tier.pro-tier::before {
             content: ''; position: absolute;
             top: -60px; right: -60px;
@@ -696,7 +640,6 @@
             background: radial-gradient(circle, rgba(184,255,0,0.06), transparent 70%);
             pointer-events: none;
         }
-
         .pw-popular {
             position: absolute; top: 0; right: 0;
             background: var(--lime); color: var(--void);
@@ -704,8 +647,6 @@
             font-size: .75rem; letter-spacing: .1em;
             padding: 3px 10px;
         }
-
-        /* selected check */
         .pw-check {
             position: absolute; top: 10px; left: 10px;
             width: 16px; height: 16px;
@@ -716,20 +657,78 @@
         .pw-tier.selected .pw-check { display: flex; }
         .pw-tier.pro-tier.selected .pw-check { background: var(--lime); }
 
+        /* ── Stripe CTA Buttons ── */
         .pw-cta {
             width: 100%; padding: 15px;
             border: none;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.2rem; letter-spacing: .1em;
             cursor: pointer;
-            transition: background .2s, transform .15s;
+            transition: background .2s, transform .15s, box-shadow .2s;
             display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
-        .pw-cta:hover { transform: translateY(-1px); }
-        .pw-cta.basic-cta { background: var(--ember); color: var(--void); }
-        .pw-cta.basic-cta:hover { background: var(--ember2); }
-        .pw-cta.pro-cta   { background: var(--lime);  color: var(--void); }
-        .pw-cta.pro-cta:hover { background: #ccff22; }
+        .pw-cta::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .pw-cta:hover { transform: translateY(-2px); }
+        .pw-cta.basic-cta {
+            background: var(--ember); color: var(--void);
+            box-shadow: 0 4px 20px rgba(255,69,0,0.3);
+        }
+        .pw-cta.basic-cta:hover {
+            background: var(--ember2);
+            box-shadow: 0 6px 28px rgba(255,69,0,0.45);
+        }
+        .pw-cta.pro-cta {
+            background: var(--lime); color: var(--void);
+            box-shadow: 0 4px 20px rgba(184,255,0,0.25);
+        }
+        .pw-cta.pro-cta:hover {
+            background: #ccff22;
+            box-shadow: 0 6px 28px rgba(184,255,0,0.4);
+        }
+
+        /* ── Stripe badge strip ── */
+        .stripe-trust {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .stripe-trust-text {
+            font-size: .6rem; color: var(--dim);
+            letter-spacing: .08em; text-transform: uppercase;
+        }
+        .stripe-logo {
+            display: flex; align-items: center; gap: 4px;
+        }
+        .stripe-logo svg { opacity: 0.45; }
+
+        /* ── Loading state ── */
+        .pw-cta.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .pw-cta.loading::before {
+            content: '';
+            width: 14px; height: 14px;
+            border: 2px solid rgba(0,0,0,0.3);
+            border-top-color: rgba(0,0,0,0.8);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            margin-right: 4px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .pw-dismiss {
             width: 100%; padding: 10px;
@@ -741,13 +740,28 @@
         }
         .pw-dismiss:hover { color: var(--text); }
 
-        .pw-secure {
-            text-align: center; font-size: .6rem;
-            color: var(--dim); margin-top: 14px;
-            letter-spacing: .06em; opacity: .7;
+        /* ── Success toast ── */
+        .toast {
+            position: fixed; top: 72px; left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--green);
+            color: var(--void);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem; letter-spacing: .1em;
+            padding: 12px 24px;
+            z-index: 800;
+            opacity: 0;
+            transition: opacity .3s, transform .3s;
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: 0 8px 32px rgba(0,200,117,0.35);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* ── active tier unlocked banner ── */
+        /* tier banners */
         .tier-banner {
             display: none;
             background: rgba(255,69,0,0.08);
@@ -771,6 +785,9 @@
 </head>
 <body>
 
+<!-- Toast notification -->
+<div class="toast" id="successToast">✓ Plan Activated — Welcome!</div>
+
 <!-- Top Bar -->
 <header class="top-bar">
     <div class="brand">
@@ -785,9 +802,9 @@
     <div class="pill" onclick="openSettingsModal()" id="wagePill">$0.00/hr · 40h ✎</div>
 </header>
 
-<!-- ═══════════════════════════════════════════
-     PAYWALL MODAL
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════
+     PAYWALL MODAL — Stripe Payment Links
+═══════════════════════════════════ -->
 <div class="paywall-overlay" id="paywallModal">
     <div class="paywall-sheet">
         <div class="pw-handle"></div>
@@ -836,15 +853,43 @@
             </div>
         </div>
 
-        <button class="pw-cta basic-cta" id="pwCtaBtn" onclick="activatePlan()">
+        <!--
+            ╔══════════════════════════════════════════════════════╗
+            ║  STRIPE PAYMENT LINKS — REPLACE THE href VALUES     ║
+            ║                                                      ║
+            ║  Basic  → paste your $0.99/mo Stripe Payment Link   ║
+            ║  Pro    → paste your $1.99/mo Stripe Payment Link   ║
+            ║                                                      ║
+            ║  Format: https://buy.stripe.com/test_xxxxxxxx       ║
+            ║                                                      ║
+            ║  In your Stripe link settings, set the success URL  ║
+            ║  to:  https://yourapp.com/?plan=basic               ║
+            ║  or:  https://yourapp.com/?plan=pro                 ║
+            ║  So the app auto-unlocks after payment.             ║
+            ╚══════════════════════════════════════════════════════╝
+        -->
+        <a  id="pwCtaBtn"
+            class="pw-cta basic-cta"
+            href="https://buy.stripe.com/test_REPLACE_BASIC_LINK"
+            target="_blank"
+            rel="noopener noreferrer"
+            onclick="handleStripeClick(event, 'basic')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             Unlock Basic — $0.99/mo
-        </button>
+        </a>
 
-        <button class="pw-dismiss" onclick="closePaywall()">Maybe later</button>
+        <!-- No dismiss / no restore — payment required to proceed -->
 
-        <div class="pw-secure">
-            🔒 &nbsp; Secure checkout · Cancel anytime · Instant access
+        <!-- Stripe trust badge -->
+        <div class="stripe-trust">
+            <div class="stripe-trust-text">Secured by</div>
+            <!-- Stripe wordmark SVG -->
+            <div class="stripe-logo">
+                <svg width="40" height="16" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.44 10.03c0-.67.55-1.04 1.44-1.04 1.28 0 2.91.39 4.19 1.08V6.44A11.1 11.1 0 0 0 6.88 5.7c-3.62 0-6.02 1.9-6.02 5.07 0 4.94 6.8 4.15 6.8 6.28 0 .79-.69 1.05-1.64 1.05-1.42 0-3.23-.59-4.67-1.38v3.67c1.59.69 3.2 1 4.67 1C9.63 21.39 12 19.52 12 16.3c0-5.34-6.56-4.38-6.56-6.27Zm12.25-7.66-4.46.95-.02 14.72c0 2.72 2.04 4.72 4.76 4.72 1.51 0 2.61-.28 3.22-.61v-3.37c-.59.24-3.49.9-3.49-1.35V9.91h3.49V6.28h-3.49l-.01-3.91Zm9.02 4.87-.27-1.36h-3.95v15.38h4.57V13.7c1.08-1.41 2.9-1.15 3.48-.95V8.88c-.6-.22-2.73-.63-3.83 2.36Zm5.37-1.36h4.59v15.38H32.08V5.88Zm0-1.34 4.59-.97V0l-4.59.98v3.56Zm12.1 1.03c-1.64 0-2.7.77-3.29 1.3l-.22-1.03h-4.07v20.65l4.62-.98.01-5.02c.61.44 1.51 1.07 3 1.07 3.03 0 5.79-2.44 5.79-7.8-.01-4.92-2.8-8.19-5.84-8.19Zm-1.02 12.64c-1 0-1.59-.36-2-.8l-.02-6.28c.44-.49 1.05-.82 2.02-.82 1.54 0 2.61 1.73 2.61 3.94 0 2.25-1.05 3.96-2.61 3.96Zm16.35-12.98c-4.63 0-7.43 3.25-7.43 7.98 0 5.27 2.97 7.9 7.7 7.9 2.23 0 3.91-.5 5.17-1.2v-3.5c-1.26.63-2.71 1.02-4.54 1.02-1.8 0-3.4-.63-3.6-2.82h9.07c.02-.25.06-.86.06-1.18-.01-4.72-2.52-8.2-6.43-8.2Zm-2.72 6.28c0-2.1 1.28-2.97 2.69-2.97 1.37 0 2.56.89 2.56 2.97h-5.25Z" fill="#f5f5f5"/>
+                </svg>
+            </div>
+            <div class="stripe-trust-text">· Cancel anytime</div>
         </div>
     </div>
 </div>
@@ -1153,7 +1198,7 @@
         <div class="card"><div class="card-label">Logged Expenses</div><div id="categoryList"></div></div>
     </div>
 
-    <!-- EXTRA INCOME (part of Pro) -->
+    <!-- EXTRA INCOME -->
     <div id="income" class="page">
         <div class="section-title">Extra Income</div>
         <div class="section-divider"></div>
@@ -1449,77 +1494,177 @@
 
 <!-- NAV BAR -->
 <nav class="nav-bar">
-    <!-- FREE -->
     <button class="nav-item active" onclick="showPage('home',this)">
         <span class="nav-icon">⊞</span>
         <span class="nav-label">Home</span>
         <span class="nav-dot"></span>
     </button>
-
-    <!-- BASIC locked tabs -->
     <button class="nav-item" id="navBudget" onclick="handleNavClick('budget','Expenses','basic',this)">
         <span class="nav-icon">≡</span>
         <span class="nav-label">Expenses</span>
         <span class="nav-dot"></span>
         <span class="nav-lock" id="lockBudget">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
         </span>
     </button>
-
-    <!-- PRO locked tabs -->
     <button class="nav-item" id="navInvest" onclick="handleNavClick('invest','Portfolio','pro',this)">
         <span class="nav-icon">◈</span>
         <span class="nav-label">Invest</span>
         <span class="nav-dot"></span>
         <span class="nav-lock" id="lockInvest">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
         </span>
     </button>
-
     <button class="nav-item" id="navDebt" onclick="handleNavClick('debt','Debt Tracker','basic',this)">
         <span class="nav-icon">⊘</span>
         <span class="nav-label">Debt</span>
         <span class="nav-dot"></span>
         <span class="nav-lock" id="lockDebt">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
         </span>
     </button>
-
     <button class="nav-item" id="navWealth" onclick="handleNavClick('wealth','25-Year Projection','pro',this)">
         <span class="nav-icon">↗</span>
         <span class="nav-label">25 Yrs</span>
         <span class="nav-dot"></span>
         <span class="nav-lock" id="lockWealth">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
         </span>
     </button>
 </nav>
 
 <script>
-// ── Persistence ──────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  STRIPE PAYMENT LINKS CONFIGURATION
+//  Replace the URLs below with your real Payment Links from:
+//  https://dashboard.stripe.com/payment-links
+//
+//  In each Payment Link → Settings → Confirmation page, set
+//  the success redirect URL to include a signed token:
+//    https://yourapp.com/?plan=basic&tok=WF_BASIC_2024
+//    https://yourapp.com/?plan=pro&tok=WF_PRO_2024
+//
+//  Then update PLAN_TOKENS below to match those exact values.
+//  Anyone without the correct token cannot unlock via URL.
+// ═══════════════════════════════════════════════════════════════
+const STRIPE_LINKS = {
+    basic: 'https://buy.stripe.com/test_6oU5kC3YE1Lo86rc2f8Ra00',
+    pro:   'https://buy.stripe.com/test_7sYdR89iY9dQ5Yj0jx8Ra01'
+};
+
+// Secret tokens — must match what you put in the Stripe success URL.
+// Change these to any random strings you like. Keep them private.
+const PLAN_TOKENS = {
+    basic: 'WF_BASIC_2024',
+    pro:   'WF_PRO_2024'
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  INTEGRITY GUARD
+//  Runs every 2 seconds. If localStorage was tampered with
+//  (e.g. via DevTools), it resets the tier to 'free'
+//  unless a valid session token is also present.
+// ═══════════════════════════════════════════════════════════════
+function startIntegrityGuard() {
+    setInterval(() => {
+        const storedTier = localStorage.getItem('wf_tier');
+        if (!storedTier || storedTier === '"free"' || storedTier === 'free') return;
+        const sessionToken = sessionStorage.getItem('wf_session_token');
+        const tier = storedTier.replace(/"/g, '');
+        const expectedToken = PLAN_TOKENS[tier];
+        if (!sessionToken || sessionToken !== expectedToken) {
+            // Tier is set but no valid session token — wipe it
+            localStorage.removeItem('wf_tier');
+            currentTier = 'free';
+            updateNavLocks();
+            updateTierBanners();
+            // Force back to home silently
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('home').classList.add('active');
+            document.querySelector('.nav-item').classList.add('active');
+            openPaywall('Premium Features', 'basic');
+        }
+    }, 2000);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUCCESS URL HANDLER
+//  Stripe redirects back with ?plan=basic&tok=WF_BASIC_2024
+//  Both the plan AND the secret token must match.
+//  Just typing ?plan=pro in the browser does nothing.
+// ═══════════════════════════════════════════════════════════════
+function checkUrlPlanParam() {
+    const params = new URLSearchParams(window.location.search);
+    const plan   = params.get('plan');
+    const tok    = params.get('tok');
+
+    // Validate: plan must be known, token must match exactly
+    if ((plan === 'basic' || plan === 'pro') && tok === PLAN_TOKENS[plan]) {
+        currentTier = plan;
+        LS.set('wf_tier', plan);
+        // Store the valid session token — required by integrity guard
+        sessionStorage.setItem('wf_session_token', tok);
+        // Clean up URL — remove params so they can't be shared/bookmarked
+        const url = new URL(window.location.href);
+        url.searchParams.delete('plan');
+        url.searchParams.delete('tok');
+        window.history.replaceState({}, '', url.toString());
+        showToast('✓ ' + (plan === 'pro' ? 'Pro' : 'Basic') + ' Plan Activated!');
+        updateNavLocks();
+        updateTierBanners();
+    } else if (plan) {
+        // Someone tried to access with a plan param but wrong/missing token
+        // Silently ignore — don't unlock anything
+        const url = new URL(window.location.href);
+        url.searchParams.delete('plan');
+        url.searchParams.delete('tok');
+        window.history.replaceState({}, '', url.toString());
+    }
+}
+
+function showToast(msg) {
+    const t = document.getElementById('successToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STRIPE CLICK HANDLER
+// ═══════════════════════════════════════════════════════════════
+function handleStripeClick(event, tier) {
+    const link = STRIPE_LINKS[tier];
+    if (!link || link.includes('REPLACE')) {
+        event.preventDefault();
+        alert('⚠️ Stripe Payment Link not configured.\n\nReplace STRIPE_LINKS.basic and STRIPE_LINKS.pro at the top of the script with your real Stripe Payment Link URLs.\n\nGet them at: dashboard.stripe.com/payment-links');
+        return;
+    }
+    // Link is valid — let Stripe handle it. No client-side unlock.
+}
+
+// ─────────────────────────────────────────
+//  PERSISTENCE
+// ─────────────────────────────────────────
 const LS = {
     get:(k,d)=>{ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} },
     set:(k,v)=>{ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 };
 
-// ── Tier State ───────────────────────────────────────
-// 'free' | 'basic' | 'pro'
+// ─────────────────────────────────────────
+//  TIER STATE
+// ─────────────────────────────────────────
 let currentTier = LS.get('wf_tier', 'free');
 let selectedPaywallTier = 'basic';
 
-// Tier permissions
 const TIER_ACCESS = {
     free:  [],
     basic: ['budget','debt'],
@@ -1530,7 +1675,9 @@ function canAccess(page) {
     return TIER_ACCESS[currentTier] && TIER_ACCESS[currentTier].includes(page);
 }
 
-// ── State ────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  APP STATE
+// ─────────────────────────────────────────
 const TAX=0.85, INV_P=0.20;
 let hourlyWage   = LS.get('wf_wage',   0.00);
 let hoursPerWeek = LS.get('wf_hours',  0);
@@ -1560,21 +1707,19 @@ function toMonthly(a,f){
     return f==='monthly'?a:f==='biweekly'?a*26/12:f==='weekly'?a*52/12:a/12;
 }
 
-// ── PAYWALL LOGIC ─────────────────────────────────────
-
+// ─────────────────────────────────────────
+//  PAYWALL LOGIC
+// ─────────────────────────────────────────
 function handleNavClick(page, featureName, requiredTier, btn) {
-    // If already unlocked, navigate normally
     if(currentTier === 'pro' || (currentTier === 'basic' && requiredTier === 'basic')) {
         showPage(page, btn);
         return;
     }
-    // Otherwise show paywall
     openPaywall(featureName, requiredTier);
 }
 
 function openPaywall(featureName, requiredTier) {
     document.getElementById('pw_feature_name').textContent = featureName;
-    // Pre-select appropriate tier
     if(requiredTier === 'pro') {
         selectTier('pro');
         document.getElementById('pw_title').textContent = 'Pro Feature';
@@ -1584,75 +1729,48 @@ function openPaywall(featureName, requiredTier) {
         document.getElementById('pw_title').textContent = 'Premium Feature';
         document.getElementById('pw_sub').innerHTML = 'Unlock <span id="pw_feature_name">' + featureName + '</span> with a WealthFlow plan.<br>Cancel anytime. No hidden fees.';
     }
-    document.getElementById('paywallModal').classList.add('open');
+    const overlay = document.getElementById('paywallModal');
+    overlay.classList.add('open');
+    // Block backdrop click from closing the paywall
+    overlay.onclick = (e) => { e.stopPropagation(); };
 }
 
-function closePaywall() {
-    document.getElementById('paywallModal').classList.remove('open');
-}
+// closePaywall() is REMOVED — the paywall cannot be dismissed.
+// It only closes after a valid Stripe payment redirect.
 
 function selectTier(tier) {
     selectedPaywallTier = tier;
     document.getElementById('pwTierBasic').classList.toggle('selected', tier === 'basic');
     document.getElementById('pwTierPro').classList.toggle('selected', tier === 'pro');
-    // Update CTA
     const cta = document.getElementById('pwCtaBtn');
     if(tier === 'basic') {
-        cta.textContent = '';
         cta.className = 'pw-cta basic-cta';
+        cta.href = STRIPE_LINKS.basic;
         cta.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Unlock Basic — $0.99/mo';
+        cta.onclick = (e) => handleStripeClick(e, 'basic');
     } else {
         cta.className = 'pw-cta pro-cta';
+        cta.href = STRIPE_LINKS.pro;
         cta.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Unlock Pro — $1.99/mo';
-    }
-}
-
-function activatePlan() {
-    // Simulate payment success — set tier
-    currentTier = selectedPaywallTier;
-    LS.set('wf_tier', currentTier);
-    closePaywall();
-    updateNavLocks();
-    updateTierBanners();
-
-    // Navigate to a now-unlocked page
-    if(currentTier === 'basic') {
-        const btn = document.getElementById('navBudget');
-        showPage('budget', btn);
-    } else if(currentTier === 'pro') {
-        const btn = document.getElementById('navInvest');
-        showPage('invest', btn);
+        cta.onclick = (e) => handleStripeClick(e, 'pro');
     }
 }
 
 function updateNavLocks() {
-    // Expenses & Debt — unlocked at basic+
-    const expensesUnlocked = canAccess('budget');
-    const debtUnlocked = canAccess('debt');
-    const investUnlocked = canAccess('invest');
-    const wealthUnlocked = canAccess('wealth');
-
-    setNavLock('lockBudget', !expensesUnlocked);
-    setNavLock('lockDebt',   !debtUnlocked);
-    setNavLock('lockInvest', !investUnlocked);
-    setNavLock('lockWealth', !wealthUnlocked);
+    setNavLock('lockBudget', !canAccess('budget'));
+    setNavLock('lockDebt',   !canAccess('debt'));
+    setNavLock('lockInvest', !canAccess('invest'));
+    setNavLock('lockWealth', !canAccess('wealth'));
 }
 
 function setNavLock(id, locked) {
     const el = document.getElementById(id);
     if(!el) return;
-    if(locked) {
-        el.style.display = 'flex';
-        el.style.opacity = '0.5';
-    } else {
-        // Show a tiny unlocked icon instead
-        el.style.opacity = '0';
-        el.style.display = 'none';
-    }
+    el.style.display = locked ? 'flex' : 'none';
+    el.style.opacity = locked ? '0.5' : '0';
 }
 
 function updateTierBanners() {
-    // Budget banner
     const bb = document.getElementById('budgetBanner');
     if(currentTier === 'pro') {
         bb.className = 'tier-banner pro show';
@@ -1667,8 +1785,6 @@ function updateTierBanners() {
     } else {
         bb.className = 'tier-banner';
     }
-
-    // Debt banner
     const db = document.getElementById('debtBanner');
     if(currentTier === 'pro') {
         db.className = 'tier-banner pro show';
@@ -1683,15 +1799,15 @@ function updateTierBanners() {
     } else {
         db.className = 'tier-banner';
     }
-
-    // Pro banners
     ['investBanner','wealthBanner','incomeBanner'].forEach(id => {
         const el = document.getElementById(id);
         if(el) el.className = currentTier === 'pro' ? 'tier-banner pro show' : 'tier-banner';
     });
 }
 
-// ── Net Worth ─────────────────────────────────────────
+// ─────────────────────────────────────────
+//  NET WORTH
+// ─────────────────────────────────────────
 function updateNetWorth(){
     const portfolioVal = holdings.reduce((s,h)=>s+h.current, 0);
     const totalDebt    = debts.reduce((s,d)=>s+d.balance, 0);
@@ -1699,12 +1815,10 @@ function updateNetWorth(){
     const inv          = inversion();
     const freeCash     = Math.max(0, totalMonthly()-spent-inv);
     const netWorth     = portfolioVal - totalDebt;
-
     const nwEl = document.getElementById('networthValue');
     nwEl.textContent = fmt(Math.abs(netWorth));
     nwEl.className = 'networth-value ' + (netWorth >= 0 ? 'positive' : 'negative');
     if(netWorth < 0) nwEl.textContent = '−' + fmt(Math.abs(netWorth));
-
     const badge = document.getElementById('nwBadge');
     if(portfolioVal === 0 && totalDebt === 0){
         badge.textContent = 'NO DATA';
@@ -1722,18 +1836,15 @@ function updateNetWorth(){
         badge.style.borderColor = 'rgba(255,51,51,0.3)';
         badge.style.color = 'var(--red)';
     }
-
     const ratio = totalDebt > 0 && portfolioVal > 0
         ? `${((portfolioVal/totalDebt)*100).toFixed(0)}% assets vs debt`
         : portfolioVal > 0 ? 'Debt-free · all assets'
         : totalDebt > 0 ? 'No assets logged against debt'
         : 'Add assets & debts to calculate';
     document.getElementById('networthSub').textContent = ratio;
-
     document.getElementById('nwPortfolio').textContent = fmt(portfolioVal);
     document.getElementById('nwDebts').textContent     = fmt(totalDebt);
     document.getElementById('nwCash').textContent      = fmt(freeCash);
-
     const barTotal = portfolioVal + freeCash + totalDebt;
     const assetPct = barTotal > 0 ? Math.round((portfolioVal + freeCash) / barTotal * 100) : 0;
     const debtPct  = barTotal > 0 ? Math.round(totalDebt / barTotal * 100) : 0;
@@ -1743,12 +1854,22 @@ function updateNetWorth(){
     document.getElementById('nwBarDebtsLabel').textContent  = `Debt ${debtPct}%`;
 }
 
-// ── Navigation ───────────────────────────────────────
-function showPage(id,btn){
+// ─────────────────────────────────────────
+//  NAVIGATION — access re-verified on every call
+// ─────────────────────────────────────────
+function showPage(id, btn) {
+    // Re-verify access even if called programmatically
+    const protectedPages = ['budget','debt','invest','wealth','income'];
+    if (protectedPages.includes(id) && !canAccess(id)) {
+        // Redirect to paywall — never show the page
+        const reqTier = ['invest','wealth','income'].includes(id) ? 'pro' : 'basic';
+        openPaywall(id.charAt(0).toUpperCase() + id.slice(1), reqTier);
+        return;
+    }
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     if(id==='home')   updateHome();
     if(id==='income') renderExtraIncome();
     if(id==='invest') renderInvest();
@@ -1756,12 +1877,19 @@ function showPage(id,btn){
     if(id==='wealth') calculateWealth();
 }
 
-// ── Modals ────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  MODALS
+// ─────────────────────────────────────────
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function closeIfOverlay(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
 
-// ── Settings ──────────────────────────────────────────
+// closePaywall is intentionally NOT exported globally.
+// The paywall can only be closed by a successful payment redirect.
+
+// ─────────────────────────────────────────
+//  SETTINGS
+// ─────────────────────────────────────────
 function openSettingsModal(){
     document.getElementById('s_wage').value  = hourlyWage;
     document.getElementById('s_hours').value = hoursPerWeek;
@@ -1791,7 +1919,9 @@ function updatePill(){
     document.getElementById('wagePill').textContent='$'+hourlyWage.toFixed(2)+'/hr · '+hoursPerWeek+'h ✎';
 }
 
-// ── Extra income ──────────────────────────────────────
+// ─────────────────────────────────────────
+//  EXTRA INCOME
+// ─────────────────────────────────────────
 let selFreqMap = { freq:'monthly', ifreq:'monthly' };
 function selFreq(btn,key){
     btn.closest('.tab-row').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -1833,7 +1963,9 @@ function renderExtraIncome(){
         </div>`).join('');
 }
 
-// ── Holdings ──────────────────────────────────────────
+// ─────────────────────────────────────────
+//  HOLDINGS
+// ─────────────────────────────────────────
 function applyHolding(){
     const name    = document.getElementById('h_name').value.trim();
     const type    = document.getElementById('h_type').value;
@@ -1866,7 +1998,9 @@ function applyUpdate(){
     renderInvest(); updateNetWorth(); closeModal('updateModal');
 }
 
-// ── Contributions ─────────────────────────────────────
+// ─────────────────────────────────────────
+//  CONTRIBUTIONS
+// ─────────────────────────────────────────
 function openContribModal(){
     const today=new Date().toISOString().split('T')[0];
     document.getElementById('c_date').value=today;
@@ -1888,7 +2022,9 @@ function removeContrib(id){
     renderInvest(); renderContribProgress();
 }
 
-// ── Render Invest ─────────────────────────────────────
+// ─────────────────────────────────────────
+//  RENDER INVEST
+// ─────────────────────────────────────────
 function renderInvest(){
     const totalCost    = holdings.reduce((s,h)=>s+h.cost,0);
     const totalCurrent = holdings.reduce((s,h)=>s+h.current,0);
@@ -1896,7 +2032,6 @@ function renderInvest(){
     const gainPct      = totalCost>0?(gain/totalCost*100).toFixed(2):0;
     const totalC       = contribs.reduce((s,c)=>s+c.amount,0);
     const inv          = inversion();
-
     document.getElementById('portfolioValue').textContent = fmt(totalCurrent);
     document.getElementById('portfolioCost').textContent  = fmt(totalCost);
     document.getElementById('portfolioGain').textContent  = fmt(gain);
@@ -1905,7 +2040,6 @@ function renderInvest(){
     document.getElementById('totalContrib').textContent = fmt(totalC);
     document.getElementById('suggestedInv').textContent = fmt(inv);
     document.getElementById('holdingCount').textContent = holdings.length;
-
     const hList=document.getElementById('holdingList');
     if(!holdings.length){
         hList.innerHTML=`<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-text">No assets logged.<br>Tap "+ Asset" to add to your portfolio.</div></div>`;
@@ -1933,7 +2067,6 @@ function renderInvest(){
             </div>`;
         }).join('');
     }
-
     if(holdings.length>0){
         document.getElementById('allocCard').style.display='block';
         const byType={};
@@ -1957,7 +2090,6 @@ function renderInvest(){
     } else {
         document.getElementById('allocCard').style.display='none';
     }
-
     const cList=document.getElementById('contribList');
     if(!contribs.length){
         cList.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No contributions logged.<br>Tap "+ Log" to track history.</div></div>`;
@@ -1976,7 +2108,9 @@ function renderInvest(){
     }
 }
 
-// ── Budget ────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  BUDGET
+// ─────────────────────────────────────────
 function addCategory(){
     const name=document.getElementById('catName').value.trim();
     const amount=parseFloat(document.getElementById('catAmount').value);
@@ -2001,7 +2135,9 @@ function renderBudget(){
 }
 function removeCat(id){ categories=categories.filter(c=>c.id!==id); LS.set('wf_cats',categories); renderBudget(); updateHome(); }
 
-// ── Home ──────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  HOME
+// ─────────────────────────────────────────
 function updateHome(){
     const base=baseSalary(),extra=extraMonthly(),total=base+extra,inv=inversion();
     const spent=categories.reduce((s,c)=>s+c.amount,0);
@@ -2036,7 +2172,9 @@ function updateHome(){
     updateNetWorth();
 }
 
-// ── Wealth ────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  WEALTH PROJECTION
+// ─────────────────────────────────────────
 let projContrib = LS.get('wf_proj_contrib', null);
 let projRate    = LS.get('wf_proj_rate',    10);
 let projYears   = LS.get('wf_proj_years',   25);
@@ -2055,7 +2193,6 @@ function calculateWealth(){
     const checkYears = [];
     for(let y = step; y <= years; y += step) checkYears.push(y);
     if(!checkYears.includes(years)) checkYears.push(years);
-
     let p = 0;
     const miles = [];
     for(let m = 1; m <= totalMonths; m++){
@@ -2064,12 +2201,10 @@ function calculateWealth(){
             miles.push({year: m/12, value: Math.round(p)});
         }
     }
-
     const finalVal  = miles.length ? miles[miles.length-1].value : 0;
     const maxVal    = finalVal || 1;
     const totalPaid = contrib * totalMonths;
     const growth    = finalVal - totalPaid;
-
     document.getElementById('wealthPageTitle').textContent  = years+'-Year Projection';
     document.getElementById('wealthCardLabel').textContent  = 'Projected Value · '+years+' Years';
     document.getElementById('futureValue').textContent      = fmt(finalVal);
@@ -2079,21 +2214,18 @@ function calculateWealth(){
     document.getElementById('wealthTotalContrib').textContent= fmt(totalPaid);
     document.getElementById('wealthTotalGrowth').textContent = fmt(Math.max(0,growth));
     document.getElementById('wealthSub').textContent        = fmt(contrib)+'/mo · '+rate+'% annual · '+years+' yrs';
-
     const hint = rate <= 6
         ? 'Conservative projection. Typical of bonds or balanced funds. Lower risk, steady growth.'
         : rate <= 10
         ? 'Every $100 in additional monthly savings equals approximately $'+Math.round(Math.pow(1+rate/100/12,120)*100)+' in 10 years at this return rate. Discipline compounds.'
         : 'Aggressive projection. Historically possible with equity-heavy portfolios. Higher volatility expected.';
     document.getElementById('wealthDisclaimer').textContent = hint;
-
     document.getElementById('milestones').innerHTML = miles.map(m=>`
         <div class="milestone-row">
             <div class="milestone-year">Yr ${m.year}</div>
             <div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:${Math.round(m.value/maxVal*100)}%"></div></div>
             <div class="milestone-value">${fmt(m.value)}</div>
         </div>`).join('');
-
     syncProjectionInputs();
     renderContribProgress();
 }
@@ -2145,7 +2277,9 @@ function resetProjection(){
     calculateWealth();
 }
 
-// ── Contribution Progress ─────────────────────────────
+// ─────────────────────────────────────────
+//  CONTRIBUTION PROGRESS
+// ─────────────────────────────────────────
 function renderContribProgress(){
     const contrib      = getProjectionContrib();
     const years        = projYears;
@@ -2153,24 +2287,20 @@ function renderContribProgress(){
     const actualTotal  = contribs.reduce((s,c) => s+c.amount, 0);
     const n            = contribs.length;
     const pct          = totalTarget > 0 ? Math.min(100, (actualTotal / totalTarget) * 100) : 0;
-
     document.getElementById('cp_actual').textContent     = fmt(actualTotal);
     document.getElementById('cp_actual_sub').textContent = n === 0 ? 'No contributions logged yet' : n + ' contribution' + (n===1?'':'s') + ' logged';
     document.getElementById('cp_target_label').textContent= 'Target: ' + fmt(totalTarget);
     document.getElementById('cp_pct_label').textContent  = pct.toFixed(1) + '% of projection target';
     document.getElementById('cp_bar').style.width        = pct + '%';
-
     const remaining = Math.max(0, totalTarget - actualTotal);
     const ahead     = actualTotal - totalTarget;
     document.getElementById('cp_remaining_label').textContent = remaining > 0 ? fmt(remaining) + ' remaining' : '';
     document.getElementById('cp_ahead_label').textContent     = ahead > 0 ? '▲ ' + fmt(ahead) + ' ahead of target' : '';
-
     const now = new Date();
     const thisMonthTotal = contribs
         .filter(c => { if(!c.date) return false; const d = new Date(c.date+'T12:00:00'); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); })
         .reduce((s,c) => s+c.amount, 0);
     document.getElementById('cp_this_month').textContent = fmt(thisMonthTotal);
-
     let avgPerMonth = 0;
     if(n > 0){
         const dates = contribs.filter(c=>c.date).map(c=>new Date(c.date+'T12:00:00')).sort((a,b)=>a-b);
@@ -2183,7 +2313,6 @@ function renderContribProgress(){
         }
     }
     document.getElementById('cp_avg_month').textContent = fmt(avgPerMonth);
-
     let streak = 0;
     const check = new Date(now.getFullYear(), now.getMonth(), 1);
     for(let i = 0; i < 120; i++){
@@ -2197,7 +2326,6 @@ function renderContribProgress(){
         else break;
     }
     document.getElementById('cp_streak').textContent = streak + ' mo' + (streak !== 1 ? 's' : '');
-
     document.getElementById('cp_monthly_target').textContent   = fmt(contrib);
     document.getElementById('cp_monthly_actual_val').textContent= fmt(avgPerMonth);
     const diff = avgPerMonth - contrib;
@@ -2223,7 +2351,6 @@ function renderContribProgress(){
         verdictEl.style.color = 'rgba(255,51,51,0.7)';
         verdictEl.textContent = '▼ You\'re averaging ' + fmt(Math.abs(diff)) + '/mo below target. Consider increasing monthly contributions to stay on track.';
     }
-
     const histEl = document.getElementById('cp_history');
     if(!n){
         histEl.innerHTML = `<div class="empty-state" style="padding:16px 0;"><div class="empty-icon" style="margin:0 auto 10px;">📋</div><div class="empty-text">No contributions yet.<br>Tap "+ Log" to record your first.</div></div>`;
@@ -2247,7 +2374,9 @@ function renderContribProgress(){
     }).join('') + (sorted.length > 8 ? `<div style="text-align:center;padding:10px 0;font-size:.62rem;color:var(--dim);">+ ${sorted.length-8} more in Invest → Contribution Log</div>` : '');
 }
 
-// ── Debt ─────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  DEBT
+// ─────────────────────────────────────────
 const DEBT_LABEL = {credit:'Credit Card',personal:'Personal Loan',auto:'Auto Loan',mortgage:'Mortgage',student:'Student Loan',medical:'Medical Debt',other:'Other'};
 const DEBT_COLOR = {credit:'#ff3333',personal:'#ff4500',auto:'#00d4ff',mortgage:'#00c875',student:'#c9a84c',medical:'#b8ff00',other:'#5a5750'};
 
@@ -2345,7 +2474,6 @@ function renderDebt(){
     document.getElementById('debtMonthlyInt').textContent  =fmt(totalMonthlyInt);
     document.getElementById('debtTotalPaid').textContent   =fmt(totalPaid);
     document.getElementById('debtCountLabel').textContent  =debts.length===0?'No debts logged':debts.length+(debts.length===1?' debt logged':' debts logged');
-
     const dList=document.getElementById('debtList');
     if(!debts.length){
         dList.innerHTML=`<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-text">No debts logged.<br>Tap "+ Debt" to add one.</div></div>`;
@@ -2376,7 +2504,6 @@ function renderDebt(){
             </div>`;
         }).join('');
     }
-
     const pList=document.getElementById('paymentList');
     if(!payments.length){
         pList.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No payments logged yet.</div></div>`;
@@ -2443,7 +2570,9 @@ function runCalcExtra(){
         <div class="calc-result-row"><span class="calc-result-label">Interest saved</span><span class="calc-result-value c-green">${fmt(savedMoney)}</span></div>`;
 }
 
-// ── PDF ───────────────────────────────────────────────
+// ─────────────────────────────────────────
+//  PDF EXPORT
+// ─────────────────────────────────────────
 function downloadBalanceSheet(){
     const btn = document.getElementById('pdfBtn');
     btn.textContent = 'Generating...';
@@ -2473,7 +2602,6 @@ function buildPDF(){
     const rect=(x,y,w,h,fill,stroke=null)=>{if(fill){doc.setFillColor(...fill);doc.rect(x,y,w,h,'F');}if(stroke){doc.setDrawColor(...stroke);doc.setLineWidth(0.5);doc.rect(x,y,w,h,'S');}};
     const money=n=>{const abs=Math.abs(n);const s='$'+abs.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});return n<0?'('+s+')':s;};
     const dateStr=()=>new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-
     const base=baseSalary(),extra=extraMonthly(),total=base+extra,inv=inversion();
     const spent=categories.reduce((s,c)=>s+c.amount,0),remain=total-spent-inv;
     const portCurrent=holdings.reduce((s,h)=>s+h.current,0),portCost=holdings.reduce((s,h)=>s+h.cost,0),portGain=portCurrent-portCost;
@@ -2481,7 +2609,6 @@ function buildPDF(){
     const totalContribActual=contribs.reduce((s,c)=>s+c.amount,0);
     const projContribAmt=getProjectionContrib();
     let projFinal=0;{let p=0;for(let m=1;m<=projYears*12;m++)p=(p+projContribAmt)*(1+projRate/100/12);projFinal=Math.round(p);}
-
     let curY=TM;
     rect(0,0,PW,6,C.black);
     curY=36;
@@ -2491,18 +2618,15 @@ function buildPDF(){
     setFont('bold',9,C.ink);doc.text(dateStr(),PW-MR,curY+8,{align:'right'});
     setFont('normal',8,C.muted);doc.text('FISCAL PERIOD · MONTHLY',PW-MR,curY+20,{align:'right'});
     curY+=36;hline(curY,ML,PW-MR,1.5,C.black);curY+=16;
-
     const kpiW=CW/3;
     [{label:'NET WORTH',value:money(netWorth),color:netWorth>=0?C.green:C.red},{label:'MONTHLY INCOME',value:money(total),color:C.ink},{label:'AVAILABLE CASH',value:money(remain),color:remain>=0?C.green:C.red}]
     .forEach((k,i)=>{const x=ML+i*kpiW;rect(x,curY,kpiW-4,52,i%2===0?C.bg:C.bgAlt);setFont('normal',7,C.muted);doc.text(k.label,x+10,curY+14);setFont('bold',14,k.color);doc.text(k.value,x+10,curY+34);if(i>0){doc.setDrawColor(...C.rule);doc.setLineWidth(0.5);doc.line(x,curY,x,curY+52);}});
     curY+=62;
-
     const sectionHead=(title,subtitle='')=>{curY+=14;rect(ML,curY,CW,20,C.black);setFont('bold',8.5,[255,255,255]);doc.text(title,ML+10,curY+13);if(subtitle){setFont('normal',7.5,[180,180,180]);doc.text(subtitle,PW-MR-8,curY+13,{align:'right'});}curY+=26;};
     const tableRow=(label,value,bold=false,bgColor=null,indent=0,valueColor=C.ink)=>{const rowH=16;if(bgColor)rect(ML,curY,CW,rowH,bgColor);setFont(bold?'bold':'normal',8.5,C.mid);doc.text(label,ML+10+indent,curY+11);setFont(bold?'bold':'normal',8.5,valueColor);doc.text(value,PW-MR-10,curY+11,{align:'right'});hline(curY+rowH,ML,PW-MR,0.3,C.rule);curY+=rowH;};
     const subHead=(label)=>{setFont('bold',7.5,C.muted);doc.text(label.toUpperCase(),ML+10,curY+9);curY+=14;};
     const totalRow=(label,value,topRule=true,valueColor=C.ink)=>{if(topRule)hline(curY,ML,PW-MR,0.8,C.ink);curY+=2;rect(ML,curY,CW,18,C.bgAlt);setFont('bold',9,C.black);doc.text(label,ML+10,curY+12);setFont('bold',9,valueColor);doc.text(value,PW-MR-10,curY+12,{align:'right'});curY+=22;};
     const checkPage=(needed=80)=>{if(curY+needed>PH-60){doc.addPage();curY=TM;rect(0,0,PW,3,C.black);curY+=10;}};
-
     sectionHead('I. INCOME STATEMENT','Monthly');
     subHead('Revenue');
     tableRow('Base Salary (net of taxes)',money(base));
@@ -2518,7 +2642,6 @@ function buildPDF(){
     varExp.forEach(c=>tableRow(c.name,money(c.amount),false,null,16));
     totalRow('TOTAL EXPENSES',money(spent),true,C.red);
     totalRow('NET AVAILABLE BALANCE',money(remain),false,remain>=0?C.green:C.red);
-
     checkPage(160);sectionHead('II. BALANCE SHEET','Current Positions');
     subHead('Assets — Investment Portfolio');
     if(!holdings.length){tableRow('No assets recorded','—',false,null,16,C.muted);}
@@ -2534,32 +2657,49 @@ function buildPDF(){
     setFont('bold',10,C.black);doc.text('NET WORTH  (Total Assets − Total Liabilities)',ML+10,curY+16);
     setFont('bold',12,netWorth>=0?C.green:C.red);doc.text(money(netWorth),PW-MR-10,curY+16,{align:'right'});
     curY+=28;
-
     checkPage(120);sectionHead('III. INVESTMENT PORTFOLIO','Holdings & Contributions');
     tableRow('Total Portfolio Market Value',money(portCurrent),false,C.bg);tableRow('Total Cost Basis',money(portCost));tableRow('Total Unrealized Gain / (Loss)',(portGain>=0?'+':'')+money(portGain),false,null,0,portGain>=0?C.green:C.red);tableRow('Total Contributions Logged',money(totalContribActual));tableRow('Suggested Monthly Investment',money(inv),false,null,0,C.green);
     curY+=6;if(contribs.length){subHead('Recent Contribution History (last 5)');contribs.slice(0,5).forEach(c=>{const dt=c.date?new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}):'—';tableRow(c.name+' · '+dt,money(c.amount),false,null,16,C.green);});}
-
     checkPage(120);sectionHead('IV. DEBT SCHEDULE','Amortization Summary');
     if(!debts.length){setFont('italic',8.5,C.muted);doc.text('No debts recorded. Debt-free position.',ML+10,curY+11);curY+=20;}
     else{rect(ML,curY,CW,14,C.bgAlt);setFont('bold',7,C.muted);doc.text('DEBT NAME',ML+10,curY+10);doc.text('BALANCE',ML+240,curY+10,{align:'right'});doc.text('RATE',ML+310,curY+10,{align:'right'});doc.text('MIN PMT',ML+380,curY+10,{align:'right'});doc.text('EST. PAYOFF',PW-MR-10,curY+10,{align:'right'});curY+=16;
     debts.forEach((d,i)=>{if(i%2===0)rect(ML,curY,CW,16,C.bg);const res=calcPayoff(d.balance,d.rate,d.minpay);const payStr=res&&!res.error?Math.floor(res.months/12)+'y '+res.months%12+'m':'—';setFont('normal',8,C.ink);const nm=d.name.length>28?d.name.slice(0,26)+'…':d.name;doc.text(nm,ML+10,curY+11);doc.text(money(d.balance),ML+240,curY+11,{align:'right'});doc.text(d.rate+'%',ML+310,curY+11,{align:'right'});doc.text(money(d.minpay||0),ML+380,curY+11,{align:'right'});setFont('normal',8,res&&!res.error?C.mid:C.muted);doc.text(payStr,PW-MR-10,curY+11,{align:'right'});hline(curY+16,ML,PW-MR,0.3,C.rule);curY+=16;});
     const totInt=debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);totalRow('TOTAL OUTSTANDING DEBT',money(totalDebt),true,C.red);tableRow('Monthly Interest Burden',money(totInt),false,null,0,C.red);const totPaid=payments.reduce((s,p)=>s+p.amount,0);tableRow('Total Payments Made to Date',money(totPaid),false,null,0,C.green);}
-
     checkPage(140);sectionHead('V. WEALTH PROJECTION',projYears+'-Year Forecast · '+projRate+'% Annual Return');
     tableRow('Monthly Contribution Assumed',money(projContribAmt),false,C.bg);tableRow('Annual Return Rate',projRate.toFixed(2)+'%');tableRow('Investment Horizon',projYears+' years');tableRow('Total Capital Contributed',money(projContribAmt*projYears*12));tableRow('Total Projected Growth (Returns)',money(Math.max(0,projFinal-projContribAmt*projYears*12)),false,null,0,C.green);
     curY+=4;hline(curY,ML,PW-MR,1,C.black);curY+=4;rect(ML,curY,CW,26,C.bgAlt);setFont('bold',11,C.black);doc.text('PROJECTED PORTFOLIO VALUE AT YEAR '+projYears,ML+10,curY+18);setFont('bold',13,C.green);doc.text(money(projFinal),PW-MR-10,curY+18,{align:'right'});curY+=30;
     curY+=4;subHead('Growth Milestones');
     const step=Math.max(1,Math.floor(projYears/5));const milYears=[];for(let y=step;y<=projYears;y+=step)milYears.push(y);if(!milYears.includes(projYears))milYears.push(projYears);
     milYears.forEach((y,i)=>{let p=0;for(let m=1;m<=y*12;m++)p=(p+projContribAmt)*(1+projRate/100/12);tableRow('Year '+y,money(Math.round(p)),false,i%2===0?C.bg:null,16,C.green);});
-
     const pageCount=doc.getNumberOfPages();
     for(let i=1;i<=pageCount;i++){doc.setPage(i);rect(0,PH-36,PW,36,C.black);setFont('normal',7,[160,160,160]);doc.text('WEALTHFLOW · PERSONAL FINANCIAL STATEMENT · CONFIDENTIAL',ML,PH-20);doc.text('Page '+i+' of '+pageCount,PW-MR,PH-20,{align:'right'});setFont('normal',6.5,[100,100,100]);doc.text('This document is for personal informational purposes only and does not constitute financial advice.',PW/2,PH-10,{align:'center'});}
-
     doc.save('WealthFlow_Balance_Sheet_'+new Date().toISOString().slice(0,10)+'.pdf');
 }
 
-// ── Init ──────────────────────────────────────────────
-window.onload=()=>{
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
+window.onload = () => {
+    // 1. Check for valid Stripe redirect (?plan=X&tok=Y)
+    checkUrlPlanParam();
+
+    // 2. If a tier is stored from a previous session, verify the session token
+    //    is also present. If not, the tab was freshly opened without a valid
+    //    payment redirect — wipe the stored tier.
+    const storedTier = LS.get('wf_tier', 'free');
+    if (storedTier !== 'free') {
+        const sessionToken = sessionStorage.getItem('wf_session_token');
+        const expectedToken = PLAN_TOKENS[storedTier];
+        if (!sessionToken || sessionToken !== expectedToken) {
+            // No valid session token — treat as free regardless of localStorage
+            currentTier = 'free';
+            localStorage.removeItem('wf_tier');
+        }
+    }
+
+    // 3. Start the continuous integrity guard (catches DevTools manipulation)
+    startIntegrityGuard();
+
     updatePill();
     renderBudget();
     renderExtraIncome();
