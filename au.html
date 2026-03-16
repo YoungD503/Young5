@@ -1,71 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Meridian — Institutional Payments</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>WBTC</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-
-/* ══════════════════════════════════════════════
-   DESIGN TOKENS — Institutional Green / Ivory
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS — Clean Institutional Light
+═══════════════════════════════════════════ */
 :root {
   /* Brand greens */
-  --forest:   #0E2A1A;
-  --deep:     #163524;
-  --mid:      #1E4A32;
-  --rich:     #276041;
-  --standard: #2E7A50;
-  --light:    #3D9966;
-  --pale:     #5BB882;
-  --tint:     #C6E8D4;
-  --wash:     #EAF5EE;
+  --g900: #082615;
+  --g800: #0D3B20;
+  --g700: #145229;
+  --g600: #1B6B34;
+  --g500: #22843F;
+  --g400: #2D9E50;
+  --g300: #3DB866;
+  --g200: #62CE86;
+  --g100: #96E3B0;
+  --g050: #C8F2D8;
+  --g010: #EBF9F0;
+
+  /* Bitcoin orange */
+  --btc:        #F7931A;
+  --btc-light:  #FFF4E6;
+  --btc-border: rgba(247,147,26,0.25);
+
+  /* Lightning purple */
+  --ln:        #7B68EE;
+  --ln-light:  #F0EEFF;
+
+  /* Remittance blue */
+  --remit:      #1565C0;
+  --remit-light:#E3F0FF;
 
   /* Neutrals */
-  --ink:      #0F1A14;
-  --ink2:     #243B2C;
-  --ink3:     #456055;
-  --ink4:     #7A9E8C;
-  --rule:     #D5E3DA;
-  --rule2:    #C0D6C8;
-  --surface:  #F7FAF8;
-  --white:    #FFFFFF;
+  --ink:    #0A1A0F;
+  --ink2:   #1E3A28;
+  --ink3:   #3D6B4F;
+  --ink4:   #6B9B7C;
+  --ink5:   #9DC4AC;
+  --rule:   #DFF0E6;
+  --rule2:  #C8E4D2;
+  --bg:     #F2FAF5;
+  --white:  #FFFFFF;
+  --card:   #FFFFFF;
+  --surface:#F7FCF9;
 
-  /* Accent */
-  --gold:     #9A7B3A;
-  --gold-lt:  #C4A55A;
-  --gold-bg:  #FBF5E6;
-  --red:      #B53232;
-  --red-bg:   #FDF0F0;
+  /* Semantic */
+  --success: #1B6B34;
+  --danger:  #C0392B;
+  --danger-light: #FDECEA;
+  --warn:    #D97706;
+  --warn-light: #FEF3C7;
 
-  /* Typography */
-  --serif:    'Playfair Display', 'Times New Roman', serif;
-  --body:     'IBM Plex Sans', 'Helvetica Neue', sans-serif;
-  --mono:     'IBM Plex Mono', 'Courier New', monospace;
+  /* Type */
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 
   /* Geometry */
-  --app-w:    480px;
-  --nav-h:    68px;
-  --r-sm:     4px;
-  --r:        6px;
-  --r-lg:     10px;
-  --r-xl:     14px;
-
-  /* Motion */
-  --ease:     cubic-bezier(0.22, 1, 0.36, 1);
+  --app-w:  420px;
+  --nav-h:  72px;
+  --r-sm:   6px;
+  --r:      12px;
+  --r-lg:   18px;
+  --r-xl:   24px;
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+html { -webkit-tap-highlight-color: transparent; }
 
 body {
-  background: var(--surface);
+  background: var(--bg);
   color: var(--ink);
-  font-family: var(--body);
-  font-weight: 400;
-  font-size: 14px;
+  font-family: var(--sans);
+  font-size: 15px;
   line-height: 1.5;
   min-height: 100svh;
   overflow-x: hidden;
@@ -73,20 +86,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle top rule */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--forest) 0%, var(--standard) 50%, var(--forest) 100%);
-  z-index: 999;
-}
-
-/* ══════════════════════════════════════════════
-   LAYOUT
-══════════════════════════════════════════════ */
-.app {
+/* ═══════════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════════ */
+.app-shell {
   max-width: var(--app-w);
   margin: 0 auto;
   min-height: 100svh;
@@ -94,482 +97,392 @@ body::before {
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 0 60px rgba(10,26,15,0.08);
 }
 
-@media (min-width: 480px) {
-  .app {
-    box-shadow: 0 0 0 1px var(--rule), 0 4px 40px rgba(14,42,26,0.08);
-  }
-}
-
-/* ══════════════════════════════════════════════
-   HEADER
-══════════════════════════════════════════════ */
-.header {
-  background: var(--forest);
-  padding: clamp(14px,3.5vw,20px) clamp(18px,4.5vw,28px);
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
+.topbar {
+  background: var(--white);
+  padding: 0 clamp(16px,4vw,22px);
+  height: clamp(56px,14vw,66px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
   position: sticky;
-  top: 3px;
-  z-index: 90;
+  top: 0;
+  z-index: 80;
   flex-shrink: 0;
 }
 
-.brand {
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.logo-badge {
+  width: clamp(32px,8vw,38px);
+  height: clamp(32px,8vw,38px);
+  background: var(--g600);
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(14px,3.5vw,17px);
+  font-weight: 800;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.logo-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-}
-
-.brand-name {
-  font-family: var(--serif);
-  font-size: clamp(18px,4.5vw,22px);
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: 0.5px;
   line-height: 1.1;
 }
-
-.brand-sub {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 3px;
+.logo-name {
+  font-size: clamp(14px,3.5vw,17px);
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+}
+.logo-sub {
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 600;
+  color: var(--ink4);
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-  font-family: var(--body);
 }
 
-.header-right {
+.topbar-right {
   display: flex;
   align-items: center;
   gap: clamp(8px,2vw,12px);
 }
 
-.hdr-btn {
-  width: clamp(32px,8vw,38px);
-  height: clamp(32px,8vw,38px);
+.lang-toggle {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  padding: 3px;
+  gap: 2px;
+}
+.lt-btn {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--ink4);
+  font-family: var(--sans);
+  transition: all 0.2s;
+}
+.lt-btn.active {
+  background: var(--g600);
+  color: var(--white);
+}
+
+.tb-icon-btn {
+  width: clamp(34px,8.5vw,40px);
+  height: clamp(34px,8.5vw,40px);
   border-radius: var(--r);
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--rule);
+  background: var(--surface);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.tb-icon-btn:hover { border-color: var(--rule2); background: var(--g010); }
+.tb-icon-btn svg { width: 17px; height: 17px; stroke: var(--ink3); fill: none; stroke-width: 1.8; }
+
+.notif-pip {
+  position: absolute;
+  top: 7px; right: 7px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--btc);
+  border: 2px solid var(--white);
+}
+
+.user-av {
+  width: clamp(34px,8.5vw,40px);
+  height: clamp(34px,8.5vw,40px);
+  border-radius: var(--r);
+  background: var(--g010);
+  border: 2px solid var(--g100);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(11px,2.8vw,13px);
+  font-weight: 800;
+  color: var(--g600);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.user-av:hover { border-color: var(--g300); }
+
+/* ═══════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════ */
+.screens-wrap {
+  flex: 1;
+  overflow: hidden;
   position: relative;
 }
-.hdr-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
-.hdr-btn svg { width: 15px; height: 15px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 1.8; }
 
-.notif-dot {
-  position: absolute; top: 6px; right: 6px;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold-lt);
-  border: 1.5px solid var(--forest);
-}
-
-.hdr-avatar {
-  width: clamp(32px,8vw,38px);
-  height: clamp(32px,8vw,38px);
-  border-radius: var(--r);
-  background: var(--rich);
-  border: 1px solid rgba(255,255,255,0.15);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif);
-  font-size: clamp(12px,3vw,14px);
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.hdr-avatar:hover { background: var(--mid); }
-
-/* ══════════════════════════════════════════════
-   SCREENS
-══════════════════════════════════════════════ */
 .screen {
   display: none;
-  flex: 1;
+  height: 100%;
+  overflow-y: auto;
   padding-bottom: calc(var(--nav-h) + 16px);
-  animation: pgIn 0.3s var(--ease) both;
+  animation: pgIn 0.32s var(--ease) both;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.screen::-webkit-scrollbar { display: none; }
 .screen.active { display: block; }
 
 @keyframes pgIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════════════════════
-   BALANCE BANNER
-══════════════════════════════════════════════ */
-.balance-band {
-  background: var(--forest);
-  padding: clamp(20px,5vw,32px) clamp(18px,4.5vw,28px) clamp(24px,6vw,36px);
+/* ═══════════════════════════════════════════
+   HOME SCREEN
+═══════════════════════════════════════════ */
+
+/* Balance Hero */
+.balance-hero {
+  background: linear-gradient(160deg, var(--g800) 0%, var(--g900) 100%);
+  padding: clamp(20px,5vw,28px) clamp(16px,4vw,22px);
   position: relative;
   overflow: hidden;
 }
 
-/* Subtle grid pattern */
-.balance-band::after {
+.balance-hero::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.balance-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
 }
 
-.bal-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: clamp(8px,2vw,12px);
-}
-
-.bal-figure {
-  font-family: var(--serif);
-  font-size: clamp(36px,10vw,52px);
-  font-weight: 400;
-  color: var(--white);
-  letter-spacing: -1px;
-  line-height: 1;
-  position: relative;
-  z-index: 1;
-}
-.bal-figure .sym {
-  font-size: 0.45em;
-  color: rgba(255,255,255,0.5);
-  vertical-align: super;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.bal-figure .dec {
-  font-size: 0.55em;
+.bh-greeting {
+  font-size: clamp(11px,2.8vw,13px);
   color: rgba(255,255,255,0.55);
-}
-
-.bal-meta {
-  margin-top: clamp(10px,2.5vw,14px);
+  font-weight: 500;
+  margin-bottom: clamp(14px,3.5vw,18px);
   display: flex;
   align-items: center;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
-  flex-wrap: wrap;
+  gap: 6px;
+}
+.bh-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,200,83,0.15);
+  border: 1px solid rgba(0,200,83,0.25);
+  color: #62CE86;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+.live-dot {
+  width: 5px; height: 5px;
+  background: #62CE86;
+  border-radius: 50%;
+  animation: livePulse 1.8s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.bh-total-label {
+  font-size: clamp(10px,2.5vw,11px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
 }
 
-.bal-change {
+.bh-total {
+  font-size: clamp(38px,10vw,50px);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.bh-total sup {
+  font-size: 0.42em;
+  color: rgba(255,255,255,0.5);
+  vertical-align: super;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.bh-change {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
-  border-radius: var(--r-sm);
-  background: rgba(61,153,102,0.25);
-  border: 1px solid rgba(91,184,130,0.3);
-  font-size: 11px;
+  background: rgba(98,206,134,0.18);
+  border: 1px solid rgba(98,206,134,0.25);
+  color: #96E3B0;
+  font-size: clamp(10px,2.5vw,12px);
   font-weight: 600;
-  color: var(--pale);
+  padding: 3px 10px;
+  border-radius: 100px;
   font-family: var(--mono);
-  letter-spacing: 0.5px;
+  margin-bottom: clamp(16px,4vw,22px);
 }
 
-.bal-period {
-  font-size: 11px;
+/* Dual currency cards */
+.currency-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px,2vw,10px);
+  margin-bottom: clamp(16px,4vw,20px);
+}
+
+.cc-tile {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-lg);
+  padding: clamp(12px,3vw,15px);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cc-tile:hover { background: rgba(255,255,255,0.11); }
+
+.cct-flag {
+  font-size: clamp(16px,4vw,20px);
+  margin-bottom: 6px;
+}
+.cct-label {
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 3px;
+}
+.cct-amount {
+  font-size: clamp(18px,4.5vw,22px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.cct-amount.usd { color: var(--g200); }
+.cct-amount.btc { color: var(--btc); }
+.cct-sub {
+  font-size: clamp(9px,2.2vw,10px);
   color: rgba(255,255,255,0.3);
   font-family: var(--mono);
-  letter-spacing: 0.5px;
+  margin-top: 2px;
 }
 
-/* Actions strip inside banner */
-.action-strip {
+/* Quick actions */
+.quick-actions {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(8px,2vw,10px);
-  margin-top: clamp(20px,5vw,28px);
-  position: relative;
-  z-index: 1;
+  gap: clamp(6px,1.5vw,8px);
 }
 
-.action-btn {
+.qa-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(6px,1.5vw,8px);
-  padding: clamp(12px,3vw,16px) clamp(6px,1.5vw,8px);
-  border-radius: var(--r-lg);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer;
-  transition: all 0.22s var(--ease);
-  position: relative;
-  overflow: hidden;
-}
-.action-btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0);
-  transition: background 0.2s;
-}
-.action-btn:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.18);
-}
-.action-btn:active { transform: scale(0.97); }
-
-.action-ico {
-  width: clamp(34px,8.5vw,42px);
-  height: clamp(34px,8.5vw,42px);
-  border-radius: var(--r);
-  display: flex; align-items: center; justify-content: center;
+  padding: clamp(12px,3vw,15px) clamp(6px,1.5vw,8px);
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.1);
-}
-.action-ico svg { width: clamp(15px,3.8vw,18px); height: clamp(15px,3.8vw,18px); stroke: rgba(255,255,255,0.8); fill: none; stroke-width: 1.8; }
-
-.action-lbl {
-  font-size: clamp(9px,2.2vw,11px);
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-}
-
-/* ══════════════════════════════════════════════
-   CARD
-══════════════════════════════════════════════ */
-.card-section {
-  padding: clamp(16px,4vw,24px) clamp(18px,4.5vw,28px) 0;
-}
-
-.inst-card {
-  border-radius: var(--r-xl);
-  background: var(--forest);
-  padding: clamp(18px,4.5vw,24px);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-  box-shadow: 0 4px 24px rgba(14,42,26,0.2);
-}
-
-.inst-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(14,42,26,0.28);
-}
-
-/* Fine lines across card */
-.inst-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    repeating-linear-gradient(
-      -55deg,
-      transparent,
-      transparent 40px,
-      rgba(255,255,255,0.012) 40px,
-      rgba(255,255,255,0.012) 41px
-    );
-}
-
-.inst-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.15) 70%, transparent 100%);
-}
-
-.card-inner { position: relative; z-index: 1; }
-
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: clamp(18px,4.5vw,26px);
-}
-
-.card-brand {
-  font-family: var(--serif);
-  font-size: clamp(15px,3.8vw,18px);
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: 1px;
-  line-height: 1.2;
-}
-.card-brand span {
-  display: block;
-  font-family: var(--body);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-.card-chip {
-  width: clamp(30px,7.5vw,38px);
-  height: clamp(22px,5.5vw,28px);
-  border-radius: 4px;
-  background: linear-gradient(135deg, #D4AF6A 0%, #B8922A 50%, #8A6A1A 100%);
-  position: relative;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-}
-.card-chip::before {
-  content: '';
-  position: absolute; top:50%; left:0; right:0; height:1px;
-  background: rgba(0,0,0,0.18); transform: translateY(-50%);
-}
-.card-chip::after {
-  content: '';
-  position: absolute; top:0; bottom:0; left:50%; width:1px;
-  background: rgba(0,0,0,0.14); transform: translateX(-50%);
-}
-
-.card-num {
-  font-family: var(--mono);
-  font-size: clamp(12px,3vw,14px);
-  letter-spacing: clamp(2px,0.5vw,3px);
-  color: rgba(255,255,255,0.45);
-  margin-bottom: clamp(16px,4vw,22px);
-}
-
-.card-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.card-holder-lbl {
-  font-size: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-.card-holder-name {
-  font-family: var(--serif);
-  font-size: clamp(13px,3.2vw,15px);
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-.card-exp { text-align: right; }
-.card-exp-lbl {
-  font-size: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-.card-exp-val {
-  font-family: var(--mono);
-  font-size: clamp(11px,2.8vw,13px);
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 2px;
-}
-
-/* ══════════════════════════════════════════════
-   CONTENT SECTIONS
-══════════════════════════════════════════════ */
-.content-block {
-  padding: clamp(16px,4vw,24px) clamp(18px,4.5vw,28px) 0;
-}
-
-/* ── Section header ── */
-.sec-hd {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: clamp(12px,3vw,16px);
-  padding-bottom: clamp(10px,2.5vw,12px);
-  border-bottom: 1px solid var(--rule);
-}
-
-.sec-title {
-  font-family: var(--serif);
-  font-size: clamp(15px,3.8vw,18px);
-  font-weight: 500;
-  color: var(--forest);
-  letter-spacing: 0.2px;
-}
-
-.sec-link {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--standard);
-  cursor: pointer;
-  transition: color 0.2s;
-  text-decoration: none;
-}
-.sec-link:hover { color: var(--mid); }
-
-/* ══════════════════════════════════════════════
-   STAT TILES
-══════════════════════════════════════════════ */
-.stat-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px,2vw,10px);
-  margin-bottom: 0;
-}
-
-.stat-tile {
-  padding: clamp(14px,3.5vw,18px);
   border-radius: var(--r-lg);
-  border: 1px solid var(--rule);
-  background: var(--white);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.stat-tile:hover {
-  border-color: var(--rule2);
-  box-shadow: 0 2px 12px rgba(14,42,26,0.06);
+.qa-btn:hover { background: rgba(255,255,255,0.13); }
+.qa-btn:active { transform: scale(0.96); }
+
+.qa-ic {
+  width: clamp(36px,9vw,44px);
+  height: clamp(36px,9vw,44px);
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(16px,4vw,20px);
+}
+.qa-ic.send    { background: rgba(98,206,134,0.15); }
+.qa-ic.receive { background: rgba(247,147,26,0.15); }
+.qa-ic.scan    { background: rgba(123,104,238,0.15); }
+.qa-ic.remit   { background: rgba(33,150,243,0.15); }
+
+.qa-label {
+  font-size: clamp(9px,2.2vw,11px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.3px;
+  text-align: center;
+  line-height: 1.3;
 }
 
-.st-label {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--ink4);
-  margin-bottom: clamp(6px,1.5vw,8px);
+/* Sections inside screens */
+.section-pad {
+  padding: clamp(16px,4vw,22px) clamp(16px,4vw,22px) 0;
 }
-.st-value {
-  font-family: var(--serif);
-  font-size: clamp(20px,5vw,26px);
-  font-weight: 500;
-  color: var(--forest);
-  letter-spacing: -0.3px;
-}
-.st-sub {
-  font-size: 10px;
-  color: var(--ink4);
-  margin-top: 3px;
-  font-family: var(--mono);
-}
-.st-value.credit { color: var(--standard); }
-.st-value.debit  { color: var(--gold); }
 
-/* ══════════════════════════════════════════════
-   CONTACTS
-══════════════════════════════════════════════ */
-.contacts-list {
+.section-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(12px,3vw,15px);
+}
+.section-hd-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sh-line {
+  width: 3px;
+  height: clamp(16px,4vw,20px);
+  background: var(--g500);
+  border-radius: 2px;
+}
+.sh-title {
+  font-size: clamp(14px,3.5vw,16px);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+.sh-cta {
+  font-size: clamp(11px,2.8vw,12px);
+  font-weight: 700;
+  color: var(--g500);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  font-family: var(--sans);
+}
+.sh-cta:hover { color: var(--g600); }
+
+/* ═══════════════════════════════════════════
+   RECENT CONTACTS
+═══════════════════════════════════════════ */
+.contacts-row {
   display: flex;
   gap: clamp(10px,2.5vw,14px);
   overflow-x: auto;
@@ -577,358 +490,189 @@ body::before {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
-.contacts-list::-webkit-scrollbar { display: none; }
+.contacts-row::-webkit-scrollbar { display: none; }
 
-.contact-item {
+.contact-chip {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   cursor: pointer;
   flex-shrink: 0;
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.2s var(--ease);
 }
-.contact-item:hover { transform: translateY(-2px); }
+.contact-chip:hover { transform: translateY(-2px); }
+.contact-chip:active { transform: scale(0.95); }
 
-.contact-av {
-  width: clamp(40px,10vw,50px);
-  height: clamp(40px,10vw,50px);
+.cc-av {
+  width: clamp(44px,11vw,54px);
+  height: clamp(44px,11vw,54px);
   border-radius: var(--r-lg);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif);
-  font-size: clamp(13px,3.2vw,15px);
-  font-weight: 600;
-  border: 1px solid transparent;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: clamp(14px,3.5vw,17px);
+  font-weight: 800;
   color: var(--white);
+  border: 2px solid transparent;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.contact-item:hover .contact-av {
-  border-color: var(--rule2);
-  box-shadow: 0 4px 12px rgba(14,42,26,0.15);
+.contact-chip:hover .cc-av {
+  border-color: var(--g100);
+  box-shadow: 0 4px 12px rgba(10,26,15,0.12);
 }
-
-.contact-nm {
-  font-size: 10px;
+.cc-name {
+  font-size: clamp(9px,2.2vw,10px);
   font-weight: 600;
-  letter-spacing: 0.5px;
   color: var(--ink4);
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: center;
+  max-width: 54px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ══════════════════════════════════════════════
-   TRANSACTIONS
-══════════════════════════════════════════════ */
-.tx-list { display: flex; flex-direction: column; }
+/* ═══════════════════════════════════════════
+   TRANSACTION LIST
+═══════════════════════════════════════════ */
+.tx-list { display: flex; flex-direction: column; gap: 1px; }
 
 .tx-item {
   display: flex;
   align-items: center;
   gap: clamp(10px,2.5vw,14px);
-  padding: clamp(12px,3vw,15px) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: clamp(12px,3vw,15px) clamp(16px,4vw,22px);
+  background: var(--white);
   cursor: pointer;
-  transition: background 0.18s;
-  margin: 0 clamp(-4px,-1vw,-6px);
-  padding-left: clamp(4px,1vw,6px);
-  padding-right: clamp(4px,1vw,6px);
-  border-radius: var(--r);
+  transition: background 0.15s;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
 }
-.tx-item:hover { background: var(--wash); }
 .tx-item:last-child { border-bottom: none; }
+.tx-item:hover { background: var(--surface); }
+.tx-item:active { background: var(--g010); }
 
-.tx-ico {
-  width: clamp(36px,9vw,44px);
-  height: clamp(36px,9vw,44px);
+/* left accent */
+.tx-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.tx-item.credit::before { background: var(--g400); }
+.tx-item.debit::before  { background: var(--btc); }
+.tx-item:hover::before  { opacity: 1; }
+
+.tx-icon {
+  width: clamp(40px,10vw,48px);
+  height: clamp(40px,10vw,48px);
   border-radius: var(--r-lg);
   display: flex; align-items: center; justify-content: center;
-  font-size: clamp(14px,3.5vw,17px);
+  font-size: clamp(17px,4.2vw,21px);
   flex-shrink: 0;
   border: 1px solid var(--rule);
-  background: var(--surface);
 }
-.tx-item.credit .tx-ico { background: var(--wash); border-color: var(--tint); }
-.tx-item.debit  .tx-ico { background: var(--gold-bg); border-color: rgba(154,123,58,0.2); }
+.tx-item.credit .tx-icon { background: var(--g010); border-color: var(--g050); }
+.tx-item.debit  .tx-icon { background: var(--btc-light); border-color: var(--btc-border); }
 
 .tx-body { flex: 1; min-width: 0; }
 .tx-name {
-  font-size: clamp(13px,3.2vw,14px);
-  font-weight: 500;
+  font-size: clamp(13px,3.2vw,15px);
+  font-weight: 600;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .tx-meta {
-  font-size: 11px;
+  font-size: clamp(10px,2.5vw,11px);
   color: var(--ink4);
   margin-top: 2px;
   font-family: var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.tx-right { text-align: right; flex-shrink: 0; }
 .tx-amount {
+  font-size: clamp(14px,3.5vw,16px);
+  font-weight: 700;
   font-family: var(--mono);
-  font-size: clamp(13px,3.2vw,14px);
-  font-weight: 500;
-  white-space: nowrap;
+  letter-spacing: -0.3px;
 }
-.tx-item.credit .tx-amount { color: var(--standard); }
-.tx-item.debit  .tx-amount { color: var(--gold); }
-
-/* ══════════════════════════════════════════════
-   HISTORY SCREEN
-══════════════════════════════════════════════ */
-.pg-title {
-  font-family: var(--serif);
-  font-size: clamp(20px,5vw,26px);
-  font-weight: 500;
-  color: var(--forest);
-  padding: clamp(18px,4.5vw,24px) clamp(18px,4.5vw,28px) clamp(12px,3vw,16px);
-  border-bottom: 1px solid var(--rule);
-  letter-spacing: 0.2px;
-}
-
-.filter-bar {
-  display: flex;
-  gap: 6px;
-  padding: clamp(12px,3vw,16px) clamp(18px,4.5vw,28px);
-  border-bottom: 1px solid var(--rule);
-  background: var(--surface);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.filter-bar::-webkit-scrollbar { display: none; }
-
-.fchip {
-  padding: 6px clamp(12px,3vw,16px);
-  border-radius: var(--r-sm);
-  font-size: 11px;
+.tx-item.credit .tx-amount { color: var(--g600); }
+.tx-item.debit  .tx-amount { color: var(--warn); }
+.tx-status {
+  font-size: clamp(9px,2.2vw,10px);
   font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  border: 1px solid var(--rule);
-  background: var(--white);
-  color: var(--ink4);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
 }
-.fchip.active {
-  background: var(--forest);
-  border-color: var(--forest);
-  color: var(--white);
-}
+.ts-done    { color: var(--ink5); }
+.ts-pending { color: var(--warn); }
 
-.tx-padded { padding: 0 clamp(18px,4.5vw,28px); }
-
-/* ══════════════════════════════════════════════
-   ASSETS / CARDS SCREEN
-══════════════════════════════════════════════ */
-.asset-card {
-  background: var(--white);
-  border: 1px solid var(--rule);
+/* ═══════════════════════════════════════════
+   INFO BANNERS
+═══════════════════════════════════════════ */
+.info-banner {
+  margin: clamp(14px,3.5vw,18px) clamp(16px,4vw,22px);
+  padding: clamp(14px,3.5vw,17px);
   border-radius: var(--r-lg);
-  padding: clamp(14px,3.5vw,18px);
-  margin-bottom: clamp(8px,2vw,10px);
-  cursor: pointer;
-  transition: all 0.2s var(--ease);
   display: flex;
-  align-items: center;
-  gap: clamp(12px,3vw,16px);
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid;
 }
-.asset-card:hover {
-  border-color: var(--rule2);
-  box-shadow: 0 2px 12px rgba(14,42,26,0.07);
-}
+.ib-green  { background: var(--g010); border-color: var(--g050); }
+.ib-remit  { background: var(--remit-light); border-color: rgba(21,101,192,0.2); }
+.ib-btc    { background: var(--btc-light); border-color: var(--btc-border); }
 
-.asset-sym-badge {
-  width: clamp(40px,10vw,48px);
-  height: clamp(40px,10vw,48px);
-  border-radius: var(--r-lg);
-  display: flex; align-items: center; justify-content: center;
+.ib-icon { font-size: clamp(18px,4.5vw,22px); flex-shrink: 0; margin-top: 1px; }
+.ib-body .ib-title {
   font-size: clamp(12px,3vw,14px);
   font-weight: 700;
-  flex-shrink: 0;
-  font-family: var(--mono);
-}
-
-.asset-info { flex: 1; min-width: 0; }
-.asset-name {
-  font-size: clamp(13px,3.2vw,15px);
-  font-weight: 500;
   color: var(--ink);
+  margin-bottom: 3px;
 }
-.asset-sub {
-  font-size: 11px;
-  color: var(--ink4);
-  margin-top: 2px;
-  font-family: var(--mono);
+.ib-body .ib-desc {
+  font-size: clamp(11px,2.7vw,12px);
+  color: var(--ink3);
+  line-height: 1.5;
 }
-
-.asset-right { text-align: right; }
-.asset-val {
-  font-family: var(--serif);
-  font-size: clamp(14px,3.5vw,17px);
-  font-weight: 500;
-  color: var(--forest);
-}
-.asset-chg {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: var(--mono);
-  margin-top: 2px;
-}
-.up { color: var(--standard); }
-.dn { color: var(--red); }
-
-/* ══════════════════════════════════════════════
-   SETTINGS SCREEN
-══════════════════════════════════════════════ */
-.profile-card {
-  background: var(--forest);
-  margin: 0 clamp(18px,4.5vw,28px) clamp(16px,4vw,22px);
-  border-radius: var(--r-xl);
-  padding: clamp(18px,4.5vw,24px);
-  display: flex;
-  align-items: center;
-  gap: clamp(14px,3.5vw,18px);
-}
-
-.prof-av {
-  width: clamp(50px,12.5vw,62px);
-  height: clamp(50px,12.5vw,62px);
-  border-radius: var(--r-lg);
-  background: var(--rich);
-  border: 1px solid rgba(255,255,255,0.12);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif);
-  font-size: clamp(16px,4vw,20px);
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  flex-shrink: 0;
-}
-
-.prof-info .p-name {
-  font-family: var(--serif);
-  font-size: clamp(16px,4vw,20px);
-  font-weight: 500;
-  color: var(--white);
-  letter-spacing: 0.2px;
-}
-.prof-info .p-email {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  margin-top: 3px;
-  font-family: var(--mono);
-}
-.prof-info .p-tier {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 8px;
-  padding: 3px 10px;
-  border-radius: var(--r-sm);
-  background: rgba(154,123,58,0.2);
-  border: 1px solid rgba(196,165,90,0.3);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold-lt);
-  font-family: var(--body);
-}
-
-.settings-group {
-  margin: 0 clamp(18px,4.5vw,28px) clamp(16px,4vw,22px);
-}
-
-.settings-group-label {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--ink4);
-  padding: 0 0 clamp(8px,2vw,10px);
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 2px;
-}
-
-.setting-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: clamp(13px,3.2vw,16px) 0;
-  border-bottom: 1px solid var(--rule);
+.ib-body .ib-cta {
+  font-size: clamp(10px,2.5vw,11px);
+  font-weight: 700;
+  color: var(--g600);
   cursor: pointer;
-  transition: background 0.15s;
+  margin-top: 5px;
+  display: inline-block;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  font-family: var(--sans);
+  padding: 0;
 }
-.setting-row:last-child { border-bottom: none; }
-.setting-row:hover { background: var(--wash); margin: 0 -6px; padding-left: 6px; padding-right: 6px; border-radius: var(--r); }
+.ib-cta.remit { color: var(--remit); }
+.ib-cta.btc   { color: var(--btc); }
 
-.setting-lft {
-  display: flex;
-  align-items: center;
-  gap: clamp(12px,3vw,14px);
-}
-
-.setting-ico {
-  width: clamp(32px,8vw,38px);
-  height: clamp(32px,8vw,38px);
-  border-radius: var(--r);
-  border: 1px solid var(--rule);
-  display: flex; align-items: center; justify-content: center;
-  background: var(--surface);
-  flex-shrink: 0;
-}
-.setting-ico svg { width: 15px; height: 15px; fill: none; stroke-width: 1.8; }
-
-.setting-text .st { font-size: clamp(13px,3.2vw,14px); font-weight: 500; color: var(--ink); }
-.setting-text .ss { font-size: 11px; color: var(--ink4); margin-top: 1px; letter-spacing: 0.3px; }
-
-.setting-row .arr { font-size: 14px; color: var(--ink4); }
-
-/* Toggle */
-.tog {
-  width: 40px; height: 22px;
-  border-radius: 11px;
-  background: var(--rule2);
-  border: 1px solid var(--rule);
-  position: relative;
-  cursor: pointer;
-  transition: all 0.25s var(--ease);
-  flex-shrink: 0;
-}
-.tog.on {
-  background: var(--forest);
-  border-color: var(--forest);
-}
-.tog::after {
-  content: '';
-  position: absolute;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: var(--white);
-  top: 2px; left: 2px;
-  transition: transform 0.25s var(--ease);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.tog.on::after { transform: translateX(18px); }
-
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    BOTTOM NAV
-══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 .bottom-nav {
-  position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
+  position: sticky;
+  bottom: 0;
   width: 100%;
-  max-width: var(--app-w);
   height: var(--nav-h);
   background: var(--white);
   border-top: 1px solid var(--rule);
   display: flex;
   align-items: stretch;
-  z-index: 90;
+  z-index: 80;
   padding-bottom: env(safe-area-inset-bottom);
+  flex-shrink: 0;
 }
 
 .nav-item {
@@ -939,44 +683,48 @@ body::before {
   justify-content: center;
   gap: 4px;
   cursor: pointer;
-  transition: all 0.2s var(--ease);
   position: relative;
+  transition: all 0.2s;
 }
-.nav-item::before {
+.nav-item::after {
   content: '';
   position: absolute;
-  top: 0; left: 20%; right: 20%;
-  height: 2px;
-  background: var(--forest);
+  top: 0; left: 25%; right: 25%;
+  height: 2.5px;
+  background: var(--g500);
+  border-radius: 0 0 3px 3px;
   transform: scaleX(0);
   transition: transform 0.25s var(--ease);
 }
-.nav-item.active::before { transform: scaleX(1); }
+.nav-item.active::after { transform: scaleX(1); }
 
 .nav-item svg {
-  width: 20px; height: 20px;
-  stroke: var(--ink4); fill: none; stroke-width: 1.8;
+  width: clamp(20px,5vw,23px);
+  height: clamp(20px,5vw,23px);
+  stroke: var(--ink5);
+  fill: none;
+  stroke-width: 1.8;
   transition: stroke 0.2s;
 }
-.nav-item.active svg { stroke: var(--forest); }
+.nav-item.active svg { stroke: var(--g600); }
 
 .nav-lbl {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink5);
   text-transform: uppercase;
-  color: var(--ink4);
   transition: color 0.2s;
 }
-.nav-item.active .nav-lbl { color: var(--forest); }
+.nav-item.active .nav-lbl { color: var(--g600); }
 
-/* ══════════════════════════════════════════════
-   MODAL / BOTTOM SHEETS
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   BOTTOM SHEETS
+═══════════════════════════════════════════ */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(14,42,26,0.45);
+  background: rgba(10,26,15,0.45);
   backdrop-filter: blur(8px);
   z-index: 200;
   display: flex;
@@ -992,9 +740,9 @@ body::before {
   width: 100%;
   max-width: var(--app-w);
   background: var(--white);
-  border-radius: 16px 16px 0 0;
-  border-top: 3px solid var(--forest);
-  padding: 0 clamp(18px,4.5vw,28px) clamp(28px,7vw,40px);
+  border-radius: 22px 22px 0 0;
+  border-top: 3px solid var(--g500);
+  padding: 0 clamp(16px,4vw,22px) clamp(28px,7vw,40px);
   transform: translateY(100%);
   transition: transform 0.4s var(--ease);
   max-height: 92svh;
@@ -1005,168 +753,160 @@ body::before {
 }
 .overlay.open .sheet { transform: translateY(0); }
 
-.sheet-handle {
-  width: 32px; height: 3px;
+.sheet-drag {
+  width: 36px; height: 4px;
   border-radius: 2px;
-  background: var(--rule);
+  background: var(--rule2);
   margin: 12px auto 0;
 }
 
-.sheet-header {
-  padding: clamp(18px,4.5vw,24px) 0 clamp(16px,4vw,20px);
+.sheet-hd {
+  padding: clamp(16px,4vw,20px) 0 clamp(12px,3vw,16px);
   border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(16px,4vw,20px);
+  margin-bottom: clamp(14px,3.5vw,18px);
 }
-
 .sheet-title {
-  font-family: var(--serif);
-  font-size: clamp(18px,4.5vw,22px);
-  font-weight: 500;
-  color: var(--forest);
-  letter-spacing: 0.2px;
+  font-size: clamp(17px,4.2vw,20px);
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.3px;
 }
-
 .sheet-sub {
-  font-size: 11px;
+  font-size: clamp(11px,2.7vw,12px);
   color: var(--ink4);
-  margin-top: 3px;
+  margin-top: 4px;
   font-family: var(--mono);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    FORM ELEMENTS
-══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 .fg { margin-bottom: clamp(12px,3vw,16px); }
-
 .fl {
   display: block;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--ink4);
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 }
-
 .fi {
   width: 100%;
-  padding: clamp(11px,2.8vw,13px) clamp(12px,3vw,15px);
+  padding: clamp(12px,3vw,14px) clamp(12px,3vw,15px);
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: 1.5px solid var(--rule);
   border-radius: var(--r);
   color: var(--ink);
-  font-family: var(--body);
-  font-size: clamp(13px,3.2vw,14px);
-  font-weight: 400;
+  font-family: var(--sans);
+  font-size: clamp(13px,3.2vw,15px);
+  font-weight: 500;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   -webkit-appearance: none;
 }
 .fi:focus {
-  border-color: var(--standard);
+  border-color: var(--g400);
   background: var(--white);
-  box-shadow: 0 0 0 3px rgba(46,122,80,0.1);
+  box-shadow: 0 0 0 3px rgba(45,158,80,0.1);
 }
-.fi::placeholder { color: var(--ink4); }
+.fi::placeholder { color: var(--ink5); font-weight: 400; }
+
+.fi-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px,2.5vw,12px); }
 
 .fi-wrap { position: relative; }
 .fi-wrap .fi { padding-right: 46px; }
-.fi-ico {
+.fi-action {
   position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
 }
-.fi-ico svg { width: 16px; height: 16px; stroke: var(--ink4); fill: none; stroke-width: 1.8; transition: stroke 0.2s; }
-.fi-ico:hover svg { stroke: var(--standard); }
+.fi-action svg { width: 17px; height: 17px; stroke: var(--ink4); fill: none; stroke-width: 1.8; transition: stroke 0.2s; }
+.fi-action:hover svg { stroke: var(--g500); }
 
-.fi-2col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px,2.5vw,14px); }
-
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    AMOUNT DISPLAY
-══════════════════════════════════════════════ */
-.amt-block {
+═══════════════════════════════════════════ */
+.amt-display {
   text-align: center;
-  padding: clamp(20px,5vw,28px) 0;
+  padding: clamp(18px,4.5vw,26px) 0 clamp(14px,3.5vw,20px);
   border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(16px,4vw,20px);
+  margin-bottom: clamp(14px,3.5vw,18px);
 }
-.amt-fig {
-  font-family: var(--serif);
-  font-size: clamp(46px,13vw,62px);
-  font-weight: 400;
-  color: var(--forest);
+.amt-num {
+  font-size: clamp(44px,12vw,58px);
+  font-weight: 800;
   letter-spacing: -2px;
   line-height: 1;
+  color: var(--ink);
 }
-.amt-sym {
-  font-size: 0.38em;
-  color: var(--ink4);
-  vertical-align: super;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.amt-equiv {
-  font-size: 12px;
-  color: var(--ink4);
+.amt-sym { font-size: 0.4em; color: var(--ink4); vertical-align: super; font-weight: 600; letter-spacing: 0; }
+.amt-btc {
+  font-size: clamp(11px,2.7vw,13px);
+  color: var(--btc);
   font-family: var(--mono);
-  margin-top: 8px;
+  margin-top: 7px;
   letter-spacing: 0.5px;
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    NUMPAD
-══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 .numpad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3,1fr);
   gap: clamp(6px,1.5vw,8px);
-  margin-bottom: clamp(16px,4vw,20px);
+  margin-bottom: clamp(14px,3.5vw,18px);
 }
 .nk {
   padding: clamp(14px,3.5vw,18px);
   border-radius: var(--r);
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: 1.5px solid var(--rule);
   color: var(--ink);
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: clamp(18px,4.5vw,22px);
-  font-weight: 400;
+  font-weight: 700;
   cursor: pointer;
   text-align: center;
   transition: all 0.15s;
-  user-select: none; -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
-.nk:hover { background: var(--wash); border-color: var(--rule2); }
-.nk:active { background: var(--tint); transform: scale(0.96); }
-.nk.del { font-family: var(--body); font-size: clamp(13px,3.2vw,16px); font-weight: 500; color: var(--ink4); }
+.nk:hover { background: var(--g010); border-color: var(--g100); }
+.nk:active { transform: scale(0.94); background: var(--g050); }
+.nk.del { font-size: clamp(14px,3.5vw,17px); color: var(--ink4); font-weight: 500; }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    BUTTONS
-══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 .btn {
   width: 100%;
-  padding: clamp(13px,3.2vw,15px);
-  border-radius: var(--r);
+  padding: clamp(14px,3.5vw,16px);
+  border-radius: var(--r-lg);
   border: none;
   cursor: pointer;
-  font-family: var(--body);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: clamp(13px,3.2vw,15px);
+  font-weight: 700;
+  letter-spacing: 0.3px;
   transition: all 0.22s var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .btn + .btn { margin-top: clamp(8px,2vw,10px); }
 
 .btn-primary {
-  background: var(--forest);
+  background: var(--g600);
   color: var(--white);
-  box-shadow: 0 2px 8px rgba(14,42,26,0.25);
+  box-shadow: 0 2px 12px rgba(27,107,52,0.3);
 }
 .btn-primary:hover {
-  background: var(--mid);
-  box-shadow: 0 4px 16px rgba(14,42,26,0.35);
+  background: var(--g700);
+  box-shadow: 0 4px 20px rgba(27,107,52,0.4);
   transform: translateY(-1px);
 }
 .btn-primary:active { transform: translateY(0); }
@@ -1174,48 +914,49 @@ body::before {
 .btn-secondary {
   background: var(--surface);
   color: var(--ink3);
-  border: 1px solid var(--rule);
+  border: 1.5px solid var(--rule);
 }
-.btn-secondary:hover { background: var(--wash); border-color: var(--rule2); }
+.btn-secondary:hover { background: var(--g010); border-color: var(--g050); }
 
-.btn-outline {
-  background: transparent;
-  color: var(--standard);
-  border: 1px solid var(--standard);
+.btn-remit {
+  background: var(--remit);
+  color: var(--white);
+  box-shadow: 0 2px 12px rgba(21,101,192,0.25);
 }
-.btn-outline:hover { background: var(--wash); }
+.btn-remit:hover { background: #0D47A1; box-shadow: 0 4px 20px rgba(21,101,192,0.35); transform: translateY(-1px); }
 
 .btn-danger {
-  background: var(--red-bg);
-  color: var(--red);
-  border: 1px solid rgba(181,50,50,0.2);
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1.5px solid rgba(192,57,43,0.2);
 }
+.btn-danger:hover { background: #fbd5d2; }
 
-/* ══════════════════════════════════════════════
-   QR / RECEIVE
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   QR DISPLAY
+═══════════════════════════════════════════ */
 .qr-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(14px,3.5vw,18px);
-  padding: clamp(10px,2.5vw,14px) 0;
+  gap: clamp(12px,3vw,16px);
+  padding: clamp(8px,2vw,12px) 0;
 }
 .qr-frame {
-  padding: clamp(12px,3vw,16px);
+  padding: clamp(14px,3.5vw,18px);
   background: var(--white);
   border-radius: var(--r-lg);
-  border: 1px solid var(--rule);
-  box-shadow: 0 4px 20px rgba(14,42,26,0.08);
+  border: 2px solid var(--rule);
+  box-shadow: 0 4px 24px rgba(10,26,15,0.08);
 }
-.addr-display {
+.addr-box {
   width: 100%;
   padding: clamp(10px,2.5vw,13px) clamp(12px,3vw,15px);
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: 1.5px solid var(--rule);
   border-radius: var(--r);
   font-family: var(--mono);
-  font-size: clamp(10px,2.5vw,12px);
+  font-size: clamp(10px,2.5vw,11px);
   color: var(--ink3);
   text-align: center;
   word-break: break-all;
@@ -1223,997 +964,1393 @@ body::before {
   transition: border-color 0.2s, background 0.2s;
   line-height: 1.6;
 }
-.addr-display:hover { border-color: var(--standard); background: var(--wash); }
+.addr-box:hover { border-color: var(--g200); background: var(--g010); }
 
-/* ══════════════════════════════════════════════
+.qr-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+.qtab {
+  padding: clamp(10px,2.5vw,12px);
+  border-radius: var(--r);
+  border: 1.5px solid var(--rule);
+  background: var(--surface);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.qtab.active { background: var(--g010); border-color: var(--g200); }
+.qtab-ic { font-size: clamp(16px,4vw,20px); display: block; margin-bottom: 3px; }
+.qtab-lb {
+  font-size: clamp(10px,2.5vw,11px);
+  font-weight: 700;
+  color: var(--ink4);
+  letter-spacing: 0.5px;
+}
+.qtab.active .qtab-lb { color: var(--g600); }
+
+/* ═══════════════════════════════════════════
    SCANNER
-══════════════════════════════════════════════ */
-.scan-frame {
+═══════════════════════════════════════════ */
+.scan-viewport {
   width: 100%;
   aspect-ratio: 1;
   border-radius: var(--r-xl);
-  background: var(--forest);
+  background: var(--g900);
   position: relative;
   overflow: hidden;
   margin-bottom: clamp(12px,3vw,16px);
+  border: 2px solid var(--rule);
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--rule2);
 }
 .scan-beam {
   position: absolute;
-  left: 16px; right: 16px;
-  height: 1.5px;
-  background: linear-gradient(90deg, transparent, var(--pale), rgba(255,255,255,0.9), var(--pale), transparent);
-  animation: scanBeam 2.5s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(91,184,130,0.6);
+  left: 18px; right: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--g300), rgba(255,255,255,0.9), var(--g300), transparent);
+  animation: scanBeam 2.4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(61,184,102,0.6);
 }
-@keyframes scanBeam {
-  0%,100% { top: 16px; opacity: 1; }
-  50% { top: calc(100% - 16px); opacity: 0.7; }
-}
-.scan-reticle {
-  position: absolute;
-  width: 55%; height: 55%;
-}
-.sc { position: absolute; width: 20px; height: 20px; }
-.sc::before, .sc::after { content: ''; position: absolute; background: rgba(255,255,255,0.6); border-radius: 1px; }
-.sc.tl { top:0;left:0; } .sc.tl::before { width:100%;height:2px;top:0;left:0; } .sc.tl::after { width:2px;height:100%;top:0;left:0; }
-.sc.tr { top:0;right:0; } .sc.tr::before { width:100%;height:2px;top:0;right:0; } .sc.tr::after { width:2px;height:100%;top:0;right:0; }
-.sc.bl { bottom:0;left:0; } .sc.bl::before { width:100%;height:2px;bottom:0;left:0; } .sc.bl::after { width:2px;height:100%;bottom:0;left:0; }
-.sc.br { bottom:0;right:0; } .sc.br::before { width:100%;height:2px;bottom:0;right:0; } .sc.br::after { width:2px;height:100%;bottom:0;right:0; }
-.scan-status {
-  font-size: 11px;
+@keyframes scanBeam { 0%,100%{top:18px;opacity:1} 50%{top:calc(100% - 18px);opacity:.6} }
+.scan-reticle { position: absolute; width: 52%; height: 52%; }
+.sc { position: absolute; width: 22px; height: 22px; }
+.sc::before,.sc::after { content:''; position:absolute; background:rgba(255,255,255,0.7); border-radius:1px; }
+.sc.tl{top:0;left:0;} .sc.tl::before{width:100%;height:2.5px;top:0;} .sc.tl::after{width:2.5px;height:100%;left:0;}
+.sc.tr{top:0;right:0;} .sc.tr::before{width:100%;height:2.5px;top:0;} .sc.tr::after{width:2.5px;height:100%;right:0;}
+.sc.bl{bottom:0;left:0;} .sc.bl::before{width:100%;height:2.5px;bottom:0;} .sc.bl::after{width:2.5px;height:100%;left:0;}
+.sc.br{bottom:0;right:0;} .sc.br::before{width:100%;height:2.5px;bottom:0;} .sc.br::after{width:2.5px;height:100%;right:0;}
+.scan-hint {
+  font-size: clamp(11px,2.7vw,12px);
   color: var(--ink4);
   font-family: var(--mono);
   text-align: center;
-  letter-spacing: 1px;
-  margin-bottom: clamp(12px,3vw,16px);
   animation: blink 2s ease-in-out infinite;
+  margin-bottom: clamp(12px,3vw,16px);
+  letter-spacing: 0.5px;
 }
 @keyframes blink { 0%,100%{opacity:.4} 50%{opacity:1} }
 
-/* ══════════════════════════════════════════════
-   INVOICE
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   REMITTANCE SCREEN
+═══════════════════════════════════════════ */
+.remit-hero {
+  background: linear-gradient(135deg, var(--remit) 0%, #0D47A1 100%);
+  padding: clamp(20px,5vw,28px) clamp(16px,4vw,22px);
+  position: relative;
+  overflow: hidden;
+}
+.remit-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.rh-label { font-size: clamp(9px,2.2vw,11px); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+.rh-title { font-size: clamp(20px,5vw,26px); font-weight: 800; color: var(--white); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 6px; }
+.rh-sub { font-size: clamp(12px,3vw,14px); color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+.remit-savings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px,2vw,10px);
+  padding: clamp(14px,3.5vw,18px) clamp(16px,4vw,22px) 0;
+}
+.rs-card {
+  padding: clamp(12px,3vw,16px);
+  border-radius: var(--r-lg);
+  border: 1.5px solid var(--rule);
+  background: var(--white);
+  text-align: center;
+}
+.rs-label { font-size: clamp(9px,2.2vw,10px); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--ink4); margin-bottom: 4px; }
+.rs-val { font-size: clamp(20px,5vw,26px); font-weight: 800; letter-spacing: -1px; line-height: 1; }
+.rs-val.save { color: var(--g600); }
+.rs-val.fee  { color: var(--danger); }
+.rs-sub { font-size: clamp(9px,2.2vw,10px); color: var(--ink4); margin-top: 3px; font-family: var(--mono); }
+
+/* Comparison visual */
+.remit-compare {
+  padding: 0 clamp(16px,4vw,22px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px,2vw,10px);
+}
+.rc-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(12px,3vw,14px);
+  border-radius: var(--r-lg);
+  border: 1.5px solid var(--rule);
+  background: var(--white);
+}
+.rc-row.highlight { background: var(--g010); border-color: var(--g100); }
+.rc-logo { font-size: clamp(16px,4vw,20px); flex-shrink: 0; }
+.rc-body { flex: 1; min-width: 0; }
+.rc-name { font-size: clamp(12px,3vw,14px); font-weight: 700; color: var(--ink); }
+.rc-detail { font-size: clamp(10px,2.5vw,11px); color: var(--ink4); font-family: var(--mono); margin-top: 2px; }
+.rc-result { text-align: right; flex-shrink: 0; }
+.rc-gets { font-size: clamp(14px,3.5vw,16px); font-weight: 800; font-family: var(--mono); }
+.rc-gets.good { color: var(--g600); }
+.rc-gets.bad  { color: var(--danger); }
+.rc-fee { font-size: clamp(9px,2.2vw,10px); color: var(--ink4); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════
+   INVOICE SCREEN
+═══════════════════════════════════════════ */
 .inv-preview {
-  border: 1px solid var(--rule);
+  border: 1.5px solid var(--rule);
   border-radius: var(--r-lg);
   overflow: hidden;
   margin-bottom: clamp(14px,3.5vw,18px);
 }
-
-.inv-preview-header {
-  background: var(--forest);
+.inv-prev-head {
+  background: var(--g800);
   padding: clamp(14px,3.5vw,18px) clamp(16px,4vw,20px);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
+.iph-brand { font-size: clamp(15px,3.8vw,18px); font-weight: 800; color: var(--white); }
+.iph-brand span { display: block; font-size: clamp(9px,2.2vw,10px); font-weight: 500; color: rgba(255,255,255,0.4); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; font-family: var(--sans); }
+.iph-id { text-align: right; }
+.iph-num { font-family: var(--mono); font-size: clamp(13px,3.2vw,15px); font-weight: 500; color: var(--g200); }
+.iph-date { font-family: var(--mono); font-size: clamp(9px,2.2vw,10px); color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-.inv-wordmark {
-  font-family: var(--serif);
-  font-size: clamp(14px,3.5vw,17px);
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: 0.5px;
-}
-.inv-wordmark small {
-  display: block;
-  font-family: var(--body);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  font-weight: 500;
-  margin-top: 2px;
-}
-.inv-id {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: rgba(255,255,255,0.55);
-  text-align: right;
-}
-.inv-id strong { display: block; font-size: 13px; color: var(--gold-lt); font-weight: 500; margin-bottom: 2px; }
-
-.inv-body { padding: clamp(14px,3.5vw,18px) clamp(16px,4vw,20px); }
-
-.inv-row {
+.inv-prev-body { padding: clamp(12px,3vw,16px) clamp(16px,4vw,20px); }
+.ipb-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(8px,2vw,10px) 0;
+  padding: clamp(7px,1.8vw,9px) 0;
   border-bottom: 1px solid var(--rule);
-  font-size: 13px;
+  font-size: clamp(12px,3vw,13px);
 }
-.inv-row:last-child { border-bottom: none; }
-.inv-row .lbl { color: var(--ink4); font-weight: 500; }
-.inv-row .val { font-family: var(--mono); color: var(--ink3); }
-.inv-row.total .lbl {
-  font-family: var(--serif);
-  font-size: clamp(14px,3.5vw,16px);
-  font-weight: 500;
-  color: var(--forest);
-}
-.inv-row.total .val {
-  font-family: var(--serif);
-  font-size: clamp(16px,4vw,20px);
-  font-weight: 600;
-  color: var(--forest);
+.ipb-row:last-child { border-bottom: none; }
+.ipb-row .lbl { color: var(--ink3); font-weight: 500; }
+.ipb-row .val { font-family: var(--mono); color: var(--ink2); }
+.ipb-row.total .lbl { font-size: clamp(14px,3.5vw,16px); font-weight: 700; color: var(--ink); }
+.ipb-row.total .val { font-size: clamp(16px,4vw,20px); font-weight: 800; color: var(--g600); }
+
+/* ═══════════════════════════════════════════
+   HISTORY SCREEN
+═══════════════════════════════════════════ */
+.history-pg-title {
+  font-size: clamp(20px,5vw,24px);
+  font-weight: 800;
+  color: var(--ink);
+  padding: clamp(18px,4.5vw,24px) clamp(16px,4vw,22px) clamp(12px,3vw,16px);
+  letter-spacing: -0.5px;
+  border-bottom: 1px solid var(--rule);
 }
 
-/* ══════════════════════════════════════════════
-   TX DETAIL SHEET
-══════════════════════════════════════════════ */
-.txd-icon {
-  width: clamp(48px,12vw,58px); height: clamp(48px,12vw,58px);
-  border-radius: var(--r-xl);
-  display: flex; align-items: center; justify-content: center;
-  font-size: clamp(20px,5vw,26px);
-  margin: 0 auto clamp(10px,2.5vw,14px);
-  border: 1px solid var(--rule);
+.filter-bar {
+  display: flex;
+  gap: 7px;
+  padding: clamp(12px,3vw,16px) clamp(16px,4vw,22px);
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--surface);
 }
-.txd-amt-fig {
-  font-family: var(--serif);
-  font-size: clamp(34px,8.5vw,44px);
-  font-weight: 400;
-  letter-spacing: -1.5px;
-  text-align: center;
-}
-.txd-date {
-  font-size: 12px;
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.fchip {
+  padding: clamp(7px,1.8vw,9px) clamp(14px,3.5vw,18px);
+  border-radius: 100px;
+  font-size: clamp(10px,2.5vw,12px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border: 1.5px solid var(--rule);
+  background: var(--white);
   color: var(--ink4);
-  text-align: center;
-  margin-top: 4px;
-  font-family: var(--mono);
+  font-family: var(--sans);
 }
-.txd-status {
-  display: flex; justify-content: center;
-  margin: 12px 0 20px;
+.fchip.active {
+  background: var(--g600);
+  border-color: var(--g600);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(27,107,52,0.25);
 }
-.status-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 12px;
-  border-radius: var(--r-sm);
-  font-size: 10px;
-  font-weight: 600;
+
+/* Month divider */
+.month-divider {
+  padding: clamp(10px,2.5vw,12px) clamp(16px,4vw,22px) clamp(6px,1.5vw,8px);
+  font-size: clamp(10px,2.5vw,11px);
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-}
-.sp-confirmed { background: var(--wash); color: var(--standard); border: 1px solid var(--tint); }
-.txd-table { border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; }
-.txd-tr {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: clamp(11px,2.8vw,14px) clamp(14px,3.5vw,16px);
+  color: var(--ink5);
+  background: var(--surface);
   border-bottom: 1px solid var(--rule);
-  font-size: 13px;
 }
-.txd-tr:last-child { border-bottom: none; }
-.txd-tr .dl { font-weight: 500; color: var(--ink4); }
-.txd-tr .dv { font-family: var(--mono); color: var(--ink); max-width: 60%; text-align: right; word-break: break-all; }
 
-/* ══════════════════════════════════════════════
-   TOAST / NOTIFICATION
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   SETTINGS SCREEN
+═══════════════════════════════════════════ */
+.profile-hero {
+  background: linear-gradient(160deg, var(--g800) 0%, var(--g900) 100%);
+  padding: clamp(20px,5vw,28px) clamp(16px,4vw,22px);
+  display: flex;
+  align-items: center;
+  gap: clamp(14px,3.5vw,18px);
+}
+.profile-av-lg {
+  width: clamp(56px,14vw,68px);
+  height: clamp(56px,14vw,68px);
+  border-radius: var(--r-xl);
+  background: var(--g600);
+  border: 3px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(20px,5vw,24px);
+  font-weight: 800;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.ph-name { font-size: clamp(17px,4.2vw,20px); font-weight: 800; color: var(--white); letter-spacing: -0.3px; }
+.ph-phone { font-size: clamp(12px,3vw,13px); color: rgba(255,255,255,0.5); margin-top: 3px; font-family: var(--mono); }
+.ph-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(98,206,134,0.2);
+  border: 1px solid rgba(98,206,134,0.3);
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--g100);
+}
+
+.settings-section {
+  padding: clamp(14px,3.5vw,18px) clamp(16px,4vw,22px) 0;
+}
+.ss-label {
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink5);
+  padding-bottom: clamp(8px,2vw,10px);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(13px,3.2vw,16px) 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+  margin: 0 calc(-1 * clamp(16px,4vw,22px));
+  padding-left: clamp(16px,4vw,22px);
+  padding-right: clamp(16px,4vw,22px);
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-row:hover { background: var(--g010); }
+.setting-row:active { background: var(--g050); }
+
+.sr-left { display: flex; align-items: center; gap: clamp(12px,3vw,15px); }
+.sr-ico {
+  width: clamp(36px,9vw,42px);
+  height: clamp(36px,9vw,42px);
+  border-radius: var(--r);
+  border: 1.5px solid var(--rule);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sr-ico svg { width: 17px; height: 17px; fill: none; stroke-width: 1.8; }
+
+.sr-text .t { font-size: clamp(13px,3.2vw,15px); font-weight: 600; color: var(--ink); }
+.sr-text .s { font-size: clamp(10px,2.5vw,11px); color: var(--ink4); margin-top: 2px; letter-spacing: 0.2px; }
+
+.sr-right { display: flex; align-items: center; gap: 8px; }
+.sr-arr { color: var(--ink5); font-size: 16px; }
+
+/* Toggle */
+.tog {
+  width: 42px; height: 24px;
+  border-radius: 12px;
+  background: var(--rule2);
+  border: 1.5px solid var(--rule);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  flex-shrink: 0;
+}
+.tog.on { background: var(--g500); border-color: var(--g500); }
+.tog::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  top: 1px; left: 1px;
+  transition: transform 0.25s var(--ease);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.tog.on::after { transform: translateX(18px); }
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
 .toast {
   position: fixed;
-  top: clamp(16px,4vw,20px);
-  left: 50%; transform: translateX(-50%) translateY(-80px);
-  background: var(--forest);
+  top: clamp(14px,3.5vw,20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background: var(--g800);
   color: var(--white);
-  padding: clamp(10px,2.5vw,12px) clamp(18px,4.5vw,22px);
-  border-radius: var(--r);
-  font-size: 13px;
-  font-weight: 500;
+  padding: clamp(10px,2.5vw,13px) clamp(18px,4.5vw,22px);
+  border-radius: 100px;
+  font-size: clamp(12px,3vw,14px);
+  font-weight: 600;
   z-index: 9999;
   transition: transform 0.38s var(--ease);
   white-space: nowrap;
-  box-shadow: 0 8px 28px rgba(14,42,26,0.35);
-  letter-spacing: 0.3px;
+  box-shadow: 0 8px 28px rgba(10,26,15,0.3);
+  letter-spacing: 0.2px;
   max-width: min(380px, 90vw);
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ══════════════════════════════════════════════
-   DIVIDERS & UTILS
-══════════════════════════════════════════════ */
-.rule { height: 1px; background: var(--rule); margin: clamp(14px,3.5vw,18px) 0; }
+/* ═══════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════ */
+.rule-line { height: 1px; background: var(--rule); margin: clamp(12px,3vw,16px) 0; }
 
-.badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 8px;
-  border-radius: var(--r-sm);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.badge-sm {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: clamp(9px,2.2vw,10px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
-.b-green { background: var(--wash); color: var(--standard); border: 1px solid var(--tint); }
-.b-gold  { background: var(--gold-bg); color: var(--gold); border: 1px solid rgba(154,123,58,0.2); }
-.b-muted { background: var(--surface); color: var(--ink4); border: 1px solid var(--rule); }
+.bs-green  { background: var(--g010); color: var(--g600); border: 1px solid var(--g050); }
+.bs-btc    { background: var(--btc-light); color: var(--btc); border: 1px solid var(--btc-border); }
+.bs-remit  { background: var(--remit-light); color: var(--remit); border: 1px solid rgba(21,101,192,0.2); }
+.bs-ln     { background: var(--ln-light); color: var(--ln); border: 1px solid rgba(123,104,238,0.2); }
+.bs-warn   { background: var(--warn-light); color: var(--warn); border: 1px solid rgba(217,119,6,0.2); }
 
+/* Page titles for sub-screens */
+.pg-title {
+  font-size: clamp(18px,4.5vw,22px);
+  font-weight: 800;
+  color: var(--ink);
+  padding: clamp(16px,4vw,22px) clamp(16px,4vw,22px) clamp(12px,3vw,14px);
+  letter-spacing: -0.4px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pg-title-ico {
+  width: clamp(32px,8vw,38px);
+  height: clamp(32px,8vw,38px);
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(16px,4vw,19px);
+  flex-shrink: 0;
+}
+
+/* Responsive override */
+@media (min-width: 420px) {
+  .app-shell {
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+}
 @media (max-width: 360px) {
-  :root { --nav-h: 60px; }
-  .action-lbl { font-size: 8px; letter-spacing: 1px; }
+  :root { --nav-h: 62px; }
+  .qa-label { display: none; }
 }
 </style>
 </head>
 <body>
 
-<div class="app">
+<div class="app-shell">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="brand">
-      <span class="brand-name">Meridian</span>
-      <span class="brand-sub">Institutional Payments</span>
-    </div>
-    <div class="header-right">
-      <div class="hdr-btn" onclick="toast('No new notifications')">
-        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-        <div class="notif-dot"></div>
+  <!-- ══════ TOPBAR ══════ -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-badge">W</div>
+      <div class="logo-text">
+        <span class="logo-name">WBTC</span>
+        <span class="logo-sub" data-es="Mi Billetera" data-en="My Wallet">My Wallet</span>
       </div>
-      <div class="hdr-avatar" onclick="switchTab('settings')">JD</div>
+    </div>
+    <div class="topbar-right">
+      <div class="lang-toggle">
+        <button class="lt-btn active" onclick="setLang('es')" id="btn-es">🇸🇻 ES</button>
+        <button class="lt-btn" onclick="setLang('en')" id="btn-en">🇺🇸 EN</button>
+      </div>
+      <div class="tb-icon-btn" onclick="showToast(LANG==='es'?'Sin notificaciones nuevas':'No new notifications')">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="notif-pip"></div>
+      </div>
+      <div class="user-av" onclick="switchTab('settings')">MG</div>
     </div>
   </header>
 
-  <!-- ═══ HOME ═══ -->
-  <div class="screen active" id="screen-home">
+  <!-- ══════ SCREENS ══════ -->
+  <div class="screens-wrap">
 
-    <!-- Balance Band -->
-    <div class="balance-band">
-      <div class="bal-label">Total Portfolio Balance</div>
-      <div class="bal-figure"><span class="sym">$</span>24,831<span class="dec">.47</span></div>
-      <div class="bal-meta">
-        <span class="bal-change">+1.27% · +$312.80</span>
-        <span class="bal-period">As of Mar 16, 2026</span>
-      </div>
+    <!-- ─────── HOME ─────── -->
+    <div class="screen active" id="sc-home">
 
-      <!-- Action Strip -->
-      <div class="action-strip">
-        <div class="action-btn" onclick="openSheet('send')">
-          <div class="action-ico">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </div>
-          <span class="action-lbl">Send</span>
+      <!-- Balance Hero -->
+      <div class="balance-hero">
+        <div class="bh-greeting">
+          <span data-es="Buenos días, María 👋" data-en="Good morning, María 👋">Buenos días, María 👋</span>
+          <span class="bh-live"><span class="live-dot"></span>Lightning</span>
         </div>
-        <div class="action-btn" onclick="openSheet('receive')">
-          <div class="action-ico">
-            <svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
-          </div>
-          <span class="action-lbl">Receive</span>
-        </div>
-        <div class="action-btn" onclick="openSheet('scan')">
-          <div class="action-ico">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><line x1="21" y1="16" x2="21" y2="21"/><line x1="16" y1="21" x2="21" y2="21"/></svg>
-          </div>
-          <span class="action-lbl">Scan</span>
-        </div>
-        <div class="action-btn" onclick="openSheet('invoice')">
-          <div class="action-ico">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <span class="action-lbl">Invoice</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Card -->
-    <div class="card-section">
-      <div class="inst-card" onclick="toast('Card management — tap to view details')">
-        <div class="card-inner">
-          <div class="card-top">
-            <div class="card-brand">Meridian<span>Private Banking</span></div>
-            <div class="card-chip"></div>
+        <div class="bh-total-label" data-es="Saldo Total" data-en="Total Balance">Saldo Total</div>
+        <div class="bh-total"><sup>$</sup>480<span style="font-size:0.55em;color:rgba(255,255,255,0.5)">.00</span></div>
+        <div class="bh-change">↑ +$12.40 <span data-es="hoy" data-en="today">hoy</span></div>
+
+        <div class="currency-cards">
+          <div class="cc-tile" onclick="showToast('USD')">
+            <div class="cct-flag">🇺🇸</div>
+            <div class="cct-label">USD</div>
+            <div class="cct-amount usd">$280.00</div>
+            <div class="cct-sub" data-es="Disponible" data-en="Available">Disponible</div>
           </div>
-          <div class="card-num">•••• &thinsp; •••• &thinsp; •••• &thinsp; 4872</div>
-          <div class="card-bottom">
-            <div>
-              <div class="card-holder-lbl">Account Holder</div>
-              <div class="card-holder-name">J. Davidson</div>
-            </div>
-            <div class="card-exp">
-              <div class="card-exp-lbl">Valid Thru</div>
-              <div class="card-exp-val">08 / 29</div>
-            </div>
+          <div class="cc-tile" onclick="showToast('Bitcoin ₿')">
+            <div class="cct-flag">₿</div>
+            <div class="cct-label">Bitcoin</div>
+            <div class="cct-amount btc">₿ 0.00298</div>
+            <div class="cct-sub">≈ $200.00</div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <div class="qa-btn" onclick="openOverlay('ov-send')">
+            <div class="qa-ic send">↑</div>
+            <span class="qa-label" data-es="Enviar" data-en="Send">Enviar</span>
+          </div>
+          <div class="qa-btn" onclick="openOverlay('ov-receive')">
+            <div class="qa-ic receive">↓</div>
+            <span class="qa-label" data-es="Recibir" data-en="Receive">Recibir</span>
+          </div>
+          <div class="qa-btn" onclick="openOverlay('ov-scan')">
+            <div class="qa-ic scan">⊙</div>
+            <span class="qa-label" data-es="Escanear" data-en="Scan">Escanear</span>
+          </div>
+          <div class="qa-btn" onclick="switchTab('remittance')">
+            <div class="qa-ic remit">✈️</div>
+            <span class="qa-label" data-es="Remesa" data-en="Remit">Remesa</span>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Stats -->
-    <div class="content-block" style="margin-top:clamp(16px,4vw,22px)">
-      <div class="sec-hd">
-        <span class="sec-title">Summary</span>
-        <span class="sec-link" onclick="switchTab('history')">Full Report</span>
-      </div>
-      <div class="stat-row">
-        <div class="stat-tile">
-          <div class="st-label">Income · March</div>
-          <div class="st-value credit">$8,240.00</div>
-          <div class="st-sub">↑ 14.2% vs Feb</div>
-        </div>
-        <div class="stat-tile">
-          <div class="st-label">Expenditure · March</div>
-          <div class="st-value debit">$3,182.00</div>
-          <div class="st-sub">↓ 6.0% vs Feb</div>
+      <!-- Info Banner -->
+      <div class="info-banner ib-remit">
+        <div class="ib-icon">✈️</div>
+        <div class="ib-body">
+          <div class="ib-title" data-es="¿Esperas una remesa?" data-en="Expecting a remittance?">¿Esperas una remesa?</div>
+          <div class="ib-desc" data-es="Comparte tu código QR con tu familia en EE. UU. Reciben $200, tú recibes $200. Sin comisión." data-en="Share your QR with your family in the US. They send $200, you get $200. Zero fee.">Comparte tu código QR con tu familia en EE. UU. Reciben $200, tú recibes $200. Sin comisión.</div>
+          <button class="ib-cta remit" onclick="openOverlay('ov-receive')" data-es="Ver mi QR →" data-en="See my QR →">Ver mi QR →</button>
         </div>
       </div>
-    </div>
 
-    <!-- Contacts -->
-    <div class="content-block">
-      <div class="sec-hd">
-        <span class="sec-title">Frequent Recipients</span>
-        <span class="sec-link" onclick="openSheet('send')">New Transfer</span>
+      <!-- Contacts -->
+      <div class="section-pad">
+        <div class="section-hd">
+          <div class="section-hd-left"><div class="sh-line"></div><span class="sh-title" data-es="Envíos frecuentes" data-en="Frequent recipients">Envíos frecuentes</span></div>
+          <button class="sh-cta" onclick="openOverlay('ov-send')" data-es="+ Nuevo" data-en="+ New">+ Nuevo</button>
+        </div>
+        <div class="contacts-row" id="contacts-row"></div>
       </div>
-      <div class="contacts-list" id="contacts-row"></div>
-    </div>
 
-    <!-- Transactions -->
-    <div class="content-block">
-      <div class="sec-hd">
-        <span class="sec-title">Recent Transactions</span>
-        <span class="sec-link" onclick="switchTab('history')">View All</span>
+      <!-- Recent Transactions -->
+      <div class="section-pad" style="margin-top:clamp(16px,4vw,22px)">
+        <div class="section-hd">
+          <div class="section-hd-left"><div class="sh-line"></div><span class="sh-title" data-es="Últimos movimientos" data-en="Recent activity">Últimos movimientos</span></div>
+          <button class="sh-cta" onclick="switchTab('history')" data-es="Ver todo" data-en="View all">Ver todo</button>
+        </div>
       </div>
       <div class="tx-list" id="home-tx"></div>
+
+      <!-- BTC Banner -->
+      <div class="info-banner ib-btc" style="margin-top:clamp(14px,3.5vw,18px)">
+        <div class="ib-icon">₿</div>
+        <div class="ib-body">
+          <div class="ib-title" data-es="Bitcoin es moneda legal en El Salvador" data-en="Bitcoin is legal tender in El Salvador">Bitcoin es moneda legal en El Salvador</div>
+          <div class="ib-desc" data-es="Desde 2021, puedes pagar con Bitcoin en cualquier negocio. Tienes ₿ 0.00298 equivalente a $200." data-en="Since 2021, you can pay with Bitcoin at any business. You have ₿ 0.00298 worth $200.">Desde 2021, puedes pagar con Bitcoin en cualquier negocio. Tienes ₿ 0.00298 equivalente a $200.</div>
+          <button class="ib-cta btc" onclick="openOverlay('ov-scan')" data-es="Pagar con QR →" data-en="Pay with QR →">Pagar con QR →</button>
+        </div>
+      </div>
     </div>
 
-  </div>
-
-  <!-- ═══ HISTORY ═══ -->
-  <div class="screen" id="screen-history">
-    <div class="pg-title">Transaction History</div>
-    <div class="filter-bar">
-      <div class="fchip active" onclick="filterTx(this,'all')">All</div>
-      <div class="fchip" onclick="filterTx(this,'in')">Received</div>
-      <div class="fchip" onclick="filterTx(this,'out')">Sent</div>
-      <div class="fchip" onclick="filterTx(this,'invoice')">Invoices</div>
-    </div>
-    <div class="tx-padded">
-      <div class="tx-list" id="history-tx"></div>
-    </div>
-  </div>
-
-  <!-- ═══ ASSETS ═══ -->
-  <div class="screen" id="screen-assets">
-    <div class="pg-title">Assets & Cards</div>
-
-    <div style="padding:0 clamp(18px,4.5vw,28px)">
-      <!-- Crypto card -->
-      <div class="inst-card" style="margin-bottom:clamp(12px,3vw,16px);background:linear-gradient(160deg,#1A1230 0%,#0E0A22 100%);border-color:rgba(139,92,246,0.2)">
-        <div class="card-inner">
-          <div class="card-top">
-            <div class="card-brand" style="color:#C4B5FD">Digital Assets<span style="color:rgba(196,181,253,0.4)">Custodial Wallet</span></div>
-            <span style="font-size:clamp(18px,4.5vw,24px)">₿</span>
-          </div>
-          <div class="card-num" style="color:rgba(139,92,246,0.6)">0.48721 BTC</div>
-          <div class="card-bottom">
-            <div>
-              <div class="card-holder-lbl">Approximate Value</div>
-              <div class="card-holder-name" style="color:#C4B5FD;font-size:clamp(14px,3.5vw,16px)">$20,100.42</div>
-            </div>
-            <div class="card-exp">
-              <div class="card-exp-lbl">24h Return</div>
-              <div class="card-exp-val" style="color:#7CFC8E">+4.20%</div>
+    <!-- ─────── SEND (full screen) ─────── -->
+    <div class="screen" id="sc-send">
+      <div class="pg-title">
+        <div class="pg-title-ico" style="background:var(--g010)">↑</div>
+        <span data-es="Enviar Dinero" data-en="Send Money">Enviar Dinero</span>
+      </div>
+      <div style="padding:clamp(16px,4vw,22px)">
+        <div class="fg">
+          <label class="fl" data-es="Destinatario" data-en="Recipient">Destinatario</label>
+          <div class="fi-wrap">
+            <input class="fi" id="fs-rec" type="text" data-ph-es="Nombre, dirección o @usuario" data-ph-en="Name, address or @handle">
+            <div class="fi-action" onclick="openOverlay('ov-scan')">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><line x1="21" y1="16" x2="21" y2="21"/><line x1="16" y1="21" x2="21" y2="21"/></svg>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="sec-hd">
-        <span class="sec-title">Holdings</span>
-      </div>
+        <!-- Quick contacts -->
+        <div class="fg">
+          <label class="fl" data-es="Selección rápida" data-en="Quick select">Selección rápida</label>
+          <div id="send-contacts" style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px"></div>
+        </div>
 
-      <div class="asset-card" onclick="toast('ETH position details')">
-        <div class="asset-sym-badge" style="background:rgba(98,126,234,0.1);color:#627EEA;border:1px solid rgba(98,126,234,0.2)">ETH</div>
-        <div class="asset-info">
-          <div class="asset-name">Ethereum</div>
-          <div class="asset-sub">2.14000 ETH</div>
+        <div class="amt-display">
+          <div class="amt-num"><span class="amt-sym">$</span><span id="fs-disp">0</span></div>
+          <div class="amt-btc" id="fs-btc">≈ 0.000000 BTC</div>
         </div>
-        <div class="asset-right">
-          <div class="asset-val">$6,832.00</div>
-          <div class="asset-chg up">+2.10% 24h</div>
-        </div>
-      </div>
 
-      <div class="asset-card" onclick="toast('USDC position details')">
-        <div class="asset-sym-badge" style="background:rgba(39,117,202,0.1);color:#2775CA;border:1px solid rgba(39,117,202,0.2)">USDC</div>
-        <div class="asset-info">
-          <div class="asset-name">USD Coin</div>
-          <div class="asset-sub">3,440.00 USDC</div>
+        <div class="numpad">
+          <div class="nk" onclick="np('1')">1</div><div class="nk" onclick="np('2')">2</div><div class="nk" onclick="np('3')">3</div>
+          <div class="nk" onclick="np('4')">4</div><div class="nk" onclick="np('5')">5</div><div class="nk" onclick="np('6')">6</div>
+          <div class="nk" onclick="np('7')">7</div><div class="nk" onclick="np('8')">8</div><div class="nk" onclick="np('9')">9</div>
+          <div class="nk" onclick="np('.')">·</div><div class="nk" onclick="np('0')">0</div><div class="nk del" onclick="np('del')">⌫</div>
         </div>
-        <div class="asset-right">
-          <div class="asset-val">$3,440.00</div>
-          <div class="asset-chg" style="color:var(--ink4)">Stable</div>
-        </div>
-      </div>
 
-      <div class="asset-card" onclick="toast('SOL position details')">
-        <div class="asset-sym-badge" style="background:rgba(20,241,149,0.08);color:#14F195;border:1px solid rgba(20,241,149,0.15)">SOL</div>
-        <div class="asset-info">
-          <div class="asset-name">Solana</div>
-          <div class="asset-sub">8.50000 SOL</div>
+        <div class="fg">
+          <label class="fl" data-es="Nota (opcional)" data-en="Note (optional)">Nota (opcional)</label>
+          <input class="fi" id="fs-note" type="text" data-ph-es="¿Para qué es este pago?" data-ph-en="What is this payment for?">
         </div>
-        <div class="asset-right">
-          <div class="asset-val">$1,428.00</div>
-          <div class="asset-chg dn">−1.40% 24h</div>
-        </div>
-      </div>
 
-      <div class="sec-hd" style="margin-top:clamp(16px,4vw,22px)">
-        <span class="sec-title">Payment Cards</span>
-      </div>
-
-      <div class="asset-card" onclick="toast('Visa card — view details')">
-        <div class="asset-sym-badge" style="background:var(--wash);color:var(--standard);border:1px solid var(--tint);font-size:10px">VISA</div>
-        <div class="asset-info">
-          <div class="asset-name">Visa •••• 4872</div>
-          <div class="asset-sub">Physical · Expires 08/29</div>
-        </div>
-        <div class="asset-right">
-          <span class="badge b-green">Active</span>
-        </div>
-      </div>
-
-      <div class="asset-card" onclick="toast('Mastercard — view details')">
-        <div class="asset-sym-badge" style="background:var(--gold-bg);color:var(--gold);border:1px solid rgba(154,123,58,0.2);font-size:9px;letter-spacing:0">MC</div>
-        <div class="asset-info">
-          <div class="asset-name">Mastercard •••• 9201</div>
-          <div class="asset-sub">Virtual · Expires 12/27</div>
-        </div>
-        <div class="asset-right">
-          <span class="badge b-gold">Virtual</span>
-        </div>
-      </div>
-
-      <div style="margin-top:clamp(12px,3vw,16px)">
-        <button class="btn btn-outline" onclick="toast('Add card — document verification required')">+ Add Payment Card</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ SETTINGS ═══ -->
-  <div class="screen" id="screen-settings">
-    <div class="pg-title">Account & Settings</div>
-
-    <div class="profile-card" style="margin-top:clamp(12px,3vw,16px)">
-      <div class="prof-av">JD</div>
-      <div class="prof-info">
-        <div class="p-name">James Davidson</div>
-        <div class="p-email">j.davidson@meridian.io</div>
-        <div class="p-tier">◆ Private Member</div>
+        <button class="btn btn-primary" onclick="execSend()">
+          <span data-es="Enviar ahora" data-en="Send now">Enviar ahora</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
       </div>
     </div>
 
-    <div class="settings-group">
-      <div class="settings-group-label">Security</div>
-      <div class="setting-row" onclick="toast('Security settings')">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--standard)"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div class="setting-text"><div class="st">Authentication</div><div class="ss">Biometrics · PIN · 2FA enabled</div></div>
-        </div>
-        <span class="arr">›</span>
+    <!-- ─────── RECEIVE ─────── -->
+    <div class="screen" id="sc-receive">
+      <div class="pg-title">
+        <div class="pg-title-ico" style="background:var(--btc-light)">↓</div>
+        <span data-es="Recibir / Mi QR" data-en="Receive / My QR">Recibir / Mi QR</span>
       </div>
-      <div class="setting-row" onclick="toast('Recovery phrase — identity verification required')">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--red)"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
-          <div class="setting-text"><div class="st">Recovery Phrase</div><div class="ss">12-word backup · Requires verification</div></div>
+      <div style="padding:clamp(16px,4vw,22px)">
+        <div class="qr-tabs">
+          <div class="qtab active" id="qtab-ln" onclick="switchQR('ln')"><span class="qtab-ic">⚡</span><span class="qtab-lb">Lightning</span></div>
+          <div class="qtab" id="qtab-btc" onclick="switchQR('btc')"><span class="qtab-ic">₿</span><span class="qtab-lb">On-chain</span></div>
         </div>
-        <span class="arr" style="color:var(--red)">›</span>
+        <div style="height:12px"></div>
+        <div class="qr-stage">
+          <div class="qr-frame" id="receive-qr"></div>
+          <div class="addr-box" id="receive-addr" onclick="copyAddr()">lnbc1pvjluez...</div>
+          <p style="font-size:clamp(10px,2.5vw,11px);color:var(--ink4);text-align:center;font-family:var(--mono)" data-es="Toca para copiar · Compatible con Chivo Wallet" data-en="Tap to copy · Compatible with Chivo Wallet">Toca para copiar · Compatible con Chivo Wallet</p>
+        </div>
+
+        <div class="rule-line"></div>
+
+        <div class="fg">
+          <label class="fl" data-es="Pedir monto específico" data-en="Request specific amount">Pedir monto específico</label>
+          <div style="position:relative">
+            <input class="fi" id="req-amt" type="number" placeholder="0.00" oninput="updateReceiveQR()" style="padding-right:52px">
+            <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--ink4);font-weight:700;letter-spacing:1px">USD</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="shareQR()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span data-es="Compartir mi QR" data-en="Share my QR">Compartir mi QR</span>
+        </button>
+        <button class="btn btn-secondary" onclick="copyAddr()" data-es="Copiar dirección" data-en="Copy address">Copiar dirección</button>
       </div>
     </div>
 
-    <div class="settings-group">
-      <div class="settings-group-label">Preferences</div>
-      <div class="setting-row">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--forest)"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          <div class="setting-text"><div class="st">Push Notifications</div><div class="ss">Transaction alerts · Balance updates</div></div>
-        </div>
-        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+    <!-- ─────── SCAN ─────── -->
+    <div class="screen" id="sc-scan">
+      <div class="pg-title">
+        <div class="pg-title-ico" style="background:var(--ln-light)">⊙</div>
+        <span data-es="Escanear QR" data-en="Scan QR">Escanear QR</span>
       </div>
-      <div class="setting-row" onclick="toast('Currency & locale settings')">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--forest)"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="18" x2="12" y2="20"/><line x1="12" y1="4" x2="12" y2="6"/></svg></div>
-          <div class="setting-text"><div class="st">Currency & Region</div><div class="ss">USD · English (United States)</div></div>
+      <div style="padding:clamp(16px,4vw,22px)">
+        <div class="scan-viewport">
+          <div class="scan-beam"></div>
+          <div class="scan-reticle">
+            <div class="sc tl"></div><div class="sc tr"></div>
+            <div class="sc bl"></div><div class="sc br"></div>
+          </div>
+          <svg viewBox="0 0 64 64" width="56" height="56" style="opacity:0.08"><rect x="4" y="4" width="56" height="56" rx="4" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="34" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="34" width="18" height="18" fill="none" stroke="white" stroke-width="2"/></svg>
         </div>
-        <span class="arr">›</span>
+        <p class="scan-hint" data-es="Apunta al código QR del destinatario…" data-en="Point at the recipient's QR code…">Apunta al código QR del destinatario…</p>
+
+        <div class="fg">
+          <label class="fl" data-es="O pegar dirección manualmente" data-en="Or paste address manually">O pegar dirección manualmente</label>
+          <div class="fi-wrap">
+            <input class="fi" id="scan-inp" type="text" data-ph-es="Dirección Lightning o Bitcoin" data-ph-en="Lightning or Bitcoin address">
+            <div class="fi-action" onclick="pasteAddr()">
+              <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="processScan()">
+          <span data-es="Usar esta dirección" data-en="Use this address">Usar esta dirección</span>
+        </button>
       </div>
     </div>
 
-    <div class="settings-group">
-      <div class="settings-group-label">Reports & Compliance</div>
-      <div class="setting-row" onclick="toast('Generating account statement…')">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--forest)"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-          <div class="setting-text"><div class="st">Export Statement</div><div class="ss">CSV · PDF · XLSX format</div></div>
-        </div>
-        <span class="arr">›</span>
+    <!-- ─────── REMITTANCE ─────── -->
+    <div class="screen" id="sc-remittance">
+      <div class="remit-hero">
+        <div class="rh-label" data-es="Remesas sin comisión" data-en="Zero-fee remittances">Remesas sin comisión</div>
+        <div class="rh-title" data-es="$200 enviados.<br>$200 recibidos." data-en="$200 sent.<br>$200 received.">$200 enviados.<br>$200 recibidos.</div>
+        <div class="rh-sub" data-es="Via Lightning Network · 0% comisión · ~2 segundos" data-en="Via Lightning Network · 0% fee · ~2 seconds">Via Lightning Network · 0% comisión · ~2 segundos</div>
       </div>
-      <div class="setting-row" onclick="toast('Compliance documents — contact relationship manager')">
-        <div class="setting-lft">
-          <div class="setting-ico"><svg viewBox="0 0 24 24" style="stroke:var(--forest)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-          <div class="setting-text"><div class="st">Compliance Documents</div><div class="ss">KYC · AML documentation</div></div>
+
+      <div class="remit-savings">
+        <div class="rs-card">
+          <div class="rs-label" data-es="Ahorras / envío" data-en="You save / transfer">Ahorras / envío</div>
+          <div class="rs-val save">$16</div>
+          <div class="rs-sub" data-es="vs. Western Union" data-en="vs. Western Union">vs. Western Union</div>
         </div>
-        <span class="arr">›</span>
+        <div class="rs-card">
+          <div class="rs-label" data-es="Ahorro anual" data-en="Annual savings">Ahorro anual</div>
+          <div class="rs-val save">$960</div>
+          <div class="rs-sub" data-es="con 5 remesas/mes" data-en="with 5 remittances/mo">con 5 remesas/mes</div>
+        </div>
+      </div>
+
+      <div class="section-pad" style="margin-top:clamp(14px,3.5vw,18px)">
+        <div class="section-hd">
+          <div class="section-hd-left"><div class="sh-line"></div><span class="sh-title" data-es="Comparación de $200" data-en="Comparison for $200">Comparación de $200</span></div>
+        </div>
+      </div>
+
+      <div class="remit-compare" id="remit-compare"></div>
+
+      <div style="padding:clamp(14px,3.5vw,18px) clamp(16px,4vw,22px) 0">
+        <div class="info-banner ib-green" style="margin:0 0 clamp(14px,3.5vw,18px)">
+          <div class="ib-icon">📱</div>
+          <div class="ib-body">
+            <div class="ib-title" data-es="¿Tu familia está en EE. UU.?" data-en="Is your family in the US?">¿Tu familia está en EE. UU.?</div>
+            <div class="ib-desc" data-es="Pídeles que descarguen MercadoBTC (gratuito). Comparten tu QR y el dinero llega en 2 segundos, sin comisión." data-en="Ask them to download MercadoBTC (free). Share your QR and money arrives in 2 seconds, no fee.">Pídeles que descarguen MercadoBTC. Comparten tu QR y el dinero llega en 2 segundos, sin comisión.</div>
+            <button class="ib-cta" onclick="switchTab('receive')" data-es="Ver mi QR de remesa →" data-en="See my remittance QR →">Ver mi QR de remesa →</button>
+          </div>
+        </div>
+
+        <button class="btn btn-remit" onclick="openOverlay('ov-receive')">
+          <span data-es="Compartir QR para remesa" data-en="Share remittance QR">Compartir QR para remesa</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </button>
       </div>
     </div>
 
-    <div class="settings-group">
-      <div class="setting-row">
-        <button class="btn btn-danger" style="width:100%;text-align:left" onclick="toast('Session terminated')">Sign Out of Account</button>
+    <!-- ─────── INVOICE ─────── -->
+    <div class="screen" id="sc-invoice">
+      <div class="pg-title">
+        <div class="pg-title-ico" style="background:var(--g010)">📄</div>
+        <span data-es="Crear Factura" data-en="Create Invoice">Crear Factura</span>
+      </div>
+
+      <div style="padding:0 clamp(16px,4vw,22px) clamp(8px,2vw,12px)">
+        <div style="height:clamp(10px,2.5vw,14px)"></div>
+
+        <div class="info-banner ib-green" style="margin:0 0 clamp(14px,3.5vw,18px)">
+          <div class="ib-icon">🏪</div>
+          <div class="ib-body">
+            <div class="ib-title" data-es="Para tu negocio" data-en="For your business">Para tu negocio</div>
+            <div class="ib-desc" data-es="Crea una factura, compártela, tu cliente paga en BTC o USD. Sin banco, sin terminal, sin comisión." data-en="Create an invoice, share it, your client pays in BTC or USD. No bank, no terminal, no fee.">Crea una factura y tu cliente paga con Bitcoin o USD en segundos.</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label class="fl" data-es="Cliente / Empresa" data-en="Client / Business">Cliente / Empresa</label>
+          <input class="fi" id="inv-client" type="text" data-ph-es="Nombre del cliente" data-ph-en="Client name">
+        </div>
+        <div class="fg">
+          <label class="fl" data-es="Descripción" data-en="Description">Descripción</label>
+          <input class="fi" id="inv-desc" type="text" data-ph-es="ej. Pupusas y frescos — Mesa 4" data-ph-en="e.g. Food and drinks — Table 4">
+        </div>
+        <div class="fi-row">
+          <div class="fg">
+            <label class="fl" data-es="Monto (USD)" data-en="Amount (USD)">Monto (USD)</label>
+            <input class="fi" id="inv-amt" type="number" placeholder="0.00" oninput="updateInvoice()">
+          </div>
+          <div class="fg">
+            <label class="fl">IVA %</label>
+            <input class="fi" id="inv-tax" type="number" placeholder="13" value="13" oninput="updateInvoice()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Invoice Preview -->
+      <div style="padding:0 clamp(16px,4vw,22px)">
+        <div class="inv-preview">
+          <div class="inv-prev-head">
+            <div class="iph-brand">MercadoBTC<span data-es="Factura Digital · El Salvador" data-en="Digital Invoice · El Salvador">Factura Digital · El Salvador</span></div>
+            <div class="iph-id">
+              <div class="iph-num" id="inv-num">#MBTC-2026-001</div>
+              <div class="iph-date" id="inv-date">16 Mar 2026</div>
+            </div>
+          </div>
+          <div class="inv-prev-body">
+            <div class="ipb-row"><span class="lbl" id="inv-prev-desc" data-es="Descripción del servicio" data-en="Service description">Descripción del servicio</span><span class="val" id="inv-prev-sub">$0.00</span></div>
+            <div class="ipb-row"><span class="lbl" id="inv-tax-lbl" data-es="IVA (13%)" data-en="Tax (13%)">IVA (13%)</span><span class="val" id="inv-prev-tax">$0.00</span></div>
+            <div class="ipb-row total"><span class="lbl" data-es="Total a Pagar" data-en="Total Due">Total a Pagar</span><span class="val" id="inv-prev-total">$0.00</span></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="sendInvoice()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span data-es="Enviar factura" data-en="Send invoice">Enviar factura</span>
+        </button>
+        <button class="btn btn-secondary" onclick="showToast(LANG==='es'?'Guardado como borrador':'Saved as draft')" data-es="Guardar borrador" data-en="Save draft">Guardar borrador</button>
       </div>
     </div>
 
-  </div>
+    <!-- ─────── HISTORY ─────── -->
+    <div class="screen" id="sc-history">
+      <div class="history-pg-title" data-es="Historial" data-en="History">Historial</div>
+      <div class="filter-bar">
+        <div class="fchip active" onclick="filterHistory(this,'all')" data-es="Todos" data-en="All">Todos</div>
+        <div class="fchip" onclick="filterHistory(this,'credit')" data-es="Recibido" data-en="Received">Recibido</div>
+        <div class="fchip" onclick="filterHistory(this,'debit')" data-es="Enviado" data-en="Sent">Enviado</div>
+        <div class="fchip" onclick="filterHistory(this,'remit')" data-es="Remesas" data-en="Remittances">Remesas</div>
+        <div class="fchip" onclick="filterHistory(this,'invoice')" data-es="Facturas" data-en="Invoices">Facturas</div>
+      </div>
+      <div id="history-list"></div>
+    </div>
 
-</div><!-- /app -->
+    <!-- ─────── SETTINGS ─────── -->
+    <div class="screen" id="sc-settings">
+      <div class="profile-hero">
+        <div class="profile-av-lg">MG</div>
+        <div>
+          <div class="ph-name">María González</div>
+          <div class="ph-phone">+503 7123-4567</div>
+          <div class="ph-badge">✓ <span data-es="Verificada · San Salvador" data-en="Verified · San Salvador">Verificada · San Salvador</span></div>
+        </div>
+      </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="nav-item active" id="nav-home" onclick="switchTab('home')">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span class="nav-lbl">Overview</span>
-  </div>
-  <div class="nav-item" id="nav-history" onclick="switchTab('history')">
-    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    <span class="nav-lbl">Activity</span>
-  </div>
-  <div class="nav-item" id="nav-assets" onclick="switchTab('assets')">
-    <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-    <span class="nav-lbl">Assets</span>
-  </div>
-  <div class="nav-item" id="nav-settings" onclick="switchTab('settings')">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-    <span class="nav-lbl">Account</span>
-  </div>
-</nav>
+      <div class="settings-section">
+        <div class="ss-label" data-es="Mi cuenta" data-en="My account">Mi cuenta</div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Perfil':'Profile')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--g600)"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Mi Perfil" data-en="My Profile">Mi Perfil</div><div class="s" data-es="Nombre, teléfono, DUI" data-en="Name, phone, ID">Nombre, teléfono, DUI</div></div>
+          </div>
+          <div class="sr-right"><span class="badge-sm bs-green" data-es="Verificado" data-en="Verified">Verificado</span><span class="sr-arr">›</span></div>
+        </div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Autoconversión BTC→USD':'BTC→USD auto-convert')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--btc)"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Auto BTC → USD" data-en="Auto BTC → USD">Auto BTC → USD</div><div class="s" data-es="Convertir automáticamente a dólares" data-en="Auto-convert to dollars">Convertir automáticamente a dólares</div></div>
+          </div>
+          <div class="sr-right"><div class="tog on" onclick="this.classList.toggle('on');event.stopPropagation()"></div></div>
+        </div>
+      </div>
 
-<!-- ═══ SHEETS ═══ -->
+      <div class="settings-section">
+        <div class="ss-label" data-es="Seguridad" data-en="Security">Seguridad</div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Seguridad y PIN':'Security & PIN')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--g600)"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="PIN y Biométrico" data-en="PIN & Biometric">PIN y Biométrico</div><div class="s" data-es="Protege tu billetera" data-en="Protect your wallet">Protege tu billetera</div></div>
+          </div>
+          <div class="sr-right"><span class="sr-arr">›</span></div>
+        </div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Frase de respaldo':'Recovery phrase')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--danger)"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Frase de recuperación" data-en="Recovery phrase">Frase de recuperación</div><div class="s" data-es="12 palabras de respaldo · Requerido" data-en="12-word backup · Required">12 palabras · Requerido</div></div>
+          </div>
+          <div class="sr-right"><span class="badge-sm bs-warn" data-es="Pendiente" data-en="Pending">Pendiente</span><span class="sr-arr" style="color:var(--danger)">›</span></div>
+        </div>
+      </div>
 
-<!-- SEND -->
-<div class="overlay" id="sheet-send">
+      <div class="settings-section">
+        <div class="ss-label" data-es="Preferencias" data-en="Preferences">Preferencias</div>
+        <div class="setting-row">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--g600)"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Notificaciones" data-en="Notifications">Notificaciones</div><div class="s" data-es="Alertas de pago y remesas" data-en="Payment & remittance alerts">Alertas de pago y remesas</div></div>
+          </div>
+          <div class="sr-right"><div class="tog on" onclick="this.classList.toggle('on');event.stopPropagation()"></div></div>
+        </div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Exportando estado de cuenta…':'Exporting statement…')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--g600)"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Exportar movimientos" data-en="Export transactions">Exportar movimientos</div><div class="s" data-es="CSV y PDF" data-en="CSV and PDF">CSV y PDF</div></div>
+          </div>
+          <div class="sr-right"><span class="sr-arr">›</span></div>
+        </div>
+        <div class="setting-row" onclick="showToast(LANG==='es'?'Ley Bitcoin El Salvador 2021':'El Salvador Bitcoin Law 2021')">
+          <div class="sr-left">
+            <div class="sr-ico"><svg viewBox="0 0 24 24" stroke="var(--btc)"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="sr-text"><div class="t" data-es="Ley Bitcoin El Salvador" data-en="El Salvador Bitcoin Law">Ley Bitcoin El Salvador</div><div class="s" data-es="Bitcoin moneda legal desde 2021" data-en="Bitcoin legal tender since 2021">Bitcoin moneda legal desde 2021</div></div>
+          </div>
+          <div class="sr-right"><span class="badge-sm bs-btc">₿</span><span class="sr-arr">›</span></div>
+        </div>
+      </div>
+
+      <div class="settings-section" style="padding-bottom:clamp(16px,4vw,22px)">
+        <div class="ss-label" data-es="Sesión" data-en="Session">Sesión</div>
+        <button class="btn btn-danger" onclick="showToast(LANG==='es'?'Sesión cerrada':'Signed out')" data-es="Cerrar sesión" data-en="Sign out" style="margin-top:clamp(10px,2.5vw,14px)">Cerrar sesión</button>
+      </div>
+    </div>
+
+  </div><!-- /screens-wrap -->
+
+  <!-- ══════ BOTTOM NAV ══════ -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" id="nav-home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="nav-lbl" data-es="Inicio" data-en="Home">Inicio</span>
+    </div>
+    <div class="nav-item" id="nav-send" onclick="switchTab('send')">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <span class="nav-lbl" data-es="Enviar" data-en="Send">Enviar</span>
+    </div>
+    <div class="nav-item" id="nav-receive" onclick="switchTab('receive')">
+      <svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+      <span class="nav-lbl" data-es="Recibir" data-en="Receive">Recibir</span>
+    </div>
+    <div class="nav-item" id="nav-invoice" onclick="switchTab('invoice')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="nav-lbl" data-es="Factura" data-en="Invoice">Factura</span>
+    </div>
+    <div class="nav-item" id="nav-history" onclick="switchTab('history')">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span class="nav-lbl" data-es="Historial" data-en="History">Historial</span>
+    </div>
+    <div class="nav-item" id="nav-settings" onclick="switchTab('settings')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      <span class="nav-lbl" data-es="Cuenta" data-en="Account">Cuenta</span>
+    </div>
+  </nav>
+
+</div><!-- /app-shell -->
+
+<!-- ══════ OVERLAYS (sheets from bottom) ══════ -->
+
+<!-- SEND OVERLAY (quick from home) -->
+<div class="overlay" id="ov-send">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-      <div class="sheet-title">Initiate Transfer</div>
-      <div class="sheet-sub">Funds will be settled within 1–2 business days</div>
+    <div class="sheet-drag"></div>
+    <div class="sheet-hd">
+      <div class="sheet-title" data-es="Enviar Dinero" data-en="Send Money">Enviar Dinero</div>
+      <div class="sheet-sub" data-es="Lightning · ~2 seg · $0 comisión · Compatible con Chivo" data-en="Lightning · ~2 sec · $0 fee · Compatible with Chivo">Lightning · ~2 seg · $0 comisión · Compatible con Chivo</div>
     </div>
     <div class="fg">
-      <label class="fl">Beneficiary</label>
+      <label class="fl" data-es="Destinatario" data-en="Recipient">Destinatario</label>
       <div class="fi-wrap">
-        <input class="fi" id="s-rec" type="text" placeholder="Name, account or @identifier" autocomplete="off">
-        <div class="fi-ico" onclick="openSheet('scan')">
+        <input class="fi" id="os-rec" type="text" data-ph-es="Nombre, dirección o @usuario" data-ph-en="Name, address or @handle">
+        <div class="fi-action" onclick="closeAllOverlays();openOverlay('ov-scan')">
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><line x1="21" y1="16" x2="21" y2="21"/><line x1="16" y1="21" x2="21" y2="21"/></svg>
         </div>
       </div>
     </div>
-    <div class="amt-block">
-      <div class="amt-fig"><span class="amt-sym">$</span><span id="s-display">0</span></div>
-      <div class="amt-equiv" id="s-btc">≈ 0.000000 BTC equivalent</div>
+    <div class="amt-display">
+      <div class="amt-num"><span class="amt-sym">$</span><span id="os-disp">0</span></div>
+      <div class="amt-btc" id="os-btc">≈ 0.000000 BTC</div>
     </div>
-    <div class="numpad">
-      <div class="nk" onclick="np('1')">1</div><div class="nk" onclick="np('2')">2</div><div class="nk" onclick="np('3')">3</div>
-      <div class="nk" onclick="np('4')">4</div><div class="nk" onclick="np('5')">5</div><div class="nk" onclick="np('6')">6</div>
-      <div class="nk" onclick="np('7')">7</div><div class="nk" onclick="np('8')">8</div><div class="nk" onclick="np('9')">9</div>
-      <div class="nk" onclick="np('.')">·</div><div class="nk" onclick="np('0')">0</div><div class="nk del" onclick="np('del')">⌫</div>
+    <div class="numpad" id="ov-numpad">
+      <div class="nk" onclick="onp('1')">1</div><div class="nk" onclick="onp('2')">2</div><div class="nk" onclick="onp('3')">3</div>
+      <div class="nk" onclick="onp('4')">4</div><div class="nk" onclick="onp('5')">5</div><div class="nk" onclick="onp('6')">6</div>
+      <div class="nk" onclick="onp('7')">7</div><div class="nk" onclick="onp('8')">8</div><div class="nk" onclick="onp('9')">9</div>
+      <div class="nk" onclick="onp('.')">·</div><div class="nk" onclick="onp('0')">0</div><div class="nk del" onclick="onp('del')">⌫</div>
     </div>
     <div class="fg">
-      <label class="fl">Reference / Purpose</label>
-      <input class="fi" id="s-note" type="text" placeholder="Payment reference (optional)">
+      <label class="fl" data-es="Nota" data-en="Note">Nota</label>
+      <input class="fi" id="os-note" type="text" data-ph-es="¿Para qué es este pago?" data-ph-en="What's this for?">
     </div>
-    <button class="btn btn-primary" onclick="execSend()">Authorise Transfer</button>
-    <button class="btn btn-secondary" onclick="closeSheet('send')">Cancel</button>
+    <button class="btn btn-primary" onclick="execOverlaySend()">
+      <span data-es="Confirmar y Enviar" data-en="Confirm & Send">Confirmar y Enviar</span>
+    </button>
+    <button class="btn btn-secondary" onclick="closeAllOverlays()" data-es="Cancelar" data-en="Cancel">Cancelar</button>
   </div>
 </div>
 
-<!-- RECEIVE -->
-<div class="overlay" id="sheet-receive">
+<!-- RECEIVE OVERLAY -->
+<div class="overlay" id="ov-receive">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-      <div class="sheet-title">Receive Payment</div>
-      <div class="sheet-sub">Share your address or QR code with the sender</div>
+    <div class="sheet-drag"></div>
+    <div class="sheet-hd">
+      <div class="sheet-title" data-es="Recibir Dinero" data-en="Receive Money">Recibir Dinero</div>
+      <div class="sheet-sub" data-es="Comparte tu QR · Compatible con Chivo Wallet y Lightning" data-en="Share your QR · Compatible with Chivo Wallet and Lightning">Comparte tu QR · Compatible con Chivo Wallet y Lightning</div>
     </div>
     <div class="qr-stage">
-      <div class="qr-frame" id="qr-box"></div>
-      <div class="addr-display" id="addr-box" onclick="copyAddr()">0x4a2B8F3cD91E7A6b82C5F04a1E9D1E7A6b8</div>
-      <p style="font-size:11px;color:var(--ink4);text-align:center;font-family:var(--mono);letter-spacing:0.5px">Tap to copy address · Compatible with all wallets</p>
+      <div class="qr-frame" id="ov-qr"></div>
+      <div class="addr-box" onclick="copyAddr()" data-es="lnbc1pvjluezpp5qqq... (toca para copiar)" data-en="lnbc1pvjluezpp5qqq... (tap to copy)">lnbc1pvjluezpp5qqq... (toca para copiar)</div>
     </div>
-    <div class="rule"></div>
-    <div class="fg">
-      <label class="fl">Request Amount (optional)</label>
-      <div class="fi-wrap">
-        <input class="fi" id="r-amt" type="number" placeholder="0.00" oninput="updateQR()" style="padding-right:52px">
-        <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--ink4);font-weight:600;letter-spacing:1.5px">USD</span>
+    <div class="fg" style="margin-top:8px">
+      <label class="fl" data-es="Pedir monto específico" data-en="Request specific amount">Pedir monto específico</label>
+      <div style="position:relative">
+        <input class="fi" id="ov-req" type="number" placeholder="0.00" oninput="updateOvQR()" style="padding-right:52px">
+        <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--ink4);font-weight:700">USD</span>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="shareAddr()">Share Address</button>
-    <button class="btn btn-secondary" onclick="closeSheet('receive')">Close</button>
+    <button class="btn btn-primary" onclick="shareQR()">
+      <span data-es="Compartir mi QR" data-en="Share my QR">Compartir mi QR</span>
+    </button>
+    <button class="btn btn-secondary" onclick="closeAllOverlays()" data-es="Cerrar" data-en="Close">Cerrar</button>
   </div>
 </div>
 
-<!-- SCAN -->
-<div class="overlay" id="sheet-scan">
+<!-- SCAN OVERLAY -->
+<div class="overlay" id="ov-scan">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-      <div class="sheet-title">Scan QR Code</div>
-      <div class="sheet-sub">Position the recipient's code within the frame</div>
+    <div class="sheet-drag"></div>
+    <div class="sheet-hd">
+      <div class="sheet-title" data-es="Escanear QR" data-en="Scan QR">Escanear QR</div>
+      <div class="sheet-sub" data-es="Apunta al código QR del destinatario o pega la dirección" data-en="Point at the QR code or paste the address">Apunta al código QR del destinatario o pega la dirección</div>
     </div>
-    <div class="scan-frame">
+    <div class="scan-viewport" style="max-height:280px">
       <div class="scan-beam"></div>
-      <div class="scan-reticle">
-        <div class="sc tl"></div><div class="sc tr"></div>
-        <div class="sc bl"></div><div class="sc br"></div>
-      </div>
-      <svg viewBox="0 0 64 64" width="64" height="64" style="opacity:0.08"><rect x="4" y="4" width="56" height="56" rx="4" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="34" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="34" width="18" height="18" fill="none" stroke="white" stroke-width="2"/></svg>
+      <div class="scan-reticle"><div class="sc tl"></div><div class="sc tr"></div><div class="sc bl"></div><div class="sc br"></div></div>
+      <svg viewBox="0 0 64 64" width="52" height="52" style="opacity:0.1"><rect x="4" y="4" width="56" height="56" rx="4" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="34" y="12" width="18" height="18" fill="none" stroke="white" stroke-width="2"/><rect x="12" y="34" width="18" height="18" fill="none" stroke="white" stroke-width="2"/></svg>
     </div>
-    <p class="scan-status">Awaiting QR code detection…</p>
-    <div class="rule"></div>
+    <p class="scan-hint" data-es="Esperando código QR…" data-en="Waiting for QR code…">Esperando código QR…</p>
     <div class="fg">
-      <label class="fl">Paste Address Manually</label>
-      <div class="fi-wrap">
-        <input class="fi" id="scan-in" type="text" placeholder="0x… or payment URI">
-        <div class="fi-ico" onclick="pasteAddr()">
-          <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
-        </div>
-      </div>
+      <label class="fl" data-es="O pegar manualmente" data-en="Or paste manually">O pegar manualmente</label>
+      <input class="fi" id="ov-scan-in" type="text" data-ph-es="Dirección Lightning o Bitcoin" data-ph-en="Lightning or Bitcoin address">
     </div>
-    <button class="btn btn-primary" onclick="processScan()">Confirm Address</button>
-    <button class="btn btn-secondary" onclick="closeSheet('scan')">Cancel</button>
+    <button class="btn btn-primary" onclick="processOvScan()">
+      <span data-es="Usar esta dirección" data-en="Use this address">Usar esta dirección</span>
+    </button>
+    <button class="btn btn-secondary" onclick="closeAllOverlays()" data-es="Cancelar" data-en="Cancel">Cancelar</button>
   </div>
 </div>
 
-<!-- INVOICE -->
-<div class="overlay" id="sheet-invoice">
+<!-- TX DETAIL OVERLAY -->
+<div class="overlay" id="ov-txdetail">
   <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-      <div class="sheet-title">Create Invoice</div>
-      <div class="sheet-sub">Generate and dispatch a formal payment request</div>
-    </div>
-    <div class="fg">
-      <label class="fl">Client / Organisation</label>
-      <input class="fi" id="i-client" type="text" placeholder="Client name or company">
-    </div>
-    <div class="fg">
-      <label class="fl">Description of Services</label>
-      <input class="fi" id="i-desc" type="text" placeholder="e.g. Consulting services — March 2026">
-    </div>
-    <div class="fi-2col">
-      <div class="fg">
-        <label class="fl">Amount (USD)</label>
-        <input class="fi" id="i-amt" type="number" placeholder="0.00" oninput="updateInv()">
-      </div>
-      <div class="fg">
-        <label class="fl">Due Date</label>
-        <input class="fi" id="i-due" type="date">
-      </div>
-    </div>
-    <div class="fg" style="max-width:160px">
-      <label class="fl">Tax Rate (%)</label>
-      <input class="fi" id="i-tax" type="number" placeholder="0" value="0" oninput="updateInv()">
-    </div>
-
-    <!-- Invoice Preview -->
-    <div class="inv-preview">
-      <div class="inv-preview-header">
-        <div class="inv-wordmark">Meridian<small>Institutional Payments</small></div>
-        <div class="inv-id">
-          <strong id="i-id">#MRD-2026-051</strong>
-          <span id="i-pdate">Mar 16, 2026</span>
-        </div>
-      </div>
-      <div class="inv-body">
-        <div class="inv-row">
-          <span class="lbl" id="i-pdesc">Service description</span>
-          <span class="val" id="i-psub">$0.00</span>
-        </div>
-        <div class="inv-row">
-          <span class="lbl">Tax</span>
-          <span class="val" id="i-ptax">$0.00</span>
-        </div>
-        <div class="inv-row total">
-          <span class="lbl">Total Due</span>
-          <span class="val" id="i-ptotal">$0.00</span>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn btn-primary" onclick="sendInvoice()">Dispatch Invoice</button>
-    <button class="btn btn-outline" onclick="toast('Invoice saved to drafts')">Save as Draft</button>
-    <button class="btn btn-secondary" onclick="closeSheet('invoice')">Cancel</button>
-  </div>
-</div>
-
-<!-- TX DETAIL -->
-<div class="overlay" id="sheet-txd">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div id="txd-content"></div>
-    <button class="btn btn-secondary" onclick="closeSheet('txd')" style="margin-top:clamp(8px,2vw,12px)">Close</button>
+    <div class="sheet-drag"></div>
+    <div id="txdetail-body"></div>
+    <button class="btn btn-secondary" onclick="closeAllOverlays()" data-es="Cerrar" data-en="Close" style="margin-top:12px">Cerrar</button>
   </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast-el"></div>
 
+<!-- ══════════════════════════════════════
+   JAVASCRIPT
+══════════════════════════════════════ -->
 <script>
-/* ════════════════════════════════════════
-   DATA
-════════════════════════════════════════ */
-const ADDR = '0x4a2B8F3cD91E7A6b82C5F04a1E9D1E7A6b8';
-const BTC  = 41250;
+/* ─── CONSTANTS ─── */
+const ADDR_LN  = 'lnbc1pvjluezpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqcqpjsp5zyg3zyg';
+const ADDR_BTC = '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy';
+const BTC_RATE = 67420;
+let LANG = 'es';
+let sendAmtStr = '';
+let ovSendAmtStr = '';
+let invCount = 1;
+let qrInst1 = null, qrInst2 = null;
+let currentQR = 'ln';
 
-const contacts = [
-  { name:'Sarah K.',  initials:'SK', bg:'#1B4D3E' },
-  { name:'Mike T.',   initials:'MT', bg:'#1A2E5C' },
-  { name:'Emma R.',   initials:'ER', bg:'#5C3D10' },
-  { name:'David L.',  initials:'DL', bg:'#1E4A32' },
-  { name:'Aria M.',   initials:'AM', bg:'#4A1E2E' },
-  { name:'Tom H.',    initials:'TH', bg:'#1C3A5A' },
+/* ─── TRANSACTION DATA ─── */
+const ALL_TX = [
+  { id:'tx01', cat:'remit',   type:'credit', icon:'🇺🇸', name_es:'Remesa — hermano en Dallas',      name_en:'Remittance — brother in Dallas',    meta_es:'Hoy 14:30 · Lightning · $0 comisión',  meta_en:'Today 14:30 · Lightning · $0 fee',     amt:200.00, date:'Mar 2026' },
+  { id:'tx02', cat:'biz',     type:'credit', icon:'🏪', name_es:'Pupusería El Buen Gusto',          name_en:'Pupusería El Buen Gusto',            meta_es:'Hoy 12:15 · QR Bitcoin',              meta_en:'Today 12:15 · Bitcoin QR',             amt:35.00,  date:'Mar 2026' },
+  { id:'tx03', cat:'bill',    type:'debit',  icon:'💡', name_es:'Pago ANDA — agua',                 name_en:'ANDA — water bill',                 meta_es:'14 mar · Factura pagada',              meta_en:'14 Mar · Bill paid',                   amt:18.50,  date:'Mar 2026' },
+  { id:'tx04', cat:'remit',   type:'credit', icon:'🇺🇸', name_es:'Remesa — tía en Los Ángeles',      name_en:'Remittance — aunt in Los Angeles',   meta_es:'12 mar · Lightning',                   meta_en:'12 Mar · Lightning',                   amt:150.00, date:'Mar 2026' },
+  { id:'tx05', cat:'bill',    type:'debit',  icon:'🛒', name_es:'Super Selectos — mercado',          name_en:'Super Selectos — groceries',        meta_es:'11 mar · BTC',                         meta_en:'11 Mar · BTC',                         amt:42.00,  date:'Mar 2026' },
+  { id:'tx06', cat:'invoice', type:'credit', icon:'📄', name_es:'Factura #MBTC-2026-088',             name_en:'Invoice #MBTC-2026-088',              meta_es:'10 mar · Negocio pagado',              meta_en:'10 Mar · Business paid',               amt:320.00, date:'Mar 2026' },
+  { id:'tx07', cat:'bill',    type:'debit',  icon:'🏠', name_es:'Renta — casera Doña Rosa',          name_en:'Rent — landlord Doña Rosa',         meta_es:'01 mar · USD',                         meta_en:'01 Mar · USD',                         amt:200.00, date:'Mar 2026' },
+  { id:'tx08', cat:'remit',   type:'credit', icon:'🇺🇸', name_es:'Remesa — primo en Houston',         name_en:'Remittance — cousin in Houston',    meta_es:'28 feb · Lightning',                   meta_en:'28 Feb · Lightning',                   amt:100.00, date:'Feb 2026' },
+  { id:'tx09', cat:'biz',     type:'credit', icon:'✂️', name_es:'Salón Belleza Lupita',              name_en:'Lupita Beauty Salon',               meta_es:'25 feb · QR MercadoBTC',                   meta_en:'25 Feb · MercadoBTC QR',                    amt:25.00,  date:'Feb 2026' },
+  { id:'tx10', cat:'bill',    type:'debit',  icon:'📱', name_es:'Recarga Tigo — celular',            name_en:'Tigo top-up — mobile',              meta_es:'20 feb · Lightning',                   meta_en:'20 Feb · Lightning',                   amt:10.00,  date:'Feb 2026' },
 ];
 
-const txns = [
-  { id:'t1', type:'out', dir:'debit',  name:'Netflix Subscription',   icon:'🎬', amt:15.99,   date:'Today, 14:34',  cat:'entertainment', hash:'0xabc123def456' },
-  { id:'t2', type:'in',  dir:'credit', name:'S. Kirby — Transfer',    icon:'↙',  amt:250.00,  date:'Today, 11:20',  cat:'transfer',      hash:'0xdef456ghi789' },
-  { id:'t3', type:'out', dir:'debit',  name:'Coffee Lab NYC',          icon:'☕', amt:8.50,    date:'Yesterday',     cat:'food',          hash:'0xghi789jkl012' },
-  { id:'t4', type:'in',  dir:'credit', name:'Invoice #MRD-2026-088',  icon:'📄', amt:1200.00, date:'14 Mar 2026',   cat:'invoice',       hash:'0xjkl012mno345' },
-  { id:'t5', type:'out', dir:'debit',  name:'AWS Cloud Infrastructure',icon:'☁️', amt:87.32,   date:'13 Mar 2026',   cat:'business',      hash:'0xmno345pqr678' },
-  { id:'t6', type:'in',  dir:'credit', name:'M. Torres — Payment',    icon:'↙',  amt:450.00,  date:'12 Mar 2026',   cat:'transfer',      hash:'0xpqr678stu901' },
-  { id:'t7', type:'out', dir:'debit',  name:'Figma Professional',      icon:'🎨', amt:15.00,   date:'10 Mar 2026',   cat:'tools',         hash:'0xstu901vwx234' },
-  { id:'t8', type:'out', dir:'debit',  name:'Uber Eats',               icon:'🍕', amt:32.40,   date:'09 Mar 2026',   cat:'food',          hash:'0xvwx234yza567' },
+const CONTACTS = [
+  { name:'Carlos H.', initials:'CH', color:'#1A4A8A', bg:'#E3F0FF' },
+  { name:'Lupita G.', initials:'LG', color:'#1B6B34', bg:'#EBF9F0' },
+  { name:'Miguel A.', initials:'MA', color:'#7B68EE', bg:'#F0EEFF' },
+  { name:'Rosa M.',   initials:'RM', color:'#B5451A', bg:'#FEF0E8' },
+  { name:'Pedro V.',  initials:'PV', color:'#1B6B34', bg:'#EBF9F0' },
 ];
 
-let sendAmt = '';
-let invNum  = 51;
+const REMIT_DATA = [
+  { logo:'💳', name:'Western Union', detail_es:'Comisión 8% · 1–3 días', detail_en:'8% fee · 1–3 days', gets:184, fee:'−$16', good:false },
+  { logo:'💳', name:'MoneyGram',     detail_es:'Comisión 7% · 1–3 días', detail_en:'7% fee · 1–3 days', gets:186, fee:'−$14', good:false },
+  { logo:'🏦', name:'Banco Agrícola',detail_es:'Comisión 6% · 3–5 días', detail_en:'6% fee · 3–5 days', gets:188, fee:'−$12', good:false },
+  { logo:'⚡', name:'MercadoBTC Lightning',detail_es:'0% comisión · ~2 seg',  detail_en:'0% fee · ~2 sec',  gets:200, fee:'$0',   good:true  },
+];
 
-/* ════════════════════════════════════════
-   BOOT
-════════════════════════════════════════ */
+/* ─── BOOT ─── */
 document.addEventListener('DOMContentLoaded', () => {
   renderContacts();
-  renderTx('home-tx', txns.slice(0,4));
-  renderTx('history-tx', txns);
-  buildQR(ADDR);
-  setDefaultDate();
+  renderTx('home-tx', ALL_TX.slice(0,4));
+  renderTx('history-list', ALL_TX, true);
+  renderRemit();
+  renderSendContacts();
+  buildQRs();
+  applyAllLang();
+  applyPlaceholders();
+  setInvDate();
 });
 
-/* ════════════════════════════════════════
-   NAV
-════════════════════════════════════════ */
-function switchTab(t) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('screen-' + t).classList.add('active');
-  document.getElementById('nav-' + t).classList.add('active');
+/* ─── LANGUAGE ─── */
+function setLang(l) {
+  LANG = l;
+  document.getElementById('btn-es').classList.toggle('active', l==='es');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  applyAllLang();
+  applyPlaceholders();
+  renderTx('home-tx', ALL_TX.slice(0,4));
+  renderTx('history-list', ALL_TX, true);
+  renderContacts();
+  renderSendContacts();
+  renderRemit();
 }
 
-/* ════════════════════════════════════════
-   CONTACTS
-════════════════════════════════════════ */
+function applyAllLang() {
+  document.querySelectorAll('[data-es]').forEach(el => {
+    const v = el.getAttribute('data-'+LANG);
+    if (v !== null) el.innerHTML = v;
+  });
+}
+function applyPlaceholders() {
+  document.querySelectorAll('[data-ph-'+LANG+']').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-'+LANG) || '';
+  });
+}
+
+/* ─── TAB NAVIGATION ─── */
+const TABS = ['home','send','receive','scan','remittance','invoice','history','settings'];
+
+function switchTab(t) {
+  TABS.forEach(id => {
+    const sc = document.getElementById('sc-'+id);
+    const nv = document.getElementById('nav-'+id);
+    if (sc) sc.classList.toggle('active', id===t);
+    if (nv) nv.classList.toggle('active', id===t);
+  });
+  window.scrollTo(0,0);
+}
+
+/* ─── OVERLAYS ─── */
+function openOverlay(id) {
+  closeAllOverlays();
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+function closeAllOverlays() {
+  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target===o) closeAllOverlays(); });
+});
+
+/* ─── RENDER CONTACTS ─── */
 function renderContacts() {
-  document.getElementById('contacts-row').innerHTML = contacts.map(c => `
-    <div class="contact-item" onclick="prefill('${c.name}')">
-      <div class="contact-av" style="background:${c.bg}">${c.initials}</div>
-      <div class="contact-nm">${c.name.split(' ')[0]}</div>
+  const row = document.getElementById('contacts-row');
+  if (!row) return;
+  row.innerHTML = CONTACTS.map(c => `
+    <div class="contact-chip" onclick="prefillSend('${c.name}')">
+      <div class="cc-av" style="background:${c.bg};color:${c.color}">${c.initials}</div>
+      <div class="cc-name">${c.name.split(' ')[0]}</div>
     </div>
   `).join('');
 }
 
-/* ════════════════════════════════════════
-   TRANSACTIONS
-════════════════════════════════════════ */
-function renderTx(id, list) {
-  document.getElementById(id).innerHTML = list.length
-    ? list.map(tx => `
-      <div class="tx-item ${tx.dir}" onclick="openTxDetail('${tx.id}')">
-        <div class="tx-ico">${tx.icon}</div>
-        <div class="tx-body">
-          <div class="tx-name">${tx.name}</div>
-          <div class="tx-meta">${tx.date} · ${tx.cat}</div>
-        </div>
-        <div class="tx-amount">${tx.type==='out'?'−':'+'}$${tx.amt.toFixed(2)}</div>
-      </div>
-    `).join('')
-    : '<p style="padding:20px 0;color:var(--ink4);font-size:13px;text-align:center;font-family:var(--mono)">No transactions found</p>';
+function renderSendContacts() {
+  const el = document.getElementById('send-contacts');
+  if (!el) return;
+  el.innerHTML = CONTACTS.slice(0,4).map(c => `
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0" onclick="document.getElementById('fs-rec').value='${c.name}'">
+      <div style="width:38px;height:38px;border-radius:10px;background:${c.bg};color:${c.color};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;border:1.5px solid ${c.color}20">${c.initials}</div>
+      <div style="font-size:9px;font-weight:600;color:var(--ink4)">${c.name.split(' ')[0]}</div>
+    </div>
+  `).join('');
 }
 
-function filterTx(el, f) {
+/* ─── RENDER TX LIST ─── */
+function renderTx(containerId, list, withMonths=false) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!list.length) { el.innerHTML = `<p style="padding:20px;text-align:center;color:var(--ink5);font-size:13px;font-family:var(--mono)">${LANG==='es'?'Sin movimientos':'No transactions'}</p>`; return; }
+  let html = '';
+  let lastDate = '';
+  list.forEach(tx => {
+    if (withMonths && tx.date !== lastDate) {
+      lastDate = tx.date;
+      html += `<div class="month-divider">${tx.date}</div>`;
+    }
+    const name = tx['name_'+LANG];
+    const meta = tx['meta_'+LANG];
+    html += `
+      <div class="tx-item ${tx.type}" onclick="openTxDetail('${tx.id}')">
+        <div class="tx-icon">${tx.icon}</div>
+        <div class="tx-body">
+          <div class="tx-name">${name}</div>
+          <div class="tx-meta">${meta}</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount">${tx.type==='credit'?'+':'−'}$${tx.amt.toFixed(2)}</div>
+          <div class="tx-status ts-done">${tx.type==='credit'?(LANG==='es'?'Recibido':'Received'):(LANG==='es'?'Enviado':'Sent')}</div>
+        </div>
+      </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function filterHistory(el, f) {
   document.querySelectorAll('.fchip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
-  const list = f==='all' ? txns : f==='invoice' ? txns.filter(t=>t.cat==='invoice') : txns.filter(t=>t.type===f);
-  renderTx('history-tx', list);
+  const map = { all:ALL_TX, credit:ALL_TX.filter(t=>t.type==='credit'), debit:ALL_TX.filter(t=>t.type==='debit'), remit:ALL_TX.filter(t=>t.cat==='remit'), invoice:ALL_TX.filter(t=>t.cat==='invoice') };
+  renderTx('history-list', map[f]||ALL_TX, true);
 }
 
-/* ════════════════════════════════════════
-   TX DETAIL
-════════════════════════════════════════ */
 function openTxDetail(id) {
-  const tx = txns.find(t=>t.id===id);
+  const tx = ALL_TX.find(t=>t.id===id);
   if (!tx) return;
-  const col  = tx.dir==='credit' ? 'var(--standard)' : 'var(--gold)';
-  const ibg  = tx.dir==='credit' ? 'var(--wash)' : 'var(--gold-bg)';
-  document.getElementById('txd-content').innerHTML = `
-    <div style="text-align:center;padding:clamp(14px,3.5vw,20px) 0 clamp(18px,4.5vw,24px)">
-      <div class="txd-icon" style="background:${ibg}">${tx.icon}</div>
-      <div class="txd-amt-fig" style="color:${col}">${tx.type==='out'?'−':'+'}$${tx.amt.toFixed(2)}</div>
-      <div class="txd-date">${tx.date}</div>
-      <div class="txd-status"><span class="status-pill sp-confirmed">✓ Confirmed</span></div>
+  const col = tx.type==='credit' ? 'var(--g600)' : 'var(--warn)';
+  document.getElementById('txdetail-body').innerHTML = `
+    <div style="text-align:center;padding:clamp(16px,4vw,22px) 0 clamp(20px,5vw,26px)">
+      <div style="font-size:3rem;margin-bottom:12px">${tx.icon}</div>
+      <div style="font-family:var(--mono);font-size:clamp(28px,7vw,36px);font-weight:800;color:${col};letter-spacing:-1px">${tx.type==='credit'?'+':'−'}$${tx.amt.toFixed(2)}</div>
+      <div style="font-size:clamp(12px,3vw,13px);color:var(--ink4);margin-top:4px;font-family:var(--mono)">${tx['meta_'+LANG]}</div>
+      <span style="display:inline-flex;align-items:center;gap:4px;margin-top:10px;padding:4px 12px;border-radius:100px;background:var(--g010);color:var(--g600);font-size:10px;font-weight:700;letter-spacing:1px;border:1px solid var(--g050)">✓ ${LANG==='es'?'Confirmado':'Confirmed'}</span>
     </div>
-    <div class="txd-table">
-      <div class="txd-tr"><span class="dl">Counterparty</span><span class="dv">${tx.name}</span></div>
-      <div class="txd-tr"><span class="dl">Category</span><span class="dv">${tx.cat}</span></div>
-      <div class="txd-tr"><span class="dl">Transaction ID</span><span class="dv" style="color:var(--standard);cursor:pointer" onclick="toast('Transaction ID copied')">${tx.hash}</span></div>
-      <div class="txd-tr"><span class="dl">Network Fee</span><span class="dv">$0.02</span></div>
-      <div class="txd-tr"><span class="dl">Settlement</span><span class="dv" style="color:var(--standard)">Completed</span></div>
+    <div style="border:1.5px solid var(--rule);border-radius:var(--r-lg);overflow:hidden">
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--rule);font-size:13px"><span style="color:var(--ink4);font-weight:500">${LANG==='es'?'Descripción':'Description'}</span><span style="font-weight:600;text-align:right;max-width:60%">${tx['name_'+LANG]}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--rule);font-size:13px"><span style="color:var(--ink4);font-weight:500">${LANG==='es'?'Categoría':'Category'}</span><span style="font-weight:600">${tx.cat}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--rule);font-size:13px"><span style="color:var(--ink4);font-weight:500">${LANG==='es'?'Red':'Network'}</span><span style="color:var(--ln);font-weight:700">⚡ Lightning</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--rule);font-size:13px"><span style="color:var(--ink4);font-weight:500">${LANG==='es'?'Comisión':'Fee'}</span><span style="color:var(--g600);font-weight:700">$0.00</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;font-size:13px"><span style="color:var(--ink4);font-weight:500">Tx Hash</span><span style="font-family:var(--mono);font-size:10px;color:var(--ink3)">0x${Math.random().toString(16).slice(2,10)}…</span></div>
+    </div>`;
+  openOverlay('ov-txdetail');
+}
+
+/* ─── RENDER REMIT ─── */
+function renderRemit() {
+  const el = document.getElementById('remit-compare');
+  if (!el) return;
+  el.innerHTML = REMIT_DATA.map(r => `
+    <div class="rc-row ${r.good?'highlight':''}">
+      <div class="rc-logo">${r.logo}</div>
+      <div class="rc-body">
+        <div class="rc-name">${r.name}</div>
+        <div class="rc-detail">${r['detail_'+LANG]}</div>
+      </div>
+      <div class="rc-result">
+        <div class="rc-gets ${r.good?'good':'bad'}">$${r.gets}</div>
+        <div class="rc-fee">${r.fee}</div>
+      </div>
     </div>
-  `;
-  openSheet('txd');
+  `).join('');
 }
 
-/* ════════════════════════════════════════
-   SHEETS
-════════════════════════════════════════ */
-function openSheet(name) {
-  closeAllSheets();
-  const el = document.getElementById('sheet-' + name);
-  if (el) { el.classList.add('open'); document.body.style.overflow='hidden'; }
-}
-function closeSheet(name) {
-  const el = document.getElementById('sheet-' + name);
-  if (el) el.classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeAllSheets() {
-  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
-  document.body.style.overflow='';
-}
-document.querySelectorAll('.overlay').forEach(o => {
-  o.addEventListener('click', e => { if(e.target===o){ o.classList.remove('open'); document.body.style.overflow=''; } });
-});
-
-/* ════════════════════════════════════════
-   NUMPAD
-════════════════════════════════════════ */
-function np(k) {
-  if (k==='del') { sendAmt = sendAmt.slice(0,-1); }
-  else if (k==='.' && sendAmt.includes('.')) { return; }
-  else if (sendAmt.length >= 8) { return; }
-  else { sendAmt += k; }
-  document.getElementById('s-display').textContent = sendAmt || '0';
-  const usd = parseFloat(sendAmt)||0;
-  document.getElementById('s-btc').textContent = `≈ ${(usd/BTC).toFixed(6)} BTC equivalent`;
+/* ─── QR CODES ─── */
+function buildQRs() {
+  buildQR('receive-qr', ADDR_LN, 160);
+  buildQR('ov-qr', ADDR_LN, 160);
 }
 
-/* ════════════════════════════════════════
-   SEND
-════════════════════════════════════════ */
-function execSend() {
-  const rec = document.getElementById('s-rec').value.trim();
-  const amt = parseFloat(sendAmt);
-  if (!rec) { toast('Please specify a beneficiary'); return; }
-  if (!amt||amt<=0) { toast('Please enter a transfer amount'); return; }
-  if (amt > 24831.47) { toast('Insufficient available balance'); return; }
-  const newTx = { id:'t'+Date.now(), type:'out', dir:'debit', name:rec, icon:'↗', amt, date:'Just now', cat:'transfer', hash:'0x'+Math.random().toString(16).slice(2,14) };
-  txns.unshift(newTx);
-  renderTx('home-tx', txns.slice(0,4));
-  renderTx('history-tx', txns);
-  sendAmt='';
-  document.getElementById('s-display').textContent='0';
-  document.getElementById('s-rec').value='';
-  document.getElementById('s-note').value='';
-  closeSheet('send');
-  toast(`Transfer of $${amt.toFixed(2)} authorised to ${rec}`);
+function buildQR(id, data, size) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  try { new QRCode(el, { text:data, width:size||160, height:size||160, colorDark:'#0A1A0F', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M }); }
+  catch(e) { el.innerHTML = `<div style="width:${size||160}px;height:${size||160}px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:8px">₿</div>`; }
 }
 
-function prefill(name) {
-  openSheet('send');
-  setTimeout(() => { document.getElementById('s-rec').value = name; }, 200);
+function switchQR(type) {
+  currentQR = type;
+  document.getElementById('qtab-ln').classList.toggle('active', type==='ln');
+  document.getElementById('qtab-btc').classList.toggle('active', type==='btc');
+  const addr = type==='ln' ? ADDR_LN : ADDR_BTC;
+  buildQR('receive-qr', addr, 160);
+  document.getElementById('receive-addr').textContent = addr;
 }
 
-/* ════════════════════════════════════════
-   QR
-════════════════════════════════════════ */
-function buildQR(data) {
-  const c = document.getElementById('qr-box');
-  if (!c) return;
-  c.innerHTML = '';
-  try {
-    new QRCode(c, { text:data, width:180, height:180, colorDark:'#0E2A1A', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M });
-  } catch(e) {
-    c.innerHTML = '<div style="width:180px;height:180px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:48px;border-radius:8px">⬛</div>';
-  }
+function updateReceiveQR() {
+  const amt = document.getElementById('req-amt').value;
+  const addr = currentQR==='ln' ? ADDR_LN : ADDR_BTC;
+  buildQR('receive-qr', amt ? `${addr}?amount=${amt}` : addr, 160);
 }
-function updateQR() {
-  const amt = document.getElementById('r-amt').value;
-  buildQR(amt ? `meridian:${ADDR}?amount=${amt}` : ADDR);
+
+function updateOvQR() {
+  const amt = document.getElementById('ov-req').value;
+  buildQR('ov-qr', amt ? `${ADDR_LN}?amount=${amt}` : ADDR_LN, 160);
 }
+
 function copyAddr() {
-  navigator.clipboard?.writeText(ADDR).catch(()=>{});
-  toast('Account address copied to clipboard');
+  navigator.clipboard?.writeText(ADDR_LN).catch(()=>{});
+  showToast(LANG==='es'?'📋 Dirección copiada':'📋 Address copied');
 }
-function shareAddr() {
-  if (navigator.share) { navigator.share({ title:'Meridian Account Address', text:ADDR }); }
+
+function shareQR() {
+  if (navigator.share) { navigator.share({ title:'Mi QR MercadoBTC', text: ADDR_LN }); }
   else copyAddr();
 }
 
-/* ════════════════════════════════════════
-   SCAN
-════════════════════════════════════════ */
+/* ─── NUMPAD (send full screen) ─── */
+function np(k) {
+  if (k==='del') { sendAmtStr=sendAmtStr.slice(0,-1); }
+  else if (k==='.' && sendAmtStr.includes('.')) { return; }
+  else if (sendAmtStr.replace('.','').length >= 7) { return; }
+  else { sendAmtStr += k; }
+  document.getElementById('fs-disp').textContent = sendAmtStr || '0';
+  const usd = parseFloat(sendAmtStr)||0;
+  document.getElementById('fs-btc').textContent = `≈ ${(usd/BTC_RATE).toFixed(6)} BTC`;
+}
+
+/* ─── NUMPAD (overlay) ─── */
+function onp(k) {
+  if (k==='del') { ovSendAmtStr=ovSendAmtStr.slice(0,-1); }
+  else if (k==='.' && ovSendAmtStr.includes('.')) { return; }
+  else if (ovSendAmtStr.replace('.','').length >= 7) { return; }
+  else { ovSendAmtStr += k; }
+  document.getElementById('os-disp').textContent = ovSendAmtStr || '0';
+  const usd = parseFloat(ovSendAmtStr)||0;
+  document.getElementById('os-btc').textContent = `≈ ${(usd/BTC_RATE).toFixed(6)} BTC`;
+}
+
+function prefillSend(name) {
+  openOverlay('ov-send');
+  setTimeout(() => { document.getElementById('os-rec').value = name; }, 150);
+}
+
+/* ─── EXECUTE SEND (overlay) ─── */
+function execOverlaySend() {
+  const rec = document.getElementById('os-rec').value.trim();
+  const amt = parseFloat(ovSendAmtStr);
+  if (!rec) { showToast(LANG==='es'?'⚠️ Ingresa un destinatario':'⚠️ Enter a recipient'); return; }
+  if (!amt||amt<=0) { showToast(LANG==='es'?'⚠️ Ingresa un monto':'⚠️ Enter an amount'); return; }
+  if (amt>480) { showToast(LANG==='es'?'⚠️ Saldo insuficiente':'⚠️ Insufficient balance'); return; }
+  addNewTx(rec, amt, 'debit', 'bill', '↑');
+  document.getElementById('os-rec').value='';
+  document.getElementById('os-note').value='';
+  ovSendAmtStr='';
+  document.getElementById('os-disp').textContent='0';
+  document.getElementById('os-btc').textContent='≈ 0.000000 BTC';
+  closeAllOverlays();
+  showToast(LANG==='es'?`✅ $${amt.toFixed(2)} enviado a ${rec}`:`✅ $${amt.toFixed(2)} sent to ${rec}`);
+}
+
+/* ─── EXECUTE SEND (full screen) ─── */
+function execSend() {
+  const rec = document.getElementById('fs-rec').value.trim();
+  const amt = parseFloat(sendAmtStr);
+  if (!rec) { showToast(LANG==='es'?'⚠️ Ingresa un destinatario':'⚠️ Enter a recipient'); return; }
+  if (!amt||amt<=0) { showToast(LANG==='es'?'⚠️ Ingresa un monto':'⚠️ Enter an amount'); return; }
+  if (amt>480) { showToast(LANG==='es'?'⚠️ Saldo insuficiente':'⚠️ Insufficient balance'); return; }
+  addNewTx(rec, amt, 'debit', 'bill', '↑');
+  document.getElementById('fs-rec').value='';
+  document.getElementById('fs-note').value='';
+  sendAmtStr='';
+  document.getElementById('fs-disp').textContent='0';
+  document.getElementById('fs-btc').textContent='≈ 0.000000 BTC';
+  showToast(LANG==='es'?`✅ $${amt.toFixed(2)} enviado a ${rec}`:`✅ $${amt.toFixed(2)} sent to ${rec}`);
+  switchTab('home');
+}
+
+function addNewTx(name, amt, type, cat, icon) {
+  const now = new Date();
+  const dateStr = `${now.getDate()} ${now.toLocaleString(LANG==='es'?'es-SV':'en-US',{month:'short'})} ${LANG==='es'?'·':'·'} Lightning`;
+  const newTx = {
+    id:'tx'+Date.now(), cat, type, icon,
+    name_es: name, name_en: name,
+    meta_es: `Ahora · Lightning · $0 comisión`,
+    meta_en: `Just now · Lightning · $0 fee`,
+    amt, date:'Mar 2026'
+  };
+  ALL_TX.unshift(newTx);
+  renderTx('home-tx', ALL_TX.slice(0,4));
+  renderTx('history-list', ALL_TX, true);
+}
+
+/* ─── SCAN ─── */
 function pasteAddr() {
   navigator.clipboard?.readText().then(t => {
-    document.getElementById('scan-in').value = t;
-    toast('Address pasted from clipboard');
+    document.getElementById('scan-inp').value = t;
+    showToast(LANG==='es'?'📋 Pegado':'📋 Pasted');
   }).catch(() => {
-    document.getElementById('scan-in').value = '0x7f3A…demo1234';
-    toast('Demo address loaded');
+    document.getElementById('scan-inp').value = 'lnbc1pvjluez…demo';
+    showToast(LANG==='es'?'Demo cargado':'Demo loaded');
   });
 }
 function processScan() {
-  const addr = document.getElementById('scan-in').value.trim();
-  if (!addr) { toast('Please scan or enter an address'); return; }
-  closeSheet('scan');
-  setTimeout(() => {
-    openSheet('send');
-    document.getElementById('s-rec').value = addr.length>24 ? addr.slice(0,24)+'…' : addr;
-  }, 350);
+  const addr = document.getElementById('scan-inp').value.trim();
+  if (!addr) { showToast(LANG==='es'?'⚠️ Ingresa una dirección':'⚠️ Enter an address'); return; }
+  switchTab('send');
+  document.getElementById('fs-rec').value = addr.length>28 ? addr.slice(0,28)+'…' : addr;
+  document.getElementById('scan-inp').value='';
+}
+function processOvScan() {
+  const addr = document.getElementById('ov-scan-in').value.trim();
+  if (!addr) { showToast(LANG==='es'?'⚠️ Ingresa una dirección':'⚠️ Enter an address'); return; }
+  closeAllOverlays();
+  setTimeout(()=>{
+    openOverlay('ov-send');
+    document.getElementById('os-rec').value = addr.length>28 ? addr.slice(0,28)+'…' : addr;
+    document.getElementById('ov-scan-in').value='';
+  }, 300);
 }
 
-/* ════════════════════════════════════════
-   INVOICE
-════════════════════════════════════════ */
-function setDefaultDate() {
-  const d = new Date(); d.setDate(d.getDate()+30);
-  const el = document.getElementById('i-due');
-  if (el) el.value = d.toISOString().split('T')[0];
-  const now = document.getElementById('i-pdate');
-  if (now) now.textContent = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+/* ─── INVOICE ─── */
+function setInvDate() {
+  const d = new Date();
+  const el = document.getElementById('inv-date');
+  if (el) el.textContent = d.toLocaleDateString(LANG==='es'?'es-SV':'en-US',{day:'2-digit',month:'short',year:'numeric'});
 }
-function updateInv() {
-  const amt  = parseFloat(document.getElementById('i-amt').value)||0;
-  const tax  = parseFloat(document.getElementById('i-tax').value)||0;
-  const desc = document.getElementById('i-desc').value || 'Service description';
+function updateInvoice() {
+  const amt  = parseFloat(document.getElementById('inv-amt').value)||0;
+  const tax  = parseFloat(document.getElementById('inv-tax').value)||0;
+  const desc = document.getElementById('inv-desc').value || (LANG==='es'?'Descripción del servicio':'Service description');
   const taxAmt = amt*(tax/100);
-  document.getElementById('i-pdesc').textContent  = desc;
-  document.getElementById('i-psub').textContent   = '$'+amt.toFixed(2);
-  document.getElementById('i-ptax').textContent   = '$'+taxAmt.toFixed(2);
-  document.getElementById('i-ptotal').textContent = '$'+(amt+taxAmt).toFixed(2);
-  document.getElementById('i-id').textContent     = '#MRD-2026-0'+invNum;
+  document.getElementById('inv-prev-desc').textContent = desc;
+  document.getElementById('inv-prev-sub').textContent  = '$'+amt.toFixed(2);
+  document.getElementById('inv-prev-tax').textContent  = '$'+taxAmt.toFixed(2);
+  document.getElementById('inv-prev-total').textContent= '$'+(amt+taxAmt).toFixed(2);
+  document.getElementById('inv-tax-lbl').textContent   = (LANG==='es'?'IVA':'Tax')+' ('+tax+'%)';
+  document.getElementById('inv-num').textContent       = '#MBTC-2026-'+String(invCount).padStart(3,'0');
 }
 function sendInvoice() {
-  const client = document.getElementById('i-client').value.trim();
-  const amt    = parseFloat(document.getElementById('i-amt').value);
-  if (!client) { toast('Please specify a client or organisation'); return; }
-  if (!amt||amt<=0) { toast('Please enter an invoice amount'); return; }
-  const tax   = parseFloat(document.getElementById('i-tax').value)||0;
+  const client = document.getElementById('inv-client').value.trim();
+  const amt    = parseFloat(document.getElementById('inv-amt').value);
+  if (!client) { showToast(LANG==='es'?'⚠️ Ingresa el nombre del cliente':'⚠️ Enter client name'); return; }
+  if (!amt||amt<=0) { showToast(LANG==='es'?'⚠️ Ingresa un monto':'⚠️ Enter an amount'); return; }
+  const tax   = parseFloat(document.getElementById('inv-tax').value)||0;
   const total = amt*(1+tax/100);
-  txns.unshift({ id:'t'+Date.now(), type:'in', dir:'credit', name:`Invoice — ${client}`, icon:'📄', amt:total, date:'Just now', cat:'invoice', hash:'0x'+Math.random().toString(16).slice(2,14) });
-  renderTx('home-tx', txns.slice(0,4));
-  renderTx('history-tx', txns);
-  ['i-client','i-desc','i-amt'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('i-tax').value='0';
-  invNum++;
-  updateInv();
-  closeSheet('invoice');
-  toast(`Invoice dispatched to ${client} · $${total.toFixed(2)}`);
+  addNewTx(`Factura — ${client}`, total, 'credit', 'invoice', '📄');
+  ['inv-client','inv-desc','inv-amt'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('inv-tax').value='13';
+  invCount++;
+  updateInvoice();
+  showToast(LANG==='es'?`📄 Factura enviada a ${client} ($${total.toFixed(2)})`:`📄 Invoice sent to ${client} ($${total.toFixed(2)})`);
+  switchTab('home');
 }
 
-/* ════════════════════════════════════════
-   TOAST
-════════════════════════════════════════ */
+/* ─── TOAST ─── */
 let _tt;
-function toast(msg) {
+function showToast(msg) {
   const el = document.getElementById('toast-el');
   el.textContent = msg;
   el.classList.add('show');
   clearTimeout(_tt);
-  _tt = setTimeout(() => el.classList.remove('show'), 3500);
+  _tt = setTimeout(()=>el.classList.remove('show'), 3500);
 }
 </script>
 </body>
