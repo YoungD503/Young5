@@ -876,26 +876,284 @@ footer {
   opacity: 1; transform: translateY(0);
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
-  .hero { grid-template-columns: 1fr; padding: 140px 28px 60px; }
-  .hero-right { display: none; }
-  .features-grid { grid-template-columns: 1fr 1fr; }
-  .how-inner { grid-template-columns: 1fr; gap: 48px; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-  .stats-strip { grid-template-columns: 1fr 1fr; }
-  .testimonials-grid { grid-template-columns: 1fr; }
-  footer { grid-template-columns: 1fr 1fr; }
+/* ══════════════════════════════════════════════
+   RESPONSIVE — Full device coverage
+   Breakpoints: 1280 / 1024 / 768 / 480 / 360
+══════════════════════════════════════════════ */
+
+/* ── Hamburger menu (mobile nav) ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 6px; background: none; border: none;
 }
-@media (max-width: 640px) {
-  nav { padding: 0 20px; }
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text); border-radius: 1px;
+  transition: transform .3s, opacity .3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed; top: 64px; left: 0; right: 0;
+  background: rgba(4,4,4,0.97);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 24px 32px;
+  z-index: 490;
+  flex-direction: column; gap: 0;
+  animation: mobileMenuIn .25s ease;
+}
+@keyframes mobileMenuIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  display: block; padding: 14px 0;
+  font-size: .8rem; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.nav-mobile-menu a:last-child { border-bottom: none; }
+.nav-mobile-menu a:hover { color: var(--ember); }
+.nav-mobile-menu .mob-cta {
+  display: block; margin-top: 20px;
+  background: var(--ember); color: var(--void);
+  text-align: center; padding: 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: .12em;
+  border-bottom: none;
+}
+.nav-mobile-menu .mob-cta:hover { background: var(--ember2); color: var(--void); }
+
+/* ── 1280px — Large tablet / small laptop ── */
+@media (max-width: 1280px) {
+  .hero { padding: 150px 40px 80px; gap: 40px; }
+  .hero-h1 { font-size: clamp(3.8rem, 7vw, 6.5rem); }
+  .features { padding: 100px 40px; }
+  .how { padding: 100px 40px; }
+  .pricing { padding: 100px 40px; }
+  .testimonials { padding: 100px 40px; }
+  .cta-banner { padding: 100px 40px; }
+  .stats-strip { padding: 70px 40px; }
+  footer { padding: 48px 40px; }
+  .df-float-tag.tag-3 { display: none; }
+}
+
+/* ── 1024px — Tablet landscape ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 28px; }
   nav .nav-links { display: none; }
-  .hero { padding: 120px 20px 60px; }
-  .features { padding: 80px 20px; }
+  .nav-hamburger { display: flex; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 130px 32px 70px;
+    text-align: center;
+  }
+  .hero-eyebrow { justify-content: center; }
+  .hero-sub { margin: 0 auto 40px; }
+  .hero-actions { justify-content: center; }
+  .hero-proof { justify-content: center; }
+  .hero-right { display: none; }
+  .hero-glow { top: 10%; right: -20%; width: 500px; height: 500px; }
+
+  .features { padding: 90px 32px; }
+  .features-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  .how { padding: 90px 32px; }
+  .how-inner { grid-template-columns: 1fr; gap: 52px; }
+  .how-steps { max-width: 600px; margin: 0 auto; }
+  .how-visual { max-width: 600px; margin: 0 auto; width: 100%; }
+
+  .pricing { padding: 90px 32px; }
+  .pricing-grid {
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+  }
+  .pricing-grid .pricing-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 50%;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .stats-strip {
+    grid-template-columns: 1fr 1fr;
+    padding: 60px 32px;
+  }
+  .stat-block:nth-child(2) { border-right: none; }
+  .stat-block:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+  .stat-block:nth-child(4) { border-right: none; border-top: 1px solid var(--border); }
+
+  .testimonials { padding: 90px 32px; }
+  .testimonials-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+
+  .cta-banner { padding: 90px 32px; }
+
+  footer {
+    grid-template-columns: 1fr 1fr;
+    padding: 48px 32px;
+    gap: 36px;
+  }
+  footer .footer-brand-desc { max-width: 100%; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+/* ── 768px — Tablet portrait ── */
+@media (max-width: 768px) {
+  nav { height: 58px; padding: 0 20px; }
+  .ticker-bar { top: 58px; }
+  .nav-mobile-menu { top: 58px; }
+
+  .hero {
+    padding: 110px 20px 60px;
+    min-height: auto;
+  }
+  .hero-h1 { font-size: clamp(3rem, 10vw, 4.5rem); }
+  .hero-sub { font-size: .82rem; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn-hero, .btn-ghost {
+    width: 100%; justify-content: center; text-align: center;
+  }
+  .hero-proof {
+    flex-wrap: wrap; gap: 16px;
+    justify-content: center;
+  }
+  .hero-proof-divider { display: none; }
+  .hero-proof-stat { text-align: center; min-width: 120px; }
+  .hero-proof-num { font-size: 1.6rem; }
+
+  .features { padding: 70px 20px; }
   .features-grid { grid-template-columns: 1fr; }
-  .how, .pricing, .testimonials, .cta-banner { padding: 80px 20px; }
-  .stats-strip { grid-template-columns: 1fr 1fr; padding: 48px 20px; }
-  footer { grid-template-columns: 1fr; padding: 40px 20px; }
+  .feature-card { padding: 28px 24px; }
+  .section-h2 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+
+  .how { padding: 70px 20px; }
+  .how-steps, .how-visual { max-width: 100%; }
+  .how-step { gap: 16px; }
+  .how-step-num { font-size: 1.8rem; width: 40px; }
+  .how-visual-card { padding: 20px; }
+  .hvcard-row { flex-direction: column; gap: 4px; }
+  .hvcard-amount { font-size: .85rem; }
+
+  .pricing { padding: 70px 20px; }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .pricing-grid .pricing-card:last-child {
+    grid-column: auto;
+    max-width: 100%;
+  }
+  .pricing-card { padding: 32px 24px; }
+
+  .stats-strip {
+    grid-template-columns: 1fr 1fr;
+    padding: 48px 20px;
+    gap: 0;
+  }
+  .stat-block { padding: 24px 16px; }
+  .stat-block-num { font-size: 2.4rem; }
+
+  .testimonials { padding: 70px 20px; }
+  .testimonials-grid { max-width: 100%; }
+  .testi-card { padding: 24px 20px; }
+
+  .cta-banner { padding: 70px 20px; }
+  .cta-banner-h2 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+  .cta-banner-actions { flex-direction: column; width: 100%; max-width: 360px; margin-left: auto; margin-right: auto; }
+
+  footer {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    gap: 28px;
+  }
+  .footer-brand-desc { max-width: 100%; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-legal { text-align: center; font-size: .56rem; }
+}
+
+/* ── 480px — Large phone ── */
+@media (max-width: 480px) {
+  nav { height: 54px; padding: 0 16px; }
+  .ticker-bar { top: 54px; height: 28px; }
+  .nav-mobile-menu { top: 54px; }
+  .nav-brand-name { font-size: 1.25rem; }
+  .ticker-item { padding: 0 18px; font-size: .55rem; }
+
+  .hero { padding: 100px 16px 50px; }
+  .hero-eyebrow { font-size: .56rem; }
+  .hero-h1 { font-size: clamp(2.6rem, 12vw, 3.5rem); }
+  .hero-sub { font-size: .78rem; }
+  .hero-proof-num { font-size: 1.4rem; }
+  .hero-proof-label { font-size: .52rem; }
+  .btn-hero { padding: 14px 24px; font-size: 1rem; }
+  .btn-ghost { padding: 13px 20px; font-size: .68rem; }
+
+  .features { padding: 60px 16px; }
+  .features-header { margin-bottom: 40px; }
+  .feature-card { padding: 24px 20px; }
+  .feature-num { font-size: 2.6rem; }
+  .feature-title { font-size: 1.2rem; }
+  .feature-desc { font-size: .74rem; }
+
+  .how { padding: 60px 16px; }
+  .how-step { padding: 20px 0; }
+  .how-step-title { font-size: 1rem; }
+  .how-step-desc { font-size: .74rem; }
+
+  .pricing { padding: 60px 16px; }
+  .pricing-grid { max-width: 100%; }
+  .pricing-price { font-size: 3rem; }
+
+  .stats-strip { padding: 40px 16px; }
+  .stat-block { padding: 20px 12px; }
+  .stat-block-num { font-size: 2rem; }
+  .stat-block-label { font-size: .56rem; letter-spacing: .12em; }
+
+  .testimonials { padding: 60px 16px; }
+  .testi-card { padding: 20px 16px; }
+  .testi-text { font-size: .76rem; }
+
+  .cta-banner { padding: 60px 16px; }
+  .cta-banner-sub { font-size: .78rem; }
+  .cta-note { font-size: .55rem; }
+
+  footer { padding: 36px 16px; gap: 24px; }
+  .footer-brand-name { font-size: 1.3rem; }
+  .footer-bottom { gap: 6px; }
+}
+
+/* ── 360px — Small phone (Galaxy S, iPhone SE) ── */
+@media (max-width: 360px) {
+  .hero-h1 { font-size: 2.4rem; }
+  .section-h2 { font-size: 2.2rem; }
+  .cta-banner-h2 { font-size: 2.2rem; }
+  .hero-proof { gap: 10px; }
+  .hero-proof-num { font-size: 1.2rem; }
+  .stats-strip { grid-template-columns: 1fr; }
+  .stat-block { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-block:last-child { border-bottom: none; }
+  .pricing-price { font-size: 2.6rem; }
+  .btn-hero, .btn-ghost { font-size: .9rem; padding: 12px 18px; }
+}
+
+/* ── Touch devices — disable custom cursor ── */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+  .btn-hero, .btn-ghost, .btn-pricing,
+  .nav-cta, .feature-card, .pricing-card { cursor: pointer; }
+  a { cursor: pointer; }
+  /* Remove hover transforms that feel janky on touch */
+  .feature-card:hover { transform: none; }
+  .pricing-card:hover { transform: none; }
+  .btn-hero:hover { transform: none; box-shadow: none; }
 }
 </style>
 </head>
@@ -925,7 +1183,18 @@ footer {
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
     Start Free
   </a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Menu -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#features"  onclick="closeMobileMenu()">Features</a>
+  <a href="#how"       onclick="closeMobileMenu()">How It Works</a>
+  <a href="#pricing"   onclick="closeMobileMenu()">Pricing</a>
+  <a href="#pricing"   class="mob-cta" onclick="closeMobileMenu()">Start Free Today →</a>
+</div>
 
 <!-- Ticker Bar -->
 <div class="ticker-bar">
@@ -1335,17 +1604,45 @@ footer {
 </footer>
 
 <script>
+// ── HAMBURGER MENU ───────────────────────────────
+const hamburger   = document.getElementById('hamburger');
+const mobileMenu  = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close mobile menu on resize to desktop
+window.addEventListener('resize', () => {
+  if(window.innerWidth > 1024) closeMobileMenu();
+});
+
+// ── CURSOR — disable on touch devices ────────────
+const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+if(isTouch) {
+  document.getElementById('cursor').style.display = 'none';
+  document.getElementById('cursorRing').style.display = 'none';
+  document.body.style.cursor = 'auto';
+}
+
 // ── CURSOR ──────────────────────────────────────
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-(function animateCursor() {
-  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-  rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animateCursor);
-})();
+if(!isTouch) {
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  })();
+}
 
 // ── TICKER ──────────────────────────────────────
 const tickerData = [
