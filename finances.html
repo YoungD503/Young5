@@ -714,29 +714,13 @@
         }
         .stripe-logo svg { opacity: 0.45; }
 
-        /* ── Loading state ── */
-        .pw-cta.loading {
-            pointer-events: none;
-            opacity: 0.7;
-        }
-        .pw-cta.loading::before {
-            content: '';
-            width: 14px; height: 14px;
-            border: 2px solid rgba(0,0,0,0.3);
-            border-top-color: rgba(0,0,0,0.8);
-            border-radius: 50%;
-            animation: spin .7s linear infinite;
-            margin-right: 4px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
         .pw-dismiss {
-            width: 100%; padding: 10px;
+            width: 100%; padding: 12px;
             background: none; border: none;
             color: var(--dim); font-family: 'JetBrains Mono', monospace;
-            font-size: .65rem; font-weight: 500; letter-spacing: .1em;
+            font-size: .68rem; font-weight: 500; letter-spacing: .12em;
             text-transform: uppercase; cursor: pointer;
-            margin-top: 10px; transition: color .2s;
+            margin-top: 14px; transition: color .2s;
         }
         .pw-dismiss:hover { color: var(--text); }
 
@@ -860,12 +844,12 @@
             ║  Basic  → paste your $0.99/mo Stripe Payment Link   ║
             ║  Pro    → paste your $1.99/mo Stripe Payment Link   ║
             ║                                                      ║
-            ║  Format: https://buy.stripe.com/test_xxxxxxxx       ║
-            ║                                                      ║
-            ║  In your Stripe link settings, set the success URL  ║
-            ║  to:  https://yourapp.com/?plan=basic               ║
-            ║  or:  https://yourapp.com/?plan=pro                 ║
-            ║  So the app auto-unlocks after payment.             ║
+            ║  In your Stripe link settings → After payment       ║
+            ║  → "Don't show confirmation page" → Add a custom    ║
+            ║  redirect URL:                                       ║
+            ║    https://yourapp.com/?plan=basic                  ║
+            ║    https://yourapp.com/?plan=pro                    ║
+            ║  The app will auto-unlock and persist the tier.     ║
             ╚══════════════════════════════════════════════════════╝
         -->
         <a  id="pwCtaBtn"
@@ -878,7 +862,7 @@
             Unlock Basic — $0.99/mo
         </a>
 
-        <!-- No dismiss / no restore — payment required to proceed -->
+        <button class="pw-dismiss" onclick="closePaywall()">Maybe later</button>
 
         <!-- Stripe trust badge -->
         <div class="stripe-trust">
@@ -1544,95 +1528,75 @@
 <script>
 // ═══════════════════════════════════════════════════════════════
 //  STRIPE PAYMENT LINKS CONFIGURATION
-//  Replace the URLs below with your real Payment Links from:
+//  Replace these with your real Payment Links from:
 //  https://dashboard.stripe.com/payment-links
 //
-//  In each Payment Link → Settings → Confirmation page, set
-//  the success redirect URL to include a signed token:
-//    https://yourapp.com/?plan=basic&tok=WF_BASIC_2024
-//    https://yourapp.com/?plan=pro&tok=WF_PRO_2024
-//
-//  Then update PLAN_TOKENS below to match those exact values.
-//  Anyone without the correct token cannot unlock via URL.
+//  In each Payment Link → "After payment" → "Don't show confirmation page"
+//  → set the redirect URL to your hosted app + ?plan=basic or ?plan=pro
+//    e.g.  https://yourapp.com/?plan=basic
+//          https://yourapp.com/?plan=pro
 // ═══════════════════════════════════════════════════════════════
 const STRIPE_LINKS = {
     basic: 'https://buy.stripe.com/test_6oU5kC3YE1Lo86rc2f8Ra00',
     pro:   'https://buy.stripe.com/test_7sYdR89iY9dQ5Yj0jx8Ra01'
 };
 
-// Secret tokens — must match what you put in the Stripe success URL.
-// Change these to any random strings you like. Keep them private.
-const PLAN_TOKENS = {
-    basic: 'WF_BASIC_2024',
-    pro:   'WF_PRO_2024'
+// ─────────────────────────────────────────
+//  PERSISTENCE
+// ─────────────────────────────────────────
+const LS = {
+    get:(k,d)=>{ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} },
+    set:(k,v)=>{ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 };
 
-// ═══════════════════════════════════════════════════════════════
-//  INTEGRITY GUARD
-//  Runs every 2 seconds. If localStorage was tampered with
-//  (e.g. via DevTools), it resets the tier to 'free'
-//  unless a valid session token is also present.
-// ═══════════════════════════════════════════════════════════════
-function startIntegrityGuard() {
-    setInterval(() => {
-        const storedTier = localStorage.getItem('wf_tier');
-        if (!storedTier || storedTier === '"free"' || storedTier === 'free') return;
-        const sessionToken = sessionStorage.getItem('wf_session_token');
-        const tier = storedTier.replace(/"/g, '');
-        const expectedToken = PLAN_TOKENS[tier];
-        if (!sessionToken || sessionToken !== expectedToken) {
-            // Tier is set but no valid session token — wipe it
-            localStorage.removeItem('wf_tier');
-            currentTier = 'free';
-            updateNavLocks();
-            updateTierBanners();
-            // Force back to home silently
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            document.getElementById('home').classList.add('active');
-            document.querySelector('.nav-item').classList.add('active');
-            openPaywall('Premium Features', 'basic');
-        }
-    }, 2000);
+// ─────────────────────────────────────────
+//  TIER STATE
+//  Loaded once from localStorage. Persists across sessions.
+//  No integrity guard, no session tokens — paying users stay unlocked.
+// ─────────────────────────────────────────
+let currentTier = LS.get('wf_tier', 'free');
+let selectedPaywallTier = 'basic';
+
+const TIER_ACCESS = {
+    free:  [],
+    basic: ['budget','debt'],
+    pro:   ['budget','debt','invest','wealth','income']
+};
+
+function canAccess(page) {
+    return TIER_ACCESS[currentTier] && TIER_ACCESS[currentTier].includes(page);
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  SUCCESS URL HANDLER
-//  Stripe redirects back with ?plan=basic&tok=WF_BASIC_2024
-//  Both the plan AND the secret token must match.
-//  Just typing ?plan=pro in the browser does nothing.
+//  STRIPE REDIRECT HANDLER
+//  When Stripe redirects back with ?plan=basic or ?plan=pro,
+//  unlock that tier and persist it in localStorage forever
+//  (until the user clears their browser data).
 // ═══════════════════════════════════════════════════════════════
 function checkUrlPlanParam() {
     const params = new URLSearchParams(window.location.search);
-    const plan   = params.get('plan');
-    const tok    = params.get('tok');
+    const plan = params.get('plan');
 
-    // Validate: plan must be known, token must match exactly
-    if ((plan === 'basic' || plan === 'pro') && tok === PLAN_TOKENS[plan]) {
+    if (plan === 'basic' || plan === 'pro') {
         currentTier = plan;
         LS.set('wf_tier', plan);
-        // Store the valid session token — required by integrity guard
-        sessionStorage.setItem('wf_session_token', tok);
-        // Clean up URL — remove params so they can't be shared/bookmarked
+
+        // Clean URL so the parameter doesn't linger on refresh
         const url = new URL(window.location.href);
         url.searchParams.delete('plan');
-        url.searchParams.delete('tok');
         window.history.replaceState({}, '', url.toString());
+
         showToast('✓ ' + (plan === 'pro' ? 'Pro' : 'Basic') + ' Plan Activated!');
-        updateNavLocks();
-        updateTierBanners();
-    } else if (plan) {
-        // Someone tried to access with a plan param but wrong/missing token
-        // Silently ignore — don't unlock anything
-        const url = new URL(window.location.href);
-        url.searchParams.delete('plan');
-        url.searchParams.delete('tok');
-        window.history.replaceState({}, '', url.toString());
+
+        // Close paywall if open
+        const overlay = document.getElementById('paywallModal');
+        if (overlay) overlay.classList.remove('open');
     }
 }
 
 function showToast(msg) {
     const t = document.getElementById('successToast');
+    if (!t) return;
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 3500);
@@ -1648,31 +1612,7 @@ function handleStripeClick(event, tier) {
         alert('⚠️ Stripe Payment Link not configured.\n\nReplace STRIPE_LINKS.basic and STRIPE_LINKS.pro at the top of the script with your real Stripe Payment Link URLs.\n\nGet them at: dashboard.stripe.com/payment-links');
         return;
     }
-    // Link is valid — let Stripe handle it. No client-side unlock.
-}
-
-// ─────────────────────────────────────────
-//  PERSISTENCE
-// ─────────────────────────────────────────
-const LS = {
-    get:(k,d)=>{ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} },
-    set:(k,v)=>{ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
-};
-
-// ─────────────────────────────────────────
-//  TIER STATE
-// ─────────────────────────────────────────
-let currentTier = LS.get('wf_tier', 'free');
-let selectedPaywallTier = 'basic';
-
-const TIER_ACCESS = {
-    free:  [],
-    basic: ['budget','debt'],
-    pro:   ['budget','debt','invest','wealth','income']
-};
-
-function canAccess(page) {
-    return TIER_ACCESS[currentTier] && TIER_ACCESS[currentTier].includes(page);
+    // Otherwise, the browser follows the link to Stripe normally
 }
 
 // ─────────────────────────────────────────
@@ -1729,14 +1669,12 @@ function openPaywall(featureName, requiredTier) {
         document.getElementById('pw_title').textContent = 'Premium Feature';
         document.getElementById('pw_sub').innerHTML = 'Unlock <span id="pw_feature_name">' + featureName + '</span> with a WealthFlow plan.<br>Cancel anytime. No hidden fees.';
     }
-    const overlay = document.getElementById('paywallModal');
-    overlay.classList.add('open');
-    // Block backdrop click from closing the paywall
-    overlay.onclick = (e) => { e.stopPropagation(); };
+    document.getElementById('paywallModal').classList.add('open');
 }
 
-// closePaywall() is REMOVED — the paywall cannot be dismissed.
-// It only closes after a valid Stripe payment redirect.
+function closePaywall() {
+    document.getElementById('paywallModal').classList.remove('open');
+}
 
 function selectTier(tier) {
     selectedPaywallTier = tier;
@@ -1855,13 +1793,11 @@ function updateNetWorth(){
 }
 
 // ─────────────────────────────────────────
-//  NAVIGATION — access re-verified on every call
+//  NAVIGATION
 // ─────────────────────────────────────────
 function showPage(id, btn) {
-    // Re-verify access even if called programmatically
     const protectedPages = ['budget','debt','invest','wealth','income'];
     if (protectedPages.includes(id) && !canAccess(id)) {
-        // Redirect to paywall — never show the page
         const reqTier = ['invest','wealth','income'].includes(id) ? 'pro' : 'basic';
         openPaywall(id.charAt(0).toUpperCase() + id.slice(1), reqTier);
         return;
@@ -1883,9 +1819,6 @@ function showPage(id, btn) {
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function closeIfOverlay(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
-
-// closePaywall is intentionally NOT exported globally.
-// The paywall can only be closed by a successful payment redirect.
 
 // ─────────────────────────────────────────
 //  SETTINGS
@@ -2680,25 +2613,12 @@ function buildPDF(){
 //  INIT
 // ─────────────────────────────────────────
 window.onload = () => {
-    // 1. Check for valid Stripe redirect (?plan=X&tok=Y)
+    // Process Stripe redirect (?plan=basic or ?plan=pro)
+    // Sets localStorage and updates currentTier if present.
     checkUrlPlanParam();
 
-    // 2. If a tier is stored from a previous session, verify the session token
-    //    is also present. If not, the tab was freshly opened without a valid
-    //    payment redirect — wipe the stored tier.
-    const storedTier = LS.get('wf_tier', 'free');
-    if (storedTier !== 'free') {
-        const sessionToken = sessionStorage.getItem('wf_session_token');
-        const expectedToken = PLAN_TOKENS[storedTier];
-        if (!sessionToken || sessionToken !== expectedToken) {
-            // No valid session token — treat as free regardless of localStorage
-            currentTier = 'free';
-            localStorage.removeItem('wf_tier');
-        }
-    }
-
-    // 3. Start the continuous integrity guard (catches DevTools manipulation)
-    startIntegrityGuard();
+    // currentTier is already loaded from localStorage at the top.
+    // Paying users stay unlocked across sessions automatically.
 
     updatePill();
     renderBudget();
