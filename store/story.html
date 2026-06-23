@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | YOUNG DESERT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── SHARED BASE ─────────────────────────────── */
+        .yd-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 8, 5, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 9000;
+            opacity: 0;
+            transition: opacity 0.38s ease;
+            pointer-events: none;
+        }
+        .yd-backdrop.yd-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .yd-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -47%) scale(0.96);
+            z-index: 9001;
+            background: #faf8f4;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.32);
+        }
+        .yd-modal.yd-visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+        .yd-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            color: #aaa;
+            cursor: pointer;
+            z-index: 10;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .yd-close:hover { color: #111; }
+        .yd-eyebrow {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #999;
+            margin: 0 0 8px;
+        }
+        .yd-headline {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #0f0d0a;
+            line-height: 1.05;
+            margin: 0 0 12px;
+        }
+        .yd-sub {
+            font-size: 0.82rem;
+            color: #666;
+            line-height: 1.6;
+            margin: 0 0 22px;
+        }
+        .yd-btn-primary {
+            display: block;
+            width: 100%;
+            background: #0f0d0a;
+            color: #faf8f4;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 14px 10px;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .yd-btn-primary:hover {
+            background: #2a2620;
+            transform: translateY(-1px);
+        }
+        .yd-btn-ghost {
+            display: block;
+            width: 100%;
+            background: none;
+            border: 1.5px solid #ddd;
+            color: #999;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 12px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            margin-bottom: 14px;
+            box-sizing: border-box;
+        }
+        .yd-btn-ghost:hover {
+            border-color: #aaa;
+            color: #444;
+        }
+        .yd-fine {
+            font-size: 0.65rem;
+            color: #bbb;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* ── EMAIL MODAL ─────────────────────────────── */
+        #email-modal { width: min(90vw, 440px); }
+        .email-inner {
+            padding: 48px 36px 36px;
+            position: relative;
+        }
+        .email-deco-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: #0f0d0a;
+        }
+        .email-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .email-input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 2px;
+            font-size: 16px;
+            color: #0f0d0a;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .email-input:focus { border-color: #0f0d0a; }
+        .email-input::placeholder { color: #bbb; }
+        .email-error {
+            font-size: 0.72rem;
+            color: #c0392b;
+            min-height: 18px;
+            margin: 0 0 10px;
+        }
+        .email-success {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f7f0;
+            border-radius: 3px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+        }
+        .email-checkmark {
+            font-size: 1.2rem;
+            color: #27ae60;
+            flex-shrink: 0;
+        }
+        .email-success p {
+            font-size: 0.82rem;
+            color: #2d6a4f;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* ── OFFER MODAL ─────────────────────────────── */
+        #offer-modal { width: min(92vw, 680px); }
+        .offer-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .offer-img-col {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+        }
+        .offer-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #0f0d0a;
+            color: #faf8f4;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 5px 9px;
+            border-radius: 2px;
+            z-index: 2;
+        }
+        .offer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 6s ease;
+        }
+        #offer-modal.yd-visible .offer-img { transform: scale(1.06); }
+        .offer-content-col {
+            padding: 40px 28px 28px;
+            display: flex;
+            flex-direction: column;
+        }
+        .offer-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0ebe2;
+            border-radius: 2px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+        }
+        .offer-pct {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #0f0d0a;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+        .offer-code-label {
+            font-size: 0.75rem;
+            color: #777;
+        }
+        .offer-code {
+            display: inline-block;
+            background: #fff;
+            color: #0f0d0a;
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 2px 7px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+        }
+        .offer-content-col .yd-btn-primary { margin-top: auto; }
+        .offer-content-col .yd-btn-ghost   { margin-top: 0; }
+
+        /* ── MOBILE ──────────────────────────────────── */
+        @media (max-width: 540px) {
+            .offer-split { grid-template-columns: 1fr; }
+            .offer-img-col { min-height: 180px; }
+            .offer-content-col { padding: 24px 22px 22px; }
+        }
+        @media (max-width: 480px) {
+            .email-inner { padding: 40px 24px 28px; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="logo"><a href="index.html">YOUNG DESERT</a></div>
+    <div class="nav-right">
+        <ul class="desktop-links">
+            <li><a href="index.html#shop">Shop</a></li>
+            <li><a href="story.html">Our Story</a></li>
+            <li><a href="javascript:void(0)" class="desktop-cart-link" onclick="toggleCart()">Cart (<span class="cart-count-val">0</span>)</a></li>
+        </ul>
+        <a href="javascript:void(0)" class="menu-btn" onclick="toggleMenu()">Menu</a>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="mobile-menu-overlay">
+    <span class="close-menu" onclick="toggleMenu()">&times;</span>
+    <ul class="mobile-nav-links">
+        <li><a href="index.html#shop" onclick="toggleMenu()">Shop</a></li>
+        <li><a href="story.html" onclick="toggleMenu()">Our Story</a></li>
+        <li>
+            <a href="javascript:void(0)" onclick="openCartFromMenu()">
+                Cart (<span class="cart-count-val">0</span>)
+            </a>
+        </li>
+    </ul>
+</div>
+
+<main class="story-container">
+    <div class="story-header-side">
+        <span class="brand-subtext">Est. 2024</span>
+        <h1 class="story-title">Woven with<br>Purpose</h1>
+    </div>
+    <div class="story-body-side">
+        <section class="story-block">
+            <p class="emphasized-text">Verse & Thread started with a simple idea: that the clothes we wear should reflect the truths we carry.</p>
+            <p>Each hoodie in our collection is more than just fabric; it's a prompt to pause, reflect, and remember the promises of Scripture. We believe that what you wear can be a silent testimony and a personal reminder of grace throughout your day.</p>
+        </section>
+        <section class="story-block">
+            <div class="minimal-image-frame">
+                <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=1200" alt="Embroidery Detail">
+            </div>
+            <p>Our embroidery is done with precision and care, ensuring that your favorite verse lasts as long as the garment itself. By choosing heavyweight 100% cotton and high-density stitching, we prioritize quality over quantity and purpose over fast fashion.</p>
+            <p class="closing-statement">This isn't just apparel. It's Verse & Thread.</p>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Young Desert. All rights reserved.</p>
+    <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Contact</a>
+    </div>
+</footer>
+
+<div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <span class="close-cart" onclick="toggleCart()">&times;</span>
+    </div>
+    <div id="cart-items-container"></div>
+    <div class="cart-footer">
+        <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+            <span>Total:</span>
+            <span id="cart-total-price">$0.00</span>
+        </div>
+        <button class="btn" style="width:100%" onclick="handleCheckout()">Checkout</button>
+    </div>
+</div>
+<div id="cart-overlay" onclick="toggleCart()"></div>
+
+<script src="script.js"></script>
+
+<script>
+(function () {
+
+    // ── CONFIG ───────────────────────────────────────
+    const EMAIL_SESSION_KEY = 'yd_email_shown';
+    const OFFER_SESSION_KEY = 'yd_offer_shown';
+    const EMAIL_DELAY_MS    = 2000;
+    const OFFER_CODE        = 'THREAD15';
+    const OFFER_PCT         = '15%';
+
+    // ── OFFER MODAL ──────────────────────────────────
+    function buildOfferModal() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'offer-backdrop';
+        backdrop.className = 'yd-backdrop';
+
+        const modal = document.createElement('div');
+        modal.id = 'offer-modal';
+        modal.className = 'yd-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'offer-headline');
+
+        modal.innerHTML = `
+            <div class="offer-split">
+                <div class="offer-img-col">
+                    <div class="offer-badge">Product of the Month</div>
+                    <img
+                        src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=800"
+                        alt="The Covenant Hoodie"
+                        class="offer-img"
+                    />
+                </div>
+                <div class="offer-content-col">
+                    <p class="yd-eyebrow">Limited Time</p>
+                    <h2 class="yd-headline" id="offer-headline">The Covenant<br>Hoodie</h2>
+                    <p class="yd-sub">Heavyweight 100% cotton. High-density scripture embroidery. Built to outlast fast fashion.</p>
+                    <div class="offer-pill">
+                        <span class="offer-pct">${OFFER_PCT} OFF</span>
+                        <span class="offer-code-label">code: <strong class="offer-code">${OFFER_CODE}</strong></span>
+                    </div>
+                    <a href="index.html#shop" class="yd-btn-primary" id="offer-shop-btn">Shop Now →</a>
+                    <button class="yd-btn-ghost" id="offer-later-btn">No thanks</button>
+                    <p class="yd-fine">First orders only · Expires Sunday</p>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(backdrop);
+        document.body.appendChild(modal);
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            backdrop.classList.add('yd-visible');
+            modal.classList.add('yd-visible');
+        }));
+
+        function closeOffer() {
+            backdrop.classList.remove('yd-visible');
+            modal.classList.remove('yd-visible');
+            setTimeout(() => { backdrop.remove(); modal.remove(); }, 380);
+            sessionStorage.setItem(OFFER_SESSION_KEY, '1');
+        }
+
+        document.getElementById('offer-later-btn').addEventListener('click', closeOffer);
+        document.getElementById('offer-shop-btn').addEventListener('click', closeOffer);
+    }
+
+    function openOfferModal() {
+        if (sessionStorage.getItem(OFFER_SESSION_KEY)) return;
+        if (document.getElementById('offer-modal')) return;
+        buildOfferModal();
+    }
+
+    // ── EMAIL MODAL ──────────────────────────────────
+    function buildEmailModal() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'email-backdrop';
+        backdrop.className = 'yd-backdrop';
+
+        const modal = document.createElement('div');
+        modal.id = 'email-modal';
+        modal.className = 'yd-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'email-headline');
+
+        modal.innerHTML = `
+            <div class="email-inner">
+                <div class="email-deco-line"></div>
+                <p class="yd-eyebrow">Join the Community</p>
+                <h2 class="yd-headline" id="email-headline">Words Worth<br>Wearing</h2>
+                <p class="yd-sub">Be first to know about new drops, scripture collections, and exclusive offers — straight to your inbox.</p>
+                <div class="email-form-row" id="email-form-row">
+                    <input
+                        type="email"
+                        id="email-input"
+                        class="email-input"
+                        placeholder="your@email.com"
+                        autocomplete="email"
+                        aria-label="Email address"
+                    />
+                    <button class="yd-btn-primary" id="email-submit-btn">Subscribe</button>
+                </div>
+                <p class="email-error" id="email-error" aria-live="polite"></p>
+                <div class="email-success" id="email-success" hidden>
+                    <span class="email-checkmark">✓</span>
+                    <p>You're in! Check your inbox for a welcome gift.</p>
+                </div>
+                <p class="yd-fine">No spam. Unsubscribe anytime.</p>
+            </div>
+        `;
+
+        document.body.appendChild(backdrop);
+        document.body.appendChild(modal);
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            backdrop.classList.add('yd-visible');
+            modal.classList.add('yd-visible');
+        }));
+
+        function closeEmail() {
+            backdrop.classList.remove('yd-visible');
+            modal.classList.remove('yd-visible');
+            setTimeout(() => {
+                backdrop.remove();
+                modal.remove();
+                openOfferModal();   // always open offer after email modal closes
+            }, 380);
+            sessionStorage.setItem(EMAIL_SESSION_KEY, '1');
+        }
+
+        document.getElementById('email-submit-btn').addEventListener('click', handleSubmit);
+        document.getElementById('email-input').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') handleSubmit();
+        });
+
+        function handleSubmit() {
+            const input = document.getElementById('email-input');
+            const error = document.getElementById('email-error');
+            const val   = input.value.trim();
+
+            if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                error.textContent = 'Please enter a valid email address.';
+                input.focus();
+                return;
+            }
+            error.textContent = '';
+
+            // ── Plug in your email service here ──
+            // fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email: val }) });
+
+            document.getElementById('email-form-row').hidden = true;
+            document.getElementById('email-success').hidden  = false;
+
+            setTimeout(closeEmail, 1800);
+        }
+    }
+
+    function openEmailModal() {
+        if (sessionStorage.getItem(EMAIL_SESSION_KEY)) return;
+        if (document.getElementById('email-modal')) return;
+        buildEmailModal();
+    }
+
+    // ── PRODUCT CARD CLICK ───────────────────────────
+    function bindProductCards() {
+        document.querySelectorAll('.product-card, [data-promo="true"]').forEach(card => {
+            card.addEventListener('click', function (e) {
+                if (e.target.closest('a[href]') && !e.target.closest('a[href="#"]')) return;
+                openOfferModal();
+            });
+        });
+    }
+
+    // ── INIT ─────────────────────────────────────────
+    function init() {
+        setTimeout(openEmailModal, EMAIL_DELAY_MS);
+        bindProductCards();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+
+</body>
+</html>

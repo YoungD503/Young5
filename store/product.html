@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUNG DESERT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:black;">YOUNG DESERT</a></div>
+        <ul>
+            <li><a href="index.html#shop">Shop</a></li>
+            <li><a href="story.html">Our Story</a></li>
+            <li><a href="javascript:void(0)" id="cart-count" onclick="toggleCart()">Cart (0)</a></li>
+        </ul>
+        
+    </nav>
+
+    <main class="product-container">
+        <div class="product-image-large">
+            <img id="main-product-img" src="" alt="Loading product...">
+        </div>
+
+        <div class="product-info-panel">
+            <h1 id="product-title">Loading...</h1>
+            <p class="verse-highlight" id="product-verse"></p>
+            <p class="product-price" id="product-price"></p>
+            
+            <p class="product-description">
+                Hand-embroidered on premium 100% cotton heavyweight fabric. 
+                Each piece is crafted to remind you of the Word throughout your day.
+            </p>
+
+            <div class="size-selector">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <p style="margin:0;">Select Size</p>
+                    <a href="#" style="font-size: 0.7rem; color: #888; text-decoration: underline;">Size Guide</a>
+                </div>
+                <div class="size-buttons">
+                    <button class="size-btn" onclick="selectSize('S')">S</button>
+                    <button class="size-btn" onclick="selectSize('M')">M</button>
+                    <button class="size-btn" onclick="selectSize('L')">L</button>
+                    <button class="size-btn" onclick="selectSize('XL')">XL</button>
+                </div>
+            </div>
+
+            <button class="btn" id="add-to-cart-btn" style="width: 100%;">Add to Cart</button>
+            
+            <p style="font-size: 0.75rem; color: #aaa; margin-top: 1.5rem; text-align: center;">
+                ⚡ Free shipping on orders over $150
+            </p>
+        </div>
+    </main>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        
+        <div id="cart-items-container">
+            </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="btn checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="cart-overlay" onclick="toggleCart()"></div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
+
+    <script>
+        /**
+         * Page-Specific Initialization
+         * This script runs alongside script.js to populate the specific hoodie data
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const productId = parseInt(params.get('id'));
+            
+            // 'products' array is accessible because script.js is loaded first
+            const item = products.find(p => p.id === productId);
+
+            if (item) {
+                document.title = `${item.name} | Verse & Thread`;
+                document.getElementById('main-product-img').src = item.image;
+                document.getElementById('main-product-img').alt = item.name;
+                document.getElementById('product-title').innerText = item.name;
+                document.getElementById('product-verse').innerText = item.verse;
+                document.getElementById('product-price').innerText = `$${item.price.toFixed(2)}`;
+                
+                // Map the Add to Cart button to the central logic
+                document.getElementById('add-to-cart-btn').onclick = () => addToCart(item.id);
+            } else {
+                // Redirect if ID is invalid or missing
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>
+

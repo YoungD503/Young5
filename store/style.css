@@ -1,0 +1,740 @@
+/* --- Global Reset & Variables --- */
+:root {
+    --primary-dark: #111111;
+    --accent-gold: #b38e44;
+    --bg-light: #ffffff;
+    --bg-soft: #fcfcfc;
+    --text-main: #222222;
+    --text-muted: #888888;
+    --border-light: #f0f0f0;
+    --white: #ffffff;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    font-weight: 900;
+    letter-spacing: 4px;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 3rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+nav a:hover, nav a.active {
+    color: var(--accent-gold);
+}
+
+/* --- Hero Section --- */
+.hero {
+     min-height: 90vh;
+    min-height: 90dvh; /* Fixes mobile Safari viewport bug */
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                url('01.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 5%;
+    color: var(--white);
+}
+
+.hero-content h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    background-color: var(--primary-dark);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--accent-gold);
+    transform: translateY(-3px);
+}
+
+/* --- Product Grid --- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    padding: 5%;
+}
+
+.product-card {
+    padding: 1.5rem;
+    background: #fff;
+    transition: var(--transition);
+}
+
+.product-card img {
+    width: 100%;
+    filter: grayscale(20%);
+    transition: var(--transition);
+}
+
+.product-card:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+}
+
+/* --- Product Detail Page --- */
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    gap: 5%;
+    padding: 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.product-image-large img {
+    width: 100%;
+    background-color: var(--bg-soft);
+}
+
+.product-info-panel {
+    position: sticky;
+    top: 100px;
+}
+
+.verse-highlight {
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.size-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.size-btn {
+    aspect-ratio: 1;
+    border: 1px solid var(--border-light);
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.size-btn.selected {
+    background: var(--primary-dark);
+    color: var(--white);
+    border-color: var(--primary-dark);
+}
+
+/* --- Sidebar Cart --- */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 450px;
+    height: 100vh;
+    background: var(--white);
+    z-index: 2000;
+
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+}
+
+.cart-sidebar.active {
+    transform: translateX(0);
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.cart-item-price {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.remove-item:hover { color: var(--primary-dark); }
+
+/* --- Story Page --- */
+.story-section {
+    max-width: 900px;
+    margin: 8rem auto;
+    padding: 0 5%;
+}
+
+.story-lead {
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 2.5rem;
+    color: var(--primary-dark);
+}
+
+.story-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.story-section h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 60px; height: 2px;
+    background: var(--accent-gold);
+}
+
+.story-image-container {
+    margin: 4rem 0;
+    overflow: hidden;
+}
+
+.story-image {
+    width: 100%;
+    filter: grayscale(100%);
+    transition: var(--transition);
+}
+
+.story-image:hover {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 1024px) {
+    .product-container { grid-template-columns: 1fr; }
+    .product-info-panel { position: static; }
+}
+
+@media (max-width: 768px) {
+    nav ul { display: none; }
+    
+    .hero { height: 70vh; }
+    .hero-content h1 { font-size: 2.8rem; }
+
+    .product-grid { grid-template-columns: 1fr; }
+    
+    .cart-sidebar { width: 100%; right: -100%; }
+    .cart-sidebar.active { transform: translateX(-100%); }
+
+    .story-section { text-align: center; margin: 4rem auto; }
+    .story-section h1::after { left: 50%; transform: translateX(-50%); }
+    .story-lead { font-size: 1.3rem; }
+
+    .btn { width: 100%; }
+}
+
+
+
+
+
+/* --- Story Page Gallery Layout --- */
+.story-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Asymmetrical split */
+    gap: 80px;
+    max-width: 1400px;
+    margin: 100px auto;
+    padding: 0 5%;
+    align-items: start;
+}
+
+.story-header-side {
+    position: sticky;
+    top: 150px; /* Keeps the title fixed while text scrolls */
+}
+
+.brand-subtext {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.story-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -3px;
+    text-transform: uppercase;
+}
+
+.story-body-side {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.emphasized-text {
+    font-size: 1.8rem;
+    line-height: 1.3;
+    color: var(--primary-dark);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.story-block p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.minimal-image-frame {
+    background: var(--bg-soft);
+    padding: 30px; /* Creating a border/frame effect */
+    margin-bottom: 2.5rem;
+}
+
+.minimal-image-frame img {
+    width: 100%;
+    display: block;
+    filter: grayscale(100%);
+    transition: var(--transition);
+}
+
+.minimal-image-frame:hover img {
+    filter: grayscale(0%);
+}
+
+.closing-statement {
+    font-weight: 700;
+    color: var(--primary-dark) !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 3rem;
+}
+
+/* --- Footer --- */
+footer {
+    padding: 5rem 5%;
+    border-top: 1px solid var(--border-light);
+    text-align: center;
+    background: var(--bg-soft);
+}
+
+.footer-links {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- Mobile Story Adjustment --- */
+@media (max-width: 1024px) {
+    .story-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        margin: 60px auto;
+        text-align: center;
+    }
+
+    .story-header-side {
+        position: static;
+    }
+
+    .story-title {
+        font-size: 3rem;
+    }
+
+    .story-body-side {
+        gap: 40px;
+    }
+
+    .emphasized-text {
+        font-size: 1.4rem;
+    }
+}
+
+
+/* --- Desktop: Hide the Menu button --- */
+.menu-btn {
+    display: none;
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- Mobile Fixes --- */
+@media (max-width: 768px) {
+    /* Show the Menu button on mobile */
+    .menu-btn {
+        display: block;
+        margin-right: 1.5rem;
+    }
+
+    /* Hide the long list of links by default */
+    nav ul {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        padding: 2rem;
+        border-bottom: 1px solid var(--border-light);
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    /* When we click 'Menu', this class will show the links */
+    nav ul.show {
+        display: flex;
+    }
+
+    .nav-controls {
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+
+
+/* --- Navigation Layout --- */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* --- Mobile Menu Overlay Logic --- */
+.mobile-menu-overlay {
+    position: fixed;
+     inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+     height: 100dvh;
+    background: var(--white);
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    /* Hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.mobile-nav-links {
+    list-style: none;
+    text-align: center;
+}
+
+.mobile-nav-links li {
+    margin: 1.5rem 0;
+}
+
+.mobile-nav-links a {
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+}
+
+.close-menu {
+    position: absolute;
+    top: 2rem;
+    right: 5%;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+/* --- Responsive Display Logic --- */
+@media (max-width: 768px) {
+    .desktop-links {
+        display: none; /* Hide the long list of links */
+    }
+
+    .menu-btn {
+        display: block; /* Show the word 'Menu' */
+        text-decoration: none;
+        color: var(--text-main);
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-sidebar {
+        width: 100%;
+    }
+}
+
+
+
+/* --- Quantity Controls --- */
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.qty-controls button {
+    background: none;
+    border: 1px solid var(--border-light);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+.qty-controls button:hover {
+    background: var(--primary-dark);
+    color: var(--white);
+    border-color: var(--primary-dark);
+}
+
+.qty-controls span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+.item-specs {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* ===============================
+   Newsletter Modal (Final Stable)
+================================= */
+
+.newsletter-overlay {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100000; /* Above EVERYTHING */
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.4s ease;
+}
+
+.newsletter-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.newsletter-modal {
+    background: #fff;
+    width: 92%;
+    max-width: 420px;
+    padding: 40px 28px;
+    text-align: center;
+    position: relative;
+
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+
+    transform: translateY(30px) scale(0.98);
+    transition: transform 0.4s ease;
+}
+
+.newsletter-overlay.active .newsletter-modal {
+    transform: translateY(0) scale(1);
+}
+
+.newsletter-modal h2 {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.newsletter-modal p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.newsletter-modal input[type="email"] {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #000;
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+    text-align: center;
+    outline: none;
+}
+
+.newsletter-modal .btn {
+    width: 100%;
+    padding: 14px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+

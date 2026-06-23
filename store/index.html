@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUNG DESERT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+    <div class="logo"><a href="index.html">YOUNG DESERT</a></div>
+    
+    <div class="nav-right">
+        <ul class="desktop-links">
+            <li><a href="index.html#shop">Shop</a></li>
+            <li><a href="story.html">Our Story</a></li>
+            <li><a href="javascript:void(0)" class="desktop-cart-link" onclick="toggleCart()">Cart (<span class="cart-count-val">0</span>)</a></li>
+        </ul>
+
+        <a href="javascript:void(0)" class="menu-btn" onclick="toggleMenu()">Menu</a>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="mobile-menu-overlay">
+    <span class="close-menu" onclick="toggleMenu()">&times;</span>
+    <ul class="mobile-nav-links">
+        <li><a href="index.html#shop" onclick="toggleMenu()">Shop</a></li>
+        <li><a href="story.html" onclick="toggleMenu()">Our Story</a></li>
+        <li>
+            <a href="javascript:void(0)" onclick="openCartFromMenu()">
+                Cart (<span class="cart-count-val">0</span>)
+            </a>
+        </li>
+    </ul>
+</div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Woven Word</h1>
+            <p>Premium embroidered hoodies featuring timeless scripture.</p>
+            <a href="#shop" class="btn">View Collection</a>
+        </div>
+    </header>
+
+    <main id="shop">
+        <h2 style="text-align: center; margin-top: 4rem;">The Scriptural Collection</h2>
+        <div class="product-grid" id="product-container">
+            </div>
+    </main>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        
+        <div id="cart-items-container">
+            <p style="padding: 20px; color: #888;">Your cart is empty.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="btn checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="cart-overlay" onclick="toggleCart()"></div>
+
+    <footer>
+        <p>&copy; 2026 Young Desert. Hand-embroidered with purpose.</p>
+    </footer>
+
+
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="script.js"></script>
+
+<div class="newsletter-overlay" id="newsletter-overlay">
+    <div class="newsletter-modal">
+        <button class="close-modal" id="close-newsletter">&times;</button>
+
+        <h2>Join the Movement</h2>
+        <p>Be the first to know about drops.</p>
+
+        <form id="newsletter-form">
+            <input type="email" required placeholder="Your Email">
+            <button type="submit" class="btn">Join</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
