@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta name="description" content="GrowDigital — We build websites and guide small businesses into the digital era. Membership plans, strategy, and tools starting from scratch." />
+  <title>GrowDigital — Launch Your Business Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-canvas:     #f5f5f7;
+      --bg-pure:       #ffffff;
+      --bg-dark:       #111112;
+      --bg-dark-card:  #1d1d1f;
+      --text-main:     #1d1d1f;
+      --text-muted:    #86868b;
+      --text-invert:   #ffffff;
+      --accent:        #0066cc;
+      --accent-hover:  #0077ed;
+      --border-light:  #e8e8ed;
+      --border-dark:   #2d2d30;
+      --radius-large:  20px;
+      --radius-medium: 12px;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 10vw;
+      background: rgba(245, 245, 247, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .logo {
+      font-weight: 700; font-size: 1.25rem;
+      letter-spacing: -.03em;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+    .logo span { color: var(--text-muted); font-weight: 400; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-main);
+      font-size: .85rem; font-weight: 500; opacity: 0.8;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta {
+      background: var(--text-main); color: var(--text-invert);
+      padding: .5rem 1.2rem; border-radius: 980px;
+      font-weight: 500; font-size: .82rem;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: #333336; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--text-main); transition: .3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 10rem 10vw 6rem;
+      background: var(--bg-pure);
+    }
+    .hero-content { max-width: 840px; }
+    .eyebrow {
+      display: inline-block;
+      color: var(--accent); font-size: .85rem; font-weight: 600;
+      letter-spacing: -.01em; margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -.04em; color: var(--text-main);
+      margin-bottom: 1.8rem;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    
+    .hero-sub {
+      font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+      color: var(--text-muted);
+      line-height: 1.5; max-width: 680px;
+      margin: 0 auto 3rem; font-weight: 400;
+      letter-spacing: -.01em;
+    }
+    .hero-actions { display: flex; gap: 1.5rem; justify-content: center; align-items: center; }
+    .btn-primary {
+      background: var(--accent); color: var(--text-invert);
+      padding: .9rem 2.2rem; border-radius: 980px;
+      font-weight: 500; font-size: 1rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost {
+      color: var(--accent); font-weight: 500; font-size: 1rem;
+      text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .btn-ghost:hover { text-decoration: underline; }
+
+    /* Counter ticker */
+    .ticker {
+      display: flex; gap: 5rem; justify-content: center; margin-top: 6rem;
+      border-top: 1px solid var(--border-light); padding-top: 3rem;
+    }
+    .tick-num {
+      font-size: 3rem; font-weight: 700;
+      color: var(--text-main); letter-spacing: -.03em;
+    }
+    .tick-label { font-size: .85rem; color: var(--text-muted); margin-top: .4rem; font-weight: 500; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 8rem 10vw; }
+    .section-label {
+      font-size: .85rem; font-weight: 600; color: var(--accent);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 700; letter-spacing: -.03em;
+      line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1.25rem; line-height: 1.5;
+      max-width: 640px; font-weight: 400;
+    }
+    .section-head { margin-bottom: 5rem; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--bg-canvas); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+    .service-card {
+      background: var(--bg-pure);
+      border-radius: var(--radius-large);
+      padding: 3rem;
+      transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .service-card:hover { transform: scale(1.02); }
+    .service-icon {
+      font-size: 2rem; margin-bottom: 1.5rem; display: block;
+    }
+    .service-card h3 {
+      font-size: 1.4rem; font-weight: 600;
+      margin-bottom: .8rem; letter-spacing: -.02em;
+    }
+    .service-card p { font-size: .95rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--bg-pure); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 3rem; }
+    .step { display: flex; flex-direction: column; }
+    .step-num {
+      font-size: 3.5rem; font-weight: 800; color: var(--border-light);
+      line-height: 1; margin-bottom: 1rem; letter-spacing: -.04em;
+    }
+    .step-body h3 {
+      font-size: 1.3rem; font-weight: 600;
+      margin-bottom: .6rem; letter-spacing: -.02em;
+    }
+    .step-body p { font-size: .95rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── TOOLS ── */
+    #tools { background: var(--bg-canvas); }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .tool-pill {
+      display: flex; align-items: center; gap: .8rem;
+      background: var(--bg-pure);
+      border-radius: var(--radius-medium); padding: 1.2rem 1.5rem;
+      font-size: .95rem; font-weight: 500;
+    }
+
+    /* ── MEMBERSHIP ── */
+    #membership { background: var(--bg-pure); }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem; align-items: stretch;
+    }
+    .plan {
+      background: var(--bg-canvas);
+      border-radius: var(--radius-large); padding: 3rem 2.5rem;
+      display: flex; flex-direction: column;
+    }
+    .plan.featured {
+      background: var(--bg-dark); color: var(--text-invert);
+    }
+    .plan-badge {
+      align-self: flex-start;
+      background: var(--accent); color: var(--text-invert);
+      font-size: .75rem; font-weight: 600;
+      padding: .25rem .75rem; border-radius: 980px; margin-bottom: 1.5rem;
+    }
+    .plan-name {
+      font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em;
+    }
+    .plan-price {
+      font-size: 3.5rem; font-weight: 700;
+      letter-spacing: -.04em; margin: 1rem 0; line-height: 1;
+    }
+    .plan-price span { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; letter-spacing: 0; }
+    .plan-desc { font-size: .95rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.5; }
+    .plan-features { list-style: none; margin-bottom: 3rem; flex: 1; }
+    .plan-features li {
+      display: flex; align-items: flex-start; gap: .8rem;
+      font-size: .95rem; padding: .8rem 0; border-bottom: 1px solid var(--border-light);
+    }
+    .plan.featured .plan-features li { border-bottom-color: var(--border-dark); }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li::before { content: '→'; color: var(--accent); font-weight: 600; }
+    .plan .btn-primary, .plan .btn-ghost { display: block; text-align: center; width: 100%; box-sizing: border-box; }
+    .plan .btn-ghost {
+      background: var(--bg-pure); color: var(--text-main); padding: .9rem 2.2rem; border-radius: 980px; text-align: center; justify-content: center;
+    }
+    .plan .btn-ghost:hover { text-decoration: none; background: #e8e8ed; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--bg-canvas); }
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border-light); }
+    .faq-q {
+      width: 100%; background: none; border: none; color: var(--text-main);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 2rem 0; cursor: pointer;
+      font-size: 1.25rem; font-weight: 600; text-align: left; gap: 2rem;
+      letter-spacing: -.02em;
+    }
+    .faq-q svg { flex-shrink: 0; transition: transform .3s; color: var(--text-muted); }
+    .faq-q[aria-expanded="true"] svg { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      font-size: 1.05rem; color: var(--text-muted);
+      line-height: 1.6; transition: max-height .3s ease-out;
+    }
+    .faq-a.open { max-height: 300px; padding-bottom: 2rem; }
+
+    /* ── CTA BANNER ── */
+    #cta-banner {
+      background: var(--bg-pure); text-align: center; padding: 10rem 10vw;
+    }
+    #cta-banner h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800; color: var(--text-main);
+      margin-bottom: 1.5rem; letter-spacing: -.04em;
+    }
+    #cta-banner p { color: var(--text-muted); margin-bottom: 3rem; font-size: 1.3rem; }
+    #cta-banner .btn-dark {
+      background: var(--accent); color: var(--text-invert);
+      padding: 1rem 2.5rem; border-radius: 980px;
+      font-weight: 500; font-size: 1.1rem;
+      text-decoration: none; display: inline-block;
+      transition: background .2s;
+    }
+    #cta-banner .btn-dark:hover { background: var(--accent-hover); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-dark); color: #86868b;
+      padding: 6rem 10vw 4rem;
+      font-size: .85rem;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; flex-wrap: wrap; gap: 4rem;
+      margin-bottom: 4rem;
+    }
+    .footer-brand .logo { color: var(--text-invert); }
+    .footer-brand p { max-width: 280px; margin-top: 1rem; line-height: 1.5; }
+    .footer-links h4 {
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase;
+      color: #f5f5f7; margin-bottom: 1.2rem;
+    }
+    .footer-links ul { list-style: none; }
+    .footer-links li { margin-bottom: .8rem; }
+    .footer-links a { text-decoration: none; color: #86868b; transition: color .2s; }
+    .footer-links a:hover { color: #f5f5f7; }
+    .footer-bottom {
+      border-top: 1px solid var(--border-dark);
+      padding-top: 2rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-badges { display: flex; gap: 1rem; }
+    .badge { color: #f5f5f7; font-weight: 500; }
+
+    /* ── WHATSAPP BUTTON ── */
+    .wa-btn {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: var(--bg-pure); color: var(--text-main);
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; border: 1px solid var(--border-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform .2s;
+    }
+    .wa-btn:hover { transform: scale(1.05); }
+    .wa-btn svg { width: 24px; height: 24px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 5vw; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: 53px; left: 0; right: 0; bottom: 0;
+        background: var(--bg-pure); padding: 3rem 10vw; gap: 2rem;
+      }
+      .nav-links.open a { font-size: 1.5rem; font-weight: 600; }
+      .ticker { gap: 2rem; flex-direction: column; align-items: center; }
+      section { padding: 5rem 5vw; }
+      #hero { padding: 8rem 5vw 4rem; }
+      #cta-banner { padding: 6rem 5vw; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">Grow<span>Digital</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#membership">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#membership" class="nav-cta">Get Started</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Small Business Digital Partner</div>
+    <h1>Your business, <em>finally</em><br>online &amp; growing.</h1>
+    <p class="hero-sub">We build your website, set up your digital tools, and guide you every step of the way — from zero to a thriving online presence.</p>
+    <div class="hero-actions">
+      <a href="#membership" class="btn-primary">See Our Plans</a>
+      <a href="#how" class="btn-ghost">How It Works <span>&rarr;</span></a>
+    </div>
+    <div class="ticker">
+      <div class="tick-item">
+        <div class="tick-num" data-target="320">320+</div>
+        <div class="tick-label">Businesses launched</div>
+      </div>
+      <div class="tick-item">
+        <div class="tick-num" data-target="98">98%</div>
+        <div class="tick-label">Client satisfaction</div>
+      </div>
+      <div class="tick-item">
+        <div class="tick-num" data-target="14">14</div>
+        <div class="tick-label">Days to go live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-head">
+    <p class="section-label">What We Do</p>
+    <h2 class="section-title">Everything your business<br>needs to go digital</h2>
+    <p class="section-sub">We don't just build websites — we build the complete digital foundation your small business needs to compete and grow.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <h3>Custom Website</h3>
+      <p>A professional, mobile-ready website built for your brand. Fast, secure, and designed to convert visitors into customers.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Social Media Setup</h3>
+      <p>We set up and optimize your Instagram, Facebook, and Google Business profiles so customers can find you everywhere.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔍</div>
+      <h3>SEO Foundations</h3>
+      <p>Get found on Google. We set up the right keywords, meta tags, and local SEO so your business ranks when people search.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💬</div>
+      <h3>WhatsApp Business</h3>
+      <p>Set up WhatsApp Business with automated greetings, quick replies, and a direct link from your website to start conversations.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📧</div>
+      <h3>Email Marketing</h3>
+      <p>Capture leads and stay in touch with your customers through beautiful, automated email campaigns.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Analytics Dashboard</h3>
+      <p>Know exactly how your business is performing online with easy-to-read reports — no tech degree required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-head">
+    <p class="section-label">The Process</p>
+    <h2 class="section-title">From scratch to online<br>in 4 simple steps</h2>
+    <p class="section-sub">We handle the heavy lifting so you can focus on what you do best — running your business.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Discovery Call</h3>
+        <p>We start with a free 30-minute call to understand your business, your goals, and what you need. No jargon, just a friendly conversation.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Strategy &amp; Planning</h3>
+        <p>We create a personalized digital roadmap for your business — which tools you need, which platforms to be on, and in what order.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Build &amp; Launch</h3>
+        <p>Our team builds your website and sets up all your digital tools within 14 days. You review, we refine, and then we go live.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>Ongoing Growth Support</h3>
+        <p>With our membership, we stay by your side — monthly check-ins, updates, and guidance so your digital presence keeps growing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="section-head">
+    <p class="section-label">Digital Tools</p>
+    <h2 class="section-title">The tools we'll set up<br>for your success</h2>
+    <p class="section-sub">We guide you through the exact tools you need — and set them all up for you.</p>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-pill"><span>🌐</span> Professional Website</div>
+    <div class="tool-pill"><span>📸</span> Instagram Business</div>
+    <div class="tool-pill"><span>📘</span> Facebook Page</div>
+    <div class="tool-pill"><span>🗺️</span> Google Business</div>
+    <div class="tool-pill"><span>💬</span> WhatsApp Business</div>
+    <div class="tool-pill"><span>📧</span> Email Marketing</div>
+    <div class="tool-pill"><span>📊</span> Google Analytics</div>
+    <div class="tool-pill"><span>🛍️</span> Online Store (optional)</div>
+    <div class="tool-pill"><span>📅</span> Booking System</div>
+    <div class="tool-pill"><span>🔒</span> SSL & Security</div>
+    <div class="tool-pill"><span>☁️</span> Cloud Hosting</div>
+    <div class="tool-pill"><span>🤖</span> Chat Automation</div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="membership">
+  <div class="section-head">
+    <p class="section-label">Membership Plans</p>
+    <h2 class="section-title">Choose your growth plan</h2>
+    <p class="section-sub">All plans include your website build. Pick the level of support that fits your business.</p>
+  </div>
+  <div class="plans-grid">
+    <!-- Starter -->
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$297<span>/one-time</span></div>
+      <p class="plan-desc">Perfect for businesses just getting online. Everything you need to launch your digital presence.</p>
+      <ul class="plan-features">
+        <li>5-page professional website</li>
+        <li>Mobile-responsive design</li>
+        <li>SSL certificate (HTTPS)</li>
+        <li>Google Business setup</li>
+        <li>WhatsApp button integration</li>
+        <li>Basic SEO setup</li>
+        <li>30-day post-launch support</li>
+      </ul>
+      <a href="#" class="btn-ghost" onclick="openWhatsApp()">Get Started</a>
+    </div>
+    <!-- Growth (featured) -->
+    <div class="plan featured">
+      <div class="plan-badge">Most Popular</div>
+      <div class="plan-name">Growth</div>
+      <div class="plan-price">$97<span>/month</span></div>
+      <p class="plan-desc">For businesses serious about growing online. Ongoing support, updates, and marketing included.</p>
+      <ul class="plan-features">
+        <li>Everything in Starter</li>
+        <li>Up to 10-page website</li>
+        <li>Monthly website updates</li>
+        <li>Social media profile setup</li>
+        <li>Email marketing setup</li>
+        <li>Monthly strategy call</li>
+        <li>Analytics report every month</li>
+        <li>Priority WhatsApp support</li>
+      </ul>
+      <a href="#" class="btn-primary" onclick="openWhatsApp()">Start Growing</a>
+    </div>
+    <!-- Scale -->
+    <div class="plan">
+      <div class="plan-name">Scale</div>
+      <div class="plan-price">$197<span>/month</span></div>
+      <p class="plan-desc">For established small businesses ready to dominate their local market digitally.</p>
+      <ul class="plan-features">
+        <li>Everything in Growth</li>
+        <li>Unlimited website pages</li>
+        <li>Online store setup</li>
+        <li>Booking system integration</li>
+        <li>Email automation flows</li>
+        <li>Bi-weekly strategy calls</li>
+        <li>Dedicated account manager</li>
+        <li>Competitor analysis</li>
+      </ul>
+      <a href="#" class="btn-ghost" onclick="openWhatsApp()">Let's Scale</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-head">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title">Questions we get all the time</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        Do I need any technical knowledge?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">Absolutely not. We handle 100% of the technical setup. Our job is to make digital as simple as possible for you — you just show up for our calls and tell us about your business.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        How long does it take to build my website?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">We typically launch within 14 business days from our discovery call. This includes design, development, your review round, and going live with SSL security.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        Can I cancel my membership anytime?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">Yes — our Growth and Scale plans are month-to-month with no long-term contracts. You can cancel anytime with 30 days notice. Your website always stays yours.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        Will my website be secure with HTTPS?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">Every website we build comes with a free SSL certificate (HTTPS) included, meaning your visitors' connection is encrypted and Google marks your site as trusted. This is standard on all our plans.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        What happens if I need changes to my website?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">Growth and Scale members get unlimited content updates each month — just message us on WhatsApp. Starter plan clients can request changes at a flat hourly rate.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        Do you offer support in Spanish?
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="faq-a">Yes! Our team is bilingual. We're happy to work with you in English or Spanish — whichever is more comfortable for you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <h2>Ready to take your business digital?</h2>
+  <p>Start with a free 30-minute strategy call. No commitment, just clarity.</p>
+  <a href="#" class="btn-dark" onclick="openWhatsApp(); return false;">Chat With Us on WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">Grow<span>Digital</span></a>
+      <p>Building and growing small businesses in the digital era — from scratch, with care.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Website Build</a></li>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">SEO</a></li>
+        <li><a href="#services">WhatsApp Setup</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#membership">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#" onclick="openWhatsApp(); return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 GrowDigital. All rights reserved.</p>
+    <div class="footer-badges">
+      <span class="badge">HTTPS Secured</span>
+      <span class="badge">GDPR Ready</span>
+      <span class="badge">Mobile First</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a class="wa-btn"
+   href="https://wa.me/50368374195?text=I%20need%20to%20grow%20my%20business"
+   id="waBtn"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  /* ── HAMBURGER ── */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  /* ── FAQ ACCORDION ── */
+  document.querySelectorAll('.faq-q').forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
+      const answer = button.nextElementSibling;
+      answer.classList.toggle('open');
+    });
+  });
+
+  function openWhatsApp() {
+    window.open("https://wa.me/1YOURNUMBER?text=I%20need%20to%20grow%20my%20business", "_blank");
+  }
+</script>
+</body>
+</html>
