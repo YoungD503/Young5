@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LockIn</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0a0b0d;
+  --surface: #141618;
+  --green: #2ecc71;
+  --amber: #f5a623;
+  --red: #e05252;
+  --text: #e8eaf0;
+  --muted: #6b7080;
+  --dim: #3a3d47;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* HEADER / NAV */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: rgba(10, 11, 13, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(234, 234, 240, 0.1);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--green);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--bg);
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+.cta-header {
+  background: var(--green);
+  color: var(--bg);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.cta-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(46, 204, 113, 0.2);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(46, 204, 113, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 720px;
+  z-index: 2;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.streak-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.streak-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1;
+  letter-spacing: -2px;
+  animation: slideDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.streak-fire {
+  font-size: 64px;
+  animation: flicker 2s ease-in-out infinite, slideDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.8; transform: scale(1.1) rotate(-2deg); }
+}
+
+.streak-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.hero-highlight {
+  color: var(--green);
+}
+
+.hero p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--muted);
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--green);
+  color: var(--bg);
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(46, 204, 113, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--dim);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-secondary:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* PROBLEM / SOLUTION */
+.problem {
+  max-width: 1100px;
+  margin: 100px auto 120px;
+  padding: 0 20px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.problem-text h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.problem-text p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.problem-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.problem-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.problem-icon {
+  font-size: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.problem-item p {
+  font-size: 15px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.problem-visual {
+  background: var(--surface);
+  border: 1px solid rgba(234, 234, 240, 0.1);
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  position: relative;
+  overflow: hidden;
+}
+
+.problem-visual::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(224, 82, 82, 0.1), transparent);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.problem-visual-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.problem-visual-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 72px;
+  color: var(--red);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.problem-visual-text {
+  font-size: 16px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* FEATURES */
+.features {
+  max-width: 1100px;
+  margin: 120px auto 120px;
+  padding: 0 20px;
+}
+
+.features h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.features-desc {
+  text-align: center;
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 60px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid rgba(234, 234, 240, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+
+.feature-card:hover {
+  border-color: var(--green);
+  border-color: rgba(46, 204, 113, 0.3);
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* PROOF */
+.proof {
+  max-width: 1100px;
+  margin: 120px auto 120px;
+  padding: 0 20px;
+}
+
+.proof h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  margin-bottom: 60px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.proof-card {
+  background: var(--surface);
+  border: 1px solid rgba(234, 234, 240, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.proof-quote {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.proof-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.proof-title {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* EMAIL SIGNUP */
+.signup {
+  max-width: 600px;
+  margin: 140px auto 100px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.signup h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.signup p {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.email-input {
+  padding: 14px 18px;
+  border: 1px solid var(--dim);
+  background: var(--surface);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.email-input::placeholder {
+  color: var(--dim);
+}
+
+.gmail-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.gmail-divider::before,
+.gmail-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--dim);
+}
+
+.btn-gmail {
+  background: rgba(234, 234, 240, 0.1);
+  border: 1px solid var(--dim);
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-gmail:hover {
+  background: rgba(234, 234, 240, 0.15);
+  border-color: var(--text);
+}
+
+.gmail-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--dim);
+  margin-top: 16px;
+}
+
+/* SUCCESS MESSAGE */
+.success-message {
+  display: none;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: var(--green);
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid rgba(234, 234, 240, 0.1);
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 13px;
+  margin-top: 80px;
+}
+
+footer a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--green);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+
+  .problem-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .problem-visual {
+    min-height: 300px;
+  }
+
+  .streak-number {
+    font-size: 64px;
+  }
+
+  .streak-fire {
+    font-size: 48px;
+  }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🔥</div>
+    LockIn
+  </div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#signup">Start free</a>
+    <button class="cta-header" onclick="scrollToSignup()">Subscribe</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="streak-hero">
+      <div>
+        <div class="streak-number" id="streakNumber">0</div>
+        <div class="streak-label">day streak</div>
+      </div>
+      <div class="streak-fire">🔥</div>
+    </div>
+
+    <h1>Don't break <span class="hero-highlight">the chain</span></h1>
+    <p>A 6-month system that turns accountability into unstoppable momentum. Track daily, build weekly, transform in 6 months.</p>
+
+    <div class="cta-group">
+      <button class="btn-primary" onclick="scrollToSignup()">Start free</button>
+      <button class="btn-secondary" onclick="window.open('Tracker.html', '_blank')">See demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="problem">
+  <span class="section-label">The Problem</span>
+  <div class="problem-grid">
+    <div class="problem-text">
+      <h2>Why most people quit</h2>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-icon">↓</div>
+          <p>No visibility. You don't see momentum building until it's too late.</p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">×</div>
+          <p>Breaking one habit kills the rest. You miss one day and abandon the system.</p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">≈</div>
+          <p>Wrong metrics. Tracking everything equally wastes energy on habits that don't matter.</p>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">❌</div>
+          <p>No recovery. One miss becomes a pattern. A pattern becomes quitting.</p>
+        </div>
+      </div>
+    </div>
+    <div class="problem-visual">
+      <div class="problem-visual-content">
+        <div class="problem-visual-number">68%</div>
+        <div class="problem-visual-text">Quit before week 4</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <span class="section-label">How it works</span>
+  <h2>Built for real commitment</h2>
+  <p class="features-desc">LockIn makes accountability visible, streaks unbreakable, and progress impossible to ignore.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🔥</span>
+      <h3>Streak protection</h3>
+      <p>Hit 80% of your habits to keep your streak alive. One miss won't kill your momentum—but two in a row will.</p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <h3>Daily accountability</h3>
+      <p>See your progress in real time. Ring fills as you check habits. Visual streaks show which habits are slipping.</p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <h3>Weekly challenges</h3>
+      <p>Complete 5 perfect days a week. Gamified, achievable, and designed to keep you locked in.</p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-icon">🧠</span>
+      <h3>Smart insights</h3>
+      <p>See which habits are hard. Identify your pattern. Data-driven tweaks that actually work.</p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-icon">📈</span>
+      <h3>6-month journey</h3>
+      <p>Track your full path in a visual calendar. Watch months turn from blank to green. Transformation is visible.</p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <h3>Real milestones</h3>
+      <p>Not daily tasks—real checkpoints. First book finished. First 50km week. Gained 5kg. Proof it's working.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof">
+  <span class="section-label">Early adopters</span>
+  <h2>People who locked in</h2>
+
+  <div class="proof-grid">
+    <div class="proof-card">
+      <div class="proof-quote">"I've tried every app. This one made me stop breaking habits because I could literally see the fire emoji. Sounds dumb, but it works."</div>
+      <div class="proof-author">Marcus T.</div>
+      <div class="proof-title">Trader, London</div>
+    </div>
+
+    <div class="proof-card">
+      <div class="proof-quote">"The 80% rule changed everything. I don't have to be perfect, just consistent. Made it 18 weeks straight."</div>
+      <div class="proof-author">Sarah K.</div>
+      <div class="proof-title">Coach, NYC</div>
+    </div>
+
+    <div class="proof-card">
+      <div class="proof-quote">"Seeing the calendar fill up each month is insane motivation. Month 3 and I've hit every milestone. This is real."</div>
+      <div class="proof-author">James R.</div>
+      <div class="proof-title">Athlete, Sydney</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL SIGNUP -->
+<section class="signup" id="signup">
+  <span class="section-label">Start now</span>
+  <h2>Lock in for 6 months</h2>
+  <p>Free. No credit card. Join early adopters building unbreakable momentum.</p>
+
+  <form class="email-form" onsubmit="handleSignup(event)">
+    <input type="email" class="email-input" id="emailInput" placeholder="your@email.com" required>
+
+    <div class="gmail-divider">or</div>
+
+    <button type="button" class="btn-gmail" onclick="handleGmailLogin()">
+      <svg class="gmail-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M2 6l10 8 10-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Continue with Gmail
+    </button>
+
+    <button type="submit" class="btn-primary" style="margin-top: 8px;">Subscribe</button>
+
+    <div class="form-note">One email per week. No spam. Unsubscribe anytime.</div>
+  </form>
+
+  <div class="success-message" id="successMessage">
+    ✓ Check your email to confirm. Welcome to LockIn.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>LockIn © 2025 · Built for people who finish what they start</p>
+  <p style="margin-top: 12px;">
+    <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Status</a>
+  </p>
+</footer>
+
+<script>
+// Animate streak number on load
+window.addEventListener('load', () => {
+  let current = 0;
+  const target = 24;
+  const step = () => {
+    if (current < target) {
+      current++;
+      document.getElementById('streakNumber').textContent = current;
+      setTimeout(step, 20);
+    }
+  };
+  step();
+});
+
+// Scroll to signup
+function scrollToSignup() {
+  document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Email signup
+function handleSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  
+  // Show success message
+  document.querySelector('.success-message').style.display = 'block';
+  document.querySelector('.email-form').style.display = 'none';
+  
+  // Reset after 3 seconds
+  setTimeout(() => {
+    document.querySelector('.success-message').style.display = 'none';
+    document.querySelector('.email-form').style.display = 'flex';
+    document.getElementById('emailInput').value = '';
+  }, 4000);
+  
+  // Log to console (in real app, send to server)
+  console.log('Signup:', email);
+}
+
+// Gmail login simulation
+function handleGmailLogin() {
+  alert('Gmail login coming soon! For now, use email signup above.');
+}
+</script>
+
+</body>
+</html>
