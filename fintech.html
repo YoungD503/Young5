@@ -1822,6 +1822,123 @@ function nudge(id, base, range, prefix='$') {
 }
 nudge('dfNetWorth', 24840, 400, '$');
 nudge('dfFree', 870, 100, '$');
+
+
+
+     // ── EMAIL MODAL ──────────────────────────────────
+    function buildEmailModal() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'email-backdrop';
+        backdrop.className = 'yd-backdrop';
+
+        const modal = document.createElement('div');
+        modal.id = 'email-modal';
+        modal.className = 'yd-modal';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-labelledby', 'email-headline');
+
+        modal.innerHTML = `
+            <div class="email-inner">
+                <div class="email-deco-line"></div>
+                <p class="yd-eyebrow">Join the Community</p>
+                <h2 class="yd-headline" id="email-headline">Words Worth<br>Wearing</h2>
+                <p class="yd-sub">Be first to know about new drops, scripture collections, and exclusive offers — straight to your inbox.</p>
+                <div class="email-form-row" id="email-form-row">
+                    <input
+                        type="email"
+                        id="email-input"
+                        class="email-input"
+                        placeholder="your@email.com"
+                        autocomplete="email"
+                        aria-label="Email address"
+                    />
+                    <button class="yd-btn-primary" id="email-submit-btn">Subscribe</button>
+                </div>
+                <p class="email-error" id="email-error" aria-live="polite"></p>
+                <div class="email-success" id="email-success" hidden>
+                    <span class="email-checkmark">✓</span>
+                    <p>You're in! Check your inbox for a welcome gift.</p>
+                </div>
+                <p class="yd-fine">No spam. Unsubscribe anytime.</p>
+            </div>
+        `;
+
+        document.body.appendChild(backdrop);
+        document.body.appendChild(modal);
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            backdrop.classList.add('yd-visible');
+            modal.classList.add('yd-visible');
+        }));
+
+        function closeEmail() {
+            backdrop.classList.remove('yd-visible');
+            modal.classList.remove('yd-visible');
+            setTimeout(() => {
+                backdrop.remove();
+                modal.remove();
+                openOfferModal();   // always open offer after email modal closes
+            }, 380);
+            sessionStorage.setItem(EMAIL_SESSION_KEY, '1');
+        }
+
+        document.getElementById('email-submit-btn').addEventListener('click', handleSubmit);
+        document.getElementById('email-input').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') handleSubmit();
+        });
+
+        function handleSubmit() {
+            const input = document.getElementById('email-input');
+            const error = document.getElementById('email-error');
+            const val   = input.value.trim();
+
+            if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                error.textContent = 'Please enter a valid email address.';
+                input.focus();
+                return;
+            }
+            error.textContent = '';
+
+            // ── Plug in your email service here ──
+            // fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email: val }) });
+
+            document.getElementById('email-form-row').hidden = true;
+            document.getElementById('email-success').hidden  = false;
+
+            setTimeout(closeEmail, 1800);
+        }
+    }
+
+    function openEmailModal() {
+        if (sessionStorage.getItem(EMAIL_SESSION_KEY)) return;
+        if (document.getElementById('email-modal')) return;
+        buildEmailModal();
+    }
+
+    // ── PRODUCT CARD CLICK ───────────────────────────
+    function bindProductCards() {
+        document.querySelectorAll('.product-card, [data-promo="true"]').forEach(card => {
+            card.addEventListener('click', function (e) {
+                if (e.target.closest('a[href]') && !e.target.closest('a[href="#"]')) return;
+                openOfferModal();
+            });
+        });
+    }
+
+    // ── INIT ─────────────────────────────────────────
+    function init() {
+        setTimeout(openEmailModal, EMAIL_DELAY_MS);
+        bindProductCards();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
 </script>
 </body>
 </html>
