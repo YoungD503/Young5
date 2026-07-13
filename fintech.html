@@ -1143,6 +1143,10 @@ footer {
   .btn-hero, .btn-ghost { font-size: .9rem; padding: 12px 18px; }
 }
 
+
+
+  
+
 /* ── Touch devices — disable custom cursor ── */
 @media (hover: none) and (pointer: coarse) {
   body { cursor: auto; }
@@ -1155,6 +1159,72 @@ footer {
   .pricing-card:hover { transform: none; }
   .btn-hero:hover { transform: none; box-shadow: none; }
 }
+
+
+
+
+   /* ── EMAIL MODAL ─────────────────────────────── */
+        #email-modal { width: min(90vw, 440px); }
+        .email-inner {
+            padding: 48px 36px 36px;
+            position: relative;
+        }
+        .email-deco-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: #0f0d0a;
+        }
+        .email-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .email-input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 2px;
+            font-size: 16px;
+            color: #0f0d0a;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .email-input:focus { border-color: #0f0d0a; }
+        .email-input::placeholder { color: #bbb; }
+        .email-error {
+            font-size: 0.72rem;
+            color: #c0392b;
+            min-height: 18px;
+            margin: 0 0 10px;
+        }
+        .email-success {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f7f0;
+            border-radius: 3px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+        }
+        .email-checkmark {
+            font-size: 1.2rem;
+            color: #27ae60;
+            flex-shrink: 0;
+        }
+        .email-success p {
+            font-size: 0.82rem;
+            color: #2d6a4f;
+            margin: 0;
+            font-weight: 600;
+        }
+
 </style>
 </head>
 <body>
