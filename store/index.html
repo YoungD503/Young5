@@ -38,7 +38,7 @@
 
     <header class="hero">
         <div class="hero-content">
-            <h1>Men World - God Word</h1>
+            <h1>Woven Word</h1>
             <p>Premium embroidered hoodies featuring timeless scripture.</p>
             <a href="#shop" class="btn">View Collection</a>
         </div>
@@ -48,6 +48,83 @@
         <h2 style="text-align: center; margin-top: 4rem;">The Scriptural Collection</h2>
         <div class="product-grid" id="product-container">
             </div>
+
+
+            <!--
+  BOOK PROMO SECTION
+  Paste this inside <main>, right after the closing </div> of #product-container
+  (i.e. after the product grid, still before </main>).
+
+  Replace the bracketed placeholders with your real content:
+  - book-cover.jpg  -> your actual cover image file
+  - [ Your Book Title Here ] -> real title
+  - tagline, rating, review, buy link -> real content
+-->
+<section class="book-promo" id="book">
+    <div class="book-promo-inner">
+        <div class="book-cover-frame">
+            <img src="book-cover.jpg" alt="[Your Book Title] — book cover" class="book-cover-img">
+        </div>
+        <div class="book-promo-content">
+            <span class="brand-subtext">From the Founder</span>
+            <h2 class="book-title">Young Desert</h2>
+            <p class="book-tagline">One line on what the book is about — who it's for and why it matters. </p>
+
+            <div class="book-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">4.9/5 — 1k+ Reviews</span>
+            </div>
+
+            <blockquote class="book-review">
+                “Insert a real reader review here — one or two sentences, kept short. ”
+                <cite class="verse-highlight">— A Reader</cite>
+            </blockquote>
+
+            <a href="#" class="btn book-buy-btn" id="book-buy-btn">Get the Book</a>
+        </div>
+    </div>
+</section>
+
+
+<!--
+  VIDEO GALLERY SECTION
+  This REPLACES the entire video-carousel section from before.
+  Delete the old <section class="video-feature" id="watch">...carousel...</section>
+  block and use this instead. Paste inside <main>.
+
+  The 7 cards + the modal are rendered/controlled by JS
+  (see video-gallery-script.js) — edit the `videos` array there
+  to set real YouTube IDs, titles, and reviews.
+-->
+<section class="video-feature" id="watch">
+    <div class="video-feature-inner">
+        <span class="brand-subtext">Watch</span>
+        <h2 class="video-title">Young Desert — In Motion</h2>
+
+        <div class="video-grid" id="video-grid">
+            <!-- Cards injected here by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- Video Modal (plays the chosen video with sound, on click) -->
+<div class="video-modal-overlay" id="video-modal-overlay">
+    <div class="video-modal">
+        <button class="close-modal" id="close-video-modal">&times;</button>
+        <div class="video-modal-frame">
+            <iframe
+                id="video-modal-iframe"
+                title="Young Desert video"
+                frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <p class="video-modal-title" id="video-modal-title"></p>
+        <p class="video-modal-review" id="video-modal-review"></p>
+    </div>
+</div>
+        
     </main>
 
     <div id="cart-sidebar" class="cart-sidebar">
@@ -95,5 +172,4 @@
 </div>
 </body>
 </html>
-
 
