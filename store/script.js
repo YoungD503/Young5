@@ -29,7 +29,7 @@ function toggleCart() {
     }
 }
 
-// 5. Render Grid (Home Page)
+// 5. Render Grid (Home Page) <p style="font-weight: bold;">$${product.price.toFixed(2)}</p> 
 function renderProducts() {
     if(!container) return;
     container.innerHTML = products.map(product => `
@@ -39,7 +39,7 @@ function renderProducts() {
             </a>
             <h3>${product.name}</h3>
             <p class="verse-highlight">${product.verse}</p>
-            <p style="font-weight: bold;">$${product.price.toFixed(2)}</p>
+        
             <a href="product.html?id=${product.id}" class="btn" style="margin-top: 15px; padding: 0.6rem 1rem; font-size: 0.8rem;">View Details</a>
         </div>
     `).join('');
@@ -316,3 +316,158 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// ===============================
+// Book Promo Section
+// Append this to the end of script.js
+// ===============================
+
+// 11. Book Promo — scroll reveal + buy link
+function initBookPromo() {
+    const section = document.querySelector('.book-promo');
+    const buyBtn = document.getElementById('book-buy-btn');
+
+    if (!section) return;
+
+    // Reveal the section once when it scrolls into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    observer.observe(section);
+
+    if (buyBtn) {
+        // TODO: replace '#' in the href with your real purchase link
+        // (Amazon, your own store, Gumroad, etc.)
+        buyBtn.addEventListener('click', (e) => {
+            if (buyBtn.getAttribute('href') === '#') {
+                e.preventDefault();
+                alert('Add your book\'s purchase link to the "Get the Book" button.');
+            }
+            // Optional: hook in analytics here, e.g.
+            // gtag('event', 'book_promo_click');
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initBookPromo);
+
+
+
+
+
+
+// ===============================
+// Video Gallery Section
+// REPLACES the entire "Video Carousel Section" JS block.
+// Delete that block (the `videos` array, renderVideoCarousel,
+// goToVideoSlide, toggleSlideSound, initVideoCarousel, and its
+// DOMContentLoaded listener) and append this instead, at the end
+// of script.js.
+// ===============================
+
+// 12. Video Gallery — grid of 7 videos, click to play in a modal
+const videos = [
+    { id: "SMwh1nIqw8k", title: "[ Video 1 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "TjqrualxgkI", title: "[ Video 2 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "5F1pcSljraU", title: "[ Video 3 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "YOUR_VIDEO_ID_4", title: "[ Video 4 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "YOUR_VIDEO_ID_5", title: "[ Video 5 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "YOUR_VIDEO_ID_6", title: "[ Video 6 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+];
+
+function renderVideoGrid() {
+    const grid = document.getElementById('video-grid');
+    if (!grid) return;
+
+    grid.innerHTML = videos.map((video, i) => `
+        <div class="video-card" data-index="${i}">
+            <div class="video-thumb-frame">
+                <img
+                    class="video-thumb-img"
+                    src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg"
+                    alt="${video.title}"
+                    loading="lazy">
+                <span class="play-icon">▶</span>
+            </div>
+            <h3 class="video-card-title">${video.title}</h3>
+            <p class="video-review">${video.review}</p>
+        </div>
+    `).join('');
+
+    grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.video-card');
+        if (!card) return;
+        openVideoModal(parseInt(card.dataset.index));
+    });
+}
+
+function openVideoModal(index) {
+    const video = videos[index];
+    const overlay = document.getElementById('video-modal-overlay');
+    const iframe = document.getElementById('video-modal-iframe');
+    const titleEl = document.getElementById('video-modal-title');
+    const reviewEl = document.getElementById('video-modal-review');
+
+    if (!overlay || !iframe) return;
+
+    // Autoplay WITH sound is allowed here because opening the modal
+    // is a direct result of the user's click (a "user gesture").
+    iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`;
+    titleEl.textContent = video.title;
+    reviewEl.textContent = video.review;
+
+    overlay.classList.add('active');
+    document.body.classList.add('modal-open');
+}
+
+function closeVideoModal() {
+    const overlay = document.getElementById('video-modal-overlay');
+    const iframe = document.getElementById('video-modal-iframe');
+
+    if (!overlay || !iframe) return;
+
+    overlay.classList.remove('active');
+    document.body.classList.remove('modal-open');
+    iframe.src = ''; // stops playback
+}
+
+function initVideoGallery() {
+    const section = document.querySelector('.video-feature');
+    const overlay = document.getElementById('video-modal-overlay');
+    const closeBtn = document.getElementById('close-video-modal');
+
+    if (!section) return;
+
+    renderVideoGrid();
+
+    // Scroll reveal (same pattern used elsewhere on the site)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    observer.observe(section);
+
+    if (closeBtn) closeBtn.addEventListener('click', closeVideoModal);
+
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeVideoModal();
+        });
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeVideoModal();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initVideoGallery);
