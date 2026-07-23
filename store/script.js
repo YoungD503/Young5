@@ -1,9 +1,9 @@
 // 1. Data Structure - Ensure images match your file names exactly
 const products = [
-    { id: 1, name: "The 'Peace' Hoodie", verse: "Philippians 4:7", price: 65, image: "00.jpg", stripeLink: "#" },
-    { id: 2, name: "The 'Strength' Hoodie", verse: "Isaiah 40:31", price: 65, image: "02.jpg", stripeLink: "#" },
-    { id: 3, name: "The 'Light' Hoodie", verse: "Matthew 5:14", price: 65, image: "03.jpg", stripeLink: "#" },
-    { id: 4, name: "The 'Love' Hoodie", verse: "1 Corinthians 13:4", price: 65, image: "04.jpg", stripeLink: "#" }
+    { id: 1, name: "The 'Peace' Hoodie", verse: "Philippians 4:7", price: 65, image: "00.png", stripeLink: "#" },
+    { id: 2, name: "The 'Strength' Hoodie", verse: "Isaiah 40:31", price: 65, image: "02.png", stripeLink: "#" },
+    { id: 3, name: "The 'Light' Hoodie", verse: "Matthew 5:14", price: 65, image: "03.png", stripeLink: "#" },
+    { id: 4, name: "The 'Love' Hoodie", verse: "1 Corinthians 13:4", price: 65, image: "04.png", stripeLink: "#" }
 ];
 
 // 2. State Management
@@ -314,6 +314,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProductDetails();
     renderCart(); 
 });
-
 
 
