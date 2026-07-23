@@ -729,12 +729,345 @@ body.modal-open {
 
 
 
+/* ===============================
+   Book Promo Section
+   Append this to the end of style.css
+================================= */
+
+.book-promo {
+    padding: 6rem 5%;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+
+    /* Scroll-reveal starting state (see script-additions.js) */
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.book-promo.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.book-promo-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.book-cover-frame {
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.book-cover-img {
+    width: 100%;
+    display: block;
+    filter: grayscale(15%);
+    transition: var(--transition);
+}
+
+.book-cover-frame:hover .book-cover-img {
+    filter: grayscale(0%);
+    transform: scale(1.015);
+}
+
+.book-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin: 0.5rem 0 1rem;
+    line-height: 1.05;
+}
+
+.book-tagline {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+}
+
+.book-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.75rem;
+}
+
+.stars {
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+}
+
+.rating-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.book-review {
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--primary-dark);
+    border-left: 2px solid var(--accent-gold);
+    padding-left: 1.5rem;
+    margin: 0 0 2rem;
+}
+
+.book-review cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-style: normal;
+}
+
+.book-buy-btn {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+    .book-promo-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .book-cover-frame {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .book-review {
+        border-left: none;
+        border-top: 2px solid var(--accent-gold);
+        padding-left: 0;
+        padding-top: 1.25rem;
+    }
+
+    .book-rating {
+        justify-content: center;
+    }
+}
 
 
 
 
+/* ===============================
+   Video Gallery Section
+   REPLACES the entire "Video Carousel Section" CSS block.
+   Delete that block and append this instead, at the end of style.css.
+================================= */
 
+.video-feature {
+    padding: 6rem 5%;
+    background: var(--bg-light);
 
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
+.video-feature.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
 
+.video-feature-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    text-align: center;
+}
 
+.video-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin: 0.5rem 0 3rem;
+}
+
+/* --- Grid of video cards --- */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    text-align: left;
+}
+
+.video-card {
+    cursor: pointer;
+}
+
+.video-thumb-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 */
+    overflow: hidden;
+    background: var(--primary-dark);
+}
+
+.video-thumb-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(60%);
+    transition: var(--transition);
+}
+
+.video-card:hover .video-thumb-img {
+    filter: grayscale(0%);
+    transform: scale(1.04);
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    padding-left: 4px; /* optical centering for the triangle glyph */
+    transition: var(--transition);
+    pointer-events: none;
+}
+
+.video-card:hover .play-icon {
+    background: var(--accent-gold);
+    color: var(--white);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-card-title {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.video-review {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.5;
+    border-left: 2px solid var(--accent-gold);
+    padding-left: 0.9rem;
+    margin-top: 0.6rem;
+}
+
+@media (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===============================
+   Video Modal
+================================= */
+
+.video-modal-overlay {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100000;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.4s ease;
+}
+
+.video-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.video-modal {
+    background: var(--white);
+    width: 92%;
+    max-width: 780px;
+    padding: 20px;
+    position: relative;
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+
+    transform: translateY(30px) scale(0.98);
+    transition: transform 0.4s ease;
+}
+
+.video-modal-overlay.active .video-modal {
+    transform: translateY(0) scale(1);
+}
+
+.video-modal-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--primary-dark);
+}
+
+.video-modal-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-modal-title {
+    margin-top: 1.25rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.video-modal-review {
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.video-modal .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 5;
+    color: var(--text-main);
+}
+
+@media (max-width: 600px) {
+    .video-modal {
+        padding: 14px;
+    }
+}
