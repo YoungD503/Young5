@@ -1,6 +1,6 @@
 // 1. Data Structure - Ensure images match your file names exactly
 const products = [
-    { id: 1, name: "YD T-shirt", verse: "", price: 65, image: "00.png", stripeLink: "#" },
+    { id: 1, name: "YD Y-shirt", verse: "", price: 65, image: "00.png", stripeLink: "#" },
     { id: 2, name: "YD Cap", verse: "", price: 65, image: "02.png", stripeLink: "#" },
     { id: 3, name: "YD Head-Band", verse: "", price: 65, image: "03.png", stripeLink: "#" },
     { id: 4, name: "YD & Collab Hodie", verse: "", price: 65, image: "04.png", stripeLink: "#" }
