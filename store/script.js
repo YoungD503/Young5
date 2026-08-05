@@ -372,9 +372,9 @@ document.addEventListener('DOMContentLoaded', initBookPromo);
 
 // 12. Video Gallery — grid of 7 videos, click to play in a modal
 const videos = [
-    { id: "SMwh1nIqw8k", title: "[ Video 1 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
-    { id: "TjqrualxgkI", title: "[ Video 2 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
-    { id: "5F1pcSljraU", title: "[ Video 3 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "", title: "[ Video 1 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "", title: "[ Video 2 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "", title: "[ Video 3 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_4", title: "[ Video 4 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_5", title: "[ Video 5 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_6", title: "[ Video 6 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
