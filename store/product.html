@@ -1,110 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOUNG DESERT</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Young Desert — Product</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav>
-        <div class="logo"><a href="index.html" style="text-decoration:none; color:black;">YOUNG DESERT</a></div>
-        <ul>
-            <li><a href="index.html#shop">Shop</a></li>
-            <li><a href="story.html">Our Story</a></li>
-            <li><a href="javascript:void(0)" id="cart-count" onclick="toggleCart()">Cart (0)</a></li>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav scrolled" id="site-nav">
+    <div class="container nav-row">
+      <a href="index.html" class="logo">Young Desert</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#shop">Shop</a></li>
+          <li><a href="index.html#book">The Book</a></li>
+          <li><a href="index.html#film">Film</a></li>
         </ul>
-        
-    </nav>
-
-    <main class="product-container">
-        <div class="product-image-large">
-            <img id="main-product-img" src="" alt="Loading product...">
-        </div>
-
-        <div class="product-info-panel">
-            <h1 id="product-title">Loading...</h1>
-            <p class="verse-highlight" id="product-verse"></p>
-            <p class="product-price" id="product-price"></p>
-            
-            <p class="product-description">
-                Hand-embroidered on premium 100% cotton heavyweight fabric. 
-                Each piece is crafted to remind you of the Word throughout your day.
-            </p>
-
-            <div class="size-selector">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <p style="margin:0;">Select Size</p>
-                    <a href="#" style="font-size: 0.7rem; color: #888; text-decoration: underline;">Size Guide</a>
-                </div>
-                <div class="size-buttons">
-                    <button class="size-btn" onclick="selectSize('S')">S</button>
-                    <button class="size-btn" onclick="selectSize('M')">M</button>
-                    <button class="size-btn" onclick="selectSize('L')">L</button>
-                    <button class="size-btn" onclick="selectSize('XL')">XL</button>
-                </div>
-            </div>
-
-            <button class="btn" id="add-to-cart-btn" style="width: 100%;">Add to Cart</button>
-            
-            <p style="font-size: 0.75rem; color: #aaa; margin-top: 1.5rem; text-align: center;">
-                ⚡ Free shipping on orders over $150
-            </p>
-        </div>
-    </main>
-
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Your Cart</h3>
-            <span class="close-cart" onclick="toggleCart()">&times;</span>
-        </div>
-        
-        <div id="cart-items-container">
-            </div>
-
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-price">$0.00</span>
-            </div>
-            <button class="btn checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
-        </div>
+      </nav>
+      <div class="nav-right">
+        <button class="cart-btn" onclick="toggleCart()">
+          Cart <span class="cart-count-val">0</span>
+        </button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <div id="cart-overlay" onclick="toggleCart()"></div>
+  <!-- ================= MOBILE MENU ================= -->
+  <div id="mobile-menu">
+    <button class="mobile-close" onclick="toggleMenu()">Close</button>
+    <a href="index.html#shop" onclick="toggleMenu()">Shop</a>
+    <a href="index.html#book" onclick="toggleMenu()">The Book</a>
+    <a href="index.html#film" onclick="toggleMenu()">Film</a>
+    <button onclick="openCartFromMenu()">Cart (<span class="cart-count-val">0</span>)</button>
+  </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="script.js"></script>
+  <!-- ================= PRODUCT DETAIL ================= -->
+  <section class="product-detail">
+    <div class="container product-detail-grid">
+      <img id="main-product-img" class="product-detail-img" src="" alt="">
 
-    <script>
-        /**
-         * Page-Specific Initialization
-         * This script runs alongside script.js to populate the specific hoodie data
-         */
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const productId = parseInt(params.get('id'));
-            
-            // 'products' array is accessible because script.js is loaded first
-            const item = products.find(p => p.id === productId);
+      <div class="product-detail-info">
+        <div class="eyebrow">Young Desert</div>
+        <h1 id="product-title">Loading…</h1>
+        <p id="product-verse"></p>
+        <p id="product-price"></p>
+        <p class="product-desc">Heavyweight fleece, garment-dyed and washed for a worn-in feel from day one. Verse embroidered small, at the left chest — never printed, never loud.</p>
 
-            if (item) {
-                document.title = `${item.name} | Verse & Thread`;
-                document.getElementById('main-product-img').src = item.image;
-                document.getElementById('main-product-img').alt = item.name;
-                document.getElementById('product-title').innerText = item.name;
-                document.getElementById('product-verse').innerText = item.verse;
-                document.getElementById('product-price').innerText = `$${item.price.toFixed(2)}`;
-                
-                // Map the Add to Cart button to the central logic
-                document.getElementById('add-to-cart-btn').onclick = () => addToCart(item.id);
-            } else {
-                // Redirect if ID is invalid or missing
-                window.location.href = 'index.html';
-            }
-        });
-    </script>
+        <div class="size-buttons">
+          <button class="size-btn" onclick="selectSize('S')">S</button>
+          <button class="size-btn" onclick="selectSize('M')">M</button>
+          <button class="size-btn" onclick="selectSize('L')">L</button>
+          <button class="size-btn" onclick="selectSize('XL')">XL</button>
+        </div>
+
+        <button id="add-to-cart-btn" class="btn">Add to Cart</button>
+        <p class="product-note">✦ Limited run — restocks are not guaranteed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Young Desert</div>
+          <p>Apparel for the quiet faithful. By invitation, in small runs, without noise.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="index.html#shop">The Collection</a>
+          <a href="index.html#book">The Book</a>
+        </div>
+        <div class="footer-col">
+          <h4>House</h4>
+          <a href="index.html#film">Film</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Young Desert. All rights reserved.</span>
+        <span>Nashville, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= CART ================= -->
+  <div id="cart-overlay" onclick="toggleCart()"></div>
+  <aside id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Selection</h3>
+      <button class="cart-close" onclick="toggleCart()">&times;</button>
+    </div>
+    <div id="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-total-price">$0.00</span>
+      </div>
+      <button class="btn" onclick="handleCheckout()">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Newsletter markup present for shared script.js, but not shown mid-purchase -->
+  <div id="newsletter-overlay">
+    <div class="newsletter-box">
+      <button id="close-newsletter">&times;</button>
+      <h3>Request early access.</h3>
+      <p>New verses release quietly, to this list first.</p>
+      <form id="newsletter-form">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Join the List</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
