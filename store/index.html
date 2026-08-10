@@ -1,178 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOUNG DESERT</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Young Desert — By Invitation Only</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="gate-open">
 
-<nav>
-    <div class="logo"><a href="index.html">YOUNG DESERT</a></div>
-    
-    <div class="nav-right">
-        <ul class="desktop-links">
-            <li><a href="index.html#shop">Shop</a></li>
-            <li><a href="story.html">Our Story</a></li>
-            <li><a href="javascript:void(0)" class="desktop-cart-link" onclick="toggleCart()">Cart (<span class="cart-count-val">0</span>)</a></li>
+  <!-- ================= GATE ================= -->
+  <div id="gate">
+    <div class="gate-inner">
+      <div class="seal"><span class="seal-mark">YD</span></div>
+      <div class="gate-kicker">By Invitation Only</div>
+      <h1>Some things<br>aren't advertised.</h1>
+      <p>Young Desert is not sold — it's passed on. Enter if you were sent here.</p>
+      <button class="gate-enter" id="gate-enter-btn">Enter</button>
+      <div class="gate-number">Member Access · No. 0417</div>
+    </div>
+  </div>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="site-nav">
+    <div class="container nav-row">
+      <a href="index.html" class="logo">Young Desert</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#shop">Shop</a></li>
+          <li><a href="index.html#book">The Book</a></li>
+          <li><a href="index.html#film">Film</a></li>
         </ul>
-
-        <a href="javascript:void(0)" class="menu-btn" onclick="toggleMenu()">Menu</a>
+      </nav>
+      <div class="nav-right">
+        <button class="cart-btn" onclick="toggleCart()">
+          Cart <span class="cart-count-val">0</span>
+        </button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-</nav>
+  </header>
 
-<div id="mobile-menu" class="mobile-menu-overlay">
-    <span class="close-menu" onclick="toggleMenu()">&times;</span>
-    <ul class="mobile-nav-links">
-        <li><a href="index.html#shop" onclick="toggleMenu()">Shop</a></li>
-        <li><a href="story.html" onclick="toggleMenu()">Our Story</a></li>
-        <li>
-            <a href="javascript:void(0)" onclick="openCartFromMenu()">
-                Cart (<span class="cart-count-val">0</span>)
-            </a>
-        </li>
-    </ul>
-</div>
+  <!-- ================= MOBILE MENU ================= -->
+  <div id="mobile-menu">
+    <button class="mobile-close" onclick="toggleMenu()">Close</button>
+    <a href="index.html#shop" onclick="toggleMenu()">Shop</a>
+    <a href="index.html#book" onclick="toggleMenu()">The Book</a>
+    <a href="index.html#film" onclick="toggleMenu()">Film</a>
+    <button onclick="openCartFromMenu()">Cart (<span class="cart-count-val">0</span>)</button>
+  </div>
 
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Woven Word</h1>
-            <p>Premium embroidered hoodies featuring timeless scripture.</p>
-            <a href="#shop" class="btn">View Collection</a>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-tag">Est. for the quiet faithful</div>
+      <h1>Garments worn by<br><em>those who were told.</em></h1>
+      <p class="hero-sub">Four verses. Four hoodies. Made in small runs, gifted before they're sold, and never marketed to strangers.</p>
+      <div class="hero-actions">
+        <a href="#shop" class="btn">View the Collection</a>
+        <a href="#book" class="btn btn-outline">Read the Story</a>
+      </div>
+    </div>
+    <div class="hero-scroll"><span class="line"></span> Scroll</div>
+  </section>
+
+ 
+
+  <!-- ================= BOOK PROMO ================= -->
+  <section class="book-promo" id="book">
+    <div class="container">
+      <div class="book-cover"><span>Young<br>Desert</span></div>
+      <div>
+        <div class="eyebrow" style="color:var(--gold-bright)">The Book</div>
+        <h2>Before the brand, there was the desert.</h2>
+        <p>The story behind Young Desert — forty days of quiet, and what came after. Written for anyone still waiting on their own invitation.</p>
+        <a href="#" id="book-buy-btn" class="btn btn-dark">Get the Book</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VIDEO GALLERY ================= 
+  <section class="section video-feature" id="film">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Film</div>
+          <h2>Worn &amp; witnessed.</h2>
         </div>
-    </header>
-
-    <main id="shop">
-        
-
-
-            <!--
-  BOOK PROMO SECTION
-  Paste this inside <main>, right after the closing </div> of #product-container
-  (i.e. after the product grid, still before </main>).
-
-  Replace the bracketed placeholders with your real content:
-  - book-cover.jpg  -> your actual cover image file
-  - [ Your Book Title Here ] -> real title
-  - tagline, rating, review, buy link -> real content
+        <p>Members, not paid talent. Unscripted, and never taken down.</p>
+      </div>
+      <div id="video-grid"><!-- populated by script.js </div>
+    </div>
+  </section>
 -->
-<section class="book-promo" id="book">
-    <div class="book-promo-inner">
-        <div class="book-cover-frame">
-            <img src="book-cover.jpg" alt="[Your Book Title] — book cover" class="book-cover-img">
+  <!-- Video modal -->
+  <div id="video-modal-overlay">
+    <div class="video-modal-box">
+      <div class="video-modal-frame">
+        <iframe id="video-modal-iframe" src="" title="Video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+      <div class="video-modal-meta">
+        <div>
+          <div id="video-modal-title"></div>
+          <p id="video-modal-review"></p>
         </div>
-        <div class="book-promo-content">
-            <span class="brand-subtext">From the Founder</span>
-            <h2 class="book-title">Young Desert</h2>
-            <p class="book-tagline">One line on what the book is about — who it's for and why it matters. </p>
-
-            <div class="book-rating">
-                <span class="stars">★★★★★</span>
-                <span class="rating-text">4.9/5 — 1+ Reviews</span>
-            </div>
-
-            <blockquote class="book-review">
-                “Insert a real reader review here — one or two sentences, kept short. ”
-                <cite class="verse-highlight">— A Reader</cite>
-            </blockquote>
-
-            <a href="#" class="btn book-buy-btn" id="book-buy-btn">Get the Book</a>
-        </div>
+        <button id="close-video-modal">&times;</button>
+      </div>
     </div>
-</section>
+  </div>
 
 
-<!--
-  VIDEO GALLERY SECTION
-  This REPLACES the entire video-carousel section from before.
-  Delete the old <section class="video-feature" id="watch">...carousel...</section>
-  block and use this instead. Paste inside <main>.
-
-  The 7 cards + the modal are rendered/controlled by JS
-  (see video-gallery-script.js) — edit the `videos` array there
-  to set real YouTube IDs, titles, and reviews.
--->
-<section class="video-feature" id="watch">
-    <div class="video-feature-inner">
-        <span class="brand-subtext">Watch</span>
-        <h2 class="video-title">Young Desert — In Motion</h2>
-
-        <div class="video-grid" id="video-grid">
-            <!-- Cards injected here by JS -->
+   <!-- ================= SHOP ================= -->
+  <section class="section" id="shop">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">The Collection</div>
+          <h2>Four verses, held close.</h2>
         </div>
+        <p>Each piece carries one verse and nothing else — no logo, no slogan, no explanation required.</p>
+      </div>
+      <div id="product-container"><!-- populated by script.js --></div>
     </div>
-</section>
+  </section>
 
-<!-- Video Modal (plays the chosen video with sound, on click) -->
-<div class="video-modal-overlay" id="video-modal-overlay">
-    <div class="video-modal">
-        <button class="close-modal" id="close-video-modal">&times;</button>
-        <div class="video-modal-frame">
-            <iframe
-                id="video-modal-iframe"
-                title="Young Desert video"
-                frameborder="0"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen>
-            </iframe>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Young Desert</div>
+          <p>Apparel for the quiet faithful. By invitation, in small runs, without noise.</p>
         </div>
-        <p class="video-modal-title" id="video-modal-title"></p>
-        <p class="video-modal-review" id="video-modal-review"></p>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <a href="index.html#shop">The Collection</a>
+          <a href="index.html#book">The Book</a>
+        </div>
+        <div class="footer-col">
+          <h4>House</h4>
+          <a href="#film">Film</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Young Desert. All rights reserved.</span>
+        <span>Nashville, TN</span>
+      </div>
     </div>
-</div>
+  </footer>
 
-
-        <h2 style="text-align: center; margin-top: 4rem;">The Collection</h2>
-        <div class="product-grid" id="product-container">
-            </div>
-        
-    </main>
-
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Your Cart</h3>
-            <span class="close-cart" onclick="toggleCart()">&times;</span>
-        </div>
-        
-        <div id="cart-items-container">
-            <p style="padding: 20px; color: #888;">Your cart is empty.</p>
-        </div>
-
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-price">$0.00</span>
-            </div>
-            <button class="btn checkout-btn" onclick="handleCheckout()">Proceed to Checkout</button>
-        </div>
+  <!-- ================= CART ================= -->
+  <div id="cart-overlay" onclick="toggleCart()"></div>
+  <aside id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Selection</h3>
+      <button class="cart-close" onclick="toggleCart()">&times;</button>
     </div>
-
-    <div id="cart-overlay" onclick="toggleCart()"></div>
-
-    <footer>
-        <p>&copy; 2026 Young Desert. Hand-embroidered with purpose.</p>
-    </footer>
-
-
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script src="script.js"></script>
-
-<div class="newsletter-overlay" id="newsletter-overlay">
-    <div class="newsletter-modal">
-        <button class="close-modal" id="close-newsletter">&times;</button>
-
-        <h2>Join the Movement</h2>
-        <p>Be the first to know about drops.</p>
-
-        <form id="newsletter-form">
-            <input type="email" required placeholder="Your Email">
-            <button type="submit" class="btn">Join</button>
-        </form>
+    <div id="cart-items-container"><!-- populated by script.js --></div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-total-price">$0.00</span>
+      </div>
+      <button class="btn" onclick="handleCheckout()">Checkout</button>
     </div>
-</div>
+  </aside>
+
+  <!-- ================= NEWSLETTER ================= -->
+  <div id="newsletter-overlay">
+    <div class="newsletter-box">
+      <button id="close-newsletter">&times;</button>
+      <h3>Request early access.</h3>
+      <p>New verses release quietly, to this list first. No spam, no noise — just word when it's time.</p>
+      <form id="newsletter-form">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Join the List</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Gate logic
+    document.getElementById('gate-enter-btn').addEventListener('click', () => {
+      document.getElementById('gate').classList.add('gate-hidden');
+      document.body.classList.remove('gate-open');
+      sessionStorage.setItem('yd_gate_passed', 'true');
+    });
+    if (sessionStorage.getItem('yd_gate_passed')) {
+      document.getElementById('gate').classList.add('gate-hidden');
+      document.body.classList.remove('gate-open');
+    }
+    // Nav scroll state
+    window.addEventListener('scroll', () => {
+      document.getElementById('site-nav').classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
 </body>
 </html>
-
