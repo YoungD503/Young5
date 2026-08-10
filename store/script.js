@@ -5,7 +5,6 @@ const products = [
     { id: 3, name: "YD Head-Band", verse: "", price: 65, image: "03.png", stripeLink: "#" },
     { id: 4, name: "YD & Collab Hodie", verse: "", price: 65, image: "04.png", stripeLink: "#" }
 ];
-
 // 2. State Management
 let cart = JSON.parse(localStorage.getItem('brandCart')) || [];
 let selectedSize = null; 
@@ -29,17 +28,17 @@ function toggleCart() {
     }
 }
 
-// 5. Render Grid (Home Page) <p style="font-weight: bold;">$${product.price.toFixed(2)}</p> 
+// 5. Render Grid (Home Page)
 function renderProducts() {
     if(!container) return;
     container.innerHTML = products.map(product => `
         <div class="product-card">
             <a href="product.html?id=${product.id}">
-                <img src="${product.image}" alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.style.background='linear-gradient(160deg,#D8CFBC,#8B5A3C)';">
             </a>
             <h3>${product.name}</h3>
             <p class="verse-highlight">${product.verse}</p>
-        
+            <p style="font-weight: bold;">$${product.price.toFixed(2)}</p>
             <a href="product.html?id=${product.id}" class="btn" style="margin-top: 15px; padding: 0.6rem 1rem; font-size: 0.8rem;">View Details</a>
         </div>
     `).join('');
@@ -108,7 +107,7 @@ function renderCart() {
         total += itemTotal;
         return `
             <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
+                <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.style.background='linear-gradient(160deg,#D8CFBC,#8B5A3C)';">
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
                     <p class="item-specs">Size: ${item.size}</p>
@@ -195,6 +194,10 @@ function loadProductDetails() {
         document.getElementById('product-price').innerText = `$${item.price.toFixed(2)}`;
         document.getElementById('main-product-img').src = item.image;
         document.getElementById('main-product-img').alt = item.name;
+        document.getElementById('main-product-img').onerror = function() {
+            this.onerror = null;
+            this.style.background = 'linear-gradient(160deg,#D8CFBC,#8B5A3C)';
+        };
         document.getElementById('add-to-cart-btn').onclick = () => addToCart(item.id);
     }
 }
@@ -301,12 +304,8 @@ function initNewsletter() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', initNewsletter);
 
-
-
-
-
-    document.addEventListener('DOMContentLoaded', initNewsletter);
 // --- Initialize ---
 document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
@@ -318,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===============================
 // Book Promo Section
-// Append this to the end of script.js
 // ===============================
 
 // 11. Book Promo — scroll reveal + buy link
@@ -357,24 +355,15 @@ function initBookPromo() {
 document.addEventListener('DOMContentLoaded', initBookPromo);
 
 
-
-
-
-
 // ===============================
 // Video Gallery Section
-// REPLACES the entire "Video Carousel Section" JS block.
-// Delete that block (the `videos` array, renderVideoCarousel,
-// goToVideoSlide, toggleSlideSound, initVideoCarousel, and its
-// DOMContentLoaded listener) and append this instead, at the end
-// of script.js.
 // ===============================
 
-// 12. Video Gallery — grid of 7 videos, click to play in a modal
+// 12. Video Gallery — grid of videos, click to play in a modal
 const videos = [
-    { id: "", title: "[ Video 1 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
-    { id: "", title: "[ Video 2 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
-    { id: "", title: "[ Video 3 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "SMwh1nIqw8k", title: "[ Video 1 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "TjqrualxgkI", title: "[ Video 2 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
+    { id: "5F1pcSljraU", title: "[ Video 3 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_4", title: "[ Video 4 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_5", title: "[ Video 5 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
     { id: "YOUR_VIDEO_ID_6", title: "[ Video 6 Title ]", review: "“[ Insert a real review or reaction quote here ]”" },
