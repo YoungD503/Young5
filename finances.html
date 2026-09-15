@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -227,6 +227,10 @@
             font-family:'Bebas Neue',sans-serif;
             font-size:1rem; letter-spacing:.03em; line-height:1;
         }
+        .nw-tile-pct {
+            font-size:.52rem; letter-spacing:.08em;
+            color:var(--dim); margin-top:5px;
+        }
         .nw-tile-icon {
             font-size:.75rem; margin-bottom:4px; display:block;
         }
@@ -296,6 +300,101 @@
         .c-gold   { color:var(--gold); }
         .c-violet { color:var(--violet); }
 
+        /* ── PERCENTAGE / RATIO HELPERS ──────────── */
+        .stat-pct {
+            font-size:.55rem; color:var(--dim);
+            margin-top:8px; letter-spacing:.08em;
+            padding-top:7px; border-top:1px solid var(--border);
+        }
+        .pct-chip {
+            display:inline-block; padding:2px 7px;
+            font-size:.56rem; letter-spacing:.06em;
+            background:rgba(255,255,255,0.04);
+            border:1px solid var(--border);
+            color:var(--dim); margin-top:5px;
+        }
+        .ratio-row { padding:13px 0; border-bottom:1px solid var(--border); }
+        .ratio-row:last-child { border-bottom:none; }
+        .ratio-top { display:flex; align-items:baseline; gap:10px; }
+        .ratio-name { flex:1; font-size:.76rem; color:var(--text); letter-spacing:.02em; }
+        .ratio-val { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:.03em; }
+        .ratio-hint { display:flex; justify-content:space-between; gap:10px; font-size:.57rem; color:var(--dim); margin-top:5px; letter-spacing:.05em; }
+        .ratio-track { height:3px; background:var(--dim2); margin-top:8px; overflow:hidden; }
+        .ratio-fill { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
+        .split-track { display:flex; height:8px; overflow:hidden; background:var(--dim2); margin-top:14px; }
+        .split-seg { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
+        .split-legend { display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; margin-top:14px; }
+        .split-item { display:flex; align-items:center; gap:8px; }
+        .legend-dot { width:7px; height:7px; flex-shrink:0; }
+        .legend-txt { flex:1; font-size:.62rem; color:var(--dim); letter-spacing:.04em; }
+        .legend-pct { font-family:'Bebas Neue',sans-serif; font-size:.95rem; letter-spacing:.03em; }
+        .alloc-line { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+        .alloc-line:last-child { border-bottom:none; }
+
+        /* ── 50/30/20 BUCKETS ────────────────────── */
+        .bucket {
+            background: var(--deep);
+            border: 1px solid var(--border);
+            border-left-width: 3px;
+            padding: 18px 18px 16px;
+            margin-bottom: 10px;
+            position: relative; overflow: hidden;
+        }
+        .bucket-head { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+        .bucket-name { font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:.06em; line-height:1; }
+        .bucket-rule { font-size:.57rem; color:var(--dim); letter-spacing:.14em; text-transform:uppercase; margin-top:5px; }
+        .bucket-status { font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; padding:3px 8px; white-space:nowrap; }
+        .bucket-nums { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:9px; }
+        .bucket-used { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:.02em; line-height:1; }
+        .bucket-alloc { font-size:.66rem; color:var(--dim); letter-spacing:.04em; }
+        .bucket-track { height:7px; background:var(--dim2); overflow:hidden; position:relative; }
+        .bucket-fill { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
+        .bucket-marker { position:absolute; top:-2px; bottom:-2px; width:1px; background:var(--white); opacity:.45; }
+        .bucket-foot { display:flex; justify-content:space-between; margin-top:9px; font-size:.62rem; letter-spacing:.04em; }
+        .bucket-items { margin-top:12px; padding-top:11px; border-top:1px solid var(--border); }
+        .bucket-item { display:flex; justify-content:space-between; font-size:.63rem; color:var(--dim); padding:3px 0; letter-spacing:.03em; }
+
+        .mode-row { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:18px; }
+        .mode-btn {
+            padding:10px 6px; border:1px solid var(--border); background:var(--surface);
+            font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:500;
+            letter-spacing:.08em; text-transform:uppercase; color:var(--dim);
+            cursor:pointer; transition:all .2s; text-align:center; line-height:1.5;
+        }
+        .mode-btn span { display:block; font-size:.52rem; letter-spacing:.06em; opacity:.7; text-transform:none; margin-top:3px; }
+        .mode-btn.active { background:var(--ember); color:var(--void); border-color:var(--ember); }
+        .mode-panel { display:none; }
+        .mode-panel.active { display:block; }
+
+        .earn-row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+        .earn-row:last-child { border-bottom:none; }
+        .earn-month { flex:1; font-size:.7rem; color:var(--text); letter-spacing:.04em; }
+        .earn-amt { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; color:var(--ice); }
+        .earn-bar { width:54px; height:4px; background:var(--dim2); overflow:hidden; }
+        .earn-fill { height:100%; background:var(--ice); }
+        .basis-row { display:flex; gap:6px; margin-bottom:8px; }
+        .basis-btn {
+            flex:1; padding:8px 4px; border:1px solid var(--border); background:var(--surface);
+            font-family:'JetBrains Mono',monospace; font-size:.58rem; font-weight:500;
+            letter-spacing:.06em; text-transform:uppercase; color:var(--dim); cursor:pointer; transition:all .2s;
+        }
+        .basis-btn.active { background:rgba(0,212,255,0.12); border-color:rgba(0,212,255,0.4); color:var(--ice); }
+        .stability { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:12px 0; }
+        .stab-tile { background:var(--surface); border:1px solid var(--border); padding:10px; }
+        .stab-lbl { font-size:.5rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin-bottom:4px; }
+        .stab-val { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; }
+
+        .rule-badge { font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; padding:3px 9px; }
+        .rule-line { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
+        .rule-line:last-child { border-bottom:none; }
+        .rule-tag { width:62px; flex-shrink:0; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; }
+        .rule-track { flex:1; height:5px; background:var(--dim2); overflow:hidden; position:relative; }
+        .rule-fill { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
+        .rule-num { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; min-width:74px; text-align:right; }
+        .rule-verdict { margin-top:14px; font-size:.7rem; line-height:1.7; padding:9px 13px; border-left:2px solid var(--dim2); color:var(--dim); }
+        .tri-bar { display:flex; height:9px; overflow:hidden; background:var(--dim2); margin-top:16px; }
+        .tri-seg { height:100%; display:flex; align-items:center; justify-content:center; font-size:.5rem; letter-spacing:.06em; color:rgba(0,0,0,.65); }
+
         /* ── PROGRESS ────────────────────────────── */
         .progress-track { height:3px; background:var(--dim2); margin-top:18px; overflow:hidden; }
         .progress-fill  { height:100%; background:linear-gradient(90deg,var(--ember),var(--ember2)); transition:width .7s cubic-bezier(.22,1,.36,1); }
@@ -361,6 +460,7 @@
         .row-sub   { font-size:.6rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-top:3px; }
         .row-meta  { text-align:right; }
         .row-value { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:.04em; color:var(--text); }
+        .row-pct   { font-family:'Bebas Neue',sans-serif; font-size:.8rem; letter-spacing:.04em; color:var(--dim); margin-top:2px; }
         .row-action {
             background:none; border:none; color:var(--dim);
             cursor:pointer; font-size:.6rem; font-weight:500;
@@ -422,6 +522,7 @@
         .milestone-bar-track { flex:1; height:3px; background:var(--dim2); margin:0 14px; overflow:hidden; }
         .milestone-bar-fill  { height:100%; background:linear-gradient(90deg,rgba(184,255,0,0.4),var(--lime)); }
         .milestone-value { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.04em; color:var(--lime); min-width:95px; text-align:right; }
+        .milestone-pct { font-size:.55rem; color:var(--dim); letter-spacing:.06em; margin-top:2px; }
 
         .disclaimer-card {
             background:var(--surface);
@@ -597,22 +698,130 @@
     <div class="modal-sheet">
         <div class="sheet-handle"></div>
         <div class="sheet-title">Income Settings</div>
-        <div class="sheet-sub">Set your hourly rate and weekly hours worked.</div>
-        <div class="form-row">
-            <label class="form-label">Hourly Rate ($)</label>
-            <div class="input-prefix-wrap">
-                <span class="input-prefix">$</span>
-                <input type="number" id="s_wage" step="0.01" min="0" placeholder="0.00" oninput="previewSettings()">
+        <div class="sheet-sub">Choose how you get paid. The budget rule is applied to your take-home figure.</div>
+
+        <div class="mode-row" id="modeRow">
+            <button class="mode-btn" data-mode="hourly"    onclick="setIncomeMode('hourly')">Hourly<span>rate × hours/week</span></button>
+            <button class="mode-btn" data-mode="daily"     onclick="setIncomeMode('daily')">Daily<span>day rate × days worked</span></button>
+            <button class="mode-btn" data-mode="salary"    onclick="setIncomeMode('salary')">Salary<span>fixed monthly or annual</span></button>
+            <button class="mode-btn" data-mode="freelance" onclick="setIncomeMode('freelance')">Freelance<span>variable / irregular</span></button>
+        </div>
+
+        <!-- HOURLY -->
+        <div class="mode-panel" id="panel_hourly">
+            <div class="form-row">
+                <label class="form-label">Hourly Rate ($)</label>
+                <div class="input-prefix-wrap">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="s_wage" step="0.01" min="0" placeholder="0.00" oninput="previewSettings()">
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="form-label">Weekly Hours</label>
+                <input type="number" id="s_hours" step="0.5" min="1" max="168" placeholder="40" oninput="previewSettings()">
+            </div>
+        </div>
+
+        <!-- DAILY -->
+        <div class="mode-panel" id="panel_daily">
+            <div class="form-row">
+                <label class="form-label">Day Rate ($)</label>
+                <div class="input-prefix-wrap">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="s_dayrate" step="0.01" min="0" placeholder="0.00" oninput="previewSettings()">
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="form-label">Days Worked Per Week</label>
+                <input type="number" id="s_days" step="0.5" min="0.5" max="7" placeholder="5" oninput="previewSettings()">
+                <div style="font-size:.6rem;color:var(--dim);margin-top:5px;">Use a realistic average — count weeks you don't work at full capacity.</div>
+            </div>
+        </div>
+
+        <!-- SALARY -->
+        <div class="mode-panel" id="panel_salary">
+            <div class="form-row">
+                <label class="form-label">Pay Period</label>
+                <div class="tab-row" style="margin-bottom:0;">
+                    <button class="tab-btn" id="sal_monthly" onclick="setSalaryPeriod('monthly')">Per Month</button>
+                    <button class="tab-btn" id="sal_annual"  onclick="setSalaryPeriod('annual')">Per Year</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="form-label" id="salLabel">Gross Salary ($)</label>
+                <div class="input-prefix-wrap">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="s_salary" step="0.01" min="0" placeholder="0.00" oninput="previewSettings()">
+                </div>
+            </div>
+        </div>
+
+        <!-- FREELANCE -->
+        <div class="mode-panel" id="panel_freelance">
+            <div style="font-size:.66rem;color:var(--dim);line-height:1.7;margin-bottom:14px;">
+                Log what you actually earned each month, then pick what the budget should be built on. With irregular income, budgeting on your <strong style="color:var(--ice);">lowest</strong> month is the safest choice — surplus months then top up savings.
+            </div>
+            <div class="form-row">
+                <label class="form-label">Add a Month</label>
+                <div style="display:flex;gap:8px;">
+                    <input type="month" id="e_month" style="flex:1;">
+                    <div class="input-prefix-wrap" style="flex:1;">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="e_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;font-size:1rem;">
+                    </div>
+                </div>
+                <button onclick="addEarning()" style="width:100%;margin-top:8px;padding:9px;background:var(--ice);color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;cursor:pointer;">+ Log Month</button>
+            </div>
+            <div class="stability" id="stabBox"></div>
+            <div class="form-row">
+                <label class="form-label">Budget Based On</label>
+                <div class="basis-row">
+                    <button class="basis-btn" data-basis="lowest"  onclick="setBasis('lowest')">Lowest</button>
+                    <button class="basis-btn" data-basis="average" onclick="setBasis('average')">Average</button>
+                    <button class="basis-btn" data-basis="manual"  onclick="setBasis('manual')">Manual</button>
+                </div>
+                <div id="basisManualWrap" style="display:none;">
+                    <div class="input-prefix-wrap">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="s_flmanual" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewSettings()">
+                    </div>
+                </div>
+                <div style="font-size:.6rem;color:var(--dim);margin-top:7px;" id="basisHint">—</div>
+            </div>
+            <div style="max-height:170px;overflow-y:auto;border:1px solid var(--border);padding:0 12px;margin-bottom:4px;" id="earnListWrap">
+                <div id="earnList"></div>
             </div>
         </div>
         <div class="form-row">
-            <label class="form-label">Weekly Hours</label>
-            <input type="number" id="s_hours" step="0.5" min="1" max="168" placeholder="40" oninput="previewSettings()">
+            <label class="form-label">Effective Take-Home Rate (%)</label>
+            <input type="number" id="s_tax" step="1" min="1" max="100" placeholder="85" oninput="previewSettings()">
+            <div style="font-size:.6rem;color:var(--dim);margin-top:5px;" id="taxHint">Percentage of gross pay you keep after taxes and deductions.</div>
         </div>
+
+        <hr class="rule">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);">Budget Rule</div>
+            <button onclick="resetRule()" style="background:none;border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;cursor:pointer;">↺ 50/30/20</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <div>
+                <label class="form-label" style="color:rgba(255,69,0,0.5);">Needs %</label>
+                <input type="number" id="s_rn" step="1" min="0" max="100" placeholder="50" oninput="previewSettings()">
+            </div>
+            <div>
+                <label class="form-label" style="color:rgba(0,212,255,0.5);">Wants %</label>
+                <input type="number" id="s_rw" step="1" min="0" max="100" placeholder="30" oninput="previewSettings()">
+            </div>
+            <div>
+                <label class="form-label" style="color:rgba(0,200,117,0.5);">Savings %</label>
+                <input type="number" id="s_rs" step="1" min="0" max="100" placeholder="20" oninput="previewSettings()">
+            </div>
+        </div>
+        <div style="font-size:.6rem;margin-top:8px;letter-spacing:.04em;" id="ruleSumHint">Must total 100%.</div>
         <div class="preview-grid">
             <div><div class="pv-label">Weekly Income</div><div class="pv-value" id="sp_weekly">—</div></div>
             <div><div class="pv-label">Monthly Income</div><div class="pv-value" id="sp_monthly">—</div></div>
-            <div><div class="pv-label">Invest (20%)</div><div class="pv-value" id="sp_inv">—</div></div>
+            <div><div class="pv-label">Savings Target</div><div class="pv-value" id="sp_inv">—</div></div>
             <div><div class="pv-label">Annual Income</div><div class="pv-value" id="sp_annual">—</div></div>
         </div>
         <div class="modal-actions">
@@ -669,13 +878,17 @@
         </div>
         <div class="form-row">
             <label class="form-label">Cost Basis / Amount Invested ($)</label>
-            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="h_cost" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="h_cost" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewHolding()"></div>
         </div>
         <div class="form-row">
             <label class="form-label">Current Market Value ($)</label>
-            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="h_current" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="h_current" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewHolding()"></div>
         </div>
-        <div class="modal-actions">
+        <div class="calc-box" id="holdingPreviewBox" style="display:none;">
+            <div class="calc-box-title">Preview — Return</div>
+            <div id="holdingPreviewContent"></div>
+        </div>
+        <div class="modal-actions" style="margin-top:14px;">
             <button class="btn-cancel" onclick="closeModal('holdingModal')">Cancel</button>
             <button class="btn-confirm green" onclick="applyHolding()">Add Asset</button>
         </div>
@@ -691,7 +904,8 @@
         <div class="form-row"><label class="form-label">Destination / Description</label><input type="text" id="c_name" placeholder="e.g. Monthly contribution, S&amp;P 500…"></div>
         <div class="form-row">
             <label class="form-label">Amount ($)</label>
-            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="c_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="c_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewContrib()"></div>
+            <div style="font-size:.6rem;color:var(--dim);margin-top:6px;" id="contribPreviewLine">—</div>
         </div>
         <div class="form-row"><label class="form-label">Date</label><input type="date" id="c_date"></div>
         <div class="modal-actions">
@@ -709,7 +923,8 @@
         <div class="sheet-sub" id="update_sub">Enter the current market value of this asset.</div>
         <div class="form-row">
             <label class="form-label">Current Value ($)</label>
-            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="u_current" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="u_current" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewUpdate()"></div>
+            <div style="font-size:.6rem;color:var(--dim);margin-top:6px;" id="updatePreviewLine">—</div>
         </div>
         <div class="modal-actions">
             <button class="btn-cancel" onclick="closeModal('updateModal')">Cancel</button>
@@ -768,7 +983,8 @@
         <div class="sheet-sub" id="payment_sub">Record a payment made to this debt.</div>
         <div class="form-row">
             <label class="form-label">Amount Paid ($)</label>
-            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="p_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="p_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewPayment()"></div>
+            <div style="font-size:.6rem;color:var(--dim);margin-top:6px;" id="paymentPreviewLine">—</div>
         </div>
         <div class="form-row"><label class="form-label">Date</label><input type="date" id="p_date"></div>
         <div class="form-row"><label class="form-label">Note (optional)</label><input type="text" id="p_note" placeholder="e.g. Minimum payment, Extra payment…"></div>
@@ -800,16 +1016,19 @@
                     <span class="nw-tile-icon">◈</span>
                     <div class="nw-tile-label">Portfolio</div>
                     <div class="nw-tile-value" id="nwPortfolio">$0.00</div>
+                    <div class="nw-tile-pct" id="nwPortfolioPct">0.0%</div>
                 </div>
                 <div class="nw-tile nw-debts">
                     <span class="nw-tile-icon">⊘</span>
                     <div class="nw-tile-label">Debts</div>
                     <div class="nw-tile-value" id="nwDebts">$0.00</div>
+                    <div class="nw-tile-pct" id="nwDebtsPct">0.0%</div>
                 </div>
                 <div class="nw-tile nw-cashflow">
                     <span class="nw-tile-icon">≡</span>
                     <div class="nw-tile-label">Cash Flow</div>
                     <div class="nw-tile-value" id="nwCash">$0.00</div>
+                    <div class="nw-tile-pct" id="nwCashPct">0.0%</div>
                 </div>
             </div>
 
@@ -828,45 +1047,62 @@
         <!-- ── INCOME ── -->
         <div class="card-ember">
             <div class="card-label-ember">Total Monthly Income</div>
-            <div class="card-value-ember" id="monthlyTotal">$3,400.00</div>
+            <div class="card-value-ember" id="monthlyTotal">$0.00</div>
             <div class="card-sub-ember" id="incomeBreakdown">Base salary · no additional income</div>
             <div style="position:relative;z-index:1;">
                 <div class="progress-track" style="background:rgba(255,69,0,0.1);margin-top:20px;">
                     <div class="progress-fill" id="usageBar" style="width:0%"></div>
                 </div>
                 <div class="progress-label">
-                    <span id="usagePct">0% used</span>
-                    <span id="totalLabel">$3,400.00 total</span>
+                    <span id="usagePct">0% of income spent</span>
+                    <span id="totalLabel">$0.00 total</span>
                 </div>
             </div>
         </div>
 
         <div class="stats-grid">
             <div class="stat-tile">
-                <div class="stat-tile-label">Total Expenses</div>
+                <div class="stat-tile-label">Needs + Wants</div>
                 <div class="stat-tile-value c-red" id="totalSpent">$0.00</div>
+                <div class="stat-pct" id="totalSpentPct">0.0% of income</div>
             </div>
             <div class="stat-tile">
-                <div class="stat-tile-label">Invest (20%)</div>
-                <div class="stat-tile-value c-green" id="inversionDisplay">$680.00</div>
+                <div class="stat-tile-label" id="invTileLabel">Invest (20%)</div>
+                <div class="stat-tile-value c-green" id="inversionDisplay">$0.00</div>
+                <div class="stat-pct" id="inversionPct">0.0% of income</div>
             </div>
         </div>
         <div class="stats-grid">
             <div class="stat-tile">
                 <div class="stat-tile-label">Base Salary</div>
-                <div class="stat-tile-value c-white" id="baseDisplay">$3,400.00</div>
+                <div class="stat-tile-value c-white" id="baseDisplay">$0.00</div>
+                <div class="stat-pct" id="basePct">0.0% of income</div>
             </div>
-            <div class="stat-tile">
-                <div class="stat-tile-label">Extra Income</div>
+            <div class="stat-tile" onclick="showPage('income')" style="cursor:pointer;">
+                <div class="stat-tile-label">Extra Income ›</div>
                 <div class="stat-tile-value c-ice" id="extraDisplay">$0.00</div>
+                <div class="stat-pct" id="extraPct">0.0% of income</div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-label">Available Balance</div>
-            <div class="card-value c-lime" id="remainingCash">$2,720.00</div>
-            <div class="card-sub">After expenses &amp; scheduled investment</div>
+            <div class="card-value c-lime" id="remainingCash">$0.00</div>
+            <div class="card-sub" id="remainingSub">After expenses &amp; scheduled investment</div>
             <div class="chart-wrap"><canvas id="miniChart"></canvas></div>
+            <div id="miniChartPcts" style="margin-top:14px;"></div>
+        </div>
+
+        <!-- ── 50 / 30 / 20 SNAPSHOT ── -->
+        <div class="card">
+            <div class="sub-header" style="margin-bottom:4px;">
+                <div class="sub-header-title" id="ruleTitle">50 / 30 / 20 Budget</div>
+                <div class="rule-badge" id="ruleBadge">NO DATA</div>
+            </div>
+            <div style="font-size:.62rem;color:var(--dim);letter-spacing:.04em;margin-bottom:10px;">Used vs. allocated this month</div>
+            <div id="ruleBars"></div>
+            <div class="rule-verdict" id="ruleVerdict"></div>
+            <button onclick="showPage('budget')" style="width:100%;margin-top:14px;padding:10px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;">Open Budget →</button>
         </div>
 
         <!-- DOWNLOAD PDF BUTTON -->
@@ -875,28 +1111,62 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Export Balance Sheet — PDF
             </button>
-            <div style="text-align:center;font-size:.58rem;color:var(--dim);margin-top:8px;letter-spacing:.06em;">Formal financial summary · all sections included</div>
+            <div style="text-align:center;font-size:.58rem;color:var(--dim);margin-top:8px;letter-spacing:.06em;">Formal financial summary · common-size percentages included</div>
         </div>
     </div>
 
-    <!-- EXPENSES -->
+    <!-- BUDGET -->
     <div id="budget" class="page">
-        <div class="section-title">Expenses</div>
+        <div class="section-title">Budget</div>
         <div class="section-divider"></div>
+
+        <div class="card-ember" style="padding:22px 20px;">
+            <div class="card-label-ember">Income to Allocate</div>
+            <div class="card-value-ember" id="budIncome">$0.00</div>
+            <div class="card-sub-ember" id="budRuleLine">Set your income to build the budget</div>
+            <div class="tri-bar" id="triBar">
+                <div class="tri-seg" id="triNeeds" style="background:var(--ember);width:50%"></div>
+                <div class="tri-seg" id="triWants" style="background:var(--ice);width:30%"></div>
+                <div class="tri-seg" id="triSave"  style="background:var(--green);width:20%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.58rem;color:var(--dim);margin-top:8px;letter-spacing:.05em;position:relative;z-index:1;">
+                <span id="triNeedsLbl">Needs $0.00</span>
+                <span id="triWantsLbl">Wants $0.00</span>
+                <span id="triSaveLbl">Savings $0.00</span>
+            </div>
+        </div>
+
+        <div id="bucketCards"></div>
+
         <div class="card">
             <div class="card-label" style="margin-bottom:14px;">New Entry</div>
-            <div class="form-row"><label class="form-label">Description</label><input type="text" id="catName" placeholder="e.g. Rent, Utilities…"></div>
-            <div class="form-row"><label class="form-label">Amount ($)</label><input type="number" id="catAmount" placeholder="0.00"></div>
+            <div class="form-row"><label class="form-label">Description</label><input type="text" id="catName" placeholder="e.g. Rent, Dining out, Emergency fund…"></div>
             <div class="form-row">
-                <label class="form-label">Category</label>
-                <select id="catType">
-                    <option value="needs">Fixed — Necessity</option>
-                    <option value="wants">Variable — Discretionary</option>
+                <label class="form-label">Monthly Amount ($)</label>
+                <input type="number" id="catAmount" placeholder="0.00" oninput="previewCategory()">
+            </div>
+            <div class="form-row">
+                <label class="form-label">Bucket</label>
+                <select id="catType" onchange="previewCategory()">
+                    <option value="needs">Needs — rent, food, utilities, transport, minimums</option>
+                    <option value="wants">Wants — dining, subscriptions, travel, hobbies</option>
+                    <option value="savings">Savings — emergency fund, investments, extra debt</option>
                 </select>
             </div>
-            <button class="btn-primary" onclick="addCategory()">+ Log Expense</button>
+            <div style="font-size:.62rem;color:var(--dim);margin-bottom:12px;line-height:1.7;" id="catPreviewLine">—</div>
+            <button class="btn-primary" onclick="addCategory()">+ Add to Budget</button>
         </div>
-        <div class="card"><div class="card-label">Logged Expenses</div><div id="categoryList"></div></div>
+
+        <div class="card"><div class="card-label">Budget Items</div><div id="categoryList"></div></div>
+
+        <div class="disclaimer-card">
+            <div class="disclaimer-title">How the rule works</div>
+            <div class="disclaimer-text">
+                <strong style="color:var(--ember);">50% Needs</strong> — essentials you can't skip: housing, food, utilities, transport, insurance, and minimum debt payments.<br><br>
+                <strong style="color:var(--ice);">30% Wants</strong> — everything that improves life but isn't required: dining out, subscriptions, travel, upgrades.<br><br>
+                <strong style="color:var(--green);">20% Savings</strong> — investments, emergency fund, and any debt payment above the minimum. This is the bucket to protect first.
+            </div>
+        </div>
     </div>
 
     <!-- EXTRA INCOME -->
@@ -907,6 +1177,16 @@
             <div class="card-label-ice">Total Extra / Month</div>
             <div class="card-value-ice" id="extraTotalDisplay">$0.00</div>
             <div class="card-sub-ice" id="extraCountLabel">No sources logged</div>
+            <div style="position:relative;z-index:1;margin-top:18px;">
+                <div style="display:flex;height:6px;overflow:hidden;background:var(--dim2);">
+                    <div id="incBarBase"  style="height:100%;background:var(--white);width:100%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
+                    <div id="incBarExtra" style="height:100%;background:var(--ice);width:0%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:.58rem;color:var(--dim);margin-top:7px;letter-spacing:.05em;">
+                    <span id="incBaseLbl">Base 100.0%</span>
+                    <span id="incExtraLbl">Extra 0.0%</span>
+                </div>
+            </div>
         </div>
         <div class="card">
             <div class="sub-header">
@@ -927,7 +1207,7 @@
             <div class="card-value-green" id="portfolioValue">$0.00</div>
             <div class="card-sub-green" id="portfolioGainLabel">No assets logged</div>
             <div style="position:relative;z-index:1;margin-top:18px;">
-                <div class="stats-grid" style="margin-bottom:0;">
+                <div class="stats-grid-3" style="margin-bottom:0;">
                     <div class="mini-stat-dark">
                         <div class="pv-label">Cost Basis</div>
                         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.04em;color:var(--white);" id="portfolioCost">$0.00</div>
@@ -936,14 +1216,30 @@
                         <div class="pv-label">Gain / Loss</div>
                         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.04em;" id="portfolioGain">$0.00</div>
                     </div>
+                    <div class="mini-stat-dark">
+                        <div class="pv-label">Return %</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.04em;" id="portfolioReturnPct">0.00%</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="stats-grid-3">
-            <div class="stat-tile"><div class="stat-tile-label">Contributed</div><div class="stat-tile-value c-white" id="totalContrib">$0.00</div></div>
-            <div class="stat-tile"><div class="stat-tile-label">Suggested</div><div class="stat-tile-value c-green" id="suggestedInv">$680.00</div></div>
-            <div class="stat-tile"><div class="stat-tile-label">Assets</div><div class="stat-tile-value c-ice" id="holdingCount">0</div></div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Contributed</div>
+                <div class="stat-tile-value c-white" id="totalContrib">$0.00</div>
+                <div class="stat-pct" id="totalContribPct">0.0% of value</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Savings Bucket</div>
+                <div class="stat-tile-value c-green" id="suggestedInv">$0.00</div>
+                <div class="stat-pct" id="suggestedInvPct">—</div>
+            </div>
+            <div class="stat-tile">
+                <div class="stat-tile-label">Assets</div>
+                <div class="stat-tile-value c-ice" id="holdingCount">0</div>
+                <div class="stat-pct" id="topWeightPct">—</div>
+            </div>
         </div>
 
         <div class="card">
@@ -957,6 +1253,9 @@
         <div class="card" id="allocCard" style="display:none;">
             <div class="card-label" style="margin-bottom:14px;">Allocation by Type</div>
             <div class="chart-wrap-sm"><canvas id="allocChart"></canvas></div>
+            <hr class="rule">
+            <div class="card-label" style="margin-bottom:6px;">Weights</div>
+            <div id="allocList"></div>
         </div>
 
         <div class="card">
@@ -977,7 +1276,19 @@
         <div class="card-ember" style="padding:28px 20px;">
             <div class="card-label-ember" id="wealthCardLabel">Projected Value · 25 Years</div>
             <div class="wealth-projection" id="futureValue">$0.00</div>
-            <div class="card-sub-ember" style="text-align:center;margin-top:8px;" id="wealthSub">$680/mo contribution · 10% annual return</div>
+            <div class="card-sub-ember" style="text-align:center;margin-top:8px;" id="wealthSub">$0/mo contribution · 10% annual return</div>
+
+            <div style="position:relative;z-index:1;margin-top:20px;">
+                <div style="display:flex;height:7px;overflow:hidden;background:var(--dim2);">
+                    <div id="wBarContrib" style="height:100%;background:var(--white);width:100%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
+                    <div id="wBarGrowth"  style="height:100%;background:var(--lime);width:0%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:.58rem;color:var(--dim);margin-top:7px;letter-spacing:.05em;">
+                    <span id="wBarContribLbl">Your capital 100.0%</span>
+                    <span id="wBarGrowthLbl">Compound growth 0.0%</span>
+                </div>
+            </div>
+
             <hr style="border-color:rgba(255,69,0,0.1);margin:20px 0;">
             <div class="card-label-ember" style="margin-bottom:14px;">Growth Milestones</div>
             <div id="milestones"></div>
@@ -992,15 +1303,15 @@
             </div>
 
             <!-- Monthly contribution -->
-            <div class="form-row">
+            <div class="form-row" id="contribAmtRow">
                 <label class="form-label" style="color:rgba(184,255,0,0.45);">Monthly Contribution ($)</label>
                 <div style="position:relative;">
                     <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--dim);pointer-events:none;">$</span>
-                    <input type="number" id="proj_contrib" step="10" min="0" placeholder="680"
+                    <input type="number" id="proj_contrib" step="10" min="0" placeholder="0"
                         style="padding-left:26px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:var(--lime);border-color:rgba(184,255,0,0.2);"
                         oninput="liveProjection()" onfocus="this.style.borderColor='rgba(184,255,0,0.5)'" onblur="this.style.borderColor='rgba(184,255,0,0.2)'">
                 </div>
-                <div style="font-size:.6rem;color:var(--dim);margin-top:5px;" id="proj_contrib_hint">Auto-filled from your 20% investment target</div>
+                <div style="font-size:.6rem;color:var(--dim);margin-top:5px;" id="proj_contrib_hint">Auto-filled from your investment target</div>
             </div>
 
             <!-- Annual return rate -->
@@ -1014,6 +1325,7 @@
                 <input type="number" id="proj_rate" step="0.1" min="0.1" max="50" placeholder="10"
                     style="border-color:rgba(184,255,0,0.2);"
                     oninput="liveProjection()" onfocus="this.style.borderColor='rgba(184,255,0,0.5)'" onblur="this.style.borderColor='rgba(184,255,0,0.2)'">
+
             </div>
 
             <!-- Time horizon -->
@@ -1034,13 +1346,13 @@
 
         <div class="disclaimer-card">
             <div class="disclaimer-title">Advisory Note</div>
-            <div class="disclaimer-text" id="wealthDisclaimer">Every $100 in additional monthly savings equals approximately $270 in 10 years at the projected return rate. Discipline compounds.</div>
+            <div class="disclaimer-text" id="wealthDisclaimer">Discipline compounds.</div>
         </div>
 
         <div class="card">
             <div class="card-label" style="margin-bottom:4px;">Model Assumptions</div>
             <hr class="rule">
-            <div class="assumption-row"><span class="assumption-label">Monthly contribution</span><span class="assumption-value c-lime" id="wealthInvDisplay">$680.00</span></div>
+            <div class="assumption-row"><span class="assumption-label">Monthly contribution</span><span class="assumption-value c-lime" id="wealthInvDisplay">$0.00</span></div>
             <div class="assumption-row"><span class="assumption-label">Annual return rate</span><span class="assumption-value c-lime" id="wealthRateDisplay">10.00%</span></div>
             <div class="assumption-row"><span class="assumption-label">Investment horizon</span><span class="assumption-value c-lime" id="wealthYearsDisplay">25 years</span></div>
             <div class="assumption-row"><span class="assumption-label">Total contributed</span><span class="assumption-value c-white" id="wealthTotalContrib">—</span></div>
@@ -1089,14 +1401,17 @@
                 <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
                     <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">This Month</div>
                     <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--green);" id="cp_this_month">$0.00</div>
+                    <div style="font-size:.52rem;color:var(--dim);margin-top:4px;" id="cp_this_month_pct">0% of target</div>
                 </div>
                 <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
                     <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Avg / Month</div>
                     <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--green);" id="cp_avg_month">$0.00</div>
+                    <div style="font-size:.52rem;color:var(--dim);margin-top:4px;" id="cp_avg_month_pct">0% of income</div>
                 </div>
                 <div style="background:rgba(0,200,117,0.07);border:1px solid rgba(0,200,117,0.1);padding:10px;">
-                    <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Streak</div>
+                    <div style="font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,200,117,0.5);margin-bottom:4px;">Consistency</div>
                     <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:var(--lime);" id="cp_streak">0 mo</div>
+                    <div style="font-size:.52rem;color:var(--dim);margin-top:4px;" id="cp_hitrate">0% of months</div>
                 </div>
             </div>
 
@@ -1112,6 +1427,7 @@
                     <div style="flex:1;text-align:right;">
                         <div style="font-size:.58rem;color:var(--dim);margin-bottom:4px;letter-spacing:.06em;">Avg actual / mo</div>
                         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;" id="cp_monthly_actual_val">$0.00</div>
+                        <div style="font-size:.56rem;color:var(--dim);margin-top:3px;" id="cp_monthly_actual_pct">0% of target</div>
                     </div>
                 </div>
                 <div id="cp_monthly_verdict" style="margin-top:10px;font-size:.7rem;line-height:1.7;padding:8px 12px;border-left:2px solid var(--dim2);color:var(--dim);"></div>
@@ -1135,14 +1451,37 @@
             <div class="card-value-red" id="debtTotalDisplay">$0.00</div>
             <div class="card-sub-red" id="debtCountLabel">No debts logged</div>
             <div style="position:relative;z-index:1;margin-top:18px;">
-                <div class="stats-grid" style="margin-bottom:0;">
+                <div class="stats-grid" style="margin-bottom:8px;">
                     <div class="mini-stat-dark">
                         <div class="pv-label">Est. Interest / Mo</div>
                         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--white);" id="debtMonthlyInt">$0.00</div>
+                        <div style="font-size:.55rem;color:var(--dim);margin-top:4px;" id="debtMonthlyIntPct">0.0% of income</div>
                     </div>
                     <div class="mini-stat-dark">
                         <div class="pv-label">Total Paid</div>
                         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--white);" id="debtTotalPaid">$0.00</div>
+                        <div style="font-size:.55rem;color:var(--dim);margin-top:4px;" id="debtTotalPaidPct">0.0% retired</div>
+                    </div>
+                </div>
+                <div class="stats-grid" style="margin-bottom:0;">
+                    <div class="mini-stat-dark">
+                        <div class="pv-label">Debt-to-Income</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;" id="debtDTI">0.0%</div>
+                        <div style="font-size:.55rem;color:var(--dim);margin-top:4px;">Min payments · target ≤ 36%</div>
+                    </div>
+                    <div class="mini-stat-dark">
+                        <div class="pv-label">Debt-to-Asset</div>
+                        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;" id="debtDTA">—</div>
+                        <div style="font-size:.55rem;color:var(--dim);margin-top:4px;">Debt vs portfolio value</div>
+                    </div>
+                </div>
+                <div style="margin-top:14px;">
+                    <div style="display:flex;justify-content:space-between;font-size:.58rem;color:var(--dim);margin-bottom:6px;letter-spacing:.05em;">
+                        <span id="debtRetiredLbl">0.0% retired</span>
+                        <span id="debtRemainLbl">100.0% remaining</span>
+                    </div>
+                    <div style="height:6px;background:var(--dim2);overflow:hidden;">
+                        <div id="debtRetiredBar" style="height:100%;background:linear-gradient(90deg,var(--green),#00e688);width:0%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
                     </div>
                 </div>
             </div>
@@ -1178,6 +1517,7 @@
                 <div class="form-row">
                     <label class="form-label">Monthly Payment ($)</label>
                     <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="calc_pay" step="0.01" placeholder="0.00" style="padding-left:26px;" oninput="runCalc()"></div>
+                    <div style="font-size:.6rem;color:var(--dim);margin-top:6px;" id="calcPayPct">—</div>
                 </div>
                 <div id="calcResultBox" style="display:none;">
                     <div style="height:1px;background:var(--border);margin:16px 0;"></div>
@@ -1221,20 +1561,32 @@
     <button class="nav-item" onclick="showPage('budget',this)"><span class="nav-icon">≡</span>Expenses<span class="nav-dot"></span></button>
     <button class="nav-item" onclick="showPage('invest',this)"><span class="nav-icon">◈</span>Invest<span class="nav-dot"></span></button>
     <button class="nav-item" onclick="showPage('debt',this)"><span class="nav-icon">⊘</span>Debt<span class="nav-dot"></span></button>
-    <button class="nav-item" onclick="showPage('wealth',this)"><span class="nav-icon">↗</span>25 Yrs<span class="nav-dot"></span></button>
+    <button class="nav-item" onclick="showPage('wealth',this)"><span class="nav-icon">↗</span>Project<span class="nav-dot"></span></button>
 </nav>
 
 <script>
 // ── Persistence ──────────────────────────────────────
 const LS = {
-    get:(k,d)=>{ try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} },
+    get:(k,d)=>{ try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;} },
     set:(k,v)=>{ try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 };
 
 // ── State ────────────────────────────────────────────
-const TAX=0.85, INV_P=0.20;
+let takeHomePct = LS.get('wf_tax',   85);   // % of gross kept after tax
+// 50/30/20 rule — user-adjustable, must total 100
+let ruleNeeds = LS.get('wf_rule_needs', 50);
+let ruleWants = LS.get('wf_rule_wants', 30);
+let ruleSave  = LS.get('wf_rule_save',  20);
+let incomeMode   = LS.get('wf_mode',   'hourly'); // hourly | daily | salary | freelance
 let hourlyWage   = LS.get('wf_wage',   0.00);
 let hoursPerWeek = LS.get('wf_hours',  0);
+let dayRate      = LS.get('wf_dayrate',0);
+let daysPerWeek  = LS.get('wf_days',   5);
+let salaryAmount = LS.get('wf_salary', 0);
+let salaryPeriod = LS.get('wf_salperiod','monthly');
+let earnings     = LS.get('wf_earnings',[]);       // [{id, month:'YYYY-MM', amount}]
+let flBasis      = LS.get('wf_flbasis','lowest');  // lowest | average | manual
+let flManual     = LS.get('wf_flmanual',0);
 let categories   = LS.get('wf_cats',   []);
 let extraIncomes = LS.get('wf_incomes',[]);
 let holdings     = LS.get('wf_holdings',[]);
@@ -1245,13 +1597,51 @@ let myChart, myAllocChart;
 let updateTargetId = null;
 let paymentTargetId = null;
 
-const baseSalary   = ()=> Math.round(hourlyWage*hoursPerWeek*52/12*TAX);
+const MODE_LABEL = {hourly:'Hourly', daily:'Daily rate', salary:'Salary', freelance:'Freelance'};
+
+// Gross monthly pay for a given configuration.
+function monthlyGross(cfg){
+    switch(cfg.mode){
+        case 'daily':     return (cfg.dayRate||0) * (cfg.daysPerWeek||0) * 52 / 12;
+        case 'salary':    return cfg.salaryPeriod==='annual' ? (cfg.salaryAmount||0)/12 : (cfg.salaryAmount||0);
+        case 'freelance': return freelanceBase(cfg);
+        default:          return (cfg.wage||0) * (cfg.hours||0) * 52 / 12;
+    }
+}
+
+function earningStats(){
+    const vals = earnings.map(e=>e.amount);
+    if(!vals.length) return {n:0, lowest:0, highest:0, average:0, spread:0};
+    const lowest=Math.min(...vals), highest=Math.max(...vals);
+    const average=vals.reduce((a,b)=>a+b,0)/vals.length;
+    return {n:vals.length, lowest, highest, average, spread: pctOf(highest-lowest, highest)};
+}
+
+function freelanceBase(cfg){
+    if(cfg.flBasis === 'manual') return cfg.flManual || 0;
+    const s = earningStats();
+    if(!s.n) return 0;
+    return cfg.flBasis === 'average' ? s.average : s.lowest;
+}
+
+function currentCfg(){
+    return {mode:incomeMode, wage:hourlyWage, hours:hoursPerWeek, dayRate, daysPerWeek,
+            salaryAmount, salaryPeriod, flBasis, flManual};
+}
+
+const baseSalary = ()=> Math.round(monthlyGross(currentCfg()) * (takeHomePct/100));
 const extraMonthly = ()=> extraIncomes.reduce((s,e)=>s+e.monthly,0);
 const totalMonthly = ()=> baseSalary()+extraMonthly();
-const inversion    = ()=> Math.round(totalMonthly()*INV_P);
+const inversion    = ()=> Math.round(totalMonthly()*(ruleSave/100));
 
 const fmt  = n => '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtC = n => (n>=0?'+':'')+fmt(n);
+
+// ── Percentage helpers ───────────────────────────────
+const pctOf  = (part, whole) => (whole > 0 ? (part / whole) * 100 : 0);
+const fmtP   = (n, d=1) => (isFinite(n) ? n.toFixed(d) : '0.0') + '%';
+const fmtPS  = (n, d=1) => (n >= 0 ? '+' : '−') + (isFinite(n) ? Math.abs(n).toFixed(d) : '0.0') + '%';
+const clampW = n => Math.max(0, Math.min(100, isFinite(n) ? n : 0));
 
 const FREQ_LABEL = {monthly:'Monthly',biweekly:'Biweekly',weekly:'Weekly',annual:'Annual'};
 const ASSET_LABEL = {etf:'ETF / Fund',stock:'Stock',crypto:'Crypto',bond:'Bond',realestate:'Real Estate',other:'Other'};
@@ -1261,32 +1651,154 @@ function toMonthly(a,f){
     return f==='monthly'?a:f==='biweekly'?a*26/12:f==='weekly'?a*52/12:a/12;
 }
 
-// ── Net Worth ─────────────────────────────────────────
+// ── Central ratio engine ─────────────────────────────
+function getRatios(){
+    const base   = baseSalary();
+    const extra  = extraMonthly();
+    const total  = base + extra;
+    const inv    = inversion();
+    const spent  = categories.filter(c=>c.type!=='savings').reduce((s,c)=>s+c.amount,0);
+    const needs  = categories.filter(c=>c.type==='needs').reduce((s,c)=>s+c.amount,0);
+    const wants  = categories.filter(c=>c.type==='wants').reduce((s,c)=>s+c.amount,0);
+    const saveCat= categories.filter(c=>c.type==='savings').reduce((s,c)=>s+c.amount,0);
+    const free   = total - spent - inv;
+    const portfolio = holdings.reduce((s,h)=>s+h.current,0);
+    const cost      = holdings.reduce((s,h)=>s+h.cost,0);
+    const totalDebt = debts.reduce((s,d)=>s+d.balance,0);
+    const origDebt  = debts.reduce((s,d)=>s+d.originalBalance,0);
+    const minPay    = debts.reduce((s,d)=>s+(d.minpay||0),0);
+    const interest  = debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
+    const contribTotal = contribs.reduce((s,c)=>s+c.amount,0);
+
+    return {
+        base, extra, total, inv, spent, needs, wants, saveCat, free,
+        portfolio, cost, totalDebt, origDebt, minPay, interest, contribTotal,
+        netWorth:        portfolio - totalDebt,
+        basePct:         pctOf(base, total),
+        extraPct:        pctOf(extra, total),
+        expenseRatio:    pctOf(spent, total),
+        savingsRate:     pctOf(total - spent, total),
+        investRate:      pctOf(inv, total),
+        needsPct:        pctOf(needs, total),
+        wantsPct:        pctOf(wants, total),
+        freePct:         pctOf(Math.max(0, free), total),
+        needsOfSpend:    pctOf(needs, spent),
+        wantsOfSpend:    pctOf(wants, spent),
+        dti:             pctOf(minPay, total),
+        interestPct:     pctOf(interest, total),
+        debtToAsset:     pctOf(totalDebt, portfolio),
+        debtRetired:     pctOf(origDebt - totalDebt, origDebt),
+        portfolioReturn: pctOf(portfolio - cost, cost),
+        contribCoverage: pctOf(contribTotal, portfolio)
+    };
+}
+
+// ── 50 / 30 / 20 BUDGET ENGINE ───────────────────────
+const BUCKETS = [
+    {key:'needs',   label:'Needs',   color:'var(--ember)', rgb:'255,69,0',   desc:'Housing, food, utilities, transport, insurance, debt minimums'},
+    {key:'wants',   label:'Wants',   color:'var(--ice)',   rgb:'0,212,255',  desc:'Dining out, subscriptions, travel, hobbies, upgrades'},
+    {key:'savings', label:'Savings', color:'var(--green)', rgb:'0,200,117',  desc:'Investments, emergency fund, debt paid above the minimum'}
+];
+const rulePct = k => k==='needs'?ruleNeeds : k==='wants'?ruleWants : ruleSave;
+
+function inCurrentMonth(dateStr){
+    if(!dateStr) return false;
+    const d = new Date(dateStr+'T12:00:00'), n = new Date();
+    return d.getMonth()===n.getMonth() && d.getFullYear()===n.getFullYear();
+}
+
+// Returns the three buckets with their allocation, what has been used, and status.
+function getBudget(){
+    const income = totalMonthly();
+    const minPay = debts.reduce((s,d)=>s+(d.minpay||0),0);
+    const payMonth = payments.filter(p=>inCurrentMonth(p.date)).reduce((s,p)=>s+p.amount,0);
+    const contribMonth = contribs.filter(c=>inCurrentMonth(c.date)).reduce((s,c)=>s+c.amount,0);
+    const extraDebt = Math.max(0, payMonth - minPay);
+    const catSum = k => categories.filter(c=>c.type===k).reduce((s,c)=>s+c.amount,0);
+
+    const extras = {
+        needs:   minPay      > 0 ? [{name:'Debt minimum payments', amount:minPay}] : [],
+        wants:   [],
+        savings: [
+            contribMonth > 0 ? {name:'Investment contributions (this month)', amount:contribMonth} : null,
+            extraDebt    > 0 ? {name:'Debt paid above minimum (this month)',  amount:extraDebt}    : null
+        ].filter(Boolean)
+    };
+
+    const buckets = BUCKETS.map(b=>{
+        const logged    = catSum(b.key);
+        const auto      = extras[b.key].reduce((s,x)=>s+x.amount,0);
+        const used      = logged + auto;
+        const pct       = rulePct(b.key);
+        const allocated = Math.round(income * pct / 100);
+        const usedPct   = pctOf(used, allocated);
+        const diff      = allocated - used;
+        // Needs & wants: staying under is good. Savings: hitting the target is good.
+        const good = b.key==='savings' ? used >= allocated : used <= allocated;
+        const near = b.key==='savings' ? usedPct >= 80     : usedPct <= 100;
+        const state = !income ? 'NO INCOME' : used===0 ? 'UNUSED' : good ? 'ON TRACK' : near ? 'CLOSE' : (b.key==='savings'?'SHORT':'OVER');
+        const color = (!income || used===0) ? 'var(--dim)' : good ? 'var(--green)' : near ? 'var(--ember)' : 'var(--red)';
+        return {...b, logged, auto, autoItems:extras[b.key], used, pct, allocated, usedPct, diff, state, color, good};
+    });
+
+    const totalUsed = buckets.reduce((s,b)=>s+b.used,0);
+    const unallocated = income - totalUsed;
+    return {income, buckets, totalUsed, unallocated, byKey:Object.fromEntries(buckets.map(b=>[b.key,b]))};
+}
+
+function budgetIsEmpty(bg){ return bg.totalUsed === 0; }
+
+function ruleVerdict(bg){
+    if(!bg.income) return {text:'Set how you get paid in the top bar to build your 50/30/20 budget.', color:'var(--dim)'};
+    if(budgetIsEmpty(bg)) return {text:'Your income is split into '+fmt(bg.byKey.needs.allocated)+' needs, '+fmt(bg.byKey.wants.allocated)+' wants and '+fmt(bg.byKey.savings.allocated)+' savings. Add items in the Budget tab to start tracking against it.', color:'var(--dim)'};
+    const bad = bg.buckets.filter(b=>!b.good);
+    if(!bad.length) return {text:'All three buckets are within the rule. Needs '+fmtP(bg.byKey.needs.usedPct,0)+' used, wants '+fmtP(bg.byKey.wants.usedPct,0)+' used, savings '+fmtP(bg.byKey.savings.usedPct,0)+' of target met.', color:'var(--green)'};
+    const parts = bad.map(b => b.key==='savings'
+        ? 'savings is '+fmt(Math.abs(b.diff))+' short of its '+fmtP(b.pct,0)+' target'
+        : b.label.toLowerCase()+' is over by '+fmt(Math.abs(b.diff))+' ('+fmtP(b.usedPct-100,0)+' past the line)');
+    const worst = bad.some(b=>b.key!=='savings' && b.usedPct>125);
+    return {text:'Out of balance: '+parts.join(' · ')+'.', color: worst?'var(--red)':'var(--ember)'};
+}
+
+function renderRuleSummary(){
+    const bg = getBudget();
+    document.getElementById('ruleTitle').textContent = ruleNeeds+' / '+ruleWants+' / '+ruleSave+' Budget';
+    const badge = document.getElementById('ruleBadge');
+    const idle = !bg.income || budgetIsEmpty(bg);
+    const allGood = !idle && bg.buckets.every(b=>b.good);
+    badge.textContent = !bg.income ? 'NO INCOME' : budgetIsEmpty(bg) ? 'READY' : allGood ? 'ON TRACK' : 'OUT OF BALANCE';
+    badge.style.color = idle?'var(--dim)':allGood?'var(--green)':'var(--ember)';
+    badge.style.background = idle?'rgba(90,87,80,0.15)':allGood?'var(--green2)':'rgba(255,69,0,0.12)';
+    badge.style.border = '1px solid '+(idle?'rgba(90,87,80,0.3)':allGood?'rgba(0,200,117,0.3)':'rgba(255,69,0,0.3)');
+
+    document.getElementById('ruleBars').innerHTML = bg.buckets.map(b=>`
+        <div class="rule-line">
+            <div class="rule-tag" style="color:${b.color};">${b.label} ${b.pct}%</div>
+            <div class="rule-track">
+                <div class="rule-fill" style="width:${clampW(b.usedPct)}%;background:${b.color};"></div>
+            </div>
+            <div class="rule-num" style="color:${b.color};">${bg.income?fmtP(b.usedPct,0):'—'}</div>
+        </div>`).join('');
+
+    const v = ruleVerdict(bg);
+    const el = document.getElementById('ruleVerdict');
+    el.textContent = v.text;
+    el.style.color = v.color;
+    el.style.borderLeftColor = v.color;
+}
+
+// ── Net Worth ─────────────────────────────────────────// ── Net Worth ─────────────────────────────────────────
 function updateNetWorth(){
-    // Assets: sum of current portfolio values
-    const portfolioVal = holdings.reduce((s,h)=>s+h.current, 0);
-    // Liabilities: sum of current debt balances
-    const totalDebt    = debts.reduce((s,d)=>s+d.balance, 0);
-    // Monthly free cash (available balance after expenses + investment)
-    const spent        = categories.reduce((s,c)=>s+c.amount, 0);
-    const inv          = inversion();
-    const freeCash     = Math.max(0, totalMonthly()-spent-inv);
-
+    const r = getRatios();
+    const portfolioVal = r.portfolio;
+    const totalDebt    = r.totalDebt;
+    const freeCash     = Math.max(0, r.free);
     const netWorth     = portfolioVal - totalDebt;
-    const totalAssets  = portfolioVal + freeCash;
-    const grandTotal   = totalAssets + totalDebt; // used for bar ratios
 
-    // Update value
     const nwEl = document.getElementById('networthValue');
-    nwEl.textContent = fmt(Math.abs(netWorth));
+    nwEl.textContent = (netWorth < 0 ? '−' : '') + fmt(Math.abs(netWorth));
     nwEl.className = 'networth-value ' + (netWorth >= 0 ? 'positive' : 'negative');
 
-    // Prefix sign for negative
-    if(netWorth < 0){
-        nwEl.textContent = '−' + fmt(Math.abs(netWorth));
-    }
-
-    // Badge
     const badge = document.getElementById('nwBadge');
     if(portfolioVal === 0 && totalDebt === 0){
         badge.textContent = 'NO DATA';
@@ -1305,27 +1817,29 @@ function updateNetWorth(){
         badge.style.color = 'var(--red)';
     }
 
-    // Sub line
-    const ratio = totalDebt > 0 && portfolioVal > 0
-        ? `${((portfolioVal/totalDebt)*100).toFixed(0)}% assets vs debt`
-        : portfolioVal > 0 ? 'Debt-free · all assets'
-        : totalDebt > 0 ? 'No assets logged against debt'
+    // Sub line — expressed as a coverage percentage
+    const sub = totalDebt > 0 && portfolioVal > 0
+        ? `Assets cover ${fmtP(pctOf(portfolioVal, totalDebt))} of debt · equity ${fmtP(pctOf(netWorth, portfolioVal))}`
+        : portfolioVal > 0 ? 'Debt-free · 100% equity in assets'
+        : totalDebt > 0 ? '0% asset coverage against debt'
         : 'Add assets & debts to calculate';
-    document.getElementById('networthSub').textContent = ratio;
+    document.getElementById('networthSub').textContent = sub;
 
-    // Tiles
+    // Tiles + their share of the gross balance sheet
+    const barTotal = portfolioVal + freeCash + totalDebt;
     document.getElementById('nwPortfolio').textContent = fmt(portfolioVal);
     document.getElementById('nwDebts').textContent     = fmt(totalDebt);
     document.getElementById('nwCash').textContent      = fmt(freeCash);
+    document.getElementById('nwPortfolioPct').textContent = fmtP(pctOf(portfolioVal, barTotal)) + ' of total';
+    document.getElementById('nwDebtsPct').textContent     = fmtP(pctOf(totalDebt, barTotal)) + ' of total';
+    document.getElementById('nwCashPct').textContent      = r.total>0 ? fmtP(r.freePct) + ' of income' : '—';
 
-    // Bar
-    const barTotal = portfolioVal + freeCash + totalDebt;
-    const assetPct = barTotal > 0 ? Math.round((portfolioVal + freeCash) / barTotal * 100) : 0;
-    const debtPct  = barTotal > 0 ? Math.round(totalDebt / barTotal * 100) : 0;
-    document.getElementById('nwBarAssets').style.width = assetPct + '%';
-    document.getElementById('nwBarDebts').style.width  = debtPct  + '%';
-    document.getElementById('nwBarAssetsLabel').textContent = `Assets ${assetPct}%`;
-    document.getElementById('nwBarDebtsLabel').textContent  = `Debt ${debtPct}%`;
+    const assetPct = pctOf(portfolioVal + freeCash, barTotal);
+    const debtPct  = pctOf(totalDebt, barTotal);
+    document.getElementById('nwBarAssets').style.width = clampW(assetPct) + '%';
+    document.getElementById('nwBarDebts').style.width  = clampW(debtPct)  + '%';
+    document.getElementById('nwBarAssetsLabel').textContent = 'Assets ' + fmtP(assetPct);
+    document.getElementById('nwBarDebtsLabel').textContent  = 'Debt ' + fmtP(debtPct);
 }
 
 // ── Navigation ───────────────────────────────────────
@@ -1333,12 +1847,14 @@ function showPage(id,btn){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
+    if(btn) btn.classList.add('active');
     if(id==='home')   updateHome();
+    if(id==='budget') renderBudget();
     if(id==='income') renderExtraIncome();
     if(id==='invest') renderInvest();
     if(id==='debt')   renderDebt();
     if(id==='wealth') calculateWealth();
+    window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ── Modals ────────────────────────────────────────────
@@ -1348,32 +1864,197 @@ function closeIfOverlay(e,id){ if(e.target===document.getElementById(id)) closeM
 
 // ── Settings ──────────────────────────────────────────
 function openSettingsModal(){
-    document.getElementById('s_wage').value  = hourlyWage;
-    document.getElementById('s_hours').value = hoursPerWeek;
+    document.getElementById('s_wage').value    = hourlyWage || '';
+    document.getElementById('s_hours').value   = hoursPerWeek || '';
+    document.getElementById('s_dayrate').value = dayRate || '';
+    document.getElementById('s_days').value    = daysPerWeek || '';
+    document.getElementById('s_salary').value  = salaryAmount || '';
+    document.getElementById('s_flmanual').value= flManual || '';
+    document.getElementById('s_tax').value     = takeHomePct;
+    document.getElementById('s_rn').value      = ruleNeeds;
+    document.getElementById('s_rw').value      = ruleWants;
+    document.getElementById('s_rs').value      = ruleSave;
+    document.getElementById('e_month').value   = new Date().toISOString().slice(0,7);
+    syncModeUI();
+    renderEarnings();
     previewSettings();
     openModal('settingsModal');
 }
-function previewSettings(){
-    const w=parseFloat(document.getElementById('s_wage').value)||0;
-    const h=parseFloat(document.getElementById('s_hours').value)||0;
-    if(!w||!h){['sp_weekly','sp_monthly','sp_inv','sp_annual'].forEach(i=>document.getElementById(i).textContent='—');return;}
-    const m=Math.round(w*h*52/12*TAX);
-    document.getElementById('sp_weekly').textContent  = fmt(Math.round(w*h*TAX));
-    document.getElementById('sp_monthly').textContent = fmt(m);
-    document.getElementById('sp_inv').textContent     = fmt(Math.round((m+extraMonthly())*INV_P));
-    document.getElementById('sp_annual').textContent  = fmt(Math.round(w*h*52*TAX));
+
+function syncModeUI(){
+    document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===incomeMode));
+    document.querySelectorAll('.mode-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel_'+incomeMode).classList.add('active');
+    document.getElementById('sal_monthly').classList.toggle('active', salaryPeriod==='monthly');
+    document.getElementById('sal_annual').classList.toggle('active', salaryPeriod==='annual');
+    document.getElementById('salLabel').textContent = salaryPeriod==='annual' ? 'Gross Annual Salary ($)' : 'Gross Monthly Salary ($)';
+    document.querySelectorAll('.basis-btn').forEach(b=>b.classList.toggle('active', b.dataset.basis===flBasis));
+    document.getElementById('basisManualWrap').style.display = flBasis==='manual' ? 'block' : 'none';
+    document.getElementById('earnListWrap').style.display = flBasis==='manual' && !earnings.length ? 'none' : 'block';
+    document.getElementById('taxHint').textContent = incomeMode==='freelance'
+        ? 'What you keep after self-employment tax, business expenses and set-asides.'
+        : 'Percentage of gross pay you keep after taxes and deductions.';
 }
+
+function setIncomeMode(mode){
+    incomeMode = mode; LS.set('wf_mode', mode);
+    syncModeUI(); previewSettings();
+}
+function setSalaryPeriod(pd){
+    salaryPeriod = pd; LS.set('wf_salperiod', pd);
+    syncModeUI(); previewSettings();
+}
+function setBasis(b){
+    flBasis = b; LS.set('wf_flbasis', b);
+    syncModeUI(); previewSettings();
+}
+
+function addEarning(){
+    const month  = document.getElementById('e_month').value;
+    const amount = parseFloat(document.getElementById('e_amount').value);
+    if(!month || !amount || amount <= 0) return;
+    earnings = earnings.filter(e => e.month !== month);
+    earnings.push({id:Date.now(), month, amount});
+    earnings.sort((a,b)=> b.month.localeCompare(a.month));
+    LS.set('wf_earnings', earnings);
+    document.getElementById('e_amount').value = '';
+    renderEarnings(); previewSettings();
+}
+function removeEarning(id){
+    earnings = earnings.filter(e => e.id !== id);
+    LS.set('wf_earnings', earnings);
+    renderEarnings(); previewSettings();
+}
+
+function monthName(m){
+    const [y,mo] = m.split('-');
+    return new Date(+y, +mo-1, 1).toLocaleDateString('en-US',{month:'short', year:'numeric'});
+}
+
+function renderEarnings(){
+    const s = earningStats();
+    document.getElementById('stabBox').innerHTML = `
+        <div class="stab-tile"><div class="stab-lbl">Lowest</div><div class="stab-val c-red">${s.n?fmt(s.lowest):'—'}</div></div>
+        <div class="stab-tile"><div class="stab-lbl">Average</div><div class="stab-val c-ice">${s.n?fmt(s.average):'—'}</div></div>
+        <div class="stab-tile"><div class="stab-lbl">Highest</div><div class="stab-val c-green">${s.n?fmt(s.highest):'—'}</div></div>`;
+
+    const el = document.getElementById('earnList');
+    if(!earnings.length){
+        el.innerHTML = `<div style="padding:16px 0;text-align:center;font-size:.68rem;color:var(--dim);line-height:1.7;">No months logged yet.<br>Add a few to see your range.</div>`;
+        return;
+    }
+    el.innerHTML = earnings.map(e=>`
+        <div class="earn-row">
+            <span class="earn-month">${monthName(e.month)}</span>
+            <span class="earn-bar"><span class="earn-fill" style="width:${clampW(pctOf(e.amount, s.highest))}%"></span></span>
+            <span class="earn-amt">${fmt(e.amount)}</span>
+            <button class="row-action" style="margin:0;" onclick="removeEarning(${e.id})">✕</button>
+        </div>`).join('');
+}
+
+function previewSettings(){
+    const tx = parseFloat(document.getElementById('s_tax').value);
+    const txv = (isNaN(tx)||tx<=0) ? takeHomePct : tx;
+    const rn = parseFloat(document.getElementById('s_rn').value);
+    const rw = parseFloat(document.getElementById('s_rw').value);
+    const rs = parseFloat(document.getElementById('s_rs').value);
+    const sum = (isNaN(rn)?0:rn)+(isNaN(rw)?0:rw)+(isNaN(rs)?0:rs);
+    const hintEl = document.getElementById('ruleSumHint');
+    if(Math.round(sum) === 100){
+        hintEl.textContent = 'Totals 100% ✓'; hintEl.style.color = 'var(--green)';
+    } else {
+        hintEl.textContent = 'Totals ' + fmtP(sum,0) + ' — must be 100% to save.'; hintEl.style.color = 'var(--red)';
+    }
+    const rsv = isNaN(rs)?ruleSave:rs;
+
+    const cfg = {
+        mode: incomeMode,
+        wage:  parseFloat(document.getElementById('s_wage').value)||0,
+        hours: parseFloat(document.getElementById('s_hours').value)||0,
+        dayRate: parseFloat(document.getElementById('s_dayrate').value)||0,
+        daysPerWeek: parseFloat(document.getElementById('s_days').value)||0,
+        salaryAmount: parseFloat(document.getElementById('s_salary').value)||0,
+        salaryPeriod,
+        flBasis,
+        flManual: parseFloat(document.getElementById('s_flmanual').value)||0
+    };
+
+    // Freelance basis hint
+    const s = earningStats();
+    const bh = document.getElementById('basisHint');
+    if(flBasis === 'manual'){
+        bh.textContent = 'Budgeting on a figure you set yourself.';
+        bh.style.color = 'var(--dim)';
+    } else if(!s.n){
+        bh.textContent = 'Log at least one month to use this option.';
+        bh.style.color = 'var(--ember)';
+    } else if(flBasis === 'lowest'){
+        bh.textContent = 'Budgeting on your worst month (' + fmt(s.lowest) + '). Anything above it is surplus.';
+        bh.style.color = 'var(--green)';
+    } else {
+        bh.textContent = 'Budgeting on the average of ' + s.n + ' month' + (s.n===1?'':'s') + '. Your range swings ' + fmtP(s.spread,0) + ' — lean months will fall short.';
+        bh.style.color = s.spread > 35 ? 'var(--ember)' : 'var(--dim)';
+    }
+
+    const grossM = monthlyGross(cfg);
+    if(!grossM){ ['sp_weekly','sp_monthly','sp_inv','sp_annual'].forEach(i=>document.getElementById(i).textContent='—'); return; }
+    const m = Math.round(grossM * (txv/100));
+    const t = m + extraMonthly();
+    document.getElementById('sp_weekly').textContent  = fmt(Math.round(m*12/52));
+    document.getElementById('sp_monthly').textContent = fmt(m);
+    document.getElementById('sp_inv').textContent     = fmt(Math.round(t*(rsv/100))) + ' · ' + fmtP(rsv,0);
+    document.getElementById('sp_annual').textContent  = fmt(Math.round(m*12));
+}
+
 function applySettings(){
-    const w=parseFloat(document.getElementById('s_wage').value);
-    const h=parseFloat(document.getElementById('s_hours').value);
-    if(!w||w<=0||!h||h<=0) return;
-    hourlyWage=w; hoursPerWeek=h;
-    LS.set('wf_wage',w); LS.set('wf_hours',h);
-    updatePill(); updateHome(); calculateWealth();
+    const tx = parseFloat(document.getElementById('s_tax').value);
+    const rn = parseFloat(document.getElementById('s_rn').value);
+    const rw = parseFloat(document.getElementById('s_rw').value);
+    const rs = parseFloat(document.getElementById('s_rs').value);
+
+    const wage  = parseFloat(document.getElementById('s_wage').value);
+    const hours = parseFloat(document.getElementById('s_hours').value);
+    const dr    = parseFloat(document.getElementById('s_dayrate').value);
+    const dpw   = parseFloat(document.getElementById('s_days').value);
+    const sal   = parseFloat(document.getElementById('s_salary').value);
+    const flm   = parseFloat(document.getElementById('s_flmanual').value);
+
+    if(!isNaN(wage) && wage>0) { hourlyWage=wage;  LS.set('wf_wage',wage); }
+    if(!isNaN(hours)&& hours>0){ hoursPerWeek=hours; LS.set('wf_hours',hours); }
+    if(!isNaN(dr)  && dr>0)    { dayRate=dr;       LS.set('wf_dayrate',dr); }
+    if(!isNaN(dpw) && dpw>0)   { daysPerWeek=dpw;  LS.set('wf_days',dpw); }
+    if(!isNaN(sal) && sal>0)   { salaryAmount=sal; LS.set('wf_salary',sal); }
+    if(!isNaN(flm) && flm>=0)  { flManual=flm;     LS.set('wf_flmanual',flm); }
+    if(!isNaN(tx)  && tx>0 && tx<=100){ takeHomePct=tx; LS.set('wf_tax',tx); }
+    if(![rn,rw,rs].some(isNaN) && Math.round(rn+rw+rs)===100){
+        ruleNeeds=rn; ruleWants=rw; ruleSave=rs;
+        LS.set('wf_rule_needs',rn); LS.set('wf_rule_wants',rw); LS.set('wf_rule_save',rs);
+    }
+    if(baseSalary() <= 0) return; // nothing usable entered for this mode
+
+    updatePill(); updateHome(); renderBudget(); calculateWealth(); renderInvest(); renderDebt();
     closeModal('settingsModal');
 }
+
+function resetRule(){
+    document.getElementById('s_rn').value = 50;
+    document.getElementById('s_rw').value = 30;
+    document.getElementById('s_rs').value = 20;
+    previewSettings();
+}
 function updatePill(){
-    document.getElementById('wagePill').textContent='$'+hourlyWage.toFixed(2)+'/hr · '+hoursPerWeek+'h ✎';
+    let txt;
+    switch(incomeMode){
+        case 'daily':
+            txt = '$'+dayRate.toFixed(2)+'/day · '+daysPerWeek+'d/wk'; break;
+        case 'salary':
+            txt = fmt(salaryAmount)+(salaryPeriod==='annual'?'/yr':'/mo'); break;
+        case 'freelance':
+            txt = 'Freelance · '+(flBasis==='manual'?'set':flBasis)+' · '+fmt(baseSalary()); break;
+        default:
+            txt = '$'+hourlyWage.toFixed(2)+'/hr · '+hoursPerWeek+'h';
+    }
+    document.getElementById('wagePill').textContent = txt+' ✎';
 }
 
 // ── Extra income ──────────────────────────────────────
@@ -1400,16 +2081,28 @@ function removeExtraIncome(id){
     renderExtraIncome(); updateHome(); calculateWealth();
 }
 function renderExtraIncome(){
-    const total=extraMonthly();
-    document.getElementById('extraTotalDisplay').textContent=fmt(total);
+    const r = getRatios();
+    document.getElementById('extraTotalDisplay').textContent=fmt(r.extra);
     const n=extraIncomes.length;
-    document.getElementById('extraCountLabel').textContent=n===0?'No sources logged':n+(n===1?' source logged':' sources logged');
+    document.getElementById('extraCountLabel').textContent = n===0
+        ? 'No sources logged'
+        : n+(n===1?' source':' sources')+' · '+fmtP(r.extraPct)+' of total income';
+
+    document.getElementById('incBarBase').style.width  = clampW(r.total>0?r.basePct:100)+'%';
+    document.getElementById('incBarExtra').style.width = clampW(r.extraPct)+'%';
+    document.getElementById('incBaseLbl').textContent  = 'Base '+(r.total>0?fmtP(r.basePct):'—');
+    document.getElementById('incExtraLbl').textContent = 'Extra '+(r.total>0?fmtP(r.extraPct):'—');
+
     const list=document.getElementById('extraIncomeList');
     if(!n){list.innerHTML=`<div class="empty-state"><div class="empty-icon">💰</div><div class="empty-text">No extra income logged.<br>Tap "+ Add" to register a source.</div></div>`;return;}
     list.innerHTML=extraIncomes.map(e=>`
         <div class="list-row">
             <div class="row-indicator ri-ice"></div>
-            <div class="row-info"><div class="row-name">${e.name}</div><div class="row-sub c-ice">${FREQ_LABEL[e.freq]}</div></div>
+            <div class="row-info">
+                <div class="row-name">${e.name}</div>
+                <div class="row-sub c-ice">${FREQ_LABEL[e.freq]}</div>
+                <div class="pct-chip">${fmtP(pctOf(e.monthly, r.total))} of income · ${fmtP(pctOf(e.monthly, r.extra))} of extra</div>
+            </div>
             <div class="row-meta">
                 <div class="row-value c-ice">${fmt(e.monthly)}/mo</div>
                 <div style="font-size:.6rem;color:var(--dim);margin-top:2px;">${e.freq!=='monthly'?fmt(e.amount)+' '+FREQ_LABEL[e.freq].toLowerCase():''}</div>
@@ -1419,6 +2112,19 @@ function renderExtraIncome(){
 }
 
 // ── Holdings ──────────────────────────────────────────
+function previewHolding(){
+    const cost=parseFloat(document.getElementById('h_cost').value)||0;
+    const cur =parseFloat(document.getElementById('h_current').value)||0;
+    const box=document.getElementById('holdingPreviewBox');
+    if(!cost||!cur){box.style.display='none';return;}
+    box.style.display='block';
+    const g=cur-cost, gp=pctOf(g,cost);
+    const port=holdings.reduce((s,h)=>s+h.current,0)+cur;
+    document.getElementById('holdingPreviewContent').innerHTML=`
+        <div class="calc-result-row"><span class="calc-result-label">Gain / loss</span><span class="calc-result-value" style="color:${g>=0?'var(--green)':'var(--red)'}">${fmtC(g)}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Return</span><span class="calc-result-value" style="color:${g>=0?'var(--green)':'var(--red)'}">${fmtPS(gp,2)}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Weight in portfolio</span><span class="calc-result-value">${fmtP(pctOf(cur,port))}</span></div>`;
+}
 function applyHolding(){
     const name    = document.getElementById('h_name').value.trim();
     const type    = document.getElementById('h_type').value;
@@ -1428,34 +2134,56 @@ function applyHolding(){
     holdings.push({id:Date.now(),name,type,cost,current:current||cost});
     LS.set('wf_holdings',holdings);
     ['h_name','h_cost','h_current'].forEach(i=>document.getElementById(i).value='');
-    renderInvest(); updateNetWorth();
+    document.getElementById('holdingPreviewBox').style.display='none';
+    renderInvest(); updateNetWorth(); renderRuleSummary();
     closeModal('holdingModal');
 }
 function removeHolding(id){
     holdings=holdings.filter(h=>h.id!==id);
     LS.set('wf_holdings',holdings);
-    renderInvest(); updateNetWorth();
+    renderInvest(); updateNetWorth(); renderRuleSummary();
 }
 function openUpdateModal(id){
     updateTargetId=id;
     const h=holdings.find(h=>h.id===id); if(!h) return;
-    document.getElementById('update_sub').textContent=`Updating: ${h.name}`;
+    document.getElementById('update_sub').textContent=`Updating: ${h.name} · cost basis ${fmt(h.cost)}`;
     document.getElementById('u_current').value=h.current;
+    previewUpdate();
     openModal('updateModal');
+}
+function previewUpdate(){
+    const h=holdings.find(h=>h.id===updateTargetId);
+    const val=parseFloat(document.getElementById('u_current').value);
+    const el=document.getElementById('updatePreviewLine');
+    if(!h||!val||val<=0){el.textContent='—';return;}
+    const g=val-h.cost, gp=pctOf(g,h.cost);
+    const chg=pctOf(val-h.current,h.current);
+    el.innerHTML=`Return vs cost: <span style="color:${g>=0?'var(--green)':'var(--red)'}">${fmtPS(gp,2)}</span> · change from last value: <span style="color:${chg>=0?'var(--green)':'var(--red)'}">${fmtPS(chg,2)}</span>`;
 }
 function applyUpdate(){
     const val=parseFloat(document.getElementById('u_current').value);
     if(!val||val<=0) return;
     const h=holdings.find(h=>h.id===updateTargetId);
     if(h){ h.current=val; LS.set('wf_holdings',holdings); }
-    renderInvest(); updateNetWorth(); closeModal('updateModal');
+    renderInvest(); updateNetWorth(); renderRuleSummary(); closeModal('updateModal');
 }
 
 // ── Contributions ─────────────────────────────────────
 function openContribModal(){
     const today=new Date().toISOString().split('T')[0];
     document.getElementById('c_date').value=today;
+    previewContrib();
     openModal('contribModal');
+}
+function previewContrib(){
+    const amt=parseFloat(document.getElementById('c_amount').value)||0;
+    const el=document.getElementById('contribPreviewLine');
+    const target=getProjectionContrib();
+    const r=getRatios();
+    if(!amt){el.textContent='—';return;}
+    const vsTarget=pctOf(amt,target);
+    const vsIncome=pctOf(amt,r.total);
+    el.innerHTML=`<span style="color:${amt>=target?'var(--green)':'var(--ember)'}">${fmtP(vsTarget)}</span> of your ${fmt(target)} monthly target · ${fmtP(vsIncome)} of monthly income`;
 }
 function applyContrib(){
     const name  = document.getElementById('c_name').value.trim();
@@ -1465,31 +2193,43 @@ function applyContrib(){
     contribs.unshift({id:Date.now(),name,amount,date});
     LS.set('wf_contribs',contribs);
     ['c_name','c_amount'].forEach(i=>document.getElementById(i).value='');
-    renderInvest(); renderContribProgress(); closeModal('contribModal');
+    renderInvest(); renderContribProgress(); renderRuleSummary(); renderBudget(); closeModal('contribModal');
 }
 function removeContrib(id){
     contribs=contribs.filter(c=>c.id!==id);
     LS.set('wf_contribs',contribs);
-    renderInvest(); renderContribProgress();
+    renderInvest(); renderContribProgress(); renderRuleSummary(); renderBudget();
 }
 
 // ── Render Invest ─────────────────────────────────────
 function renderInvest(){
-    const totalCost    = holdings.reduce((s,h)=>s+h.cost,0);
-    const totalCurrent = holdings.reduce((s,h)=>s+h.current,0);
-    const gain         = totalCurrent-totalCost;
-    const gainPct      = totalCost>0?(gain/totalCost*100).toFixed(2):0;
-    const totalC       = contribs.reduce((s,c)=>s+c.amount,0);
-    const inv          = inversion();
+    const r = getRatios();
+    const totalCost=r.cost, totalCurrent=r.portfolio;
+    const gain=totalCurrent-totalCost;
+    const gainPct=r.portfolioReturn;
+    const totalC=r.contribTotal;
+    const inv=r.inv;
 
     document.getElementById('portfolioValue').textContent = fmt(totalCurrent);
     document.getElementById('portfolioCost').textContent  = fmt(totalCost);
-    document.getElementById('portfolioGain').textContent  = fmt(gain);
+    document.getElementById('portfolioGain').textContent  = fmtC(gain);
     document.getElementById('portfolioGain').style.color  = gain>=0?'var(--green)':'var(--red)';
-    document.getElementById('portfolioGainLabel').textContent = holdings.length===0?'No assets logged':`${gain>=0?'Gain':'Loss'} of ${Math.abs(gainPct)}% · ${holdings.length} asset(s)`;
+    document.getElementById('portfolioReturnPct').textContent = totalCost>0?fmtPS(gainPct,2):'—';
+    document.getElementById('portfolioReturnPct').style.color = gain>=0?'var(--green)':'var(--red)';
+    document.getElementById('portfolioGainLabel').textContent = holdings.length===0
+        ? 'No assets logged'
+        : `${gain>=0?'Gain':'Loss'} of ${fmtP(Math.abs(gainPct),2)} on cost basis · ${holdings.length} asset(s)`;
+
     document.getElementById('totalContrib').textContent = fmt(totalC);
+    document.getElementById('totalContribPct').textContent = totalCurrent>0
+        ? fmtP(r.contribCoverage)+' of value' : '—';
     document.getElementById('suggestedInv').textContent = fmt(inv);
+    document.getElementById('suggestedInvPct').textContent = r.total>0?ruleSave+'% of income':'—';
     document.getElementById('holdingCount').textContent = holdings.length;
+
+    const weights = holdings.map(h=>({name:h.name, w:pctOf(h.current,totalCurrent)})).sort((a,b)=>b.w-a.w);
+    document.getElementById('topWeightPct').textContent = weights.length
+        ? 'Top: '+fmtP(weights[0].w) : '—';
 
     const hList=document.getElementById('holdingList');
     if(!holdings.length){
@@ -1497,7 +2237,9 @@ function renderInvest(){
     } else {
         hList.innerHTML=holdings.map(h=>{
             const g=h.current-h.cost;
-            const gp=h.cost>0?(g/h.cost*100).toFixed(1):0;
+            const gp=pctOf(g,h.cost);
+            const weight=pctOf(h.current,totalCurrent);
+            const gainShare=pctOf(g,gain);
             const cls=g>0?'up':g<0?'down':'flat';
             const ri=h.type==='etf'?'ri-ember':h.type==='stock'?'ri-ice':h.type==='crypto'?'ri-lime':h.type==='bond'?'ri-green':'ri-dim';
             return `<div class="list-row">
@@ -1505,11 +2247,13 @@ function renderInvest(){
                 <div class="row-info">
                     <div class="row-name">${h.name}</div>
                     <div class="row-sub c-dim">${ASSET_LABEL[h.type]||'Other'}</div>
-                    <div class="inv-badge ${cls}">${g>=0?'▲':'▼'} ${Math.abs(gp)}%&nbsp;&nbsp;${fmtC(g)}</div>
+                    <div class="inv-badge ${cls}">${g>=0?'▲':'▼'} ${fmtP(Math.abs(gp),2)}&nbsp;&nbsp;${fmtC(g)}</div>
+                    <div class="pct-chip">${fmtP(weight)} of portfolio${gain!==0?' · '+fmtP(Math.abs(gainShare))+' of total P/L':''}</div>
                 </div>
                 <div class="row-meta">
                     <div class="row-value">${fmt(h.current)}</div>
-                    <div style="font-size:.62rem;color:var(--dim);margin-top:2px;">Cost: ${fmt(h.cost)}</div>
+                    <div class="row-pct">${fmtP(weight)}</div>
+                    <div style="font-size:.6rem;color:var(--dim);margin-top:2px;">Cost: ${fmt(h.cost)}</div>
                     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
                         <button class="row-action" style="color:var(--ice);" onclick="openUpdateModal(${h.id})">Update</button>
                         <button class="row-action" onclick="removeHolding(${h.id})">Remove</button>
@@ -1523,9 +2267,10 @@ function renderInvest(){
         document.getElementById('allocCard').style.display='block';
         const byType={};
         holdings.forEach(h=>{ byType[h.type]=(byType[h.type]||0)+h.current; });
-        const labels=Object.keys(byType).map(t=>ASSET_LABEL[t]||t);
+        const keys=Object.keys(byType);
+        const labels=keys.map(t=>ASSET_LABEL[t]||t);
         const data=Object.values(byType);
-        const colors=Object.keys(byType).map(t=>ASSET_COLOR[t]||'#5a5750');
+        const colors=keys.map(t=>ASSET_COLOR[t]||'#5a5750');
         const ctx2=document.getElementById('allocChart').getContext('2d');
         if(myAllocChart) myAllocChart.destroy();
         myAllocChart=new Chart(ctx2,{
@@ -1535,10 +2280,23 @@ function renderInvest(){
                 cutout:'65%', maintainAspectRatio:false,
                 plugins:{
                     legend:{display:true,position:'bottom',labels:{color:'#5a5750',font:{family:'JetBrains Mono',size:10,weight:'400'},padding:12,boxWidth:10,boxHeight:10,borderRadius:0}},
-                    tooltip:{backgroundColor:'#141413',borderColor:'rgba(255,255,255,0.07)',borderWidth:1,titleColor:'#e8e4dc',bodyColor:'#5a5750',padding:10,callbacks:{label:c=>' '+fmt(c.parsed)}}
+                    tooltip:{backgroundColor:'#141413',borderColor:'rgba(255,255,255,0.07)',borderWidth:1,titleColor:'#e8e4dc',bodyColor:'#5a5750',padding:10,
+                        callbacks:{label:c=>' '+fmt(c.parsed)+'  ·  '+fmtP(pctOf(c.parsed,totalCurrent))}}
                 }
             }
         });
+        document.getElementById('allocList').innerHTML = keys
+            .map((t,i)=>({t,v:data[i],c:colors[i]}))
+            .sort((a,b)=>b.v-a.v)
+            .map(o=>{
+                const w=pctOf(o.v,totalCurrent);
+                return `<div class="alloc-line">
+                    <span class="legend-dot" style="background:${o.c};"></span>
+                    <span style="flex:1;font-size:.74rem;color:var(--text);">${ASSET_LABEL[o.t]||o.t}</span>
+                    <span style="flex:1.2;height:4px;background:var(--dim2);overflow:hidden;"><span style="display:block;height:100%;width:${clampW(w)}%;background:${o.c};"></span></span>
+                    <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:${o.c};min-width:52px;text-align:right;">${fmtP(w)}</span>
+                </div>`;
+            }).join('');
     } else {
         document.getElementById('allocCard').style.display='none';
     }
@@ -1547,11 +2305,15 @@ function renderInvest(){
     if(!contribs.length){
         cList.innerHTML=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No contributions logged.<br>Tap "+ Log" to track history.</div></div>`;
     } else {
+        const target=getProjectionContrib();
         cList.innerHTML=contribs.map(c=>{
             const d=c.date?new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}):'';
+            const vs=pctOf(c.amount,target);
             return `<div class="list-row">
                 <div class="row-indicator ri-green"></div>
-                <div class="row-info"><div class="row-name">${c.name}</div><div class="contrib-date">${d}</div></div>
+                <div class="row-info"><div class="row-name">${c.name}</div><div class="contrib-date">${d}</div>
+                    <div class="pct-chip">${fmtP(vs)} of monthly target${totalC>0?' · '+fmtP(pctOf(c.amount,totalC))+' of all contributions':''}</div>
+                </div>
                 <div class="row-meta">
                     <div class="row-value c-green">${fmt(c.amount)}</div>
                     <button class="row-action" onclick="removeContrib(${c.id})">Remove</button>
@@ -1562,6 +2324,26 @@ function renderInvest(){
 }
 
 // ── Budget ────────────────────────────────────────────
+function previewCategory(){
+    const amt  = parseFloat(document.getElementById('catAmount').value)||0;
+    const type = document.getElementById('catType').value;
+    const el   = document.getElementById('catPreviewLine');
+    const bg   = getBudget();
+    if(!bg.income){ el.textContent = 'Set your income in the top bar to see how this fits the rule.'; el.style.color='var(--dim)'; return; }
+    if(!amt){ el.textContent='—'; el.style.color='var(--dim)'; return; }
+    const b = bg.byKey[type];
+    const after = b.used + amt;
+    const afterPct = pctOf(after, b.allocated);
+    const over = after - b.allocated;
+    const ok = type==='savings' ? true : after <= b.allocated;
+    el.style.color = ok ? 'var(--green)' : 'var(--red)';
+    el.innerHTML = `Uses ${fmtP(pctOf(amt,b.allocated),0)} of your ${b.label.toLowerCase()} budget. `
+        + (type==='savings'
+            ? `That bucket would reach ${fmtP(afterPct,0)} of its ${fmt(b.allocated)} target.`
+            : over > 0
+                ? `⚠ That would push ${b.label.toLowerCase()} to ${fmtP(afterPct,0)} — ${fmt(over)} over budget.`
+                : `${b.label} would sit at ${fmtP(afterPct,0)}, leaving ${fmt(b.allocated-after)}.`);
+}
 function addCategory(){
     const name=document.getElementById('catName').value.trim();
     const amount=parseFloat(document.getElementById('catAmount').value);
@@ -1572,58 +2354,148 @@ function addCategory(){
         renderBudget(); updateHome();
         document.getElementById('catName').value='';
         document.getElementById('catAmount').value='';
+        document.getElementById('catPreviewLine').textContent='—';
+        document.getElementById('catPreviewLine').style.color='var(--dim)';
     }
 }
 function renderBudget(){
+    const bg = getBudget();
+
+    document.getElementById('budIncome').textContent = fmt(bg.income);
+    document.getElementById('budRuleLine').textContent = bg.income
+        ? 'Split by the '+ruleNeeds+'/'+ruleWants+'/'+ruleSave+' rule · '+fmt(bg.unallocated>=0?bg.unallocated:0)+' still unassigned'
+        : 'Set your income to build the budget';
+    document.getElementById('triNeeds').style.width = ruleNeeds+'%';
+    document.getElementById('triWants').style.width = ruleWants+'%';
+    document.getElementById('triSave').style.width  = ruleSave+'%';
+    document.getElementById('triNeedsLbl').textContent = 'Needs '+fmt(bg.byKey.needs.allocated);
+    document.getElementById('triWantsLbl').textContent = 'Wants '+fmt(bg.byKey.wants.allocated);
+    document.getElementById('triSaveLbl').textContent  = 'Savings '+fmt(bg.byKey.savings.allocated);
+
+    document.getElementById('bucketCards').innerHTML = bg.buckets.map(b=>{
+        const items = [
+            ...b.autoItems.map(x=>({...x, auto:true})),
+            ...categories.filter(c=>c.type===b.key).sort((x,y)=>y.amount-x.amount)
+        ];
+        const footLeft = b.key==='savings'
+            ? (b.diff <= 0 ? '▲ '+fmt(Math.abs(b.diff))+' above target' : '▼ '+fmt(b.diff)+' short of target')
+            : (b.diff >= 0 ? fmt(b.diff)+' left to spend' : '⚠ '+fmt(Math.abs(b.diff))+' over budget');
+        return `<div class="bucket" style="border-left-color:${b.color};">
+            <div class="bucket-head">
+                <div style="flex:1;">
+                    <div class="bucket-name" style="color:${b.color};">${b.label}</div>
+                    <div class="bucket-rule">${b.pct}% of income · ${fmt(b.allocated)} allocated</div>
+                </div>
+                <div class="bucket-status" style="color:${b.color};background:rgba(${b.rgb},0.12);">${b.state}</div>
+            </div>
+            <div class="bucket-nums">
+                <div class="bucket-used" style="color:${b.color};">${fmt(b.used)}</div>
+                <div class="bucket-alloc">${bg.income?fmtP(b.usedPct,0)+' of '+fmt(b.allocated):'—'}</div>
+            </div>
+            <div class="bucket-track">
+                <div class="bucket-fill" style="width:${clampW(b.usedPct)}%;background:${b.color};"></div>
+                ${b.usedPct>100?'<div class="bucket-marker" style="left:100%"></div>':''}
+            </div>
+            <div class="bucket-foot">
+                <span style="color:${b.color};">${bg.income?footLeft:'—'}</span>
+                <span style="color:var(--dim);">${b.pct}% target</span>
+            </div>
+            ${items.length ? `<div class="bucket-items">${items.map(i=>`
+                <div class="bucket-item">
+                    <span style="${i.auto?'font-style:italic;':''}">${i.name}${i.auto?' (auto)':''}</span>
+                    <span style="color:var(--text);">${fmt(i.amount)}</span>
+                </div>`).join('')}</div>` : `<div class="bucket-items"><div class="bucket-item"><span>Nothing assigned yet</span><span>—</span></div></div>`}
+        </div>`;
+    }).join('');
+
     const list=document.getElementById('categoryList');
-    if(!categories.length){list.innerHTML=`<div class="empty-state"><div class="empty-icon">📄</div><div class="empty-text">No expenses logged.<br>Add your first entry above.</div></div>`;return;}
-    list.innerHTML=categories.map(c=>`
-        <div class="list-row">
-            <div class="row-indicator ${c.type==='needs'?'ri-ember':'ri-ice'}"></div>
-            <div class="row-info"><div class="row-name">${c.name}</div><div class="row-sub ${c.type==='needs'?'c-ember':'c-ice'}">${c.type==='needs'?'Fixed':'Discretionary'}</div></div>
-            <div class="row-meta"><div class="row-value">${fmt(c.amount)}</div><button class="row-action" onclick="removeCat(${c.id})">Remove</button></div>
-        </div>`).join('');
+    if(!categories.length){list.innerHTML=`<div class="empty-state"><div class="empty-icon">📄</div><div class="empty-text">No budget items yet.<br>Add your first entry above.</div></div>`;return;}
+    const RI={needs:'ri-ember',wants:'ri-ice',savings:'ri-green'};
+    const CL={needs:'c-ember',wants:'c-ice',savings:'c-green'};
+    const LB={needs:'Needs',wants:'Wants',savings:'Savings'};
+    list.innerHTML=[...categories].sort((a,b)=>b.amount-a.amount).map(c=>{
+        const b=bg.byKey[c.type]||bg.byKey.needs;
+        return `<div class="list-row">
+            <div class="row-indicator ${RI[c.type]||'ri-dim'}"></div>
+            <div class="row-info">
+                <div class="row-name">${c.name}</div>
+                <div class="row-sub ${CL[c.type]||'c-dim'}">${LB[c.type]||'Needs'}</div>
+                <div class="pct-chip">${b.allocated>0?fmtP(pctOf(c.amount,b.allocated),0)+' of the '+LB[c.type].toLowerCase()+' budget':'set income to compare'}</div>
+            </div>
+            <div class="row-meta">
+                <div class="row-value">${fmt(c.amount)}</div>
+                <button class="row-action" onclick="removeCat(${c.id})">Remove</button>
+            </div>
+        </div>`;
+    }).join('');
 }
 function removeCat(id){ categories=categories.filter(c=>c.id!==id); LS.set('wf_cats',categories); renderBudget(); updateHome(); }
 
 // ── Home ──────────────────────────────────────────────
 function updateHome(){
-    const base=baseSalary(),extra=extraMonthly(),total=base+extra,inv=inversion();
-    const spent=categories.reduce((s,c)=>s+c.amount,0);
-    const remain=total-spent-inv;
-    const pct=total>inv?Math.min(100,Math.round(spent/(total-inv)*100)):0;
-    document.getElementById('monthlyTotal').textContent   = fmt(total);
-    document.getElementById('totalLabel').textContent     = fmt(total)+' total';
-    document.getElementById('inversionDisplay').textContent= fmt(inv);
-    document.getElementById('totalSpent').textContent     = fmt(spent);
-    document.getElementById('remainingCash').textContent  = fmt(remain);
-    document.getElementById('baseDisplay').textContent    = fmt(base);
-    document.getElementById('extraDisplay').textContent   = fmt(extra);
-    document.getElementById('usageBar').style.width       = pct+'%';
-    document.getElementById('usagePct').textContent       = pct+'% of budget used';
-    document.getElementById('incomeBreakdown').textContent= extra>0?'Base salary + '+extraIncomes.length+' additional source(s)':'Base salary · no additional income';
+    const r = getRatios();
+    const total=r.total, inv=r.inv, spent=r.spent, remain=r.free;
+    const pct = r.expenseRatio;
+
+    document.getElementById('monthlyTotal').textContent    = fmt(total);
+    document.getElementById('totalLabel').textContent       = fmt(total)+' = 100%';
+    document.getElementById('inversionDisplay').textContent = fmt(inv);
+    document.getElementById('invTileLabel').textContent     = 'Savings ('+ruleSave+'%)';
+    document.getElementById('inversionPct').textContent     = total>0?'Target for the savings bucket':'—';
+    document.getElementById('totalSpent').textContent       = fmt(spent);
+    document.getElementById('totalSpentPct').textContent    = total>0?fmtP(r.expenseRatio)+' of income':'—';
+    document.getElementById('remainingCash').textContent    = fmt(remain);
+    document.getElementById('remainingSub').textContent     = total>0
+        ? fmtP(r.freePct)+' of income left after expenses & investment'
+        : 'After expenses & scheduled investment';
+    document.getElementById('baseDisplay').textContent      = fmt(r.base);
+    document.getElementById('basePct').textContent          = total>0?fmtP(r.basePct)+' of income':'—';
+    document.getElementById('extraDisplay').textContent     = fmt(r.extra);
+    document.getElementById('extraPct').textContent         = total>0?fmtP(r.extraPct)+' of income':'—';
+    document.getElementById('usageBar').style.width         = clampW(pct)+'%';
+    document.getElementById('usagePct').textContent         = total>0?fmtP(pct)+' of income spent':'0.0% of income spent';
+    const modeTxt = incomeMode==='freelance'
+        ? 'Freelance · budgeted on '+(flBasis==='manual'?'a set figure':flBasis+' month')
+        : MODE_LABEL[incomeMode] + ' pay';
+    document.getElementById('incomeBreakdown').textContent  = r.extra>0
+        ? modeTxt+' '+fmtP(r.basePct)+' + '+extraIncomes.length+' extra source(s) '+fmtP(r.extraPct)
+        : modeTxt+' · 100% of income';
+
     const ctx=document.getElementById('miniChart').getContext('2d');
     if(myChart) myChart.destroy();
+    const parts=[spent,inv,Math.max(0,remain)];
+    const partsTotal=parts.reduce((a,b)=>a+b,0);
     myChart=new Chart(ctx,{
         type:'doughnut',
         data:{
             labels:['Expenses','Investment','Free Balance'],
-            datasets:[{data:[spent,inv,Math.max(0,remain)],backgroundColor:['#ff3333','#00c875','#ff4500'],borderColor:'#141413',borderWidth:3,hoverOffset:5}]
+            datasets:[{data:parts,backgroundColor:['#ff3333','#00c875','#ff4500'],borderColor:'#141413',borderWidth:3,hoverOffset:5}]
         },
         options:{
             cutout:'68%', maintainAspectRatio:false,
             plugins:{
                 legend:{display:true,position:'bottom',labels:{color:'#5a5750',font:{family:'JetBrains Mono',size:11,weight:'400'},padding:13,boxWidth:10,boxHeight:10,borderRadius:0}},
-                tooltip:{backgroundColor:'#141413',borderColor:'rgba(255,255,255,0.07)',borderWidth:1,titleColor:'#e8e4dc',bodyColor:'#5a5750',padding:11,callbacks:{label:c=>' '+fmt(c.parsed)}}
+                tooltip:{backgroundColor:'#141413',borderColor:'rgba(255,255,255,0.07)',borderWidth:1,titleColor:'#e8e4dc',bodyColor:'#5a5750',padding:11,
+                    callbacks:{label:c=>' '+fmt(c.parsed)+'  ·  '+fmtP(pctOf(c.parsed,partsTotal))}}
             }
         }
     });
+
+    const labels=[['Expenses',spent,'var(--red)'],['Investment',inv,'var(--green)'],['Free Balance',Math.max(0,remain),'var(--ember)']];
+    document.getElementById('miniChartPcts').innerHTML = labels.map(([n,v,c])=>`
+        <div class="alloc-line">
+            <span class="legend-dot" style="background:${c};"></span>
+            <span style="flex:1;font-size:.72rem;color:var(--dim);">${n}</span>
+            <span style="font-size:.72rem;color:var(--text);margin-right:12px;">${fmt(v)}</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.03em;color:${c};min-width:52px;text-align:right;">${fmtP(pctOf(v,partsTotal))}</span>
+        </div>`).join('');
+
     updateNetWorth();
+    renderRuleSummary();
 }
 
 // ── Wealth ────────────────────────────────────────────
-// Custom projection state (persisted)
-let projContrib = LS.get('wf_proj_contrib', null); // null = use auto
+let projContrib = LS.get('wf_proj_contrib', null); // null = use the savings bucket
 let projRate    = LS.get('wf_proj_rate',    10);
 let projYears   = LS.get('wf_proj_years',   25);
 
@@ -1631,14 +2503,22 @@ function getProjectionContrib(){
     return projContrib !== null ? projContrib : inversion();
 }
 
+function fvSeries(contrib, rate, months){
+    const mr = rate/100/12;
+    let p = 0;
+    for(let m=1; m<=months; m++) p = (p + contrib) * (1 + mr);
+    return p;
+}
+
 function calculateWealth(){
+    const r       = getRatios();
     const contrib = getProjectionContrib();
     const rate    = projRate;
     const years   = projYears;
     const totalMonths = years * 12;
     const monthlyRate = rate / 100 / 12;
+    const monthlyRatePct = (Math.pow(1+rate/100, 1/12) - 1) * 100; // effective compounded
 
-    // Build milestone checkpoints (evenly spaced, up to 6 points)
     const step = Math.max(1, Math.floor(years / 5));
     const checkYears = [];
     for(let y = step; y <= years; y += step) checkYears.push(y);
@@ -1654,38 +2534,46 @@ function calculateWealth(){
     }
 
     const finalVal  = miles.length ? miles[miles.length-1].value : 0;
-    const maxVal    = finalVal || 1;
     const totalPaid = contrib * totalMonths;
     const growth    = finalVal - totalPaid;
+    const growthShare  = pctOf(growth, finalVal);
+    const contribShare = pctOf(totalPaid, finalVal);
 
-    // Update page title & card label dynamically
     document.getElementById('wealthPageTitle').textContent  = years+'-Year Projection';
     document.getElementById('wealthCardLabel').textContent  = 'Projected Value · '+years+' Years';
-
     document.getElementById('futureValue').textContent      = fmt(finalVal);
-    document.getElementById('wealthInvDisplay').textContent = fmt(contrib);
-    document.getElementById('wealthRateDisplay').textContent= rate.toFixed(2)+'%';
+    document.getElementById('wealthSub').textContent        = fmt(contrib)+'/mo · '+rate+'% annual · '+years+' yrs';
+
+    document.getElementById('wBarContrib').style.width = clampW(contribShare)+'%';
+    document.getElementById('wBarGrowth').style.width  = clampW(growthShare)+'%';
+    document.getElementById('wBarContribLbl').textContent = 'Your capital '+fmtP(contribShare);
+    document.getElementById('wBarGrowthLbl').textContent  = 'Compound growth '+fmtP(growthShare);
+
+    document.getElementById('wealthInvDisplay').textContent  = fmt(contrib);
+    document.getElementById('wealthRateDisplay').textContent = fmtP(rate,2);
     document.getElementById('wealthYearsDisplay').textContent= years+' years';
     document.getElementById('wealthTotalContrib').textContent= fmt(totalPaid);
     document.getElementById('wealthTotalGrowth').textContent = fmt(Math.max(0,growth));
-    document.getElementById('wealthSub').textContent        = fmt(contrib)+'/mo · '+rate+'% annual · '+years+' yrs';
 
-    // Advisory note adapts to rate
     const hint = rate <= 6
-        ? 'Conservative projection. Typical of bonds or balanced funds. Lower risk, steady growth.'
+        ? 'Conservative projection. Typical of bonds or balanced funds — lower risk, steadier growth.'
         : rate <= 10
-        ? 'Every $100 in additional monthly savings equals approximately $'+Math.round(Math.pow(1+rate/100/12,120)*100)+' in 10 years at this return rate. Discipline compounds.'
-        : 'Aggressive projection. Historically possible with equity-heavy portfolios. Higher volatility expected.';
+        ? 'Holding the '+ruleSave+'% savings bucket every month is what drives this. Compound growth supplies '+fmtP(growthShare)+' of the final balance; your own capital is '+fmtP(contribShare)+'.'
+        : 'Aggressive projection. Historically possible with equity-heavy portfolios, but expect wide swings.';
     document.getElementById('wealthDisclaimer').textContent = hint;
 
-    document.getElementById('milestones').innerHTML = miles.map(m=>`
-        <div class="milestone-row">
+    document.getElementById('milestones').innerHTML = miles.map(m=>{
+        const share = pctOf(m.value, finalVal);
+        return `<div class="milestone-row">
             <div class="milestone-year">Yr ${m.year}</div>
-            <div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:${Math.round(m.value/maxVal*100)}%"></div></div>
-            <div class="milestone-value">${fmt(m.value)}</div>
-        </div>`).join('');
+            <div class="milestone-bar-track"><div class="milestone-bar-fill" style="width:${clampW(share)}%"></div></div>
+            <div>
+                <div class="milestone-value">${fmt(m.value)}</div>
+                <div class="milestone-pct" style="text-align:right;">${fmtP(share)} of final</div>
+            </div>
+        </div>`;
+    }).join('');
 
-    // Sync input fields to current values
     syncProjectionInputs();
     renderContribProgress();
 }
@@ -1696,29 +2584,25 @@ function syncProjectionInputs(){
     document.getElementById('proj_rate').value    = projRate;
     document.getElementById('proj_years').value   = projYears;
 
-    // Hint label
-    const hint = projContrib === null
-        ? 'Auto-filled from your 20% investment target'
+    document.getElementById('proj_contrib_hint').textContent = projContrib === null
+        ? 'Auto-filled from your '+ruleSave+'% savings bucket'
         : 'Custom amount — edit freely';
-    document.getElementById('proj_contrib_hint').textContent = hint;
 
-    // Sync rate preset buttons
-    document.querySelectorAll('.rate-preset').forEach(b=>{
+    document.querySelectorAll('.rate-preset[data-rate]').forEach(b=>{
         b.classList.toggle('active', parseFloat(b.dataset.rate) === projRate);
     });
-    // Sync horizon preset buttons
     document.querySelectorAll('.horizon-preset').forEach(b=>{
         b.classList.toggle('active', parseInt(b.dataset.yr) === projYears);
     });
 }
 
 function liveProjection(){
-    const c = parseFloat(document.getElementById('proj_contrib').value);
-    const r = parseFloat(document.getElementById('proj_rate').value);
-    const y = parseInt(document.getElementById('proj_years').value);
-    if(!isNaN(c) && c >= 0)  { projContrib = c; LS.set('wf_proj_contrib', c); }
-    if(!isNaN(r) && r > 0)   { projRate    = r; LS.set('wf_proj_rate',    r); }
-    if(!isNaN(y) && y >= 1)  { projYears   = y; LS.set('wf_proj_years',   y); }
+    const c  = parseFloat(document.getElementById('proj_contrib').value);
+    const r  = parseFloat(document.getElementById('proj_rate').value);
+    const y  = parseInt(document.getElementById('proj_years').value);
+    if(!isNaN(c) && c >= 0) { projContrib = c; LS.set('wf_proj_contrib', c); }
+    if(!isNaN(r) && r >  0) { projRate    = r; LS.set('wf_proj_rate',    r); }
+    if(!isNaN(y) && y >= 1) { projYears   = y; LS.set('wf_proj_years',   y); }
     calculateWealth();
 }
 
@@ -1746,48 +2630,47 @@ function resetProjection(){
 
 // ── Contribution Progress ─────────────────────────────
 function renderContribProgress(){
+    const r            = getRatios();
     const contrib      = getProjectionContrib();
     const years        = projYears;
-    const totalTarget  = contrib * years * 12; // projected total contributions
-    const actualTotal  = contribs.reduce((s,c) => s+c.amount, 0);
+    const totalTarget  = contrib * years * 12;
+    const actualTotal  = r.contribTotal;
     const n            = contribs.length;
-    const pct          = totalTarget > 0 ? Math.min(100, (actualTotal / totalTarget) * 100) : 0;
+    const pct          = pctOf(actualTotal, totalTarget);
 
-    // Big actual
     document.getElementById('cp_actual').textContent     = fmt(actualTotal);
     document.getElementById('cp_actual_sub').textContent = n === 0 ? 'No contributions logged yet' : n + ' contribution' + (n===1?'':'s') + ' logged';
     document.getElementById('cp_target_label').textContent= 'Target: ' + fmt(totalTarget);
-    document.getElementById('cp_pct_label').textContent  = pct.toFixed(1) + '% of projection target';
-    document.getElementById('cp_bar').style.width        = pct + '%';
+    document.getElementById('cp_pct_label').textContent  = fmtP(pct,2) + ' of projection target';
+    document.getElementById('cp_bar').style.width        = clampW(pct) + '%';
 
     const remaining = Math.max(0, totalTarget - actualTotal);
     const ahead     = actualTotal - totalTarget;
-    document.getElementById('cp_remaining_label').textContent = remaining > 0 ? fmt(remaining) + ' remaining' : '';
-    document.getElementById('cp_ahead_label').textContent     = ahead > 0 ? '▲ ' + fmt(ahead) + ' ahead of target' : '';
+    document.getElementById('cp_remaining_label').textContent = remaining > 0 ? fmt(remaining) + ' remaining (' + fmtP(pctOf(remaining,totalTarget),1) + ')' : '';
+    document.getElementById('cp_ahead_label').textContent     = ahead > 0 ? '▲ ' + fmt(ahead) + ' ahead (' + fmtP(pctOf(ahead,totalTarget)) + ')' : '';
 
-    // This month
     const now = new Date();
     const thisMonthTotal = contribs
         .filter(c => { if(!c.date) return false; const d = new Date(c.date+'T12:00:00'); return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear(); })
         .reduce((s,c) => s+c.amount, 0);
     document.getElementById('cp_this_month').textContent = fmt(thisMonthTotal);
+    document.getElementById('cp_this_month_pct').textContent = fmtP(pctOf(thisMonthTotal, contrib),0) + ' of target';
 
-    // Average per month (based on unique months with any contribution)
-    let avgPerMonth = 0;
+    let avgPerMonth = 0, monthsElapsed = 0;
     if(n > 0){
-        // spread total over months between first and now
         const dates = contribs.filter(c=>c.date).map(c=>new Date(c.date+'T12:00:00')).sort((a,b)=>a-b);
         if(dates.length){
             const first = dates[0];
-            const monthsElapsed = Math.max(1,
+            monthsElapsed = Math.max(1,
                 (now.getFullYear()-first.getFullYear())*12 + (now.getMonth()-first.getMonth()) + 1
             );
             avgPerMonth = actualTotal / monthsElapsed;
         }
     }
     document.getElementById('cp_avg_month').textContent = fmt(avgPerMonth);
+    document.getElementById('cp_avg_month_pct').textContent = r.total>0 ? fmtP(pctOf(avgPerMonth, r.total)) + ' of income' : '—';
 
-    // Streak — count consecutive months up to now that have at least one contribution
+    // Streak + hit rate as a percentage of elapsed months
     let streak = 0;
     const check = new Date(now.getFullYear(), now.getMonth(), 1);
     for(let i = 0; i < 120; i++){
@@ -1800,12 +2683,16 @@ function renderContribProgress(){
         if(hasContrib){ streak++; check.setMonth(check.getMonth()-1); }
         else break;
     }
+    const activeMonths = new Set(contribs.filter(c=>c.date).map(c=>c.date.slice(0,7))).size;
     document.getElementById('cp_streak').textContent = streak + ' mo' + (streak !== 1 ? 's' : '');
+    document.getElementById('cp_hitrate').textContent = monthsElapsed>0
+        ? fmtP(pctOf(activeMonths, monthsElapsed),0) + ' of months' : '0% of months';
 
-    // Monthly target check
     document.getElementById('cp_monthly_target').textContent   = fmt(contrib);
     document.getElementById('cp_monthly_actual_val').textContent= fmt(avgPerMonth);
+    document.getElementById('cp_monthly_actual_pct').textContent= fmtP(pctOf(avgPerMonth, contrib),0) + ' of target';
     const diff = avgPerMonth - contrib;
+    const diffPct = pctOf(Math.abs(diff), contrib);
     const vsIcon = document.getElementById('cp_vs_icon');
     const actualEl = document.getElementById('cp_monthly_actual_val');
     const verdictEl = document.getElementById('cp_monthly_verdict');
@@ -1820,16 +2707,15 @@ function renderContribProgress(){
         actualEl.style.color = 'var(--green)';
         verdictEl.style.borderLeftColor = 'var(--green)';
         verdictEl.style.color = 'var(--green)';
-        verdictEl.textContent = '▲ You\'re averaging ' + fmt(diff) + '/mo above target. At this pace your goal arrives ' + Math.round((totalTarget/actualTotal)*years*10)/10 + ' yrs in.';
+        verdictEl.textContent = '▲ You are averaging ' + fmt(diff) + '/mo above target — ' + fmtP(diffPct) + ' over plan, or ' + fmtP(pctOf(avgPerMonth,contrib)) + ' of the monthly goal.';
     } else {
         vsIcon.textContent = '↓'; vsIcon.style.color = 'var(--red)';
         actualEl.style.color = 'var(--red)';
         verdictEl.style.borderLeftColor = 'var(--red)';
         verdictEl.style.color = 'rgba(255,51,51,0.7)';
-        verdictEl.textContent = '▼ You\'re averaging ' + fmt(Math.abs(diff)) + '/mo below target. Consider increasing monthly contributions to stay on track.';
+        verdictEl.textContent = '▼ You are averaging ' + fmt(Math.abs(diff)) + '/mo below target — ' + fmtP(diffPct) + ' short, hitting ' + fmtP(pctOf(avgPerMonth,contrib)) + ' of the monthly goal.';
     }
 
-    // History log (most recent 8)
     const histEl = document.getElementById('cp_history');
     if(!n){
         histEl.innerHTML = `<div class="empty-state" style="padding:16px 0;"><div class="empty-icon" style="margin:0 auto 10px;">📋</div><div class="empty-text">No contributions yet.<br>Tap "+ Log" to record your first.</div></div>`;
@@ -1838,6 +2724,7 @@ function renderContribProgress(){
     const sorted = [...contribs].sort((a,b) => new Date(b.date+'T12:00:00')-new Date(a.date+'T12:00:00'));
     histEl.innerHTML = sorted.slice(0,8).map(c => {
         const dt = c.date ? new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}) : '';
+        const share = pctOf(c.amount, contrib);
         const onTarget = c.amount >= contrib;
         return `<div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
             <div style="width:2px;background:${onTarget?'var(--green)':'var(--ember)'};align-self:stretch;min-height:30px;margin-right:12px;flex-shrink:0;"></div>
@@ -1847,7 +2734,7 @@ function renderContribProgress(){
             </div>
             <div style="text-align:right;">
                 <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:${onTarget?'var(--green)':'var(--ember)'};">${fmt(c.amount)}</div>
-                <div style="font-size:.58rem;margin-top:2px;color:${onTarget?'rgba(0,200,117,0.5)':'rgba(255,69,0,0.5)'};">${onTarget?'▲ on target':'▼ below target'}</div>
+                <div style="font-size:.58rem;margin-top:2px;color:${onTarget?'rgba(0,200,117,0.7)':'rgba(255,69,0,0.7)'};">${onTarget?'▲':'▼'} ${fmtP(share,0)} of target</div>
             </div>
         </div>`;
     }).join('') + (sorted.length > 8 ? `<div style="text-align:center;padding:10px 0;font-size:.62rem;color:var(--dim);">+ ${sorted.length-8} more in Invest → Contribution Log</div>` : '');
@@ -1862,7 +2749,7 @@ function calcPayoff(balance,annualRate,monthlyPay){
     const r=annualRate/100/12;
     if(r===0){const months=Math.ceil(balance/monthlyPay);return{months,totalPaid:monthlyPay*months,totalInterest:0};}
     const minRequired=balance*r;
-    if(monthlyPay<=minRequired) return{error:'Payment does not cover monthly interest'};
+    if(monthlyPay<=minRequired) return{error:'Payment does not cover monthly interest ('+fmt(minRequired)+'/mo)'};
     const months=Math.ceil(-Math.log(1-(balance*r)/monthlyPay)/Math.log(1+r));
     const totalPaid=monthlyPay*months;
     return{months,totalPaid,totalInterest:totalPaid-balance};
@@ -1874,13 +2761,16 @@ function previewDebt(){
     const minpay=parseFloat(document.getElementById('d_minpay').value)||0;
     if(!balance||!minpay){document.getElementById('debtPreviewBox').style.display='none';return;}
     const res=calcPayoff(balance,rate,minpay);
+    const r=getRatios();
     document.getElementById('debtPreviewBox').style.display='block';
     if(!res||res.error){document.getElementById('debtPreviewContent').innerHTML=`<div style="color:var(--red);font-size:.78rem;">${res?res.error:'Error'}</div>`;return;}
     const yrs=Math.floor(res.months/12),mos=res.months%12;
     document.getElementById('debtPreviewContent').innerHTML=`
         <div class="calc-result-row"><span class="calc-result-label">Payoff time</span><span class="calc-result-value">${yrs>0?yrs+'y ':''}${mos}m</span></div>
         <div class="calc-result-row"><span class="calc-result-label">Total paid</span><span class="calc-result-value">${fmt(res.totalPaid)}</span></div>
-        <div class="calc-result-row"><span class="calc-result-label">Total interest</span><span class="calc-result-value c-red">${fmt(res.totalInterest)}</span></div>`;
+        <div class="calc-result-row"><span class="calc-result-label">Total interest</span><span class="calc-result-value c-red">${fmt(res.totalInterest)}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Interest as % of balance</span><span class="calc-result-value c-red">${fmtP(pctOf(res.totalInterest,balance))}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Payment as % of income</span><span class="calc-result-value">${r.total>0?fmtP(pctOf(minpay,r.total)):'—'}</span></div>`;
 }
 
 function applyDebt(){
@@ -1894,24 +2784,38 @@ function applyDebt(){
     LS.set('wf_debts',debts);
     ['d_name','d_balance','d_rate','d_minpay'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('debtPreviewBox').style.display='none';
-    renderDebt(); updateNetWorth(); closeModal('debtModal');
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); closeModal('debtModal');
 }
 
 function removeDebt(id){
     debts=debts.filter(d=>d.id!==id);
     payments=payments.filter(p=>p.debtId!==id);
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth();
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget();
 }
 
 function openPaymentModal(id){
     paymentTargetId=id;
     const d=debts.find(d=>d.id===id); if(!d) return;
-    document.getElementById('payment_sub').textContent=`Logging payment for: ${d.name}`;
+    document.getElementById('payment_sub').textContent=`Logging payment for: ${d.name} · balance ${fmt(d.balance)}`;
     document.getElementById('p_amount').value='';
     document.getElementById('p_note').value='';
     document.getElementById('p_date').value=new Date().toISOString().split('T')[0];
+    document.getElementById('paymentPreviewLine').textContent='—';
     openModal('paymentModal');
+}
+
+function previewPayment(){
+    const d=debts.find(d=>d.id===paymentTargetId);
+    const amt=parseFloat(document.getElementById('p_amount').value)||0;
+    const el=document.getElementById('paymentPreviewLine');
+    if(!d||!amt){el.textContent='—';return;}
+    const interest=d.balance*d.rate/100/12;
+    const principal=Math.max(0,amt-interest);
+    const newBal=Math.max(0,d.balance-amt);
+    el.innerHTML=`Clears <span style="color:var(--green)">${fmtP(pctOf(amt,d.balance))}</span> of this balance · `+
+        `${fmtP(pctOf(principal,amt))} principal / ${fmtP(pctOf(Math.min(interest,amt),amt))} interest · `+
+        `new balance ${fmt(newBal)} (${fmtP(pctOf(d.originalBalance-newBal,d.originalBalance))} retired)`;
 }
 
 function applyPayment(){
@@ -1923,14 +2827,14 @@ function applyPayment(){
     d.balance=Math.max(0,d.balance-amount);
     payments.unshift({id:Date.now(),debtId:paymentTargetId,debtName:d.name,amount,date,note});
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth(); closeModal('paymentModal');
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); closeModal('paymentModal');
 }
 
 function removePayment(id){
     const p=payments.find(p=>p.id===id);
     if(p){const d=debts.find(d=>d.id===p.debtId);if(d) d.balance=Math.min(d.originalBalance,d.balance+p.amount);LS.set('wf_debts',debts);}
     payments=payments.filter(p=>p.id!==id); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth();
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget();
 }
 
 let currentDebtTab='list';
@@ -1944,36 +2848,61 @@ function switchDebtTab(tab,btn){
 }
 
 function renderDebt(){
-    const totalBalance=debts.reduce((s,d)=>s+d.balance,0);
-    const totalMonthlyInt=debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
+    const r = getRatios();
+    const totalBalance=r.totalDebt;
+    const totalMonthlyInt=r.interest;
     const totalPaid=payments.reduce((s,p)=>s+p.amount,0);
+
     document.getElementById('debtTotalDisplay').textContent=fmt(totalBalance);
     document.getElementById('debtMonthlyInt').textContent  =fmt(totalMonthlyInt);
+    document.getElementById('debtMonthlyIntPct').textContent= r.total>0
+        ? fmtP(r.interestPct)+' of income'
+        : (totalBalance>0 ? fmtP(pctOf(totalMonthlyInt,totalBalance),2)+' of balance' : '—');
     document.getElementById('debtTotalPaid').textContent   =fmt(totalPaid);
-    document.getElementById('debtCountLabel').textContent  =debts.length===0?'No debts logged':debts.length+(debts.length===1?' debt logged':' debts logged');
+    document.getElementById('debtTotalPaidPct').textContent= r.origDebt>0?fmtP(r.debtRetired)+' retired':'—';
+    document.getElementById('debtCountLabel').textContent  = debts.length===0
+        ? 'No debts logged'
+        : debts.length+(debts.length===1?' debt':' debts')+(r.total>0?' · '+fmtP(pctOf(totalBalance, r.total*12),1)+' of annual income':' logged');
+
+    const dtiEl=document.getElementById('debtDTI');
+    dtiEl.textContent = r.total>0?fmtP(r.dti):'—';
+    dtiEl.style.color = r.dti<=36?'var(--green)':r.dti<=45?'var(--ember)':'var(--red)';
+    const dtaEl=document.getElementById('debtDTA');
+    dtaEl.textContent = r.portfolio>0?fmtP(r.debtToAsset):(totalBalance>0?'∞':'—');
+    dtaEl.style.color = r.portfolio>0&&r.debtToAsset<100?'var(--green)':'var(--red)';
+
+    document.getElementById('debtRetiredBar').style.width = clampW(r.debtRetired)+'%';
+    document.getElementById('debtRetiredLbl').textContent = r.origDebt>0?fmtP(r.debtRetired)+' retired':'0.0% retired';
+    document.getElementById('debtRemainLbl').textContent  = r.origDebt>0?fmtP(100-r.debtRetired)+' remaining':'—';
 
     const dList=document.getElementById('debtList');
     if(!debts.length){
         dList.innerHTML=`<div class="empty-state"><div class="empty-icon">✓</div><div class="empty-text">No debts logged.<br>Tap "+ Debt" to add one.</div></div>`;
     } else {
-        dList.innerHTML=debts.map(d=>{
+        dList.innerHTML=[...debts].sort((a,b)=>b.balance-a.balance).map(d=>{
             const paid=d.originalBalance-d.balance;
-            const paidPct=d.originalBalance>0?Math.round(paid/d.originalBalance*100):0;
+            const paidPct=pctOf(paid,d.originalBalance);
+            const share=pctOf(d.balance,totalBalance);
+            const intShare=pctOf(d.balance*d.rate/100/12, totalMonthlyInt);
             const res=calcPayoff(d.balance,d.rate,d.minpay);
             const yrs=res&&!res.error?Math.floor(res.months/12):0;
             const mos=res&&!res.error?res.months%12:0;
             const payoffStr=res&&!res.error?(yrs>0?yrs+"y ":"")+mos+"m":"—";
+            const intPct=res&&!res.error?fmtP(pctOf(res.totalInterest,d.balance)):'—';
             const isSafe=paidPct>=50;
             return `<div style="padding:16px 0;border-bottom:1px solid var(--border);">
                 <div style="display:flex;align-items:center;margin-bottom:8px;">
                     <div style="width:8px;height:8px;border-radius:50%;background:${DEBT_COLOR[d.type]||'#5a5750'};margin-right:10px;flex-shrink:0;box-shadow:0 0 6px ${DEBT_COLOR[d.type]||'#5a5750'};"></div>
-                    <div style="flex:1;"><div class="row-name">${d.name}</div><div class="row-sub c-dim">${DEBT_LABEL[d.type]||'Other'} · ${d.rate}% annual</div></div>
-                    <div style="text-align:right;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--red);">${fmt(d.balance)}</div><div style="font-size:.6rem;color:var(--dim);">of ${fmt(d.originalBalance)}</div></div>
+                    <div style="flex:1;"><div class="row-name">${d.name}</div><div class="row-sub c-dim">${DEBT_LABEL[d.type]||'Other'} · ${fmtP(d.rate,2)} APR</div></div>
+                    <div style="text-align:right;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--red);">${fmt(d.balance)}</div><div style="font-size:.6rem;color:var(--dim);">${fmtP(share)} of total debt</div></div>
                 </div>
-                <div class="debt-progress-track"><div class="debt-progress-fill ${isSafe?"safe":""}" style="width:${paidPct}%"></div></div>
+                <div class="debt-progress-track"><div class="debt-progress-fill ${isSafe?"safe":""}" style="width:${clampW(paidPct)}%"></div></div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
-                    <span class="payoff-chip ${isSafe?"safe":""}">${paidPct}% paid</span>
-                    <span style="font-size:.6rem;color:var(--dim);">Est. payoff: ${payoffStr}</span>
+                    <span class="payoff-chip ${isSafe?"safe":""}">${fmtP(paidPct)} paid off</span>
+                    <span style="font-size:.6rem;color:var(--dim);">Est. payoff: ${payoffStr} · interest ${intPct} of balance</span>
+                </div>
+                <div style="font-size:.58rem;color:var(--dim);margin-top:7px;letter-spacing:.04em;">
+                    Min payment ${fmt(d.minpay||0)}${r.total>0?' · '+fmtP(pctOf(d.minpay||0,r.total))+' of income':''} · ${fmtP(intShare)} of monthly interest
                 </div>
                 <div style="display:flex;gap:8px;margin-top:10px;">
                     <button onclick="openPaymentModal(${d.id})" style="flex:1;padding:9px;background:var(--red);color:var(--void);border:none;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.06em;cursor:pointer;">+ Log Payment</button>
@@ -1989,9 +2918,12 @@ function renderDebt(){
     } else {
         pList.innerHTML=payments.slice(0,20).map(p=>{
             const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}):'';
+            const d=debts.find(x=>x.id===p.debtId);
+            const share=d?pctOf(p.amount,d.originalBalance):0;
             return `<div class="payment-log-row">
                 <div class="row-indicator ri-green"></div>
-                <div style="flex:1;"><div class="row-name" style="font-size:.83rem;">${p.debtName}</div><div style="font-size:.6rem;color:var(--dim);">${dt}${p.note?" · "+p.note:""}</div></div>
+                <div style="flex:1;"><div class="row-name" style="font-size:.83rem;">${p.debtName}</div><div style="font-size:.6rem;color:var(--dim);">${dt}${p.note?" · "+p.note:""}</div>
+                ${d?`<div class="pct-chip">${fmtP(share)} of original balance · ${fmtP(pctOf(p.amount,totalPaid))} of all payments</div>`:''}</div>
                 <div style="text-align:right;"><div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:var(--green);">${fmt(p.amount)}</div><button class="row-action" onclick="removePayment(${p.id})">Remove</button></div>
             </div>`;
         }).join('');
@@ -2002,11 +2934,14 @@ function renderDebt(){
 function renderStrategy(){
     const s=document.getElementById('strategyList');
     if(!debts.length){s.innerHTML=`<div class="empty-state"><div class="empty-text" style="padding:10px 0;">Log debts to see suggested payoff order.</div></div>`;return;}
+    const totalBalance=debts.reduce((x,d)=>x+d.balance,0);
     const sorted=[...debts].sort((a,b)=>b.rate-a.rate);
     s.innerHTML=sorted.map((d,i)=>{
         const res=calcPayoff(d.balance,d.rate,d.minpay);
-        const summary=res&&!res.error?`Total interest: ${fmt(res.totalInterest)} · ${Math.floor(res.months/12)}y ${res.months%12}m`:'Adjust minimum payment';
-        return `<div class="assumption-row"><span class="assumption-label"><strong style="color:var(--ember);">#${i+1}</strong> ${d.name}<br><small style="color:var(--dim);font-weight:300;">${summary}</small></span><span class="assumption-value c-red">${d.rate}%</span></div>`;
+        const summary=res&&!res.error
+            ? `Interest ${fmt(res.totalInterest)} = ${fmtP(pctOf(res.totalInterest,d.balance))} of balance · ${Math.floor(res.months/12)}y ${res.months%12}m`
+            : 'Adjust minimum payment';
+        return `<div class="assumption-row"><span class="assumption-label"><strong style="color:var(--ember);">#${i+1}</strong> ${d.name} <small style="color:var(--dim);">(${fmtP(pctOf(d.balance,totalBalance))} of debt)</small><br><small style="color:var(--dim);font-weight:300;">${summary}</small></span><span class="assumption-value c-red">${fmtP(d.rate,2)}</span></div>`;
     }).join('');
 }
 
@@ -2014,18 +2949,26 @@ function runCalc(){
     const balance=parseFloat(document.getElementById('calc_balance').value)||0;
     const rate=parseFloat(document.getElementById('calc_rate').value)||0;
     const pay=parseFloat(document.getElementById('calc_pay').value)||0;
+    const r=getRatios();
     const box=document.getElementById('calcResultBox');
+    document.getElementById('calcPayPct').innerHTML = (pay&&r.total>0)
+        ? fmtP(pctOf(pay,r.total))+' of your monthly income'+(balance?' · '+fmtP(pctOf(pay,balance),2)+' of the balance per month':'')
+        : '—';
     if(!balance||!pay){box.style.display='none';return;}
     box.style.display='block';
     const res=calcPayoff(balance,rate,pay);
     const el=document.getElementById('calcResults');
     if(!res||res.error){el.innerHTML=`<div style="color:var(--red);font-size:.78rem;padding:8px 0;">${res?res.error:'Error'}</div>`;return;}
     const yrs=Math.floor(res.months/12),mos=res.months%12;
+    const firstInt=balance*rate/100/12;
     el.innerHTML=`
         <div class="calc-result-row"><span class="calc-result-label">Months to payoff</span><span class="calc-result-value">${res.months} months (${yrs>0?yrs+"y ":""}${mos}m)</span></div>
         <div class="calc-result-row"><span class="calc-result-label">Total paid</span><span class="calc-result-value">${fmt(res.totalPaid)}</span></div>
         <div class="calc-result-row"><span class="calc-result-label">Total interest paid</span><span class="calc-result-value c-red">${fmt(res.totalInterest)}</span></div>
-        <div class="calc-result-row"><span class="calc-result-label">% of balance in interest</span><span class="calc-result-value">${balance>0?(res.totalInterest/balance*100).toFixed(1):"0"}%</span></div>`;
+        <div class="calc-result-row"><span class="calc-result-label">Interest as % of balance</span><span class="calc-result-value c-red">${fmtP(pctOf(res.totalInterest,balance))}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Interest as % of total paid</span><span class="calc-result-value c-red">${fmtP(pctOf(res.totalInterest,res.totalPaid))}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">First payment: principal</span><span class="calc-result-value c-green">${fmtP(pctOf(Math.max(0,pay-firstInt),pay))}</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">First payment: interest</span><span class="calc-result-value c-red">${fmtP(pctOf(Math.min(firstInt,pay),pay))}</span></div>`;
     runCalcExtra();
 }
 
@@ -2044,38 +2987,51 @@ function runCalcExtra(){
     const savedMoney=base.totalPaid-extr.totalPaid;
     const yrs=Math.floor(extr.months/12),mos=extr.months%12;
     document.getElementById('calcExtraResults').innerHTML=`
+        <div class="calc-result-row"><span class="calc-result-label">Payment increase</span><span class="calc-result-value">${fmtP(pctOf(extra,pay))} more per month</span></div>
         <div class="calc-result-row"><span class="calc-result-label">New payoff time</span><span class="calc-result-value c-green">${yrs>0?yrs+"y ":""}${mos}m</span></div>
-        <div class="calc-result-row"><span class="calc-result-label">Time saved</span><span class="calc-result-value c-green">${savedMonths} month(s) less</span></div>
-        <div class="calc-result-row"><span class="calc-result-label">Interest saved</span><span class="calc-result-value c-green">${fmt(savedMoney)}</span></div>`;
+        <div class="calc-result-row"><span class="calc-result-label">Time saved</span><span class="calc-result-value c-green">${savedMonths} month(s) · ${fmtP(pctOf(savedMonths,base.months))} faster</span></div>
+        <div class="calc-result-row"><span class="calc-result-label">Interest saved</span><span class="calc-result-value c-green">${fmt(savedMoney)} · ${fmtP(pctOf(savedMoney,base.totalInterest))} of interest</span></div>`;
 }
 
 // ── PDF Balance Sheet ─────────────────────────────────
 function downloadBalanceSheet(){
     const btn = document.getElementById('pdfBtn');
+    const original = btn.innerHTML;
     btn.textContent = 'Generating...';
     btn.style.opacity = '0.6';
     btn.disabled = true;
 
-    setTimeout(()=>{
-        try { buildPDF(); } catch(e){ console.error(e); }
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export Balance Sheet — PDF`;
+    setTimeout(async ()=>{
+        try { await buildPDF(); } catch(e){ console.error(e); }
+        btn.innerHTML = original;
         btn.style.opacity = '1';
         btn.disabled = false;
     }, 80);
 }
 
-function buildPDF(){
+async function deliverFile(blob, filename, fallback){
+    try {
+        if(window.claude && typeof window.claude.use === 'function'){
+            const downloads = await window.claude.use('downloads');
+            if(downloads){ await downloads.save({filename, data: blob}); return; }
+        }
+    } catch(e){
+        if(e && e.code === 'declined') return;
+        console.error(e);
+        return;
+    }
+    fallback();
+}
+
+async function buildPDF(){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation:'portrait', unit:'pt', format:'letter' });
 
     // ── Design constants ───────────────────────────────
     const PW = 612, PH = 792;
     const ML = 56, MR = 56, TM = 56;
-    const CW = PW - ML - MR; // content width
-    const COL2 = ML + CW / 2 + 8;
-    const COLW2 = CW / 2 - 8;
+    const CW = PW - ML - MR;
 
-    // Colors
     const C = {
         black:  [10,  10,  10],
         ink:    [30,  30,  30],
@@ -2091,7 +3047,6 @@ function buildPDF(){
         blue:   [30,  90,  160],
     };
 
-    // Helpers
     const setFont = (style='normal', size=9, color=C.ink) => {
         doc.setFont('helvetica', style);
         doc.setFontSize(size);
@@ -2113,43 +3068,31 @@ function buildPDF(){
     };
     const dateStr = () => new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
+    // Percentage column x-position
+    const PCTX = PW - MR - 92;
+
     // ── Gather data ────────────────────────────────────
-    const base   = baseSalary();
-    const extra  = extraMonthly();
-    const total  = base + extra;
-    const inv    = inversion();
-    const spent  = categories.reduce((s,c)=>s+c.amount,0);
-    const remain = total - spent - inv;
-
-    const portCurrent = holdings.reduce((s,h)=>s+h.current,0);
-    const portCost    = holdings.reduce((s,h)=>s+h.cost,0);
-    const portGain    = portCurrent - portCost;
-
-    const totalDebt   = debts.reduce((s,d)=>s+d.balance,0);
-    const netWorth    = portCurrent - totalDebt;
-    const totalContribActual = contribs.reduce((s,c)=>s+c.amount,0);
+    const r = getRatios();
+    const base=r.base, extra=r.extra, total=r.total, inv=r.inv, spent=r.spent, remain=r.free;
+    const portCurrent=r.portfolio, portCost=r.cost, portGain=portCurrent-portCost;
+    const totalDebt=r.totalDebt, netWorth=r.netWorth;
+    const totalContribActual=r.contribTotal;
 
     const projContribAmt = getProjectionContrib();
-    let projFinal = 0;
-    { let p=0; for(let m=1;m<=projYears*12;m++) p=(p+projContribAmt)*(1+projRate/100/12); projFinal=Math.round(p); }
+    const projTotalPaid  = projContribAmt * projYears * 12;
+    const projFinal      = Math.round(fvSeries(projContribAmt, projRate, projYears*12));
+    const projGrowth     = Math.max(0, projFinal - projTotalPaid);
 
     let curY = TM;
 
-    // ═══════════════════════════════════════════════════
-    // PAGE HEADER
-    // ═══════════════════════════════════════════════════
-    // Top black bar
+    // ═══ PAGE HEADER ═══
     rect(0, 0, PW, 6, C.black);
-
     curY = 36;
-    // Company/app name
     setFont('bold', 22, C.black);
     doc.text('WEALTHFLOW', ML, curY);
-
     setFont('normal', 8, C.muted);
-    doc.text('PERSONAL FINANCIAL STATEMENT', ML, curY + 14);
+    doc.text('PERSONAL FINANCIAL STATEMENT · 50/30/20 BUDGET REVIEW', ML, curY + 14);
 
-    // Date block top-right
     setFont('normal', 8, C.muted);
     doc.text('PREPARED ON', PW - MR, curY - 4, {align:'right'});
     setFont('bold', 9, C.ink);
@@ -2161,30 +3104,27 @@ function buildPDF(){
     hline(curY, ML, PW-MR, 1.5, C.black);
     curY += 16;
 
-    // ═══════════════════════════════════════════════════
-    // EXECUTIVE SUMMARY ROW (3 KPIs)
-    // ═══════════════════════════════════════════════════
+    // ═══ EXECUTIVE SUMMARY (3 KPIs with percentages) ═══
     const kpiW = CW / 3;
     const kpis = [
-        { label:'NET WORTH',    value: money(netWorth),   color: netWorth>=0?C.green:C.red },
-        { label:'MONTHLY INCOME', value: money(total),    color: C.ink },
-        { label:'AVAILABLE CASH', value: money(remain),   color: remain>=0?C.green:C.red },
+        { label:'NET WORTH',      value: money(netWorth), sub: portCurrent>0 ? fmtP(pctOf(netWorth, portCurrent))+' equity in assets' : 'no assets recorded', color: netWorth>=0?C.green:C.red },
+        { label:'MONTHLY INCOME', value: money(total),    sub: total>0 ? 'base '+fmtP(r.basePct)+' · extra '+fmtP(r.extraPct) : 'no income set', color: C.ink },
+        { label:'AVAILABLE CASH', value: money(remain),   sub: total>0 ? fmtP(r.freePct)+' of income' : '—', color: remain>=0?C.green:C.red },
     ];
-
     kpis.forEach((k,i)=>{
         const x = ML + i * kpiW;
-        rect(x, curY, kpiW-4, 52, i%2===0 ? C.bg : C.bgAlt);
+        rect(x, curY, kpiW-4, 62, i%2===0 ? C.bg : C.bgAlt);
         setFont('normal', 7, C.muted);
         doc.text(k.label, x+10, curY+14);
         setFont('bold', 14, k.color);
         doc.text(k.value, x+10, curY+34);
-        if(i>0){ doc.setDrawColor(...C.rule); doc.setLineWidth(0.5); doc.line(x,curY,x,curY+52); }
+        setFont('normal', 6.8, C.muted);
+        doc.text(k.sub, x+10, curY+50);
+        if(i>0){ doc.setDrawColor(...C.rule); doc.setLineWidth(0.5); doc.line(x,curY,x,curY+62); }
     });
-    curY += 62;
+    curY += 72;
 
-    // ═══════════════════════════════════════════════════
-    // SECTION HELPER
-    // ═══════════════════════════════════════════════════
+    // ═══ HELPERS ═══
     const sectionHead = (title, subtitle='') => {
         curY += 14;
         rect(ML, curY, CW, 20, C.black);
@@ -2197,15 +3137,28 @@ function buildPDF(){
         curY += 26;
     };
 
-    const tableRow = (label, value, bold=false, bgColor=null, indent=0, valueColor=C.ink) => {
+    const tableRow = (label, value, bold=false, bgColor=null, indent=0, valueColor=C.ink, pctStr='') => {
         const rowH = 16;
         if(bgColor) rect(ML, curY, CW, rowH, bgColor);
         setFont(bold?'bold':'normal', 8.5, C.mid);
         doc.text(label, ML+10+indent, curY+11);
+        if(pctStr){
+            setFont('normal', 7.5, C.muted);
+            doc.text(pctStr, PCTX, curY+11, {align:'right'});
+        }
         setFont(bold?'bold':'normal', 8.5, valueColor);
         doc.text(value, PW-MR-10, curY+11, {align:'right'});
         hline(curY+rowH, ML, PW-MR, 0.3, C.rule);
         curY += rowH;
+    };
+
+    const colHead = (c1='', c2='% OF BASE', c3='AMOUNT') => {
+        rect(ML, curY, CW, 13, C.bgAlt);
+        setFont('bold', 6.5, C.muted);
+        if(c1) doc.text(c1, ML+10, curY+9);
+        doc.text(c2, PCTX, curY+9, {align:'right'});
+        doc.text(c3, PW-MR-10, curY+9, {align:'right'});
+        curY += 15;
     };
 
     const subHead = (label) => {
@@ -2214,12 +3167,16 @@ function buildPDF(){
         curY += 14;
     };
 
-    const totalRow = (label, value, topRule=true, valueColor=C.ink) => {
+    const totalRow = (label, value, topRule=true, valueColor=C.ink, pctStr='') => {
         if(topRule) hline(curY, ML, PW-MR, 0.8, C.ink);
         curY += 2;
         rect(ML, curY, CW, 18, C.bgAlt);
         setFont('bold', 9, C.black);
         doc.text(label, ML+10, curY+12);
+        if(pctStr){
+            setFont('bold', 7.5, C.mid);
+            doc.text(pctStr, PCTX, curY+12, {align:'right'});
+        }
         setFont('bold', 9, valueColor);
         doc.text(value, PW-MR-10, curY+12, {align:'right'});
         curY += 22;
@@ -2229,128 +3186,171 @@ function buildPDF(){
         if(curY + needed > PH - 60) {
             doc.addPage();
             curY = TM;
-            // thin top rule on new page
             rect(0, 0, PW, 3, C.black);
             curY += 10;
         }
     };
 
-    // ═══════════════════════════════════════════════════
-    // SECTION 1 — INCOME STATEMENT
-    // ═══════════════════════════════════════════════════
-    sectionHead('I. INCOME STATEMENT', 'Monthly');
+    // ═══ SECTION I — INCOME STATEMENT ═══
+    sectionHead('I. INCOME STATEMENT', 'Monthly · ' + ruleNeeds + '/' + ruleWants + '/' + ruleSave + ' rule');
 
     subHead('Revenue');
-    tableRow('Base Salary (net of taxes)', money(base), false, null, 0);
-    extraIncomes.forEach(e => tableRow(e.name + ' (' + FREQ_LABEL[e.freq] + ')', money(e.monthly), false, null, 16, C.ink));
-    totalRow('TOTAL MONTHLY INCOME', money(total), true, C.blue);
+    colHead('', '% OF INCOME', 'AMOUNT');
+    tableRow('Base Salary (net of taxes)', money(base), false, null, 0, C.ink, fmtP(r.basePct));
+    extraIncomes.forEach(e => tableRow(e.name + ' (' + FREQ_LABEL[e.freq] + ')', money(e.monthly), false, null, 16, C.ink, fmtP(pctOf(e.monthly,total))));
+    totalRow('TOTAL MONTHLY INCOME', money(total), true, C.blue, '100.0%');
 
-    curY += 8;
-    subHead('Appropriations');
-    tableRow('Scheduled Investment (20%)', money(inv), false, null, 0, C.green);
+    const bg = getBudget();
+    bg.buckets.forEach(b => {
+        checkPage(90);
+        curY += 8;
+        subHead(b.label + ' — ' + b.pct + '% allocation  ·  ' + money(b.allocated));
+        const rows = [
+            ...b.autoItems.map(x=>({name:x.name+' (auto)', amount:x.amount})),
+            ...categories.filter(c=>c.type===b.key)
+        ];
+        if(!rows.length) tableRow('Nothing assigned', '—', false, null, 16, C.muted);
+        rows.forEach(x => tableRow(x.name, money(x.amount), false, null, 16, C.ink, fmtP(pctOf(x.amount, b.allocated))+' of bucket'));
+        const col = b.good ? C.green : C.red;
+        const foot = b.key==='savings'
+            ? (b.diff <= 0 ? money(Math.abs(b.diff)) + ' above target' : money(b.diff) + ' short of target')
+            : (b.diff >= 0 ? money(b.diff) + ' remaining' : money(Math.abs(b.diff)) + ' OVER BUDGET');
+        totalRow(b.label.toUpperCase() + ' USED  —  ' + foot, money(b.used), true, col, fmtP(b.usedPct,1));
+    });
 
-    curY += 4;
-    subHead('Fixed Expenses');
-    const fixedExp = categories.filter(c=>c.type==='needs');
-    const varExp   = categories.filter(c=>c.type==='wants');
-    if(!fixedExp.length) tableRow('No fixed expenses logged', '—', false, null, 16, C.muted);
-    fixedExp.forEach(c => tableRow(c.name, money(c.amount), false, null, 16));
+    curY += 6;
+    totalRow('UNALLOCATED INCOME', money(bg.unallocated), true, bg.unallocated>=0?C.mid:C.red, total>0?fmtP(pctOf(bg.unallocated,total)):'');
 
-    curY += 4;
-    subHead('Variable Expenses');
-    if(!varExp.length) tableRow('No variable expenses logged', '—', false, null, 16, C.muted);
-    varExp.forEach(c => tableRow(c.name, money(c.amount), false, null, 16));
+    // ═══ SECTION II — BALANCE SHEET ═══
+    checkPage(180);
+    sectionHead('II. BALANCE SHEET', 'Current positions · % of gross balance sheet');
 
-    totalRow('TOTAL EXPENSES', money(spent), true, C.red);
-    totalRow('NET AVAILABLE BALANCE', money(remain), false, remain>=0?C.green:C.red);
-
-    // ═══════════════════════════════════════════════════
-    // SECTION 2 — BALANCE SHEET (Assets & Liabilities)
-    // ═══════════════════════════════════════════════════
-    checkPage(160);
-    sectionHead('II. BALANCE SHEET', 'Current Positions');
-
-    // Assets
     subHead('Assets — Investment Portfolio');
+    colHead('', '% OF PORTFOLIO', 'MARKET VALUE');
     if(!holdings.length){
         tableRow('No assets recorded', '—', false, null, 16, C.muted);
     } else {
         holdings.forEach(h => {
-            const g = h.current - h.cost;
-            const gStr = (g>=0?'+':'')+money(g);
-            tableRow(h.name + '  (' + (ASSET_LABEL[h.type]||'Other') + ')', money(h.current), false, null, 16, C.ink);
+            tableRow(h.name + '  (' + (ASSET_LABEL[h.type]||'Other') + ')', money(h.current), false, null, 16, C.ink, fmtP(pctOf(h.current, portCurrent)));
         });
-        tableRow('Cost Basis', money(portCost), false, null, 16, C.muted);
-        tableRow('Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 16, portGain>=0?C.green:C.red);
+        tableRow('Cost Basis', money(portCost), false, null, 16, C.muted, fmtP(pctOf(portCost, portCurrent)));
+        tableRow('Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 16, portGain>=0?C.green:C.red, fmtPS(r.portfolioReturn,2)+' ret.');
     }
-    totalRow('TOTAL ASSETS', money(portCurrent), true, C.green);
+    totalRow('TOTAL ASSETS', money(portCurrent), true, C.green, '100.0%');
 
     curY += 6;
-    // Liabilities
     subHead('Liabilities — Outstanding Debts');
-    checkPage(debts.length*18 + 80);
+    checkPage(debts.length*18 + 90);
+    colHead('', '% OF TOTAL DEBT', 'BALANCE');
     if(!debts.length){
         tableRow('No debts recorded', '—', false, null, 16, C.muted);
     } else {
         debts.forEach(d => {
-            const paidPct = d.originalBalance > 0 ? Math.round((d.originalBalance-d.balance)/d.originalBalance*100) : 0;
-            tableRow(d.name + '  (' + (DEBT_LABEL[d.type]||'Other') + '  ' + d.rate + '% p.a.)', money(d.balance), false, null, 16, C.red);
+            tableRow(d.name + '  (' + (DEBT_LABEL[d.type]||'Other') + '  ' + fmtP(d.rate,2) + ' p.a.)', money(d.balance), false, null, 16, C.red, fmtP(pctOf(d.balance, totalDebt)));
         });
-        const monthlyInt = debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
-        tableRow('Est. Monthly Interest Burden', money(monthlyInt), false, null, 16, C.red);
+        tableRow('Est. Monthly Interest Burden', money(r.interest), false, null, 16, C.red, total>0?fmtP(r.interestPct)+' of inc.':'');
     }
-    totalRow('TOTAL LIABILITIES', money(totalDebt), true, C.red);
+    totalRow('TOTAL LIABILITIES', money(totalDebt), true, C.red, debts.length?'100.0%':'');
 
-    // Net Worth summary
     curY += 4;
     hline(curY, ML, PW-MR, 1, C.black);
     curY += 4;
-    rect(ML, curY, CW, 24, netWorth>=0 ? [235,248,241] : [250,235,235]);
+    rect(ML, curY, CW, 28, netWorth>=0 ? [235,248,241] : [250,235,235]);
     setFont('bold', 10, C.black);
-    doc.text('NET WORTH  (Total Assets − Total Liabilities)', ML+10, curY+16);
+    doc.text('NET WORTH  (Total Assets − Total Liabilities)', ML+10, curY+13);
+    setFont('normal', 7, C.mid);
+    doc.text(portCurrent>0 ? 'Equity ratio '+fmtP(pctOf(netWorth,portCurrent))+'  ·  debt-to-asset '+fmtP(r.debtToAsset) : 'No assets recorded', ML+10, curY+24);
     setFont('bold', 12, netWorth>=0?C.green:C.red);
-    doc.text(money(netWorth), PW-MR-10, curY+16, {align:'right'});
-    curY += 28;
+    doc.text(money(netWorth), PW-MR-10, curY+18, {align:'right'});
+    curY += 32;
 
-    // ═══════════════════════════════════════════════════
-    // SECTION 3 — INVESTMENT PORTFOLIO DETAIL
-    // ═══════════════════════════════════════════════════
-    checkPage(120);
-    sectionHead('III. INVESTMENT PORTFOLIO', 'Holdings & Contributions');
+    // ═══ SECTION III — BUDGET RULE COMPLIANCE ═══
+    checkPage(170);
+    sectionHead('III. BUDGET RULE COMPLIANCE', ruleNeeds + '/' + ruleWants + '/' + ruleSave + ' of take-home pay');
 
-    tableRow('Total Portfolio Market Value', money(portCurrent), false, C.bg);
-    tableRow('Total Cost Basis', money(portCost), false, null);
-    tableRow('Total Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 0, portGain>=0?C.green:C.red);
-    tableRow('Total Contributions Logged', money(totalContribActual), false, null);
-    tableRow('Suggested Monthly Investment', money(inv), false, null, 0, C.green);
+    rect(ML, curY, CW, 14, C.bgAlt);
+    setFont('bold', 6.5, C.muted);
+    doc.text('BUCKET', ML+10, curY+10);
+    doc.text('ALLOCATED', ML+230, curY+10, {align:'right'});
+    doc.text('USED', ML+320, curY+10, {align:'right'});
+    doc.text('% USED', ML+390, curY+10, {align:'right'});
+    doc.text('VARIANCE', PW-MR-10, curY+10, {align:'right'});
+    curY += 16;
+
+    bg.buckets.forEach((b,i) => {
+        if(i%2===0) rect(ML, curY, CW, 18, C.bg);
+        const col = !total ? C.muted : b.good ? C.green : C.red;
+        setFont('bold', 8.5, C.ink);
+        doc.text(b.label + '  (' + b.pct + '%)', ML+10, curY+12);
+        setFont('normal', 8.5, C.mid);
+        doc.text(money(b.allocated), ML+230, curY+12, {align:'right'});
+        doc.text(money(b.used), ML+320, curY+12, {align:'right'});
+        setFont('bold', 8.5, col);
+        doc.text(total?fmtP(b.usedPct,1):'—', ML+390, curY+12, {align:'right'});
+        doc.text((b.diff>=0?'+':'−') + money(Math.abs(b.diff)).replace('(','').replace(')',''), PW-MR-10, curY+12, {align:'right'});
+        hline(curY+18, ML, PW-MR, 0.3, C.rule);
+        curY += 18;
+    });
 
     curY += 6;
-    if(contribs.length){
-        subHead('Recent Contribution History (last 5)');
-        contribs.slice(0,5).forEach(c => {
-            const dt = c.date ? new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}) : '—';
-            tableRow(c.name + '  ·  ' + dt, money(c.amount), false, null, 16, C.green);
+    const verdict = ruleVerdict(bg);
+    const allGood = total>0 && bg.buckets.every(b=>b.good);
+    rect(ML, curY, CW, 30, allGood ? [235,248,241] : [253,245,235]);
+    setFont('bold', 8.5, allGood ? C.green : C.red);
+    doc.text(allGood ? 'WITHIN THE RULE' : 'OUT OF BALANCE', ML+10, curY+13);
+    setFont('normal', 7.2, C.mid);
+    doc.text(doc.splitTextToSize(verdict.text, CW-20), ML+10, curY+24);
+    curY += 36;
+
+    // ═══ SECTION IV — INVESTMENT PORTFOLIO ═══
+    checkPage(150);
+    sectionHead('IV. INVESTMENT PORTFOLIO', 'Holdings & contributions');
+
+    tableRow('Total Portfolio Market Value', money(portCurrent), false, C.bg, 0, C.ink, '100.0%');
+    tableRow('Total Cost Basis', money(portCost), false, null, 0, C.ink, fmtP(pctOf(portCost, portCurrent)));
+    tableRow('Total Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 0, portGain>=0?C.green:C.red, fmtP(pctOf(portGain, portCurrent)));
+    tableRow('Return on Cost Basis', fmtPS(r.portfolioReturn,2), false, null, 0, portGain>=0?C.green:C.red, '');
+    tableRow('Total Contributions Logged', money(totalContribActual), false, null, 0, C.ink, fmtP(r.contribCoverage)+' of value');
+    tableRow('Savings Bucket Target', money(inv), false, null, 0, C.green, ruleSave+'% of inc.');
+
+    if(holdings.length){
+        curY += 6;
+        subHead('Allocation by Asset Type');
+        const byType={};
+        holdings.forEach(h=>{ byType[h.type]=(byType[h.type]||0)+h.current; });
+        Object.keys(byType).sort((a,b)=>byType[b]-byType[a]).forEach((t,i)=>{
+            tableRow(ASSET_LABEL[t]||t, money(byType[t]), false, i%2===0?C.bg:null, 16, C.ink, fmtP(pctOf(byType[t], portCurrent)));
         });
     }
 
-    // ═══════════════════════════════════════════════════
-    // SECTION 4 — DEBT SCHEDULE
-    // ═══════════════════════════════════════════════════
-    checkPage(120);
-    sectionHead('IV. DEBT SCHEDULE', 'Amortization Summary');
+    if(contribs.length){
+        checkPage(120);
+        curY += 6;
+        subHead('Recent Contribution History (last 5)');
+        const target = getProjectionContrib();
+        contribs.slice(0,5).forEach(c => {
+            const dt = c.date ? new Date(c.date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}) : '—';
+            tableRow(c.name + '  ·  ' + dt, money(c.amount), false, null, 16, C.green, fmtP(pctOf(c.amount, target))+' of target');
+        });
+    }
+
+    // ═══ SECTION V — DEBT SCHEDULE ═══
+    checkPage(140);
+    sectionHead('V. DEBT SCHEDULE', 'Amortization summary');
 
     if(!debts.length){
         setFont('italic', 8.5, C.muted);
-        doc.text('No debts recorded. Debt-free position.', ML+10, curY+11);
+        doc.text('No debts recorded. Debt-free position — 0.0% debt-to-income.', ML+10, curY+11);
         curY += 20;
     } else {
-        // Column headers
         rect(ML, curY, CW, 14, C.bgAlt);
-        setFont('bold', 7, C.muted);
+        setFont('bold', 6.5, C.muted);
         doc.text('DEBT NAME', ML+10, curY+10);
-        doc.text('BALANCE', ML+240, curY+10, {align:'right'});
-        doc.text('RATE', ML+310, curY+10, {align:'right'});
-        doc.text('MIN PMT', ML+380, curY+10, {align:'right'});
+        doc.text('BALANCE', ML+215, curY+10, {align:'right'});
+        doc.text('% DEBT', ML+265, curY+10, {align:'right'});
+        doc.text('APR', ML+310, curY+10, {align:'right'});
+        doc.text('MIN PMT', ML+375, curY+10, {align:'right'});
+        doc.text('% PAID', ML+425, curY+10, {align:'right'});
         doc.text('EST. PAYOFF', PW-MR-10, curY+10, {align:'right'});
         curY += 16;
 
@@ -2359,36 +3359,38 @@ function buildPDF(){
             const res = calcPayoff(d.balance, d.rate, d.minpay);
             const payStr = res&&!res.error ? Math.floor(res.months/12)+'y '+res.months%12+'m' : '—';
             setFont('normal', 8, C.ink);
-            // truncate long names
-            const nm = d.name.length > 28 ? d.name.slice(0,26)+'…' : d.name;
+            const nm = d.name.length > 22 ? d.name.slice(0,20)+'…' : d.name;
             doc.text(nm, ML+10, curY+11);
-            doc.text(money(d.balance), ML+240, curY+11, {align:'right'});
-            doc.text(d.rate+'%', ML+310, curY+11, {align:'right'});
-            doc.text(money(d.minpay||0), ML+380, curY+11, {align:'right'});
+            doc.text(money(d.balance), ML+215, curY+11, {align:'right'});
+            setFont('normal', 7.5, C.muted);
+            doc.text(fmtP(pctOf(d.balance,totalDebt)), ML+265, curY+11, {align:'right'});
+            setFont('normal', 8, C.ink);
+            doc.text(fmtP(d.rate,2), ML+310, curY+11, {align:'right'});
+            doc.text(money(d.minpay||0), ML+375, curY+11, {align:'right'});
+            setFont('normal', 7.5, C.muted);
+            doc.text(fmtP(pctOf(d.originalBalance-d.balance, d.originalBalance)), ML+425, curY+11, {align:'right'});
             setFont('normal', 8, res&&!res.error?C.mid:C.muted);
             doc.text(payStr, PW-MR-10, curY+11, {align:'right'});
             hline(curY+16, ML, PW-MR, 0.3, C.rule);
             curY += 16;
         });
 
-        const totInt = debts.reduce((s,d)=>s+(d.balance*d.rate/100/12),0);
-        totalRow('TOTAL OUTSTANDING DEBT', money(totalDebt), true, C.red);
-        tableRow('Monthly Interest Burden', money(totInt), false, null, 0, C.red);
+        totalRow('TOTAL OUTSTANDING DEBT', money(totalDebt), true, C.red, '100.0%');
+        tableRow('Monthly Interest Burden', money(r.interest), false, null, 0, C.red, total>0?fmtP(r.interestPct)+' of inc.':'');
+        tableRow('Total Minimum Payments', money(r.minPay), false, null, 0, C.red, total>0?fmtP(r.dti)+' DTI':'');
         const totPaid = payments.reduce((s,p)=>s+p.amount,0);
-        tableRow('Total Payments Made to Date', money(totPaid), false, null, 0, C.green);
+        tableRow('Total Payments Made to Date', money(totPaid), false, null, 0, C.green, fmtP(r.debtRetired)+' retired');
     }
 
-    // ═══════════════════════════════════════════════════
-    // SECTION 5 — WEALTH PROJECTION
-    // ═══════════════════════════════════════════════════
-    checkPage(140);
-    sectionHead('V. WEALTH PROJECTION', projYears+'-Year Forecast  ·  '+projRate+'% Annual Return');
+    // ═══ SECTION VI — WEALTH PROJECTION ═══
+    checkPage(190);
+    sectionHead('VI. WEALTH PROJECTION', projYears+'-year forecast  ·  '+fmtP(projRate,2)+' annual return');
 
-    tableRow('Monthly Contribution Assumed', money(projContribAmt), false, C.bg);
-    tableRow('Annual Return Rate', projRate.toFixed(2)+'%', false, null);
+    tableRow('Monthly Contribution Assumed', money(projContribAmt), false, C.bg, 0, C.ink, total>0?fmtP(pctOf(projContribAmt,total))+' of inc.':'');
+    tableRow('Annual Return Rate', fmtP(projRate,2), false, null);
     tableRow('Investment Horizon', projYears+' years', false, null);
-    tableRow('Total Capital Contributed', money(projContribAmt * projYears * 12), false, null);
-    tableRow('Total Projected Growth (Returns)', money(Math.max(0,projFinal - projContribAmt*projYears*12)), false, null, 0, C.green);
+    tableRow('Total Capital Contributed', money(projTotalPaid), false, null, 0, C.ink, fmtP(pctOf(projTotalPaid, projFinal))+' of final');
+    tableRow('Total Projected Growth (Returns)', money(projGrowth), false, null, 0, C.green, fmtP(pctOf(projGrowth, projFinal))+' of final');
 
     curY += 4;
     hline(curY, ML, PW-MR, 1, C.black);
@@ -2400,23 +3402,21 @@ function buildPDF(){
     doc.text(money(projFinal), PW-MR-10, curY+18, {align:'right'});
     curY += 30;
 
-    // Milestones table
+    checkPage(130);
     curY += 4;
     subHead('Growth Milestones');
+    colHead('', '% OF FINAL', 'VALUE');
     const step = Math.max(1, Math.floor(projYears/5));
     const milYears = [];
     for(let y=step; y<=projYears; y+=step) milYears.push(y);
     if(!milYears.includes(projYears)) milYears.push(projYears);
 
     milYears.forEach((y,i) => {
-        let p=0;
-        for(let m=1;m<=y*12;m++) p=(p+projContribAmt)*(1+projRate/100/12);
-        tableRow('Year '+y, money(Math.round(p)), false, i%2===0?C.bg:null, 16, C.green);
+        const v = Math.round(fvSeries(projContribAmt, projRate, y*12));
+        tableRow('Year '+y, money(v), false, i%2===0?C.bg:null, 16, C.green, fmtP(pctOf(v, projFinal)));
     });
 
-    // ═══════════════════════════════════════════════════
-    // FOOTER ON EVERY PAGE
-    // ═══════════════════════════════════════════════════
+    // ═══ FOOTER ═══
     const pageCount = doc.getNumberOfPages();
     for(let i=1; i<=pageCount; i++){
         doc.setPage(i);
@@ -2428,9 +3428,8 @@ function buildPDF(){
         doc.text('This document is for personal informational purposes only and does not constitute financial advice.', PW/2, PH-10, {align:'center'});
     }
 
-    // Save
     const filename = 'WealthFlow_Balance_Sheet_'+new Date().toISOString().slice(0,10)+'.pdf';
-    doc.save(filename);
+    await deliverFile(doc.output('blob'), filename, ()=>doc.save(filename));
 }
 
 // ── Init ──────────────────────────────────────────────
