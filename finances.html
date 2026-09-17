@@ -354,6 +354,48 @@
         .bucket-items { margin-top:12px; padding-top:11px; border-top:1px solid var(--border); }
         .bucket-item { display:flex; justify-content:space-between; font-size:.63rem; color:var(--dim); padding:3px 0; letter-spacing:.03em; }
 
+        /* ── DUE DATES · TOAST · BACKUP ──────────── */
+        .due-chip {
+            font-size:.52rem; letter-spacing:.1em; text-transform:uppercase;
+            padding:2px 7px; margin-left:8px; white-space:nowrap;
+        }
+        .due-overdue { background:rgba(255,51,51,0.14); color:var(--red); }
+        .due-soon    { background:rgba(255,69,0,0.14);  color:var(--ember); }
+        .due-later   { background:rgba(255,255,255,0.05); color:var(--dim); }
+        .due-done    { background:rgba(0,200,117,0.12); color:var(--green); }
+        .bill-head {
+            display:flex; justify-content:space-between; align-items:center;
+            font-size:.55rem; letter-spacing:.14em; text-transform:uppercase;
+            color:var(--dim); padding:9px 0 7px; margin-top:4px;
+            border-bottom:1px solid var(--border);
+        }
+        .toast {
+            position:fixed; left:50%; bottom:84px; transform:translateX(-50%) translateY(20px);
+            background:var(--card); border:1px solid var(--border2);
+            color:var(--text); font-family:'JetBrains Mono',monospace;
+            font-size:.68rem; letter-spacing:.04em; padding:11px 18px;
+            z-index:800; opacity:0; pointer-events:none;
+            transition:opacity .25s ease, transform .25s ease;
+            max-width:calc(100% - 32px); text-align:center;
+        }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        .toast.good { border-color:rgba(0,200,117,0.4); color:var(--green); }
+        .toast.bad  { border-color:rgba(255,51,51,0.4);  color:var(--red); }
+        .danger-btn {
+            width:100%; padding:11px; background:transparent;
+            border:1px solid rgba(255,51,51,0.3); color:var(--red);
+            font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:500;
+            letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:all .2s;
+        }
+        .danger-btn:hover { background:rgba(255,51,51,0.08); }
+        .util-btn {
+            flex:1; padding:11px; background:var(--surface);
+            border:1px solid var(--border); color:var(--text);
+            font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:500;
+            letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:all .2s;
+        }
+        .util-btn:hover { border-color:var(--border2); background:var(--card); }
+
         .mode-row { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:18px; }
         .mode-btn {
             padding:10px 6px; border:1px solid var(--border); background:var(--surface);
@@ -383,6 +425,37 @@
         .stab-tile { background:var(--surface); border:1px solid var(--border); padding:10px; }
         .stab-lbl { font-size:.5rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin-bottom:4px; }
         .stab-val { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; }
+
+        /* ── ACCOUNTS / BILLS ────────────────────── */
+        .acct-row { display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(--border); }
+        .acct-row:last-child { border-bottom:none; }
+        .acct-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .acct-info { flex:1; min-width:0; }
+        .acct-name { font-size:.82rem; color:var(--text); letter-spacing:.02em; }
+        .acct-type { font-size:.57rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin-top:3px; }
+        .acct-bal { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:.03em; }
+
+        .bill-row { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); cursor:pointer; }
+        .bill-row:last-child { border-bottom:none; }
+        .bill-box {
+            width:18px; height:18px; flex-shrink:0;
+            border:1px solid var(--border2); background:var(--surface);
+            display:flex; align-items:center; justify-content:center;
+            font-size:.7rem; color:var(--void); transition:all .2s;
+        }
+        .bill-row.done .bill-box { background:var(--green); border-color:var(--green); }
+        .bill-row.done .bill-name { color:var(--dim); text-decoration:line-through; }
+        .bill-row.done .bill-amt  { color:var(--dim); text-decoration:line-through; }
+        .bill-name { flex:1; font-size:.8rem; color:var(--text); letter-spacing:.02em; }
+        .bill-tag { font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; margin-top:3px; }
+        .bill-amt { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:.03em; color:var(--text); }
+
+        .runway { display:flex; align-items:baseline; gap:10px; margin-top:4px; }
+        .runway-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:.02em; line-height:1; }
+        .cash-line { display:flex; justify-content:space-between; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--border); }
+        .cash-line:last-child { border-bottom:none; }
+        .cash-lbl { font-size:.74rem; color:var(--dim); letter-spacing:.02em; }
+        .cash-val { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:.03em; }
 
         .rule-badge { font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; padding:3px 9px; }
         .rule-line { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
@@ -580,8 +653,8 @@
             border:none; background:none; color:var(--dim);
             cursor:pointer; text-align:center;
             font-family:'JetBrains Mono',monospace;
-            font-size:.52rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
-            padding:6px 10px;
+            font-size:.5rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+            padding:6px 4px;
             display:flex; flex-direction:column; align-items:center; gap:4px;
             transition:color .2s;
         }
@@ -831,6 +904,40 @@
     </div>
 </div>
 
+<!-- ═══ ACCOUNT MODAL ═══ -->
+<div class="modal-overlay" id="acctModal" onclick="closeIfOverlay(event,'acctModal')">
+    <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title" id="acct_title">Add Account</div>
+        <div class="sheet-sub">Enter the balance you have right now — this is checked against the bills you still owe.</div>
+        <div class="form-row"><label class="form-label">Account Name</label><input type="text" id="a_name" placeholder="e.g. Main Checking, Savings…"></div>
+        <div class="form-row">
+            <label class="form-label">Account Type</label>
+            <select id="a_type" onchange="acctTypeChanged()">
+                <option value="checking">Checking</option>
+                <option value="savings">Savings</option>
+                <option value="cash">Cash / Wallet</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label class="form-label">Current Balance ($)</label>
+            <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="a_balance" step="0.01" placeholder="0.00" style="padding-left:26px;"></div>
+        </div>
+        <div class="form-row">
+            <label class="form-label">Use This Money For Bills?</label>
+            <div class="tab-row" style="margin-bottom:0;">
+                <button class="tab-btn" id="a_spend_yes" onclick="setSpendable(true)">Yes — spendable</button>
+                <button class="tab-btn" id="a_spend_no"  onclick="setSpendable(false)">No — ring-fenced</button>
+            </div>
+            <div style="font-size:.6rem;color:var(--dim);margin-top:7px;">Ring-fenced accounts still count toward net worth, but are left out of the "left to pay bills" figure.</div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('acctModal')">Cancel</button>
+            <button class="btn-confirm" onclick="applyAccount()">Save Account</button>
+        </div>
+    </div>
+</div>
+
 <!-- ═══ EXTRA INCOME MODAL ═══ -->
 <div class="modal-overlay" id="incomeModal" onclick="closeIfOverlay(event,'incomeModal')">
     <div class="modal-sheet">
@@ -964,6 +1071,10 @@
             <label class="form-label">Minimum Monthly Payment ($)</label>
             <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="d_minpay" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;" oninput="previewDebt()"></div>
         </div>
+        <div class="form-row">
+            <label class="form-label">Payment Due Day (optional)</label>
+            <input type="number" id="d_due" min="1" max="31" placeholder="e.g. 15">
+        </div>
         <div class="calc-box" id="debtPreviewBox" style="display:none;">
             <div class="calc-box-title">Preview — Minimum Payment</div>
             <div id="debtPreviewContent"></div>
@@ -1025,8 +1136,8 @@
                     <div class="nw-tile-pct" id="nwDebtsPct">0.0%</div>
                 </div>
                 <div class="nw-tile nw-cashflow">
-                    <span class="nw-tile-icon">≡</span>
-                    <div class="nw-tile-label">Cash Flow</div>
+                    <span class="nw-tile-icon">◇</span>
+                    <div class="nw-tile-label">Accounts</div>
                     <div class="nw-tile-value" id="nwCash">$0.00</div>
                     <div class="nw-tile-pct" id="nwCashPct">0.0%</div>
                 </div>
@@ -1093,6 +1204,20 @@
             <div id="miniChartPcts" style="margin-top:14px;"></div>
         </div>
 
+        <!-- ── CASH vs BILLS ── -->
+        <div class="card" onclick="showPage('cash')" style="cursor:pointer;">
+            <div class="sub-header" style="margin-bottom:10px;">
+                <div class="sub-header-title">Cash vs Bills ›</div>
+                <div class="rule-badge" id="cashBadge">NO ACCOUNTS</div>
+            </div>
+            <div class="cash-line"><span class="cash-lbl">Spendable balance</span><span class="cash-val c-ice" id="hc_bal">$0.00</span></div>
+            <div class="cash-line"><span class="cash-lbl">Bills still due</span><span class="cash-val c-red" id="hc_due">−$0.00</span></div>
+            <div class="cash-line" style="border-bottom:none;">
+                <span class="cash-lbl" style="color:var(--text);">Left after bills</span>
+                <span class="cash-val" style="font-size:1.5rem;" id="hc_left">$0.00</span>
+            </div>
+        </div>
+
         <!-- ── 50 / 30 / 20 SNAPSHOT ── -->
         <div class="card">
             <div class="sub-header" style="margin-bottom:4px;">
@@ -1153,8 +1278,14 @@
                     <option value="savings">Savings — emergency fund, investments, extra debt</option>
                 </select>
             </div>
+            <div class="form-row">
+                <label class="form-label">Due Day of Month (optional)</label>
+                <input type="number" id="catDue" min="1" max="31" placeholder="e.g. 1 for the 1st">
+                <div style="font-size:.6rem;color:var(--dim);margin-top:5px;">Adds a due date so the Cash tab can flag what's overdue or coming up.</div>
+            </div>
             <div style="font-size:.62rem;color:var(--dim);margin-bottom:12px;line-height:1.7;" id="catPreviewLine">—</div>
-            <button class="btn-primary" onclick="addCategory()">+ Add to Budget</button>
+            <button class="btn-primary" id="catSubmit" onclick="addCategory()">+ Add to Budget</button>
+            <button class="btn-cancel" id="catCancel" style="width:100%;margin-top:8px;display:none;" onclick="cancelEditCategory()">Cancel edit</button>
         </div>
 
         <div class="card"><div class="card-label">Budget Items</div><div id="categoryList"></div></div>
@@ -1166,6 +1297,81 @@
                 <strong style="color:var(--ice);">30% Wants</strong> — everything that improves life but isn't required: dining out, subscriptions, travel, upgrades.<br><br>
                 <strong style="color:var(--green);">20% Savings</strong> — investments, emergency fund, and any debt payment above the minimum. This is the bucket to protect first.
             </div>
+        </div>
+    </div>
+
+    <!-- CASH & BILLS -->
+    <div id="cash" class="page">
+        <div class="section-title">Cash &amp; Bills</div>
+        <div class="section-divider"></div>
+
+        <div class="card-ice" style="padding:24px 20px;">
+            <div class="card-label-ice">Available for Bills</div>
+            <div class="card-value-ice" id="cashSpendable">$0.00</div>
+            <div class="card-sub-ice" id="cashSpendableSub">Add an account to get started</div>
+            <div style="position:relative;z-index:1;margin-top:20px;">
+                <div class="cash-line"><span class="cash-lbl">Spendable balance</span><span class="cash-val c-ice" id="cl_bal">$0.00</span></div>
+                <div class="cash-line"><span class="cash-lbl">Bills still due this month</span><span class="cash-val c-red" id="cl_due">−$0.00</span></div>
+                <div class="cash-line" style="border-bottom:none;padding-top:14px;">
+                    <span class="cash-lbl" style="color:var(--text);font-size:.8rem;">Left after bills</span>
+                    <span class="cash-val" style="font-size:1.6rem;" id="cl_left">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="cashVerdictCard">
+            <div id="cashVerdict" style="font-size:.74rem;line-height:1.8;padding:10px 14px;border-left:2px solid var(--dim2);color:var(--dim);"></div>
+            <div style="margin-top:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--dim);margin-bottom:6px;letter-spacing:.05em;">
+                    <span id="billPaidLbl">0 of 0 bills paid</span>
+                    <span id="billPaidPct">0%</span>
+                </div>
+                <div style="height:6px;background:var(--dim2);overflow:hidden;">
+                    <div id="billBar" style="height:100%;background:linear-gradient(90deg,var(--green),#00e688);width:0%;transition:width .6s cubic-bezier(.22,1,.36,1);"></div>
+                </div>
+            </div>
+            <div class="stats-grid" style="margin-top:16px;margin-bottom:0;">
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Already Paid</div>
+                    <div class="stat-tile-value c-green" id="cs_paid">$0.00</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-tile-label">Savings to Set Aside</div>
+                    <div class="stat-tile-value c-lime" id="cs_reserve">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="sub-header">
+                <div class="sub-header-title">Bills This Month</div>
+                <button class="add-btn" onclick="showPage('budget')" style="background:var(--surface);color:var(--dim);border:1px solid var(--border);font-size:.8rem;">Edit in Budget</button>
+            </div>
+            <div style="font-size:.62rem;color:var(--dim);margin-bottom:12px;letter-spacing:.03em;">Tap an item to mark it paid. The list resets at the start of each month.</div>
+            <div id="billList"></div>
+        </div>
+
+        <div class="card">
+            <div class="sub-header">
+                <div class="sub-header-title">Accounts</div>
+                <button class="add-btn" onclick="openAcctModal()">+ Account</button>
+            </div>
+            <div id="acctList"></div>
+            <div id="acctTotals" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-label" style="margin-bottom:6px;">Data &amp; Backup</div>
+            <div style="font-size:.62rem;color:var(--dim);line-height:1.7;margin-bottom:14px;">
+                Everything is stored only in this browser. Clearing site data, switching device or using private browsing will lose it. Export a backup file regularly.
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <button class="util-btn" onclick="exportData()">↓ Export Backup</button>
+                <button class="util-btn" onclick="document.getElementById('importFile').click()">↑ Import Backup</button>
+            </div>
+            <input type="file" id="importFile" accept="application/json,.json" style="display:none;" onchange="importData(event)">
+            <div style="font-size:.58rem;color:var(--dim);margin-bottom:14px;letter-spacing:.04em;" id="backupInfo">—</div>
+            <button class="danger-btn" onclick="resetAllData()">Erase All Data</button>
         </div>
     </div>
 
@@ -1555,10 +1761,13 @@
 
 </div>
 
+<div class="toast" id="toast"></div>
+
 <!-- NAV BAR -->
 <nav class="nav-bar">
     <button class="nav-item active" onclick="showPage('home',this)"><span class="nav-icon">⊞</span>Home<span class="nav-dot"></span></button>
-    <button class="nav-item" onclick="showPage('budget',this)"><span class="nav-icon">≡</span>Expenses<span class="nav-dot"></span></button>
+    <button class="nav-item" onclick="showPage('budget',this)"><span class="nav-icon">≡</span>Budget<span class="nav-dot"></span></button>
+    <button class="nav-item" onclick="showPage('cash',this)"><span class="nav-icon">◇</span>Cash<span class="nav-dot"></span></button>
     <button class="nav-item" onclick="showPage('invest',this)"><span class="nav-icon">◈</span>Invest<span class="nav-dot"></span></button>
     <button class="nav-item" onclick="showPage('debt',this)"><span class="nav-icon">⊘</span>Debt<span class="nav-dot"></span></button>
     <button class="nav-item" onclick="showPage('wealth',this)"><span class="nav-icon">↗</span>Project<span class="nav-dot"></span></button>
@@ -1591,6 +1800,8 @@ let categories   = LS.get('wf_cats',   []);
 let extraIncomes = LS.get('wf_incomes',[]);
 let holdings     = LS.get('wf_holdings',[]);
 let contribs     = LS.get('wf_contribs',[]);
+let accounts     = LS.get('wf_accounts',[]);      // [{id,name,type,balance,spendable}]
+let billsPaid    = LS.get('wf_billspaid',{});     // { 'YYYY-MM': [billId, ...] }
 let debts        = LS.get('wf_debts',  []);
 let payments     = LS.get('wf_payments',[]);
 let myChart, myAllocChart;
@@ -1787,20 +1998,247 @@ function renderRuleSummary(){
     el.style.borderLeftColor = v.color;
 }
 
-// ── Net Worth ─────────────────────────────────────────// ── Net Worth ─────────────────────────────────────────
+// ── CASH ACCOUNTS & BILLS ────────────────────────────
+const ACCT_LABEL = {checking:'Checking', savings:'Savings', cash:'Cash / Wallet'};
+const ACCT_COLOR = {checking:'#00d4ff', savings:'#00c875', cash:'#b8ff00'};
+const monthKey = () => new Date().toISOString().slice(0,7);
+
+function getCash(){
+    const total     = accounts.reduce((s,a)=>s+a.balance,0);
+    const spendable = accounts.filter(a=>a.spendable).reduce((s,a)=>s+a.balance,0);
+    return {total, spendable, reserved: total-spendable, n: accounts.length};
+}
+
+// Everything still owed out of this month's income: budget items + debt minimums.
+// Days between today and an item's due day this month (negative = overdue).
+function daysUntilDue(day){
+    if(!day) return null;
+    const now = new Date();
+    const last = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+    const d = new Date(now.getFullYear(), now.getMonth(), Math.min(day, last));
+    return Math.round((d - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+}
+
+function getBills(){
+    const key  = monthKey();
+    const paid = billsPaid[key] || [];
+    const items = [];
+    categories.filter(c=>c.type!=='savings').forEach(c=>{
+        items.push({id:'c'+c.id, name:c.name, amount:c.amount, bucket:c.type, dueDay:c.dueDay||null});
+    });
+    debts.forEach(d=>{
+        if(d.minpay>0) items.push({id:'d'+d.id, name:d.name+' — minimum payment', amount:d.minpay, bucket:'needs', auto:true, dueDay:d.dueDay||null});
+    });
+    const withState = items.map(i=>{
+        const days = daysUntilDue(i.dueDay);
+        return {...i, paid: paid.includes(i.id), days,
+                urgency: days===null ? 2 : days < 0 ? 0 : days <= 7 ? 1 : 2};
+    }).sort((a,b)=>
+        (a.paid - b.paid) ||
+        (a.urgency - b.urgency) ||
+        ((a.days===null?999:a.days) - (b.days===null?999:b.days)) ||
+        (b.amount - a.amount)
+    );
+    const unpaid  = withState.filter(i=>!i.paid);
+    const total   = withState.reduce((s,i)=>s+i.amount,0);
+    const paidAmt = withState.filter(i=>i.paid).reduce((s,i)=>s+i.amount,0);
+    return {key, items:withState, total, paidAmt, due: total-paidAmt,
+            count: withState.length, paidCount: withState.filter(i=>i.paid).length,
+            overdue:    unpaid.filter(i=>i.urgency===0).reduce((s,i)=>s+i.amount,0),
+            overdueN:   unpaid.filter(i=>i.urgency===0).length,
+            dueSoon:    unpaid.filter(i=>i.urgency===1).reduce((s,i)=>s+i.amount,0),
+            dueSoonN:   unpaid.filter(i=>i.urgency===1).length};
+}
+
+function dueChip(i){
+    if(i.paid) return '<span class="due-chip due-done">paid</span>';
+    if(i.days === null) return '';
+    if(i.days < 0)  return `<span class="due-chip due-overdue">${Math.abs(i.days)}d overdue</span>`;
+    if(i.days === 0) return '<span class="due-chip due-soon">due today</span>';
+    if(i.days <= 7) return `<span class="due-chip due-soon">in ${i.days}d</span>`;
+    return `<span class="due-chip due-later">${ordinal(i.dueDay)}</span>`;
+}
+function ordinal(n){
+    const s=['th','st','nd','rd'], v=n%100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+
+function toggleBill(id){
+    const key = monthKey();
+    const list = billsPaid[key] || [];
+    billsPaid[key] = list.includes(id) ? list.filter(x=>x!==id) : [...list, id];
+    LS.set('wf_billspaid', billsPaid);
+    renderCash(); updateHome();
+}
+
+// ── Account modal ────────────────────────────────────
+let acctTargetId = null, acctSpendable = true;
+function openAcctModal(id){
+    acctTargetId = id || null;
+    const a = id ? accounts.find(x=>x.id===id) : null;
+    document.getElementById('acct_title').textContent = a ? 'Edit Account' : 'Add Account';
+    document.getElementById('a_name').value    = a ? a.name : '';
+    document.getElementById('a_type').value    = a ? a.type : 'checking';
+    document.getElementById('a_balance').value = a ? a.balance : '';
+    setSpendable(a ? a.spendable : true);
+    openModal('acctModal');
+}
+function setSpendable(v){
+    acctSpendable = v;
+    document.getElementById('a_spend_yes').classList.toggle('active', v);
+    document.getElementById('a_spend_no').classList.toggle('active', !v);
+}
+function acctTypeChanged(){
+    if(acctTargetId) return;
+    setSpendable(document.getElementById('a_type').value !== 'savings');
+}
+function applyAccount(){
+    const name    = document.getElementById('a_name').value.trim();
+    const type    = document.getElementById('a_type').value;
+    const balance = parseFloat(document.getElementById('a_balance').value);
+    if(!name || isNaN(balance)) return;
+    if(acctTargetId){
+        const a = accounts.find(x=>x.id===acctTargetId);
+        if(a) Object.assign(a, {name, type, balance, spendable:acctSpendable});
+    } else {
+        accounts.push({id:Date.now(), name, type, balance, spendable:acctSpendable});
+    }
+    LS.set('wf_accounts', accounts);
+    renderCash(); updateHome(); closeModal('acctModal');
+    toast((acctTargetId?'Updated ':'Added ')+name+' — '+fmt(balance)+'.','good');
+}
+function removeAccount(id){
+    accounts = accounts.filter(a=>a.id!==id);
+    LS.set('wf_accounts', accounts);
+    renderCash(); updateHome();
+}
+
+// ── Cash page render ─────────────────────────────────
+function renderCash(){
+    const c  = getCash();
+    const b  = getBills();
+    const bg = getBudget();
+    const left = c.spendable - b.due;
+    const sv = bg.byKey.savings;
+    const reserveLeft = Math.max(0, sv.allocated - sv.used);
+
+    document.getElementById('cashSpendable').textContent = fmt(c.spendable);
+    document.getElementById('cashSpendableSub').textContent = c.n === 0
+        ? 'Add an account to get started'
+        : c.n + ' account' + (c.n===1?'':'s') + (c.reserved>0 ? ' · ' + fmt(c.reserved) + ' ring-fenced' : '');
+
+    document.getElementById('cl_bal').textContent = fmt(c.spendable);
+    document.getElementById('cl_due').textContent = '−' + fmt(b.due);
+    const leftEl = document.getElementById('cl_left');
+    leftEl.textContent = (left<0?'−':'') + fmt(Math.abs(left));
+    leftEl.style.color = left >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const v = document.getElementById('cashVerdict');
+    let txt, col;
+    if(!c.n){
+        txt = 'Add your checking or savings balance and this will show exactly what is left once every bill is covered.';
+        col = 'var(--dim)';
+    } else if(!b.count){
+        txt = 'No bills logged yet. Add your expenses in the Budget tab and they will appear here as a checklist.';
+        col = 'var(--dim)';
+    } else if(left < 0){
+        txt = 'Short by ' + fmt(Math.abs(left)) + '. Your spendable balance does not cover the ' + fmt(b.due) + ' still owed — you need more income this month or a bill has to move.';
+        col = 'var(--red)';
+    } else if(left < reserveLeft){
+        txt = fmt(left) + ' left after bills. That covers everything owed, but falls ' + fmt(reserveLeft-left) + ' short of the ' + fmt(reserveLeft) + ' you still want to move into savings this month.';
+        col = 'var(--ember)';
+    } else {
+        txt = fmt(left) + ' left after every bill is paid' + (reserveLeft>0
+            ? ' — enough to cover the ' + fmt(reserveLeft) + ' savings transfer and still keep ' + fmt(left-reserveLeft) + ' free.'
+            : ' — savings for the month are already covered.');
+        col = 'var(--green)';
+    }
+    v.textContent = txt; v.style.color = col; v.style.borderLeftColor = col;
+
+    const pctPaid = pctOf(b.paidAmt, b.total);
+    document.getElementById('billPaidLbl').textContent = b.paidCount + ' of ' + b.count + ' bills paid';
+    document.getElementById('billPaidPct').textContent = b.count ? fmtP(pctPaid,0) : '—';
+    document.getElementById('billBar').style.width = clampW(pctPaid) + '%';
+    document.getElementById('cs_paid').textContent = fmt(b.paidAmt);
+    document.getElementById('cs_reserve').textContent = fmt(reserveLeft);
+
+    const TAG = {needs:['Needs','c-ember'], wants:['Wants','c-ice']};
+    const bl = document.getElementById('billList');
+    bl.innerHTML = !b.count
+        ? `<div class="empty-state"><div class="empty-icon">🧾</div><div class="empty-text">No bills to track.<br>Add expenses in the Budget tab.</div></div>`
+        : `<div class="bill-head">
+                <span style="color:${b.overdueN?'var(--red)':'var(--dim)'};">${b.overdueN?b.overdueN+' overdue · '+fmt(b.overdue):'Nothing overdue'}</span>
+                <span style="color:${b.dueSoonN?'var(--ember)':'var(--dim)'};">${b.dueSoonN?'Next 7 days '+fmt(b.dueSoon):'Nothing due this week'}</span>
+           </div>` + b.items.map(i=>`
+            <div class="bill-row ${i.paid?'done':''}" onclick="toggleBill('${i.id}')">
+                <div class="bill-box">${i.paid?'✓':''}</div>
+                <div style="flex:1;">
+                    <div class="bill-name">${i.name}${dueChip(i)}</div>
+                    <div class="bill-tag ${(TAG[i.bucket]||TAG.needs)[1]}">${(TAG[i.bucket]||TAG.needs)[0]}${i.auto?' · auto':''}</div>
+                </div>
+                <div class="bill-amt">${fmt(i.amount)}</div>
+            </div>`).join('');
+
+    const al = document.getElementById('acctList');
+    al.innerHTML = !c.n
+        ? `<div class="empty-state"><div class="empty-icon">◇</div><div class="empty-text">No accounts added.<br>Tap "+ Account" to enter a balance.</div></div>`
+        : accounts.map(a=>`
+            <div class="acct-row">
+                <div class="acct-dot" style="background:${ACCT_COLOR[a.type]};box-shadow:0 0 6px ${ACCT_COLOR[a.type]};"></div>
+                <div class="acct-info">
+                    <div class="acct-name">${a.name}</div>
+                    <div class="acct-type">${ACCT_LABEL[a.type]}${a.spendable?'':' · ring-fenced'}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="acct-bal" style="color:${a.spendable?'var(--text)':'var(--dim)'};">${fmt(a.balance)}</div>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button class="row-action" style="color:var(--ice);" onclick="openAcctModal(${a.id})">Edit</button>
+                        <button class="row-action" onclick="removeAccount(${a.id})">Remove</button>
+                    </div>
+                </div>
+            </div>`).join('');
+
+    renderBackupInfo();
+
+    const tot = document.getElementById('acctTotals');
+    tot.style.display = c.n ? 'block' : 'none';
+    if(c.n) tot.innerHTML = `
+        <div class="cash-line" style="padding:7px 0;"><span class="cash-lbl">Spendable</span><span class="cash-val c-ice">${fmt(c.spendable)}</span></div>
+        <div class="cash-line" style="padding:7px 0;"><span class="cash-lbl">Ring-fenced</span><span class="cash-val c-dim">${fmt(c.reserved)}</span></div>
+        <div class="cash-line" style="padding:7px 0;border-bottom:none;"><span class="cash-lbl" style="color:var(--text);">Total cash</span><span class="cash-val c-white">${fmt(c.total)}</span></div>`;
+}
+
+function renderCashSummary(){
+    const c = getCash(), b = getBills();
+    const left = c.spendable - b.due;
+    document.getElementById('hc_bal').textContent = fmt(c.spendable);
+    document.getElementById('hc_due').textContent = '−' + fmt(b.due);
+    const el = document.getElementById('hc_left');
+    el.textContent = (left<0?'−':'') + fmt(Math.abs(left));
+    el.style.color = !c.n ? 'var(--dim)' : left >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const badge = document.getElementById('cashBadge');
+    const paint = (t,color,bgc,bd)=>{ badge.textContent=t; badge.style.color=color; badge.style.background=bgc; badge.style.border='1px solid '+bd; };
+    if(!c.n)                          paint('NO ACCOUNTS','var(--dim)','rgba(90,87,80,0.15)','rgba(90,87,80,0.3)');
+    else if(left < 0)                 paint('SHORT','var(--red)','var(--red2)','rgba(255,51,51,0.3)');
+    else if(b.due === 0 && b.count)   paint('ALL PAID','var(--green)','var(--green2)','rgba(0,200,117,0.3)');
+    else                              paint('COVERED','var(--green)','var(--green2)','rgba(0,200,117,0.3)');
+}
+
+// ── Net Worth ─────────────────────────────────────────
 function updateNetWorth(){
     const r = getRatios();
     const portfolioVal = r.portfolio;
     const totalDebt    = r.totalDebt;
-    const freeCash     = Math.max(0, r.free);
-    const netWorth     = portfolioVal - totalDebt;
+    const freeCash     = getCash().total;
+    const netWorth     = portfolioVal + freeCash - totalDebt;
 
     const nwEl = document.getElementById('networthValue');
     nwEl.textContent = (netWorth < 0 ? '−' : '') + fmt(Math.abs(netWorth));
     nwEl.className = 'networth-value ' + (netWorth >= 0 ? 'positive' : 'negative');
 
     const badge = document.getElementById('nwBadge');
-    if(portfolioVal === 0 && totalDebt === 0){
+    if(portfolioVal === 0 && totalDebt === 0 && freeCash === 0){
         badge.textContent = 'NO DATA';
         badge.style.background = 'rgba(90,87,80,0.2)';
         badge.style.borderColor = 'rgba(90,87,80,0.3)';
@@ -1818,11 +2256,12 @@ function updateNetWorth(){
     }
 
     // Sub line — expressed as a coverage percentage
-    const sub = totalDebt > 0 && portfolioVal > 0
-        ? `Assets cover ${fmtP(pctOf(portfolioVal, totalDebt))} of debt · equity ${fmtP(pctOf(netWorth, portfolioVal))}`
-        : portfolioVal > 0 ? 'Debt-free · 100% equity in assets'
+    const grossAssets = portfolioVal + freeCash;
+    const sub = totalDebt > 0 && grossAssets > 0
+        ? `Assets cover ${fmtP(pctOf(grossAssets, totalDebt))} of debt · equity ${fmtP(pctOf(netWorth, grossAssets))}`
+        : grossAssets > 0 ? 'Debt-free · 100% equity in assets'
         : totalDebt > 0 ? '0% asset coverage against debt'
-        : 'Add assets & debts to calculate';
+        : 'Add accounts, assets & debts to calculate';
     document.getElementById('networthSub').textContent = sub;
 
     // Tiles + their share of the gross balance sheet
@@ -1832,7 +2271,7 @@ function updateNetWorth(){
     document.getElementById('nwCash').textContent      = fmt(freeCash);
     document.getElementById('nwPortfolioPct').textContent = fmtP(pctOf(portfolioVal, barTotal)) + ' of total';
     document.getElementById('nwDebtsPct').textContent     = fmtP(pctOf(totalDebt, barTotal)) + ' of total';
-    document.getElementById('nwCashPct').textContent      = r.total>0 ? fmtP(r.freePct) + ' of income' : '—';
+    document.getElementById('nwCashPct').textContent      = fmtP(pctOf(freeCash, barTotal)) + ' of total';
 
     const assetPct = pctOf(portfolioVal + freeCash, barTotal);
     const debtPct  = pctOf(totalDebt, barTotal);
@@ -1843,13 +2282,26 @@ function updateNetWorth(){
 }
 
 // ── Navigation ───────────────────────────────────────
+let toastTimer = null;
+function toast(msg, kind=''){
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show ' + kind;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>{ el.className = 'toast ' + kind; }, 2600);
+}
+
 function showPage(id,btn){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if(btn) btn.classList.add('active');
+    // Highlight the matching nav item even when navigated from a link inside a page.
+    const nav = btn || [...document.querySelectorAll('.nav-item')]
+        .find(b => (b.getAttribute('onclick')||'').includes("showPage('"+id+"'"));
+    if(nav) nav.classList.add('active');
     if(id==='home')   updateHome();
     if(id==='budget') renderBudget();
+    if(id==='cash')   renderCash();
     if(id==='income') renderExtraIncome();
     if(id==='invest') renderInvest();
     if(id==='debt')   renderDebt();
@@ -2030,10 +2482,19 @@ function applySettings(){
         ruleNeeds=rn; ruleWants=rw; ruleSave=rs;
         LS.set('wf_rule_needs',rn); LS.set('wf_rule_wants',rw); LS.set('wf_rule_save',rs);
     }
-    if(baseSalary() <= 0) return; // nothing usable entered for this mode
+    if(baseSalary() <= 0){
+        const why = incomeMode==='freelance'
+            ? (flBasis==='manual' ? 'Enter an amount to budget on.' : 'Log at least one month of earnings first.')
+            : incomeMode==='daily'  ? 'Enter a day rate and days worked per week.'
+            : incomeMode==='salary' ? 'Enter your salary amount.'
+            : 'Enter an hourly rate and weekly hours.';
+        toast(why, 'bad');
+        return;
+    }
 
-    updatePill(); updateHome(); renderBudget(); calculateWealth(); renderInvest(); renderDebt();
+    updatePill(); updateHome(); renderBudget(); renderCash(); calculateWealth(); renderInvest(); renderDebt();
     closeModal('settingsModal');
+    toast('Income set — ' + fmt(baseSalary()) + '/mo take-home.', 'good');
 }
 
 function resetRule(){
@@ -2132,6 +2593,7 @@ function applyHolding(){
     const current = parseFloat(document.getElementById('h_current').value)||0;
     if(!name||cost<=0) return;
     holdings.push({id:Date.now(),name,type,cost,current:current||cost});
+    toast('Added '+name+' to your portfolio.','good');
     LS.set('wf_holdings',holdings);
     ['h_name','h_cost','h_current'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('holdingPreviewBox').style.display='none';
@@ -2191,6 +2653,7 @@ function applyContrib(){
     const date  = document.getElementById('c_date').value;
     if(!name||!amount||amount<=0) return;
     contribs.unshift({id:Date.now(),name,amount,date});
+    toast('Logged '+fmt(amount)+' contribution.','good');
     LS.set('wf_contribs',contribs);
     ['c_name','c_amount'].forEach(i=>document.getElementById(i).value='');
     renderInvest(); renderContribProgress(); renderRuleSummary(); renderBudget(); closeModal('contribModal');
@@ -2344,19 +2807,51 @@ function previewCategory(){
                 ? `⚠ That would push ${b.label.toLowerCase()} to ${fmtP(afterPct,0)} — ${fmt(over)} over budget.`
                 : `${b.label} would sit at ${fmtP(afterPct,0)}, leaving ${fmt(b.allocated-after)}.`);
 }
+let catEditId = null;
+
+function clearCategoryForm(){
+    catEditId = null;
+    ['catName','catAmount','catDue'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('catType').value = 'needs';
+    document.getElementById('catSubmit').textContent = '+ Add to Budget';
+    document.getElementById('catCancel').style.display = 'none';
+    const pl = document.getElementById('catPreviewLine');
+    pl.textContent='—'; pl.style.color='var(--dim)';
+}
+function cancelEditCategory(){ clearCategoryForm(); }
+
+function editCategory(id){
+    const c = categories.find(x=>x.id===id); if(!c) return;
+    catEditId = id;
+    document.getElementById('catName').value   = c.name;
+    document.getElementById('catAmount').value = c.amount;
+    document.getElementById('catType').value   = c.type;
+    document.getElementById('catDue').value    = c.dueDay || '';
+    document.getElementById('catSubmit').textContent = 'Save changes';
+    document.getElementById('catCancel').style.display = 'block';
+    previewCategory();
+    document.querySelector('#budget .card:nth-of-type(2)')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
 function addCategory(){
-    const name=document.getElementById('catName').value.trim();
-    const amount=parseFloat(document.getElementById('catAmount').value);
-    const type=document.getElementById('catType').value;
-    if(name&&amount>0){
-        categories.push({id:Date.now(),name,amount,type});
-        LS.set('wf_cats',categories);
-        renderBudget(); updateHome();
-        document.getElementById('catName').value='';
-        document.getElementById('catAmount').value='';
-        document.getElementById('catPreviewLine').textContent='—';
-        document.getElementById('catPreviewLine').style.color='var(--dim)';
+    const name   = document.getElementById('catName').value.trim();
+    const amount = parseFloat(document.getElementById('catAmount').value);
+    const type   = document.getElementById('catType').value;
+    const dueRaw = parseInt(document.getElementById('catDue').value);
+    const dueDay = (!isNaN(dueRaw) && dueRaw>=1 && dueRaw<=31) ? dueRaw : null;
+    if(!name || !(amount>0)){ toast('Enter a description and an amount above zero.','bad'); return; }
+
+    if(catEditId){
+        const c = categories.find(x=>x.id===catEditId);
+        if(c) Object.assign(c, {name, amount, type, dueDay});
+        toast('Updated "'+name+'".','good');
+    } else {
+        categories.push({id:Date.now(), name, amount, type, dueDay});
+        toast('Added "'+name+'" to '+type+'.','good');
     }
+    LS.set('wf_cats',categories);
+    clearCategoryForm();
+    renderBudget(); renderCash(); updateHome();
 }
 function renderBudget(){
     const bg = getBudget();
@@ -2419,17 +2914,27 @@ function renderBudget(){
             <div class="row-indicator ${RI[c.type]||'ri-dim'}"></div>
             <div class="row-info">
                 <div class="row-name">${c.name}</div>
-                <div class="row-sub ${CL[c.type]||'c-dim'}">${LB[c.type]||'Needs'}</div>
+                <div class="row-sub ${CL[c.type]||'c-dim'}">${LB[c.type]||'Needs'}${c.dueDay?' · due '+ordinal(c.dueDay):''}</div>
                 <div class="pct-chip">${b.allocated>0?fmtP(pctOf(c.amount,b.allocated),0)+' of the '+LB[c.type].toLowerCase()+' budget':'set income to compare'}</div>
             </div>
             <div class="row-meta">
                 <div class="row-value">${fmt(c.amount)}</div>
-                <button class="row-action" onclick="removeCat(${c.id})">Remove</button>
+                <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
+                    <button class="row-action" style="color:var(--ice);" onclick="editCategory(${c.id})">Edit</button>
+                    <button class="row-action" onclick="removeCat(${c.id})">Remove</button>
+                </div>
             </div>
         </div>`;
     }).join('');
 }
-function removeCat(id){ categories=categories.filter(c=>c.id!==id); LS.set('wf_cats',categories); renderBudget(); updateHome(); }
+function removeCat(id){
+    const c = categories.find(x=>x.id===id);
+    categories = categories.filter(x=>x.id!==id);
+    LS.set('wf_cats',categories);
+    if(catEditId === id) clearCategoryForm();
+    renderBudget(); renderCash(); updateHome();
+    if(c) toast('Removed "'+c.name+'".');
+}
 
 // ── Home ──────────────────────────────────────────────
 function updateHome(){
@@ -2492,6 +2997,7 @@ function updateHome(){
 
     updateNetWorth();
     renderRuleSummary();
+    renderCashSummary();
 }
 
 // ── Wealth ────────────────────────────────────────────
@@ -2780,18 +3286,21 @@ function applyDebt(){
     const rate=parseFloat(document.getElementById('d_rate').value)||0;
     const minpay=parseFloat(document.getElementById('d_minpay').value)||0;
     if(!name||!balance||balance<=0) return;
-    debts.push({id:Date.now(),name,type,originalBalance:balance,balance,rate,minpay});
+    const dueRaw = parseInt(document.getElementById('d_due').value);
+    const dueDay = (!isNaN(dueRaw) && dueRaw>=1 && dueRaw<=31) ? dueRaw : null;
+    debts.push({id:Date.now(),name,type,originalBalance:balance,balance,rate,minpay,dueDay});
     LS.set('wf_debts',debts);
-    ['d_name','d_balance','d_rate','d_minpay'].forEach(i=>document.getElementById(i).value='');
+    ['d_name','d_balance','d_rate','d_minpay','d_due'].forEach(i=>document.getElementById(i).value='');
+    toast('Logged "'+name+'".','good');
     document.getElementById('debtPreviewBox').style.display='none';
-    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); closeModal('debtModal');
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); renderCash(); closeModal('debtModal');
 }
 
 function removeDebt(id){
     debts=debts.filter(d=>d.id!==id);
     payments=payments.filter(p=>p.debtId!==id);
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget();
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); renderCash();
 }
 
 function openPaymentModal(id){
@@ -2826,15 +3335,16 @@ function applyPayment(){
     const d=debts.find(d=>d.id===paymentTargetId); if(!d) return;
     d.balance=Math.max(0,d.balance-amount);
     payments.unshift({id:Date.now(),debtId:paymentTargetId,debtName:d.name,amount,date,note});
+    toast(fmt(amount)+' paid to '+d.name+' · '+fmt(d.balance)+' left.','good');
     LS.set('wf_debts',debts); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); closeModal('paymentModal');
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); renderCash(); closeModal('paymentModal');
 }
 
 function removePayment(id){
     const p=payments.find(p=>p.id===id);
     if(p){const d=debts.find(d=>d.id===p.debtId);if(d) d.balance=Math.min(d.originalBalance,d.balance+p.amount);LS.set('wf_debts',debts);}
     payments=payments.filter(p=>p.id!==id); LS.set('wf_payments',payments);
-    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget();
+    renderDebt(); updateNetWorth(); renderRuleSummary(); renderBudget(); renderCash();
 }
 
 let currentDebtTab='list';
@@ -3075,7 +3585,9 @@ async function buildPDF(){
     const r = getRatios();
     const base=r.base, extra=r.extra, total=r.total, inv=r.inv, spent=r.spent, remain=r.free;
     const portCurrent=r.portfolio, portCost=r.cost, portGain=portCurrent-portCost;
-    const totalDebt=r.totalDebt, netWorth=r.netWorth;
+    const cash = getCash(), bills = getBills();
+    const grossAssets = portCurrent + cash.total;
+    const totalDebt = r.totalDebt, netWorth = grossAssets - totalDebt;
     const totalContribActual=r.contribTotal;
 
     const projContribAmt = getProjectionContrib();
@@ -3225,18 +3737,29 @@ async function buildPDF(){
     checkPage(180);
     sectionHead('II. BALANCE SHEET', 'Current positions · % of gross balance sheet');
 
+    subHead('Assets — Cash Accounts');
+    colHead('', '% OF ASSETS', 'BALANCE');
+    if(!accounts.length){
+        tableRow('No accounts recorded', '—', false, null, 16, C.muted);
+    } else {
+        accounts.forEach(a => tableRow(a.name + '  (' + ACCT_LABEL[a.type] + (a.spendable?'':', ring-fenced') + ')',
+            money(a.balance), false, null, 16, C.ink, fmtP(pctOf(a.balance, grossAssets))));
+        tableRow('Spendable for bills', money(cash.spendable), false, C.bg, 16, C.ink, fmtP(pctOf(cash.spendable, cash.total))+' of cash');
+    }
+
+    curY += 6;
     subHead('Assets — Investment Portfolio');
-    colHead('', '% OF PORTFOLIO', 'MARKET VALUE');
+    colHead('', '% OF ASSETS', 'MARKET VALUE');
     if(!holdings.length){
         tableRow('No assets recorded', '—', false, null, 16, C.muted);
     } else {
         holdings.forEach(h => {
-            tableRow(h.name + '  (' + (ASSET_LABEL[h.type]||'Other') + ')', money(h.current), false, null, 16, C.ink, fmtP(pctOf(h.current, portCurrent)));
+            tableRow(h.name + '  (' + (ASSET_LABEL[h.type]||'Other') + ')', money(h.current), false, null, 16, C.ink, fmtP(pctOf(h.current, grossAssets)));
         });
-        tableRow('Cost Basis', money(portCost), false, null, 16, C.muted, fmtP(pctOf(portCost, portCurrent)));
+        tableRow('Cost Basis', money(portCost), false, null, 16, C.muted, fmtP(pctOf(portCost, portCurrent))+' of port.');
         tableRow('Unrealized Gain / (Loss)', (portGain>=0?'+':'')+money(portGain), false, null, 16, portGain>=0?C.green:C.red, fmtPS(r.portfolioReturn,2)+' ret.');
     }
-    totalRow('TOTAL ASSETS', money(portCurrent), true, C.green, '100.0%');
+    totalRow('TOTAL ASSETS  (cash + portfolio)', money(grossAssets), true, C.green, '100.0%');
 
     curY += 6;
     subHead('Liabilities — Outstanding Debts');
@@ -3259,7 +3782,7 @@ async function buildPDF(){
     setFont('bold', 10, C.black);
     doc.text('NET WORTH  (Total Assets − Total Liabilities)', ML+10, curY+13);
     setFont('normal', 7, C.mid);
-    doc.text(portCurrent>0 ? 'Equity ratio '+fmtP(pctOf(netWorth,portCurrent))+'  ·  debt-to-asset '+fmtP(r.debtToAsset) : 'No assets recorded', ML+10, curY+24);
+    doc.text(grossAssets>0 ? 'Equity ratio '+fmtP(pctOf(netWorth,grossAssets))+'  ·  debt-to-asset '+fmtP(pctOf(totalDebt,grossAssets)) : 'No assets recorded', ML+10, curY+24);
     setFont('bold', 12, netWorth>=0?C.green:C.red);
     doc.text(money(netWorth), PW-MR-10, curY+18, {align:'right'});
     curY += 32;
@@ -3302,9 +3825,39 @@ async function buildPDF(){
     doc.text(doc.splitTextToSize(verdict.text, CW-20), ML+10, curY+24);
     curY += 36;
 
-    // ═══ SECTION IV — INVESTMENT PORTFOLIO ═══
+    // ═══ CASH POSITION vs BILLS DUE ═══
     checkPage(150);
-    sectionHead('IV. INVESTMENT PORTFOLIO', 'Holdings & contributions');
+    sectionHead('IV. CASH POSITION', 'Bills outstanding this month');
+
+    tableRow('Spendable Cash Balance', money(cash.spendable), false, C.bg, 0, C.ink, cash.total>0?fmtP(pctOf(cash.spendable,cash.total))+' of cash':'');
+    tableRow('Ring-fenced Cash', money(cash.reserved), false, null, 0, C.muted);
+    tableRow('Bills Committed This Month', money(bills.total), false, null, 0, C.ink, total>0?fmtP(pctOf(bills.total,total))+' of inc.':'');
+    tableRow('Bills Already Paid', money(bills.paidAmt), false, null, 0, C.green, bills.total>0?fmtP(pctOf(bills.paidAmt,bills.total)):'');
+    tableRow('Bills Still Due', money(bills.due), false, null, 0, C.red, bills.total>0?fmtP(pctOf(bills.due,bills.total)):'');
+    if(bills.overdueN) tableRow('— of which overdue', money(bills.overdue), false, null, 16, C.red, bills.overdueN+' item'+(bills.overdueN===1?'':'s'));
+    if(bills.dueSoonN) tableRow('— due within 7 days', money(bills.dueSoon), false, null, 16, C.ink, bills.dueSoonN+' item'+(bills.dueSoonN===1?'':'s'));
+    const leftAfter = cash.spendable - bills.due;
+    totalRow('LEFT AFTER BILLS', money(leftAfter), true, leftAfter>=0?C.green:C.red,
+             cash.spendable>0?fmtP(pctOf(leftAfter,cash.spendable)):'');
+
+    if(bills.count){
+        curY += 6;
+        subHead('Bill Checklist');
+        colHead('', 'STATUS', 'AMOUNT');
+        bills.items.forEach((i,ix) => {
+            const status = i.paid ? 'PAID'
+                : i.days === null ? 'DUE'
+                : i.days < 0 ? Math.abs(i.days)+'D OVERDUE'
+                : i.days === 0 ? 'DUE TODAY'
+                : 'DUE ' + ordinal(i.dueDay);
+            tableRow(i.name, money(i.amount), false, ix%2===0?C.bg:null, 16,
+                i.paid ? C.muted : (i.days!==null && i.days<0) ? C.red : C.ink, status);
+        });
+    }
+
+    // ═══ SECTION V — INVESTMENT PORTFOLIO ═══
+    checkPage(150);
+    sectionHead('V. INVESTMENT PORTFOLIO', 'Holdings & contributions');
 
     tableRow('Total Portfolio Market Value', money(portCurrent), false, C.bg, 0, C.ink, '100.0%');
     tableRow('Total Cost Basis', money(portCost), false, null, 0, C.ink, fmtP(pctOf(portCost, portCurrent)));
@@ -3334,9 +3887,9 @@ async function buildPDF(){
         });
     }
 
-    // ═══ SECTION V — DEBT SCHEDULE ═══
+    // ═══ SECTION VI — DEBT SCHEDULE ═══
     checkPage(140);
-    sectionHead('V. DEBT SCHEDULE', 'Amortization summary');
+    sectionHead('VI. DEBT SCHEDULE', 'Amortization summary');
 
     if(!debts.length){
         setFont('italic', 8.5, C.muted);
@@ -3382,9 +3935,9 @@ async function buildPDF(){
         tableRow('Total Payments Made to Date', money(totPaid), false, null, 0, C.green, fmtP(r.debtRetired)+' retired');
     }
 
-    // ═══ SECTION VI — WEALTH PROJECTION ═══
+    // ═══ SECTION VII — WEALTH PROJECTION ═══
     checkPage(190);
-    sectionHead('VI. WEALTH PROJECTION', projYears+'-year forecast  ·  '+fmtP(projRate,2)+' annual return');
+    sectionHead('VII. WEALTH PROJECTION', projYears+'-year forecast  ·  '+fmtP(projRate,2)+' annual return');
 
     tableRow('Monthly Contribution Assumed', money(projContribAmt), false, C.bg, 0, C.ink, total>0?fmtP(pctOf(projContribAmt,total))+' of inc.':'');
     tableRow('Annual Return Rate', fmtP(projRate,2), false, null);
@@ -3432,9 +3985,82 @@ async function buildPDF(){
     await deliverFile(doc.output('blob'), filename, ()=>doc.save(filename));
 }
 
+// ── Backup, restore & reset ───────────────────────────
+const DATA_KEYS = ['wf_mode','wf_wage','wf_hours','wf_dayrate','wf_days','wf_salary','wf_salperiod',
+    'wf_earnings','wf_flbasis','wf_flmanual','wf_tax','wf_rule_needs','wf_rule_wants','wf_rule_save',
+    'wf_cats','wf_incomes','wf_holdings','wf_contribs','wf_debts','wf_payments','wf_accounts',
+    'wf_billspaid','wf_proj_contrib','wf_proj_rate','wf_proj_years'];
+
+function snapshot(){
+    const data = {};
+    DATA_KEYS.forEach(k=>{ const v = localStorage.getItem(k); if(v !== null) data[k] = v; });
+    return {app:'WealthFlow', version:1, exportedAt:new Date().toISOString(), data};
+}
+
+function backupSummary(){
+    return [
+        categories.length + ' budget item' + (categories.length===1?'':'s'),
+        accounts.length + ' account' + (accounts.length===1?'':'s'),
+        debts.length + ' debt' + (debts.length===1?'':'s'),
+        holdings.length + ' asset' + (holdings.length===1?'':'s')
+    ].join(' · ');
+}
+
+async function exportData(){
+    const blob = new Blob([JSON.stringify(snapshot(), null, 2)], {type:'application/json'});
+    const filename = 'wealthflow-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    await deliverFile(blob, filename, ()=>{
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename; a.click();
+        setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    });
+    toast('Backup exported — ' + backupSummary() + '.', 'good');
+}
+
+function importData(ev){
+    const file = ev.target.files && ev.target.files[0];
+    ev.target.value = '';
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+        let parsed;
+        try { parsed = JSON.parse(reader.result); }
+        catch { toast('That file is not valid JSON.','bad'); return; }
+        if(!parsed || parsed.app !== 'WealthFlow' || !parsed.data){
+            toast('That is not a WealthFlow backup file.','bad'); return;
+        }
+        if(!confirm('Replace everything currently in this browser with the backup from '
+            + new Date(parsed.exportedAt).toLocaleString() + '? This cannot be undone.')) return;
+        DATA_KEYS.forEach(k=>localStorage.removeItem(k));
+        Object.entries(parsed.data).forEach(([k,v])=>{
+            if(DATA_KEYS.includes(k)) localStorage.setItem(k, v);
+        });
+        location.reload();
+    };
+    reader.onerror = () => toast('Could not read that file.','bad');
+    reader.readAsText(file);
+}
+
+function resetAllData(){
+    if(!confirm('Erase all WealthFlow data in this browser? Export a backup first if you might want it back.')) return;
+    if(!confirm('Last check — this permanently deletes your budget, accounts, debts and portfolio. Continue?')) return;
+    DATA_KEYS.forEach(k=>localStorage.removeItem(k));
+    location.reload();
+}
+
+function renderBackupInfo(){
+    const el = document.getElementById('backupInfo');
+    if(!el) return;
+    let bytes = 0;
+    DATA_KEYS.forEach(k=>{ const v = localStorage.getItem(k); if(v) bytes += v.length; });
+    el.textContent = bytes ? 'Currently stored: ' + backupSummary() + ' · ' + (bytes/1024).toFixed(1) + ' KB'
+                           : 'Nothing stored yet.';
+}
+
 // ── Init ──────────────────────────────────────────────
 window.onload=()=>{
-    updatePill(); renderBudget(); renderExtraIncome();
+    updatePill(); renderBudget(); renderExtraIncome(); renderCash();
     renderInvest(); renderDebt(); updateHome(); calculateWealth();
 };
 </script>
