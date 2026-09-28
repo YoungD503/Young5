@@ -750,6 +750,123 @@
         /* Las tarjetas recortan su brillo decorativo sin poder desplazarse de lado */
         .card, .card-ember, .card-ice, .card-red, .card-green, .card-networth, .bucket, .nw-card { overflow: clip; }
 
+        /* ── GASTOS DEL NEGOCIO ───────────────────── */
+        .csv-row .ca.exp { color:var(--ember); }
+        .exp-cat { margin-top:6px; padding:5px 8px; font-size:.62rem; width:auto; max-width:100%; display:block; }
+        .biz-head { display:flex; align-items:center; gap:8px; }
+        .biz-head select { width:auto; padding:6px 8px; font-size:.7rem; }
+        .biz-top { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:4px 0 8px; }
+        .biz-tile { background:var(--surface); border:1px solid var(--border); padding:12px 14px; }
+        .biz-big { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:.03em; line-height:1.1; margin-top:4px; font-variant-numeric:tabular-nums; }
+        .biz-sub { font-size:.56rem; color:var(--dim); margin-top:3px; line-height:1.5; }
+        .biz-cat-row { display:flex; align-items:center; gap:10px; padding:6px 0; font-size:.66rem; color:var(--text); }
+        .biz-cat-row .l { flex:1.5; min-width:0; }
+        .biz-cat-row .b { flex:1; height:5px; background:var(--dim2); overflow:hidden; }
+        .biz-cat-row .b span { display:block; height:100%; background:var(--ember); }
+        .biz-cat-row .v { width:86px; text-align:right; font-variant-numeric:tabular-nums; }
+        .biz-list { max-height:320px; overflow:auto; border-top:1px solid var(--border); margin-top:10px; }
+        .biz-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
+        .biz-row .d { flex:1; min-width:0; }
+        .biz-row .t { font-size:.74rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .biz-row .s { font-size:.56rem; color:var(--dim); margin-top:3px; }
+        .biz-row select { margin-top:6px; padding:4px 8px; font-size:.6rem; width:auto; max-width:100%; }
+        .biz-row .a { text-align:right; }
+        .biz-row .a b { display:block; font-family:'Bebas Neue',sans-serif; font-weight:400; font-size:1.15rem; color:var(--ember); letter-spacing:.03em; font-variant-numeric:tabular-nums; }
+        .biz-export { display:flex; gap:8px; margin-top:12px; }
+
+        /* ── GASTOS: PERSONAL / NEGOCIO ─────────────── */
+        .view-toggle { display:flex; border:1px solid var(--border); margin:0 0 14px; }
+        .view-toggle button { flex:1; padding:12px 10px; background:var(--surface); color:var(--dim); border:none; font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; transition:background .2s,color .2s; }
+        .view-toggle button + button { border-left:1px solid var(--border); }
+        .view-toggle button.active { background:var(--ember); color:var(--void); }
+        .view-toggle button:focus-visible { outline:2px solid var(--ice); outline-offset:-2px; }
+        #budget[data-view="personal"] .pv-negocio, #budget[data-view="negocio"] .pv-personal { display:none !important; }
+        @media (min-width: 900px){ .page > .view-toggle { column-span: all; } }
+        .real-big { font-family:'Bebas Neue',sans-serif; font-size:2.3rem; letter-spacing:.03em; line-height:1; color:var(--text); font-variant-numeric:tabular-nums; margin-top:4px; }
+        .real-sub { font-size:.62rem; color:var(--dim); line-height:1.7; margin:6px 0 10px; }
+        .real-row { padding:11px 0; border-bottom:1px solid var(--border); }
+        .real-row .top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+        .real-row .nm { font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; }
+        .real-row .amt { font-size:.74rem; color:var(--text); font-variant-numeric:tabular-nums; text-align:right; }
+        .real-row .track { height:6px; background:var(--dim2); margin-top:8px; overflow:hidden; }
+        .real-row .track span { display:block; height:100%; }
+        .real-row .st { display:flex; justify-content:space-between; gap:10px; font-size:.58rem; color:var(--dim); margin-top:6px; }
+        .real-note { font-size:.62rem; line-height:1.7; margin-top:10px; }
+        .real-empty-btn { width:100%; margin-top:12px; color:var(--ice); border-color:rgba(0,212,255,0.3); flex:none; }
+        .biz-row.unc .t { color:var(--gold); }
+        .biz-top.three { grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); }
+        .biz-top.three .biz-big { font-size:1.3rem; }
+        .biz-top.three .pv-label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .biz-head .add-btn { white-space:nowrap; }
+        #realCard .sub-header { flex-wrap:wrap; gap:8px; }
+        #realMonth { max-width:150px; }
+
+        /* ── INICIO CON DATOS REALES ─────────────── */
+        #home.has-real .home-plan { display:none !important; }
+        .hm-big { font-family:'Bebas Neue',sans-serif; font-size:2.6rem; letter-spacing:.03em; line-height:1; font-variant-numeric:tabular-nums; margin-top:6px; }
+        .hm-sub { font-size:.64rem; color:var(--dim); line-height:1.7; margin:8px 0 12px; }
+        .hm-sub b { color:var(--text); font-weight:500; }
+        .hm-bar { display:flex; height:10px; background:var(--dim2); overflow:hidden; margin-bottom:6px; }
+        .hm-bar span { display:block; height:100%; }
+        .hm-line { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:.7rem; }
+        .hm-line:last-child { border-bottom:none; }
+        .hm-line .n { flex:1; color:var(--dim); }
+        .hm-line .v { color:var(--text); font-variant-numeric:tabular-nums; }
+        .hm-line .p { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; min-width:46px; text-align:right; }
+        .hm-cta { width:100%; margin-top:12px; color:var(--ice); border-color:rgba(0,212,255,0.3); flex:none; }
+        .todo-row { display:flex; align-items:center; gap:12px; width:100%; padding:12px 0; background:none; border:none; border-bottom:1px solid var(--border); color:inherit; text-align:left; cursor:pointer; font-family:'JetBrains Mono',monospace; }
+        .todo-row:last-child { border-bottom:none; }
+        .todo-row:focus-visible { outline:2px solid var(--ice); outline-offset:2px; }
+        .todo-dot { width:8px; height:8px; flex:none; }
+        .todo-body { flex:1; min-width:0; }
+        .todo-t { display:block; font-size:.74rem; color:var(--text); line-height:1.45; }
+        .todo-s { display:block; font-size:.58rem; color:var(--dim); margin-top:3px; line-height:1.5; }
+        .todo-arrow { color:var(--dim); font-size:.9rem; transition:color .2s, transform .2s; }
+        .todo-row:hover .todo-arrow { color:var(--ice); transform:translateX(2px); }
+        .todo-done { font-size:.72rem; color:var(--green); padding:6px 0 2px; }
+        .hm-biz { cursor:pointer; }
+        #hmBody > .pv-label:first-child { margin-top:12px; }
+        .hm-biz .biz-top.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+        .hm-biz .biz-tile { padding:10px 10px; min-width:0; }
+        .hm-biz .biz-big { font-size:clamp(1rem, 4.4vw, 1.4rem); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .hm-biz:focus-visible { outline:2px solid var(--ice); outline-offset:2px; }
+
+        /* ── PERFIL: EMPLEADO / POR MI CUENTA / AMBOS ── */
+        .prof-row { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:18px; }
+        .prof-row .mode-btn { min-height:58px; }
+        .prof-big { display:grid; gap:8px; margin:6px 0 4px; }
+        .prof-big button { display:block; width:100%; text-align:left; padding:14px 16px; background:var(--surface); border:1px solid var(--border); color:var(--text); cursor:pointer; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:.05em; transition:border-color .2s, background .2s; }
+        .prof-big button span { display:block; font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.02em; color:var(--dim); margin-top:4px; line-height:1.6; }
+        .prof-big button:hover, .prof-big button:focus-visible { border-color:var(--ember); background:rgba(255,69,0,0.06); outline:none; }
+        .kind-row { display:none; gap:0; margin:10px 0 0; border:1px solid var(--border); position:relative; z-index:1; }
+        .kind-row button { flex:1; padding:9px 8px; background:var(--surface); color:var(--dim); border:none; font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+        .kind-row button + button { border-left:1px solid var(--border); }
+        .kind-row button.active { background:var(--ice); color:var(--void); }
+        body.profile-ambos .kind-row { display:flex; }
+        body.profile-empleado .only-biz { display:none !important; }
+        .kind-tag { font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; padding:2px 6px; margin-left:6px; border:1px solid var(--border); }
+        .kind-tag.sueldo { color:var(--ice); border-color:rgba(0,212,255,0.3); }
+        .kind-tag.negocio { color:var(--ember); border-color:rgba(255,69,0,0.3); }
+
+        /* ── PRESUPUESTO MIXTO (AMBOS) ─────────────── */
+        body.profile-ambos #panel_freelance { display:block; }
+        body.profile-ambos #modeRow .mode-btn[data-mode="freelance"] { display:none; }
+        .ambos-block { display:none; }
+        body.profile-ambos .ambos-block { display:block; }
+        .biz-sec-title { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:.06em; color:var(--ember); border-top:1px solid var(--border); padding-top:16px; margin:10px 0 8px; }
+        .mix-split { font-size:.62rem; color:var(--dim); line-height:1.7; margin-top:10px; padding:10px 12px; border:1px solid var(--border); background:var(--surface); }
+        .mix-split b { color:var(--text); font-weight:500; }
+
+        /* ── CUENTA PERSONAL / DEL NEGOCIO ───────── */
+        .acct-box { margin:12px 0 4px; padding:12px; border:1px solid var(--border); background:var(--surface); }
+        .acct-toggle { display:flex; border:1px solid var(--border); margin:6px 0 0; }
+        .acct-toggle button { flex:1; padding:9px 8px; background:var(--card); color:var(--dim); border:none; font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+        .acct-toggle button + button { border-left:1px solid var(--border); }
+        .acct-toggle button.active { background:var(--ember); color:var(--void); }
+        .acct-toggle button:focus-visible { outline:2px solid var(--ice); outline-offset:-2px; }
+        .acct-note { font-size:.6rem; color:var(--dim); line-height:1.7; margin-top:8px; }
+        .acct-note b { color:var(--text); font-weight:500; }
+
         /* ── MINI OVERRIDES ──────────────────────── */
         .mini-stat-dark {
             background:rgba(255,255,255,0.05);
@@ -780,6 +897,13 @@
         <div class="sheet-handle"></div>
         <div class="sheet-title">Configuración de ingresos</div>
         <div class="sheet-sub">Elige cómo te pagan. La regla de presupuesto se aplica a lo que te queda después de impuestos.</div>
+        <label class="form-label">Cómo ganas tu dinero</label>
+        <div class="prof-row" id="profRow">
+            <button class="mode-btn" data-prof="empleado" onclick="setProfile('empleado')">Empleado<span>W-2, ya me retienen</span></button>
+            <button class="mode-btn" data-prof="negocio" onclick="setProfile('negocio')">Por mi cuenta<span>1099 o negocio</span></button>
+            <button class="mode-btn" data-prof="ambos" onclick="setProfile('ambos')">Ambos<span>sueldo + negocio</span></button>
+        </div>
+        <label class="form-label" id="payModeLbl">Cómo te pagan</label>
 
         <div class="set-grid">
         <div class="set-col set-left">
@@ -841,6 +965,10 @@
 
         <!-- FREELANCE -->
         <div class="mode-panel" id="panel_freelance">
+            <div class="ambos-block">
+                <div class="biz-sec-title">Tu negocio (1099)</div>
+                <div style="font-size:.64rem;color:var(--dim);line-height:1.7;margin-bottom:12px;">Los pagos que registres como <b style="color:var(--text);font-weight:500;">Negocio</b> se suman solos a cada mes. Al presupuesto se le resta tu <span id="mixTaxPct">25%</span> de impuestos (el mismo de Me pagaron).</div>
+            </div>
             <div style="font-size:.66rem;color:var(--dim);line-height:1.7;margin-bottom:14px;">
                 Registra lo que realmente ganaste cada mes y elige sobre qué base armar el presupuesto. Con ingresos irregulares, lo más seguro es presupuestar sobre tu mes <strong style="color:var(--ice);">más bajo</strong>: lo que ganes de más en los meses buenos se va a ahorro.
             </div>
@@ -870,6 +998,7 @@
                     </div>
                 </div>
                 <div style="font-size:.6rem;color:var(--dim);margin-top:7px;" id="basisHint">—</div>
+                <div class="mix-split ambos-block" id="mixSplit"></div>
             </div>
             <div style="max-height:170px;overflow-y:auto;border:1px solid var(--border);padding:0 12px;margin-bottom:4px;" id="earnListWrap">
                 <div id="earnList"></div>
@@ -1029,6 +1158,43 @@
     </div>
 </div>
 
+<!-- ═══ GASTO DEL NEGOCIO ═══ -->
+<div class="modal-overlay" id="bizModal" onclick="closeIfOverlay(event,'bizModal')">
+    <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title" id="bz_title">Agregar gasto del negocio</div>
+        <div class="sheet-sub" id="bz_sub">Para compras en efectivo o que no salen en tu estado de cuenta. Guarda el recibo.</div>
+        <div class="form-row"><label class="form-label" for="bz_desc">Descripción</label><input type="text" id="bz_desc" placeholder="Ej. Pintura para el trabajo de la calle Main"></div>
+        <div style="display:flex;gap:8px;">
+            <div class="form-row" style="flex:1;">
+                <label class="form-label" for="bz_amount">Monto ($)</label>
+                <div class="input-prefix-wrap"><span class="input-prefix">$</span><input type="number" id="bz_amount" step="0.01" min="0" placeholder="0.00" style="padding-left:26px;"></div>
+            </div>
+            <div class="form-row" style="flex:1;"><label class="form-label" for="bz_date">Fecha</label><input type="date" id="bz_date"></div>
+        </div>
+        <div class="form-row"><label class="form-label" for="bz_cat">Categoría</label><select id="bz_cat"></select></div>
+        <div id="bz_err" class="csv-err" style="display:none;margin:0 0 10px;"></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('bizModal')">Cancelar</button>
+            <button class="btn-confirm green" onclick="applyExp()">Agregar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ PERFIL ═══ -->
+<div class="modal-overlay" id="profileModal" onclick="closeIfOverlay(event,'profileModal')">
+    <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">¿Cómo ganas tu dinero?</div>
+        <div class="sheet-sub">Así sé si debo apartar impuestos de lo que te pagan y qué secciones mostrarte. Lo puedes cambiar después en Configuración.</div>
+        <div class="prof-big">
+            <button onclick="setProfile('empleado'); closeModal('profileModal')">Soy empleado<span>Me pagan por nómina (W-2) y mi empleador ya me quita los impuestos.</span></button>
+            <button onclick="setProfile('negocio'); closeModal('profileModal')">Trabajo por mi cuenta<span>Cobro como independiente (1099) o tengo mi propio negocio.</span></button>
+            <button onclick="setProfile('ambos'); closeModal('profileModal')">Las dos cosas<span>Tengo un trabajo con sueldo y además gano por mi cuenta.</span></button>
+        </div>
+    </div>
+</div>
+
 <!-- ═══ OTROS ACTIVOS ═══ -->
 <div class="modal-overlay" id="assetModal" onclick="closeIfOverlay(event,'assetModal')">
     <div class="modal-sheet">
@@ -1125,9 +1291,21 @@
     <div id="home" class="page active">
 
         <button class="paid-cta" onclick="showPage('taxes',document.getElementById('navTaxes'))">
-            <span><span class="paid-cta-k">Me pagaron</span><span class="paid-cta-s">¿Cuánto aparto para impuestos, gastos y ahorro?</span></span>
+            <span><span class="paid-cta-k">Me pagaron</span><span class="paid-cta-s" id="ctaSub">¿Cuánto aparto para impuestos, gastos y ahorro?</span></span>
             <span class="paid-cta-arrow">→</span>
         </button>
+
+        <!-- ── TU MES (datos reales) ── -->
+        <div class="card" id="homeMonthCard">
+            <div class="sub-header" style="margin-bottom:2px;"><div class="sub-header-title" id="hmTitle">Tu mes</div></div>
+            <div id="hmBody"></div>
+        </div>
+
+        <!-- ── PENDIENTES ── -->
+        <div class="card" id="homeTodoCard">
+            <div class="card-label" style="margin-bottom:4px;">Pendientes</div>
+            <div id="hmTodo"></div>
+        </div>
 
         <!-- ── NET WORTH CARD ── -->
         <div class="card-networth">
@@ -1173,6 +1351,16 @@
             </div>
         </div>
 
+        <!-- ── TU NEGOCIO ── -->
+        <div class="card hm-biz only-biz" id="homeBizCard" role="button" tabindex="0" onclick="goGastos('negocio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goGastos('negocio');}" style="display:none;">
+            <div class="sub-header" style="margin-bottom:8px;"><div class="sub-header-title">Tu negocio · <span id="hbYear"></span></div><span class="todo-arrow">→</span></div>
+            <div class="biz-top three" style="margin:0;">
+                <div class="biz-tile"><div class="pv-label">Ingresos</div><div class="biz-big" id="hbIn" style="color:var(--text);">$0.00</div></div>
+                <div class="biz-tile"><div class="pv-label">Gastos</div><div class="biz-big c-ember" id="hbOut">$0.00</div></div>
+                <div class="biz-tile"><div class="pv-label">Ganancia</div><div class="biz-big c-green" id="hbNet">$0.00</div></div>
+            </div>
+        </div>
+
         <!-- ── INCOME ── -->
         <div class="card-ember">
             <div class="card-label-ember">Ingreso mensual total</div>
@@ -1189,7 +1377,7 @@
             </div>
         </div>
 
-        <div class="stats-grid">
+        <div class="stats-grid home-plan">
             <div class="stat-tile">
                 <div class="stat-tile-label">Necesidades + Gustos</div>
                 <div class="stat-tile-value c-red" id="totalSpent">$0.00</div>
@@ -1201,7 +1389,7 @@
                 <div class="stat-pct" id="inversionPct">0.0% del ingreso</div>
             </div>
         </div>
-        <div class="stats-grid">
+        <div class="stats-grid home-plan">
             <div class="stat-tile">
                 <div class="stat-tile-label">Ingreso base</div>
                 <div class="stat-tile-value c-white" id="baseDisplay">$0.00</div>
@@ -1214,7 +1402,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card home-plan">
             <div class="card-label">Saldo disponible</div>
             <div class="card-value c-lime" id="remainingCash">$0.00</div>
             <div class="card-sub" id="remainingSub">Después de gastos y ahorro programado</div>
@@ -1228,10 +1416,10 @@
                 <div class="sub-header-title" id="ruleTitle">Presupuesto 50 / 30 / 20</div>
                 <div class="rule-badge" id="ruleBadge">SIN DATOS</div>
             </div>
-            <div style="font-size:.62rem;color:var(--dim);letter-spacing:.04em;margin-bottom:10px;">Usado vs. asignado este mes</div>
+            <div style="font-size:.62rem;color:var(--dim);letter-spacing:.04em;margin-bottom:10px;" id="ruleSub">Usado vs. asignado este mes</div>
             <div id="ruleBars"></div>
             <div class="rule-verdict" id="ruleVerdict"></div>
-            <button onclick="showPage('budget')" style="width:100%;margin-top:14px;padding:10px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;">Abrir presupuesto →</button>
+            <button onclick="goGastos('personal')" style="width:100%;margin-top:14px;padding:10px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;">Ver mis gastos →</button>
         </div>
 
         <!-- DOWNLOAD PDF BUTTON -->
@@ -1255,13 +1443,17 @@
                 <span class="input-prefix">$</span>
                 <input type="number" id="mp_amount" step="0.01" min="0" placeholder="0.00" oninput="previewPaycheck()" style="padding-left:26px;color:var(--ice);">
             </div>
+            <div class="kind-row" id="mpKindRow" role="group" aria-label="Tipo de pago">
+                <button data-kind="sueldo" onclick="setMpKind('sueldo')">Sueldo (W-2)</button>
+                <button data-kind="negocio" onclick="setMpKind('negocio')">Negocio (1099)</button>
+            </div>
             <div style="display:flex;gap:8px;margin-top:10px;position:relative;z-index:1;">
                 <div style="flex:1.3;"><label class="form-label">Fecha del pago</label><input type="date" id="mp_date"></div>
-                <div style="flex:1;"><label class="form-label">% impuestos</label><input type="number" id="mp_rate" step="1" min="0" max="60" oninput="setTaxRate()"></div>
+                <div style="flex:1;" class="only-biz"><label class="form-label">% impuestos</label><input type="number" id="mp_rate" step="1" min="0" max="60" oninput="setTaxRate()"></div>
             </div>
             <div id="mp_split" style="position:relative;z-index:1;margin-top:16px;"></div>
             <button class="btn-primary" style="position:relative;z-index:1;margin-top:14px;background:var(--ice);" onclick="logPaycheck()">Registrar pago</button>
-            <div style="font-size:.6rem;color:var(--dim);margin-top:9px;position:relative;z-index:1;line-height:1.7;">Al registrarlo, el pago se suma a tus ingresos de ese mes (modo Independiente) y lo apartado para impuestos cuenta para tu próximo pago trimestral.</div>
+            <div id="mpNote" style="font-size:.6rem;color:var(--dim);margin-top:9px;position:relative;z-index:1;line-height:1.7;"></div>
         </div>
 
         <div class="card" id="csvCard">
@@ -1272,7 +1464,7 @@
             <div id="csvResult"></div>
         </div>
 
-        <div class="card-red">
+        <div class="card-red only-biz">
             <div class="card-label-red">Próximo pago estimado al IRS</div>
             <div class="card-value-red" id="q_due" style="font-size:2.3rem;">—</div>
             <div class="card-sub-red" id="q_sub">—</div>
@@ -1288,7 +1480,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card only-biz">
             <div class="card-label" style="margin-bottom:6px;">Calendario de pagos estimados</div>
             <div id="q_calendar"></div>
         </div>
@@ -1298,18 +1490,34 @@
             <div id="paycheckList"></div>
         </div>
 
-        <div class="disclaimer-card">
+        <div class="disclaimer-card only-biz">
             <div class="disclaimer-title">Importante</div>
-            <div class="disclaimer-text">Este porcentaje es una guía para apartar dinero, no un cálculo de impuestos. Como independiente pagas impuesto de trabajo por cuenta propia (15.3%) más impuesto federal sobre la renta, y en algunos estados también impuesto estatal. Muchos independientes apartan entre 25% y 30%. Si una fecha cae en fin de semana o día feriado, se mueve al siguiente día hábil. Confirma tu porcentaje y tus pagos con un preparador de impuestos o contador.</div>
+            <div class="disclaimer-text">Este porcentaje es una guía para apartar dinero, no un cálculo de impuestos. Como independiente pagas impuesto de trabajo por cuenta propia (15.3%) más impuesto federal sobre la renta, y en algunos estados también impuesto estatal. Muchos independientes apartan entre 25% y 30%. Si además tienes un sueldo, lo del negocio se suma encima y puede quedar en un tramo de impuestos más alto; otra opción que puedes consultar es pedir más retención en tu W-4. Si una fecha cae en fin de semana o día feriado, se mueve al siguiente día hábil. Confirma tu porcentaje y tus pagos con un preparador de impuestos o contador.</div>
         </div>
     </div>
 
     <!-- BUDGET -->
-    <div id="budget" class="page">
-        <div class="section-title">Presupuesto</div>
+    <div id="budget" class="page" data-view="personal">
+        <div class="section-title">Gastos</div>
         <div class="section-divider"></div>
 
-        <div class="card-ember" style="padding:22px 20px;">
+        <div class="view-toggle only-biz" role="tablist" aria-label="Tipo de gastos">
+            <button id="vtPersonal" role="tab" class="active" aria-selected="true" onclick="setGastosView('personal')">Personal</button>
+            <button id="vtNegocio" role="tab" aria-selected="false" onclick="setGastosView('negocio')">Negocio</button>
+        </div>
+
+        <div class="card pv-personal" id="realCard">
+            <div class="sub-header">
+                <div class="sub-header-title">Gasto real</div>
+                <div class="biz-head">
+                    <select id="realMonth" aria-label="Mes" onchange="realMonthSel=this.value; renderReal()"></select>
+                    <button class="add-btn" onclick="openExpModal('personal')">+ Gasto</button>
+                </div>
+            </div>
+            <div id="realBody"></div>
+        </div>
+
+        <div class="card-ember pv-personal" style="padding:22px 20px;">
             <div class="card-label-ember">Ingreso por asignar</div>
             <div class="card-value-ember" id="budIncome">$0.00</div>
             <div class="card-sub-ember" id="budRuleLine">Configura tu ingreso para armar el presupuesto</div>
@@ -1325,9 +1533,9 @@
             </div>
         </div>
 
-        <div id="bucketCards"></div>
+        <div id="bucketCards" class="pv-personal"></div>
 
-        <div class="card">
+        <div class="card pv-personal">
             <div class="card-label" style="margin-bottom:14px;">Nueva partida</div>
             <div class="form-row"><label class="form-label">Descripción</label><input type="text" id="catName" placeholder="Ej. Renta, Comer fuera, Fondo de emergencia…"></div>
             <div class="form-row">
@@ -1346,9 +1554,9 @@
             <button class="btn-primary" onclick="addCategory()">+ Agregar al presupuesto</button>
         </div>
 
-        <div class="card"><div class="card-label">Partidas del presupuesto</div><div id="categoryList"></div></div>
+        <div class="card pv-personal"><div class="card-label">Partidas del presupuesto</div><div id="categoryList"></div></div>
 
-        <div class="disclaimer-card">
+        <div class="disclaimer-card pv-personal">
             <div class="disclaimer-title">Cómo funciona la regla</div>
             <div class="disclaimer-text">
                 <strong style="color:var(--ember);">50% Necesidades</strong> — lo esencial que no puedes evitar: vivienda, comida, servicios, transporte, seguros y pagos mínimos de deudas.<br><br>
@@ -1356,6 +1564,48 @@
                 <strong style="color:var(--green);">20% Ahorro</strong> — inversiones, fondo de emergencia y todo pago a deudas por encima del mínimo. Es la categoría que debes proteger primero.
             </div>
         </div>
+
+        <div class="card pv-negocio only-biz" id="bizResult">
+            <div class="card-label" style="margin-bottom:10px;">Resultado del negocio · <span id="brYear">2026</span></div>
+            <div class="biz-top three">
+                <div class="biz-tile"><div class="pv-label">Ingresos</div><div class="biz-big" id="brIn" style="color:var(--text);">$0.00</div><div class="biz-sub" id="brInSub">pagos registrados</div></div>
+                <div class="biz-tile"><div class="pv-label">Gastos</div><div class="biz-big c-ember" id="brOut">$0.00</div><div class="biz-sub" id="brOutSub">0 gastos</div></div>
+                <div class="biz-tile"><div class="pv-label">Ganancia</div><div class="biz-big c-green" id="brNet">$0.00</div><div class="biz-sub" id="brNetSub">—</div></div>
+            </div>
+            <div class="biz-sub" id="brNote" style="line-height:1.7;"></div>
+        </div>
+
+        <div class="card pv-negocio only-biz" id="bizCard">
+            <div class="sub-header">
+                <div class="sub-header-title">Gastos del negocio</div>
+                <div class="biz-head">
+                    <select id="bizYear" aria-label="Año" onchange="bizYearSel=+this.value; renderBiz()"></select>
+                    <button class="add-btn green" onclick="openExpModal('negocio')">+ Gasto</button>
+                </div>
+            </div>
+            <div class="biz-top">
+                <div class="biz-tile">
+                    <div class="pv-label">Deducible en <span id="bizYearLbl">2026</span></div>
+                    <div class="biz-big c-ember" id="bizTotal">$0.00</div>
+                    <div class="biz-sub" id="bizCount">0 gastos</div>
+                </div>
+                <div class="biz-tile">
+                    <div class="pv-label">Ahorro estimado</div>
+                    <div class="biz-big c-green" id="bizSave">$0.00</div>
+                    <div class="biz-sub" id="bizSaveSub">según tu % de impuestos</div>
+                </div>
+            </div>
+            <div class="biz-sub" id="bizQuarter" style="margin-bottom:6px;"></div>
+            <div id="bizCats"></div>
+            <div class="biz-list" id="bizList"></div>
+            <div class="biz-export">
+                <button class="btn-cancel" onclick="exportBizPDF()">↓ Reporte PDF</button>
+                <button class="btn-cancel" onclick="exportBizCSV()">↓ CSV</button>
+            </div>
+            <div id="bizMsg" class="csv-help" style="margin:8px 0 0;"></div>
+            <div class="csv-help" style="margin:10px 0 0;">La app sugiere qué podría ser deducible; quien decide es tu preparador de impuestos. Guarda tus recibos.</div>
+        </div>
+
     </div>
 
     <!-- EXTRA INCOME -->
@@ -1830,7 +2080,13 @@ function currentCfg(){
             salaryAmount, salaryPeriod, flBasis, flManual};
 }
 
-const baseSalary = ()=> Math.round(monthlyGross(currentCfg()) * (takeHomePct/100));
+// Sueldo neto (trabajo) y neto del negocio. En el perfil "Ambos" el presupuesto usa los dos.
+const jobNetOf = (cfg, take) => cfg.mode === 'freelance' ? 0 : Math.round(monthlyGross(cfg) * (take/100));
+const bizNetOf = cfg => Math.round(freelanceBase(cfg) * (1 - taxRate/100));
+const isMixed  = () => { try { return profile === 'ambos'; } catch(e){ return false; } };
+const baseSalary = ()=> isMixed()
+    ? jobNetOf(currentCfg(), takeHomePct) + bizNetOf(currentCfg())
+    : Math.round(monthlyGross(currentCfg()) * (takeHomePct/100));
 const extraMonthly = ()=> extraIncomes.reduce((s,e)=>s+e.monthly,0);
 const totalMonthly = ()=> baseSalary()+extraMonthly();
 const inversion    = ()=> Math.round(totalMonthly()*(ruleSave/100));
@@ -2090,7 +2346,7 @@ function openSettingsModal(){
 }
 
 function syncModeUI(){
-    document.querySelectorAll('.mode-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===incomeMode));
+    document.querySelectorAll('#modeRow .mode-btn').forEach(b=>b.classList.toggle('active', b.dataset.mode===incomeMode));
     document.querySelectorAll('.mode-panel').forEach(p=>p.classList.remove('active'));
     document.getElementById('panel_'+incomeMode).classList.add('active');
     document.getElementById('sal_monthly').classList.toggle('active', salaryPeriod==='monthly');
@@ -2099,7 +2355,9 @@ function syncModeUI(){
     document.querySelectorAll('.basis-btn').forEach(b=>b.classList.toggle('active', b.dataset.basis===flBasis));
     document.getElementById('basisManualWrap').style.display = flBasis==='manual' ? 'block' : 'none';
     document.getElementById('earnListWrap').style.display = flBasis==='manual' && !earnings.length ? 'none' : 'block';
-    document.getElementById('taxHint').textContent = incomeMode==='freelance'
+    document.getElementById('taxHint').textContent = isMixed()
+        ? 'Porcentaje de tu sueldo bruto que te llega después de retenciones. A lo del negocio se le resta aparte tu % de impuestos.'
+        : incomeMode==='freelance'
         ? 'Lo que te queda después del impuesto de trabajo por cuenta propia (15.3%), impuesto sobre la renta y gastos del negocio. Para 1099, 70–75% es un punto de partida común.'
         : 'Porcentaje del pago bruto que te queda después de impuestos y deducciones.';
 }
@@ -2206,9 +2464,16 @@ function previewSettings(){
         bh.style.color = s.spread > 35 ? 'var(--ember)' : 'var(--dim)';
     }
 
-    const grossM = monthlyGross(cfg);
+    const mixed = isMixed();
+    const jobN = mixed ? jobNetOf(cfg, txv) : 0, bizN = mixed ? bizNetOf(cfg) : 0;
+    const mixEl = document.getElementById('mixSplit');
+    if(mixEl) mixEl.innerHTML = mixed
+        ? `Tu presupuesto usará <b>${fmt(jobN)}</b> de sueldo neto + <b>${fmt(bizN)}</b> del negocio (después de apartar ${taxRate}%) = <b style="color:var(--ember);">${fmt(jobN + bizN)}</b> al mes.`
+        : '';
+    const mixTax = document.getElementById('mixTaxPct'); if(mixTax) mixTax.textContent = taxRate + '%';
+    const grossM = mixed ? (jobN + bizN) : monthlyGross(cfg);
     if(!grossM){ ['sp_weekly','sp_monthly','sp_inv','sp_annual'].forEach(i=>document.getElementById(i).textContent='—'); return; }
-    const m = Math.round(grossM * (txv/100));
+    const m = mixed ? jobN + bizN : Math.round(grossM * (txv/100));
     const t = m + extraMonthly();
     document.getElementById('sp_weekly').textContent  = fmt(Math.round(m*12/52));
     document.getElementById('sp_monthly').textContent = fmt(m);
@@ -2242,7 +2507,9 @@ function applySettings(){
     }
     const errEl = document.getElementById('settingsError');
     if(baseSalary() <= 0){
-        errEl.textContent = incomeMode==='freelance'
+        errEl.textContent = isMixed()
+            ? 'Ingresa tu sueldo o registra al menos un mes del negocio antes de aplicar.'
+            : incomeMode==='freelance'
             ? 'Registra al menos un mes de ingresos (o usa "Manual") antes de aplicar.'
             : 'Ingresa un monto válido para este tipo de ingreso antes de aplicar.';
         errEl.style.display = 'block';
@@ -2262,6 +2529,10 @@ function resetRule(){
 }
 function updatePill(){
     let txt;
+    if(isMixed()){
+        document.getElementById('wagePill').textContent = 'Sueldo + negocio $' + Math.round(baseSalary()).toLocaleString('en-US') + ' ✎';
+        return;
+    }
     switch(incomeMode){
         case 'daily':
             txt = '$'+dayRate.toFixed(2)+'/día · '+daysPerWeek+'d/sem'; break;
@@ -2618,6 +2889,7 @@ function addCategory(){
     }
 }
 function renderBudget(){
+    renderReal(); renderBiz();
     const bg = getBudget();
 
     document.getElementById('budIncome').textContent = fmt(bg.income);
@@ -2713,7 +2985,9 @@ function updateHome(){
     document.getElementById('extraPct').textContent         = total>0?fmtP(r.extraPct)+' del ingreso':'—';
     document.getElementById('usageBar').style.width         = clampW(pct)+'%';
     document.getElementById('usagePct').textContent         = total>0?fmtP(pct)+' del ingreso gastado':'0.0% del ingreso gastado';
-    const modeTxt = incomeMode==='freelance'
+    const modeTxt = isMixed()
+        ? 'Sueldo ' + fmt(jobNetOf(currentCfg(), takeHomePct)) + ' + negocio ' + fmt(bizNetOf(currentCfg())) + ' (' + ({lowest:'mes más bajo', average:'promedio', manual:'cifra fija'}[flBasis]) + ')'
+        : incomeMode==='freelance'
         ? 'Independiente · presupuesto sobre '+(flBasis==='manual'?'una cifra fija':(flBasis==='lowest'?'el mes más bajo':'el promedio'))
         : MODE_LABEL[incomeMode];
     document.getElementById('incomeBreakdown').textContent  = r.extra>0
@@ -2724,6 +2998,7 @@ function updateHome(){
     if(myChart) myChart.destroy();
     const parts=[spent,inv,Math.max(0,remain)];
     const partsTotal=parts.reduce((a,b)=>a+b,0);
+    try{
     myChart=new Chart(ctx,{
         type:'doughnut',
         data:{
@@ -2739,6 +3014,7 @@ function updateHome(){
             }
         }
     });
+    }catch(e){ console.error(e); }
 
     const labels=[['Gastos',spent,'var(--red)'],['Ahorro',inv,'var(--green)'],['Saldo libre',Math.max(0,remain),'var(--ember)']];
     document.getElementById('miniChartPcts').innerHTML = labels.map(([n,v,c])=>`
@@ -2751,11 +3027,204 @@ function updateHome(){
 
     updateNetWorth();
     renderRuleSummary();
+    renderHomeReal();
 }
 
+// ── Inicio con datos reales ──────────────────────────
+function goGastos(view){
+    setGastosView(view);
+    showPage('budget', document.querySelector('.nav-item[onclick*="\'budget\'"]'));
+}
+function goPagos(){ showPage('taxes', document.getElementById('navTaxes')); }
+function homeMonth(){
+    const dates = [...persExp, ...bizExp].map(e => e.date).concat(taxLog.map(t => t.date));
+    if(!dates.length) return null;
+    const cur = hoyISO().slice(0, 7);
+    if(dates.some(d => d.startsWith(cur))) return cur;
+    return dates.sort().reverse()[0].slice(0, 7);
+}
+function monthSummary(ym){
+    const inc = taxLog.filter(t => t.date.startsWith(ym));
+    const pe = persExp.filter(e => e.date.startsWith(ym));
+    const be = bizExp.filter(e => e.date.startsWith(ym));
+    const b = k => pe.filter(e => persBucket(e) === k).reduce((s, e) => s + e.amount, 0);
+    const S = {
+        ym, income: inc.reduce((s, t) => s + t.gross, 0), tax: inc.reduce((s, t) => s + t.tax, 0),
+        incSueldo: inc.filter(t => incKind(t) === 'sueldo').reduce((s, t) => s + t.gross, 0),
+        biz: be.reduce((s, e) => s + e.amount, 0),
+        needs: b('needs'), wants: b('wants'), none: b('none'), savings: b('savings'),
+        nNone: pe.filter(e => persBucket(e) === 'none').length,
+        hasPers: pe.length > 0, hasAny: inc.length + pe.length + be.length > 0,
+    };
+    S.pers = S.needs + S.wants + S.none;
+    S.free = S.income - S.tax - S.biz - S.pers - S.savings;
+    return S;
+}
+function renderHomeReal(){
+    const home = document.getElementById('home');
+    const ym = homeMonth();
+    const M = ym ? monthSummary(ym) : null;
+    home.classList.toggle('has-real', !!(M && M.hasAny));
+
+    // Tu mes
+    const body = document.getElementById('hmBody');
+    document.getElementById('hmTitle').textContent = ym ? 'Tu mes · ' + mesLargo(ym) : 'Tu mes';
+    if(!M || !M.hasAny){
+        body.innerHTML = `<div class="hm-sub" style="margin-top:6px;">Aquí verás cuánto entró, cuánto salió y cuánto te quedó cada mes, con tus datos reales. Registra tus pagos en <b>Me pagaron</b> o importa tu estado de cuenta.</div>
+            <button class="btn-cancel hm-cta" onclick="goPagos()">Importar mi estado de cuenta →</button>`;
+    } else {
+        const parts = [
+            ...(prof() === 'empleado' ? [] : [['Impuestos apartados', M.tax, 'var(--red)'], ['Gastos del negocio', M.biz, 'var(--gold)']]),
+            ['Gastos personales',   M.pers,    'var(--ember)'],
+            ['Ahorro',              M.savings, 'var(--green)'],
+            ['Libre',               Math.max(0, M.free), 'var(--lime)'],
+        ];
+        const base = Math.max(M.income, parts.slice(0, -1).reduce((s, p) => s + p[1], 0)) || 1;
+        const neg = M.free < 0;
+        body.innerHTML = `
+            <div class="pv-label">${neg ? 'Saliste de más' : 'Te quedó libre'}</div>
+            <div class="hm-big" style="color:${neg ? 'var(--red)' : 'var(--lime)'};">${fmt(Math.abs(M.free))}</div>
+            <div class="hm-sub">${M.income > 0
+                ? `De <b>${fmt(M.income)}</b> que entraron en ${mesLargo(ym).toLowerCase()}${prof() === 'ambos' && M.incSueldo > 0 && M.incSueldo < M.income ? ` (sueldo ${fmt(M.incSueldo)} · negocio ${fmt(M.income - M.incSueldo)})` : ''}${neg ? '; salió más de lo que entró' : ''}.`
+                : `No hay pagos registrados en ${mesLargo(ym).toLowerCase()}. Registra lo que te pagaron para ver cuánto te quedó.`}</div>
+            <div class="hm-bar">${parts.filter(p => p[1] > 0).map(p => `<span style="width:${clampW(p[1] / base * 100)}%;background:${p[2]};" title="${p[0]}"></span>`).join('')}</div>
+            ${parts.map(p => `<div class="hm-line"><span class="legend-dot" style="background:${p[2]};"></span><span class="n">${p[0]}</span><span class="v">${fmt(p[1])}</span><span class="p" style="color:${p[2]};">${M.income > 0 ? fmtP(pctOf(p[1], M.income), 0) : '—'}</span></div>`).join('')}
+            ${M.none > 0 ? `<div class="hm-sub" style="margin:8px 0 0;">Los gastos personales incluyen ${fmt(M.none)} sin clasificar.</div>` : ''}`;
+    }
+
+    // Pendientes
+    const todo = [];
+    const unc = persExp.filter(e => persBucket(e) === 'none');
+    if(baseSalary() <= 0) todo.push({ c:'var(--ember)', t:'Configura cómo te pagan', s:'Con tu ingreso armamos tu presupuesto 50/30/20.', go:"document.getElementById('wagePill').click()" });
+    if(unc.length){
+        const m = unc.map(e => e.date).sort().reverse()[0].slice(0, 7);
+        todo.push({ c:'var(--gold)', t:(unc.length === 1 ? '1 gasto sin clasificar' : unc.length + ' gastos sin clasificar'), s:'Suman ' + fmt(unc.reduce((s, e) => s + e.amount, 0)) + '. Clasifícalos una vez y la app aprende.', go:`realMonthSel='${m}'; goGastos('personal')` });
+    }
+    if(M && M.hasPers){
+        const bg = getBudget();
+        [['needs', 'necesidades'], ['wants', 'gustos']].forEach(([k, n]) => {
+            const alloc = bg.byKey[k].allocated, real = M[k];
+            if(alloc > 0 && real > alloc) todo.push({ c:'var(--red)', t:`Te pasaste ${fmt(real - alloc)} en ${n}`, s:`Llevas ${fmt(real)} de ${fmt(alloc)} en ${mesLargo(ym).toLowerCase()}.`, go:`realMonthSel='${ym}'; goGastos('personal')` });
+        });
+    }
+    if(!profile) todo.unshift({ c:'var(--ember)', t:'Dinos cómo ganas tu dinero', s:'Empleado, por tu cuenta o ambos: así sé si hay que apartar impuestos.', go:"openModal('profileModal')" });
+    if(prof() !== 'empleado' && (incomeMode === 'freelance' || taxLog.some(t => incKind(t) === 'negocio'))){
+        const p = nextTaxPeriod(), d = diasHasta(p.due);
+        todo.push({ c: d <= 14 ? 'var(--red)' : 'var(--ice)', t:`Pago estimado al IRS: ${fechaLarga(p.due)}`, s:(d === 0 ? 'Vence hoy' : d === 1 ? 'Falta 1 día' : `Faltan ${d} días`) + ` · llevas ${fmt(taxIn(p.start, p.end))} apartado este trimestre.`, go:'goPagos()' });
+    }
+    const imported = [...taxLog, ...persExp, ...bizExp].filter(x => x.src).map(x => x.date).sort();
+    if(!imported.length) todo.push({ c:'var(--ice)', t:'Importa tu estado de cuenta', s:'PDF o CSV del banco: tus pagos y gastos se registran solos.', go:'goPagos()' });
+    else {
+        const last = imported[imported.length - 1], ago = -diasHasta(last);
+        if(ago > 35) todo.push({ c:'var(--ice)', t:'Importa tu estado de cuenta más reciente', s:`El último que importaste llega hasta el ${fechaLarga(last)}.`, go:'goPagos()' });
+    }
+    document.getElementById('hmTodo').innerHTML = todo.length
+        ? todo.map(x => `<button class="todo-row" onclick="${x.go}"><span class="todo-dot" style="background:${x.c};"></span><span class="todo-body"><span class="todo-t">${x.t}</span><span class="todo-s">${x.s}</span></span><span class="todo-arrow">→</span></button>`).join('')
+        : '<div class="todo-done">✓ Todo al día.</div>';
+
+    // Tu negocio
+    const bizCard = document.getElementById('homeBizCard');
+    const y = hoyISO().slice(0, 4);
+    const inc = taxLog.filter(t => t.date.startsWith(y) && incKind(t) === 'negocio').reduce((s, t) => s + t.gross, 0);
+    const out = bizExp.filter(e => e.date.startsWith(y)).reduce((s, e) => s + bizDed(e), 0);
+    bizCard.style.display = (inc || out) ? '' : 'none';
+    document.getElementById('hbYear').textContent = y;
+    const whole = n => (n < 0 ? '-' : '') + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+    document.getElementById('hbIn').textContent = whole(inc);
+    document.getElementById('hbOut').textContent = whole(out);
+    const net = document.getElementById('hbNet');
+    net.textContent = whole(inc - out); net.style.color = inc - out >= 0 ? 'var(--green)' : 'var(--red)';
+
+    // 50/30/20 con gasto real
+    if(M && M.hasPers){
+        const bg = getBudget();
+        document.getElementById('ruleSub').textContent = 'Gasto real vs. asignado · ' + mesLargo(ym);
+        const rows = [['needs', 'Necesidades', ruleNeeds], ['wants', 'Gustos', ruleWants], ['savings', 'Ahorro', ruleSave]].map(([k, label, pct]) => {
+            const alloc = bg.byKey[k].allocated, real = M[k], u = pctOf(real, alloc);
+            const good = k === 'savings' ? real >= alloc : real <= alloc;
+            const color = !alloc ? 'var(--dim)' : good ? 'var(--green)' : (k === 'savings' ? 'var(--ember)' : 'var(--red)');
+            return { k, label, pct, alloc, real, u, good, color };
+        });
+        document.getElementById('ruleBars').innerHTML = rows.map(r => `
+            <div class="rule-line">
+                <div class="rule-tag" style="color:${r.color};">${r.label} ${r.pct}%</div>
+                <div class="rule-track"><div class="rule-fill" style="width:${clampW(r.u)}%;background:${r.color};"></div></div>
+                <div class="rule-num" style="color:${r.color};">${r.alloc ? fmtP(r.u, 0) : '—'}</div>
+            </div>`).join('');
+        const badge = document.getElementById('ruleBadge');
+        const ok = bg.income && rows.every(r => r.good);
+        badge.textContent = !bg.income ? 'SIN INGRESO' : ok ? 'EN ORDEN' : 'FUERA DE BALANCE';
+        badge.style.color = !bg.income ? 'var(--dim)' : ok ? 'var(--green)' : 'var(--ember)';
+        badge.style.background = !bg.income ? 'rgba(90,87,80,0.15)' : ok ? 'var(--green2)' : 'rgba(255,69,0,0.12)';
+        badge.style.border = '1px solid ' + (!bg.income ? 'rgba(90,87,80,0.3)' : ok ? 'rgba(0,200,117,0.3)' : 'rgba(255,69,0,0.3)');
+        const v = document.getElementById('ruleVerdict');
+        const bad = rows.filter(r => r.alloc && !r.good).map(r => r.k === 'savings' ? `al ahorro le faltan ${fmt(r.alloc - r.real)}` : `${r.label.toLowerCase()} se pasa por ${fmt(r.real - r.alloc)}`);
+        v.textContent = !bg.income ? 'Configura cómo te pagan para comparar tu gasto real con la regla.'
+            : bad.length ? 'Con tu gasto real: ' + bad.join(' y ') + '.'
+            : `Tu gasto real está dentro de la regla: necesidades ${fmtP(rows[0].u, 0)}, gustos ${fmtP(rows[1].u, 0)} y ahorro ${fmtP(rows[2].u, 0)} de la meta.`;
+        const vc = !bg.income ? 'var(--dim)' : bad.length ? 'var(--ember)' : 'var(--green)';
+        v.style.color = vc; v.style.borderLeftColor = vc;
+    } else {
+        document.getElementById('ruleSub').textContent = 'Plan: usado vs. asignado este mes';
+    }
+}
+
+// ── Perfil: empleado, por mi cuenta o ambos ──────────
+let profile = LS.get('wf_profile', null);       // 'empleado' | 'negocio' | 'ambos' | null (sin elegir)
+let payRules = LS.get('wf_payrules', {});       // pagador → 'sueldo' | 'negocio'
+let mpKind = LS.get('wf_mpkind', 'sueldo');     // tipo elegido en Me pagaron (perfil Ambos)
+const prof = () => profile || 'negocio';
+const PAYROLL_RX = /payroll|direct dep|dir dep|dirdep|n[oó]mina|salary|\badp\b|paychex|gusto|workday|ceridian|paylocity|\bpayrl\b|\bpr ppd\b/i;
+const incKind = t => t.kind === 'sueldo' ? 'sueldo' : 'negocio';
+function payerKey(d){
+    return String(d || '').toLowerCase()
+        .replace(/zelle (payment|transfer)( from)?|conf#? ?\S+;?|cash ?app\*?|venmo( cashout)?|direct dep(osit)?|dir dep|ach (credit|deposit)|online transfer from|mobile deposit|remote online deposit|deposit|ppd id:? ?\S+|orig co name:?|from\b/g, ' ')
+        .replace(/[#*]\S*/g, ' ').replace(/\d+/g, ' ')
+        .replace(/[^a-záéíóúñ&' ]/g, ' ').replace(/\s+/g, ' ').trim()
+        .split(' ').slice(0, 3).join(' ');
+}
+function guessKind(desc){
+    const p = prof();
+    if(p === 'empleado') return 'sueldo';
+    if(p === 'negocio') return 'negocio';
+    const k = payerKey(desc);
+    if(k && payRules[k]) return payRules[k];
+    return PAYROLL_RX.test(desc || '') ? 'sueldo' : 'negocio';
+}
+function setProfile(p){
+    profile = p; LS.set('wf_profile', p);
+    if(p === 'ambos' && incomeMode === 'freelance'){ LS.set('wf_mode_prev', 'freelance'); incomeMode = 'salary'; LS.set('wf_mode', 'salary'); }
+    else if(p === 'negocio' && LS.get('wf_mode_prev', null) === 'freelance'){ incomeMode = 'freelance'; LS.set('wf_mode', 'freelance'); LS.set('wf_mode_prev', null); }
+    // En "Ambos", los meses del negocio se rehacen solo con pagos de negocio registrados
+    if(p === 'ambos' && taxLog.some(t => incKind(t) === 'sueldo')){
+        const byMonth = {};
+        taxLog.filter(t => incKind(t) === 'negocio').forEach(t => { byMonth[t.date.slice(0,7)] = (byMonth[t.date.slice(0,7)] || 0) + t.gross; });
+        earnings = Object.entries(byMonth).map(([month, amount], i) => ({ id: Date.now() + i, month, amount: Math.round(amount * 100) / 100 })).sort((a, b) => b.month.localeCompare(a.month));
+        LS.set('wf_earnings', earnings);
+    }
+    applyProfile();
+    try{ renderTaxes(); renderBudget(); updateHome(); }catch(e){ console.error(e); }
+}
+function applyProfile(){
+    const p = prof();
+    ['empleado', 'negocio', 'ambos'].forEach(k => document.body.classList.toggle('profile-' + k, p === k));
+    document.querySelectorAll('#profRow .mode-btn').forEach(b => b.classList.toggle('active', b.dataset.prof === profile));
+    if(p === 'empleado' && document.getElementById('budget').dataset.view === 'negocio') setGastosView('personal');
+    document.querySelectorAll('#mpKindRow button').forEach(b => b.classList.toggle('active', b.dataset.kind === mpKind));
+    const lbl = document.getElementById('payModeLbl');
+    if(lbl) lbl.textContent = p === 'ambos' ? 'Tu trabajo con sueldo' : 'Cómo te pagan';
+    if(document.getElementById('settingsModal').classList.contains('open')){ try{ syncModeUI(); renderEarnings(); previewSettings(); }catch(e){} }
+    try{ updatePill(); }catch(e){}
+    const cta = document.getElementById('ctaSub');
+    if(cta) cta.textContent = p === 'empleado' ? '¿Cómo reparto mi cheque entre gastos y ahorro?' : '¿Cuánto aparto para impuestos, gastos y ahorro?';
+}
+function setMpKind(k){ mpKind = k; LS.set('wf_mpkind', k); applyProfile(); previewPaycheck(); }
+function currentMpKind(){ const p = prof(); return p === 'empleado' ? 'sueldo' : p === 'negocio' ? 'negocio' : mpKind; }
+function maybeAskProfile(){ if(!profile) openModal('profileModal'); }
+
 // ── Me pagaron / Impuestos trimestrales ──────────────
-function paycheckSplit(gross){
-    const tax = Math.round(gross*taxRate)/100;
+function paycheckSplit(gross, kind){
+    const tax = kind === 'sueldo' ? 0 : Math.round(gross*taxRate)/100;
     const net = gross - tax;
     return { gross, tax, net, needs: net*ruleNeeds/100, wants: net*ruleWants/100, save: net*ruleSave/100 };
 }
@@ -2763,27 +3232,32 @@ function setTaxRate(){
     const v = parseFloat(document.getElementById('mp_rate').value);
     if(!isNaN(v) && v>=0 && v<=60){ taxRate=v; LS.set('wf_taxrate',v); }
     previewPaycheck();
+    if(isMixed()){ updatePill(); }
 }
 function previewPaycheck(){
     const g  = parseFloat(document.getElementById('mp_amount').value)||0;
     const el = document.getElementById('mp_split');
+    const kind = currentMpKind();
     if(!g){
-        el.innerHTML = '<div style="font-size:.66rem;color:var(--dim);line-height:1.7;">Escribe el monto que recibiste y te digo cómo repartirlo: primero impuestos, luego necesidades, gustos y ahorro con tu regla '+ruleNeeds+'/'+ruleWants+'/'+ruleSave+'.</div>';
+        el.innerHTML = '<div style="font-size:.66rem;color:var(--dim);line-height:1.7;">' + (kind === 'sueldo'
+            ? 'Escribe lo que te depositaron y te digo cómo repartirlo en necesidades, gustos y ahorro con tu regla '+ruleNeeds+'/'+ruleWants+'/'+ruleSave+'. Tu empleador ya retuvo los impuestos.'
+            : 'Escribe el monto que recibiste y te digo cómo repartirlo: primero impuestos, luego necesidades, gustos y ahorro con tu regla '+ruleNeeds+'/'+ruleWants+'/'+ruleSave+'.') + '</div>';
         return;
     }
-    const p = paycheckSplit(g);
+    const p = paycheckSplit(g, kind);
     const rows = [
-        ['Impuestos — apártalo y no lo toques', p.tax,   'var(--red)',   taxRate+'% del pago'],
-        ['Necesidades',                          p.needs, 'var(--ember)', ruleNeeds+'% de lo que queda'],
-        ['Gustos',                               p.wants, 'var(--ice)',   ruleWants+'% de lo que queda'],
-        ['Ahorro',                               p.save,  'var(--green)', ruleSave+'% de lo que queda'],
+        ...(kind === 'sueldo' ? [] : [['Impuestos — apártalo y no lo toques', p.tax, 'var(--red)', taxRate+'% del pago']]),
+        ['Necesidades', p.needs, 'var(--ember)', ruleNeeds+'% ' + (kind === 'sueldo' ? 'del cheque' : 'de lo que queda')],
+        ['Gustos',      p.wants, 'var(--ice)',   ruleWants+'% ' + (kind === 'sueldo' ? 'del cheque' : 'de lo que queda')],
+        ['Ahorro',      p.save,  'var(--green)', ruleSave+'% '  + (kind === 'sueldo' ? 'del cheque' : 'de lo que queda')],
     ];
     el.innerHTML = `<div class="split-track" style="margin:0 0 6px;">${rows.map(r=>`<div class="split-seg" style="width:${clampW(pctOf(r[1],g))}%;background:${r[2]};"></div>`).join('')}</div>`
         + rows.map(r=>`<div class="split-row">
             <span class="legend-dot" style="background:${r[2]};"></span>
             <span style="flex:1;"><span style="display:block;font-size:.74rem;color:var(--text);">${r[0]}</span><span style="display:block;font-size:.56rem;color:var(--dim);margin-top:2px;">${r[3]}</span></span>
             <span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.03em;color:${r[2]};">${fmt(r[1])}</span>
-        </div>`).join('');
+        </div>`).join('')
+        + (kind === 'sueldo' ? '<div style="font-size:.6rem;color:var(--dim);margin-top:8px;line-height:1.6;">Es sueldo: tu empleador ya retuvo los impuestos, así que no hay que apartar nada.</div>' : '');
 }
 function addToEarnings(month, delta){
     const e = earnings.find(x=>x.month===month);
@@ -2796,18 +3270,19 @@ function logPaycheck(){
     const gross = parseFloat(document.getElementById('mp_amount').value);
     const date  = document.getElementById('mp_date').value || hoyISO();
     if(!gross || gross<=0) return;
-    const p = paycheckSplit(gross);
-    taxLog.unshift({id:Date.now(), date, gross, tax:p.tax});
+    const kind = currentMpKind();
+    const p = paycheckSplit(gross, kind);
+    taxLog.unshift({id:Date.now(), date, gross, tax:p.tax, kind});
     taxLog.sort((a,b)=>b.date.localeCompare(a.date));
     LS.set('wf_taxlog', taxLog);
-    addToEarnings(date.slice(0,7), gross);
+    if(!(isMixed() && kind === 'sueldo')) addToEarnings(date.slice(0,7), gross);
     document.getElementById('mp_amount').value = '';
     renderTaxes(); updatePill(); updateHome(); renderBudget();
 }
 function removePaycheck(id){
     const t = taxLog.find(x=>x.id===id); if(!t) return;
     taxLog = taxLog.filter(x=>x.id!==id); LS.set('wf_taxlog', taxLog);
-    addToEarnings(t.date.slice(0,7), -t.gross);
+    if(!(isMixed() && incKind(t) === 'sueldo')) addToEarnings(t.date.slice(0,7), -t.gross);
     renderTaxes(); updatePill(); updateHome(); renderBudget();
 }
 // Periodos de pagos estimados del IRS (Form 1040-ES)
@@ -2828,6 +3303,11 @@ function nextTaxPeriod(){
     return [...taxPeriods(y-1), ...taxPeriods(y)].find(p=>p.due>=hoy);
 }
 function renderTaxes(){
+    renderBiz();
+    const mpNote = document.getElementById('mpNote');
+    if(mpNote) mpNote.textContent = currentMpKind() === 'sueldo'
+        ? 'Al registrarlo, el cheque se suma a tus ingresos del mes. Como es sueldo, no se aparta nada para impuestos.'
+        : 'Al registrarlo, el pago se suma a tus ingresos de ese mes y lo apartado para impuestos cuenta para tu próximo pago trimestral.';
     const rateEl = document.getElementById('mp_rate');
     if(document.activeElement !== rateEl) rateEl.value = taxRate;
     const dEl = document.getElementById('mp_date');
@@ -2863,12 +3343,13 @@ function renderTaxes(){
         <div class="list-row">
             <div class="row-indicator ri-ice"></div>
             <div class="row-info">
-                <div class="row-name">${fmt(t.gross)} recibido</div>
+                <div class="row-name">${fmt(t.gross)} recibido${prof() === 'ambos' ? `<span class="kind-tag ${incKind(t)}">${incKind(t)}</span>` : ''}</div>
                 <div class="contrib-date">${fechaCorta(t.date)} ${t.date.slice(0,4)}${t.desc ? " · " + esc(t.desc) : ""}</div>
             </div>
             <div class="row-meta">
-                <div class="row-value c-red">${fmt(t.tax)}</div>
-                <div style="font-size:.58rem;color:var(--dim);margin-top:2px;">para impuestos</div>
+                ${incKind(t) === 'sueldo'
+                    ? '<div class="row-value" style="color:var(--ice);">Sueldo</div><div style="font-size:.58rem;color:var(--dim);margin-top:2px;">impuestos ya retenidos</div>'
+                    : `<div class="row-value c-red">${fmt(t.tax)}</div><div style="font-size:.58rem;color:var(--dim);margin-top:2px;">para impuestos</div>`}
                 <button class="row-action" onclick="removePaycheck(${t.id})">Quitar</button>
             </div>
         </div>`).join('');
@@ -3124,10 +3605,39 @@ async function parseStatementPDF(data){
         const t = { date: ld.date, desc, amount: v, page: l.page, y: l.y };
         tx.push(t); last = t;
     });
-    return { tx: tx.map(t => ({ date:t.date, desc:t.desc.replace(/\s+/g, ' ').slice(0, 80), amount:t.amount })), stmtIn, pages: doc.numPages };
+    return { tx: tx.map(t => ({ date:t.date, desc:t.desc.replace(/\s+/g, ' ').slice(0, 80), amount:t.amount })), stmtIn, pages: doc.numPages, last4: last4FromText(full) };
 }
 
 /* ---------- Común ---------- */
+// ── De qué cuenta es el estado: personal o del negocio ──
+let acctRules = LS.get('wf_acctrules', {});   // últimos 4 dígitos → 'personal' | 'negocio'
+function last4FromText(txt){
+    let m = String(txt || '').match(/ending (?:in )?[x*•\s]*(\d{4})\b|terminad[ao] en[x*•\s]*(\d{4})\b/i);
+    if(m) return m[1] || m[2];
+    const snippets = String(txt || '').match(/(?:account|acct|cuenta)[^\n]{0,48}/gi) || [];
+    for(const sn of snippets){
+        const runs = (sn.replace(/[\s-]/g, '').match(/\d{4,}/g) || []).filter(r => !(r.length === 4 && /^(19|20)\d\d$/.test(r)));
+        if(runs.length){ const r = runs.sort((a, b) => b.length - a.length)[0]; return r.slice(-4); }
+    }
+    return null;
+}
+function last4FromName(name){ const m = String(name || '').match(/(?<!\d)(\d{4})(?!\d)/); return m ? m[1] : null; }
+function initAcct(S, last4){
+    S.last4 = last4 || null;
+    const saved = S.last4 && acctRules[S.last4];
+    S.acctRemembered = !!saved;
+    S.acct = prof() === 'empleado' ? 'personal' : (saved || 'personal');
+    S.savePersonal = S.acct !== 'negocio';
+    S.showAllExp = S.acct === 'negocio';
+}
+function csvSetAcct(a){
+    const S = csvState; if(!S || S.acct === a) return;
+    S.acct = a; S.acctRemembered = false;
+    S.savePersonal = a !== 'negocio';
+    S.showAllExp = a === 'negocio';
+    csvExtract(); renderCSV();
+}
+
 function csvExtract(){
     const S = csvState;
     const raw = S.kind === 'pdf' ? S.pdf.tx.map(t => ({ ...t })) : csvRaw();
@@ -3147,7 +3657,23 @@ function csvExtract(){
     S.deposits = out.filter(t => t.amount > 0).sort((a, b) => b.date.localeCompare(a.date)).map(t => {
         const transfer = TRANSFER.test(t.desc) && !PEOPLE.test(t.desc);
         const byHand = !t.dup && manual.some(p => Math.abs(p.gross - t.amount) < 0.01 && Math.abs(new Date(p.date) - new Date(t.date)) <= 4 * day);
-        return { ...t, transfer, byHand, checked: !t.dup && !transfer && !byHand };
+        return { ...t, transfer, byHand, kind: S.acct === 'negocio' ? 'negocio' : guessKind(t.desc), checked: !t.dup && !transfer && !byHand };
+    });
+    // Retiros: sugerir los que parecen gastos del negocio
+    const knownExp = new Set([...bizExp, ...persExp].map(e => e.src).filter(Boolean));
+    const seenE = {};
+    S.expenses = out.filter(t => t.amount < 0).sort((a, b) => b.date.localeCompare(a.date)).map(t => {
+        const amount = Math.abs(t.amount), base = t.date + '|' + amount.toFixed(2);
+        seenE[base] = (seenE[base] || 0) + 1;
+        const key = 'exp:' + base + '#' + seenE[base];
+        const sug = prof() === 'empleado' ? null : bizSuggest(t.desc), dup = knownExp.has(key);
+        const pcat = persSuggest(t.desc);
+        if(S.acct === 'negocio'){
+            // Cuenta del negocio: todo es del negocio menos pagos de tarjeta, transferencias entre cuentas e impuestos
+            const notExpense = (PERS_CATS[pcat] || {}).b === 'skip' || pcat === 'ahorro' || TRANSFER.test(t.desc);
+            return { date: t.date, desc: t.desc || '', amount, key, dup, sug: true, remembered: !!(sug && sug.remembered), cat: sug ? sug.cat : 'otros', pcat, notExpense, checked: !dup && !notExpense };
+        }
+        return { date: t.date, desc: t.desc || '', amount, key, dup, sug: !!sug, remembered: !!(sug && sug.remembered), cat: sug ? sug.cat : 'otros', pcat, checked: !dup && !!(sug && sug.strong) };
     });
 }
 function readBankFile(input){
@@ -3166,6 +3692,7 @@ function readBankFile(input){
                 if(res.noText) return fail('Ese PDF es una imagen escaneada y no tiene texto que se pueda leer. Descarga el estado de cuenta original desde la web o la app del banco, o el CSV de movimientos.');
                 if(!res.tx.length) return fail('No encontré movimientos en ese PDF. Si es un estado de cuenta, prueba con el CSV de movimientos del mismo banco.');
                 csvState = { kind:'pdf', name:f.name, pdf:res, invert:false };
+                initAcct(csvState, res.last4 || last4FromName(f.name));
                 csvExtract(); renderCSV();
             }catch(e){
                 if(e && e.name === 'PasswordException') fail('Ese PDF tiene contraseña. Ábrelo, guárdalo sin contraseña (o descarga el CSV de movimientos) y vuelve a intentarlo.');
@@ -3181,6 +3708,7 @@ function readBankFile(input){
             const rows = csvSplit(String(rd.result));
             if(rows.length < 2) throw new Error('vacío');
             csvState = { kind:'csv', name:f.name, rows, invert:false };
+            initAcct(csvState, last4FromName(f.name));
             csvState.map = csvDetect(rows);
             csvExtract();
             if(!csvState.all.length) throw new Error('sin movimientos');
@@ -3197,16 +3725,50 @@ function csvToggle(i, on){ csvState.deposits[i].checked = on; renderCSVSummary()
 function csvAll(on){ csvState.deposits.forEach(d => { if(!d.dup) d.checked = on; }); renderCSV(); }
 function csvClose(){ csvState = null; document.getElementById('csvResult').innerHTML = ''; }
 function renderCSVSummary(){
-    const sel = csvState.deposits.filter(d => d.checked);
-    const total = sel.reduce((s, d) => s + d.amount, 0);
-    const tax = sel.reduce((s, d) => s + paycheckSplit(d.amount).tax, 0);
-    document.getElementById('csvSum').innerHTML = sel.length
-        ? `Seleccionados: <b>${sel.length} ${sel.length === 1 ? 'pago' : 'pagos'}</b> por <b>${fmt(total)}</b> · para impuestos (${taxRate}%): <b style="color:var(--red)">${fmt(tax)}</b>`
-        : 'Marca los depósitos que fueron pagos por tu trabajo.';
+    const S = csvState;
+    const dsel = (S.deposits || []).filter(d => d.checked);
+    const esel = (S.expenses || []).filter(e => e.checked && !e.dup);
+    const psel = S.savePersonal !== false ? (S.expenses || []).filter(e => !e.checked && !e.dup && !(S.acct === 'negocio' && e.notExpense)) : [];
+    const dTot = dsel.reduce((s, d) => s + d.amount, 0);
+    const tax  = dsel.reduce((s, d) => s + paycheckSplit(d.amount, d.kind).tax, 0);
+    const dSue = dsel.filter(d => d.kind === 'sueldo').reduce((s, d) => s + d.amount, 0);
+    const eTot = esel.reduce((s, e) => s + e.amount * (BIZ_CATS[e.cat] || BIZ_CATS.otros).ded, 0);
+    const pTot = psel.reduce((s, e) => s + e.amount, 0);
+    const parts = [], btn = [];
+    if(dsel.length){
+        const pagos = `<b>${dsel.length} ${dsel.length === 1 ? 'pago' : 'pagos'}</b> por <b>${fmt(dTot)}</b>`;
+        parts.push(prof() === 'empleado' ? pagos + ' · tu empleador ya retuvo los impuestos'
+            : prof() === 'ambos' ? pagos + ` (sueldo ${fmt(dSue)} · negocio ${fmt(dTot - dSue)}) · para impuestos: <b style="color:var(--red)">${fmt(tax)}</b>, solo de lo del negocio`
+            : pagos + ` · para impuestos (${taxRate}%): <b style="color:var(--red)">${fmt(tax)}</b>`);
+        btn.push(`${dsel.length} ${dsel.length === 1 ? 'pago' : 'pagos'}`);
+    }
+    if(esel.length){
+        parts.push(`<b>${esel.length} ${esel.length === 1 ? 'gasto' : 'gastos'} del negocio</b> · deducible: <b style="color:var(--ember)">${fmt(eTot)}</b>`);
+        btn.push(`${esel.length} ${esel.length === 1 ? 'gasto' : 'gastos'} del negocio`);
+    }
+    if(psel.length){
+        parts.push(`<b>${psel.length} ${psel.length === 1 ? 'gasto personal' : 'gastos personales'}</b> por <b>${fmt(pTot)}</b> · van a Gastos → Personal`);
+        btn.push(`${psel.length} ${psel.length === 1 ? 'personal' : 'personales'}`);
+    }
+    document.getElementById('csvSum').innerHTML = parts.length
+        ? 'Seleccionados: ' + parts.join('<br>')
+        : 'Marca los depósitos que fueron pagos por tu trabajo y las compras que fueron del negocio.';
     const b = document.getElementById('csvGo');
-    b.disabled = !sel.length; b.style.opacity = sel.length ? 1 : .4;
-    b.textContent = sel.length ? `Importar ${sel.length} ${sel.length === 1 ? 'pago' : 'pagos'}` : 'Importar';
+    b.disabled = !parts.length; b.style.opacity = parts.length ? 1 : .4;
+    b.textContent = !parts.length ? 'Importar' : btn.length > 2 ? 'Importar todo' : 'Importar ' + btn.join(' y ');
 }
+function depKind(i, k){
+    const d = csvState.deposits[i]; d.kind = k;
+    if(!d.dup && !d.checked){ d.checked = true; const r = document.getElementById('csvRow'+i); r.classList.remove('off'); r.querySelector('input').checked = true; }
+    renderCSVSummary();
+}
+function expToggle(i, on){ csvState.expenses[i].checked = on; document.getElementById('expRow'+i).classList.toggle('off', !on); renderCSVSummary(); }
+function expCat(i, cat){
+    const e = csvState.expenses[i]; e.cat = cat;
+    if(!e.dup && !e.checked){ e.checked = true; const r = document.getElementById('expRow'+i); r.classList.remove('off'); r.querySelector('input').checked = true; }
+    renderCSVSummary();
+}
+function expShowAll(on){ csvState.showAllExp = on; renderCSV(); }
 function renderCSV(){
     const S = csvState, out = document.getElementById('csvResult');
     const deps = S.deposits, wd = S.all.filter(t => t.amount < 0);
@@ -3251,11 +3813,10 @@ function renderCSV(){
         mapHtml = `<label class="csv-check"><input type="checkbox" id="csvInvert" ${S.invert ? 'checked' : ''} onchange="csvSetInvert(this.checked)"> Invertir signos (si los depósitos salen como gastos)</label>`;
     }
 
-    out.innerHTML = `
-        <div class="csv-status"><b>${esc(S.name)}</b><br>${plural(S.all.length, 'movimiento', 'movimientos')} del ${fechaCorta(dates[0])} ${dates[0].slice(0,4)} al ${fechaCorta(dates[dates.length-1])} ${dates[dates.length-1].slice(0,4)} · ${plural(deps.length, 'depósito', 'depósitos')} por ${fmt(depTotal)} · ${plural(wd.length, 'retiro', 'retiros')} por ${fmt(Math.abs(wdTotal))}</div>
-        ${notes.join('')}
-        ${mapHtml}
-        ${deps.length ? `
+    const exps = S.expenses || [];
+    const expShown = exps.map((e, i) => ({ e, i })).filter(x => S.showAllExp || x.e.sug || x.e.checked);
+    const catOpts = sel => Object.entries(BIZ_CATS).map(([k, c]) => `<option value="${k}"${k === sel ? ' selected' : ''}>${c.label}</option>`).join('');
+    const depHtml = deps.length ? `
         <div class="csv-bar">
             <span class="form-label">Depósitos encontrados</span>
             <span><button class="csv-link" onclick="csvAll(true)">Marcar todos</button><button class="csv-link" onclick="csvAll(false)">Ninguno</button></span>
@@ -3266,32 +3827,482 @@ function renderCSV(){
                 <span class="cd">
                     <span class="ct" style="display:block;">${esc(d.desc || 'Depósito')}</span>
                     <span class="cs" style="display:block;">${fechaCorta(d.date)} ${d.date.slice(0,4)}${d.dup ? '<span class="csv-flag">ya importado</span>' : ''}${d.transfer ? '<span class="csv-flag">¿transferencia?</span>' : ''}${d.byHand ? '<span class="csv-flag">¿ya lo anotaste?</span>' : ''}</span>
+                    ${prof() === 'ambos' ? `<select class="exp-cat" aria-label="Tipo de ingreso" ${d.dup ? 'disabled' : ''} onchange="depKind(${i}, this.value)"><option value="sueldo"${d.kind === 'sueldo' ? ' selected' : ''}>Sueldo (W-2)</option><option value="negocio"${d.kind === 'negocio' ? ' selected' : ''}>Negocio (1099)</option></select>` : ''}
                 </span>
                 <span class="ca">${fmt(d.amount)}</span>
             </label>`).join('')}
+        </div>` : '<div class="csv-warn">No encontré depósitos en este archivo.</div>';
+    const expHtml = exps.length && prof() !== 'empleado' ? `
+        <div class="csv-bar">
+            <span class="form-label">${S.acct === 'negocio' ? 'Gastos del negocio' : S.showAllExp ? 'Todos los retiros' : 'Gastos que pueden ser del negocio'}</span>
+            <button class="csv-link" onclick="expShowAll(${!S.showAllExp})">${S.showAllExp ? 'Ver solo sugeridos' : 'Ver todos los retiros (' + exps.length + ')'}</button>
         </div>
+        ${expShown.length ? `<div class="csv-list">${expShown.map(({ e, i }) => `
+            <label class="csv-row${e.checked ? '' : ' off'}" id="expRow${i}">
+                <input type="checkbox" ${e.checked ? 'checked' : ''} ${e.dup ? 'disabled' : ''} onchange="expToggle(${i}, this.checked)">
+                <span class="cd">
+                    <span class="ct" style="display:block;">${esc(e.desc || 'Retiro')}</span>
+                    <span class="cs" style="display:block;">${fechaCorta(e.date)} ${e.date.slice(0,4)}${e.dup ? '<span class="csv-flag">ya importado</span>' : ''}${e.remembered ? '<span class="csv-flag">como la vez pasada</span>' : ''}${e.notExpense ? '<span class="csv-flag">¿transferencia o pago de tarjeta?</span>' : ''}</span>
+                    <select class="exp-cat" aria-label="Categoría" ${e.dup ? 'disabled' : ''} onchange="expCat(${i}, this.value)">${catOpts(e.cat)}</select>
+                </span>
+                <span class="ca exp">${fmt(e.amount)}</span>
+            </label>`).join('')}</div>` : '<div class="csv-help" style="margin:6px 0 10px;">No encontré compras típicas de negocio. Toca «Ver todos los retiros» para marcar las tuyas.</div>'}` : '';
+    const persLine = exps.length ? `<label class="csv-check" style="margin:0 0 12px;"><input type="checkbox" id="csvSavePers" ${S.savePersonal !== false ? 'checked' : ''} onchange="csvState.savePersonal = this.checked; renderCSVSummary()"> ${S.acct === 'negocio' ? 'Guardar los retiros no marcados como gastos personales' : 'Guardar los demás retiros como gastos personales (se clasifican solos)'}</label>` : '';
+    const bizIn = deps.some(d => d.kind === 'negocio' && d.checked), persOut = exps.some(e => !e.checked && !e.dup);
+    const acctHtml = prof() === 'empleado' ? '' : `
+        <div class="acct-box">
+            <span class="form-label" style="margin:0;">¿De qué cuenta es este estado?</span>
+            <div class="acct-toggle" role="group" aria-label="Tipo de cuenta">
+                <button class="${S.acct === 'personal' ? 'active' : ''}" onclick="csvSetAcct('personal')">Personal</button>
+                <button class="${S.acct === 'negocio' ? 'active' : ''}" onclick="csvSetAcct('negocio')">Del negocio</button>
+            </div>
+            <div class="acct-note">${S.last4 ? `Cuenta terminada en <b>${esc(S.last4)}</b>${S.acctRemembered ? ' · la recordé de la vez pasada' : ' · la recordaré para la próxima'}. ` : ''}${S.acct === 'negocio'
+                ? 'Todo lo de esta cuenta se toma como del negocio. Desmarca lo que haya sido personal; los pagos de tarjeta y las transferencias entre tus cuentas quedan fuera.'
+                : (bizIn && persOut ? 'Consejo: una cuenta solo para el negocio hace tus impuestos más fáciles y te ayuda a proteger tu negocio.' : 'Los retiros van a tus gastos personales, salvo los que marques como del negocio.')}</div>
+        </div>`;
+    const any = deps.length || exps.length;
+    out.innerHTML = `
+        <div class="csv-status"><b>${esc(S.name)}</b><br>${plural(S.all.length, 'movimiento', 'movimientos')} del ${fechaCorta(dates[0])} ${dates[0].slice(0,4)} al ${fechaCorta(dates[dates.length-1])} ${dates[dates.length-1].slice(0,4)} · ${plural(deps.length, 'depósito', 'depósitos')} por ${fmt(depTotal)} · ${plural(wd.length, 'retiro', 'retiros')} por ${fmt(Math.abs(wdTotal))}</div>
+        ${acctHtml}
+        ${notes.join('')}
+        ${mapHtml}
+        ${any ? depHtml + expHtml + persLine + `
         <div class="csv-sum" id="csvSum"></div>
         <div style="display:flex;gap:8px;">
             <button class="btn-cancel" onclick="csvClose()">Cancelar</button>
             <button class="btn-confirm" id="csvGo" style="background:var(--ice);" onclick="importCSV()">Importar</button>
-        </div>` : `<div class="csv-err">No encontré depósitos. ${S.kind === 'csv' ? 'Revisa las columnas arriba o marca' : 'Marca'} "Invertir signos".</div>`}`;
-    if(deps.length) renderCSVSummary();
+        </div>` : `<div class="csv-err">No encontré movimientos. ${S.kind === 'csv' ? 'Revisa las columnas arriba o marca' : 'Marca'} "Invertir signos".</div>`}`;
+    if(any) renderCSVSummary();
 }
 function importCSV(){
-    const sel = csvState.deposits.filter(d => d.checked && !d.dup);
-    if(!sel.length) return;
+    const S = csvState;
+    const dsel = (S.deposits || []).filter(d => d.checked && !d.dup);
+    const esel = (S.expenses || []).filter(e => e.checked && !e.dup);
+    const psel = S.savePersonal !== false ? (S.expenses || []).filter(e => !e.checked && !e.dup && !(S.acct === 'negocio' && e.notExpense)) : [];
+    if(!dsel.length && !esel.length && !psel.length) return;
     let tax = 0;
-    sel.forEach((d, i) => {
-        const p = paycheckSplit(d.amount); tax += p.tax;
-        taxLog.push({ id: Date.now() + i, date: d.date, gross: d.amount, tax: p.tax, src: d.key, desc: d.desc.slice(0, 60) });
-        addToEarnings(d.date.slice(0, 7), d.amount);
+    const t0 = Date.now();
+    dsel.forEach((d, i) => {
+        const p = paycheckSplit(d.amount, d.kind); tax += p.tax;
+        taxLog.push({ id: t0 + i, date: d.date, gross: d.amount, tax: p.tax, kind: d.kind || 'negocio', src: d.key, desc: d.desc.slice(0, 60), acct: S.acct });
+        if(prof() === 'ambos'){ const k = payerKey(d.desc); if(k) payRules[k] = d.kind; }
+        if(!(isMixed() && d.kind === 'sueldo')) addToEarnings(d.date.slice(0, 7), d.amount);
     });
-    taxLog.sort((a, b) => b.date.localeCompare(a.date));
-    LS.set('wf_taxlog', taxLog);
-    const n = sel.length, total = sel.reduce((s, d) => s + d.amount, 0);
+    if(dsel.length){ taxLog.sort((a, b) => b.date.localeCompare(a.date)); LS.set('wf_taxlog', taxLog); LS.set('wf_payrules', payRules); }
+    esel.forEach((e, i) => {
+        bizExp.push({ id: t0 + 5000 + i, date: e.date, desc: e.desc.slice(0, 60), amount: e.amount, cat: e.cat, src: e.key, acct: S.acct });
+        const mk = merchantKey(e.desc); if(mk) bizRules[mk] = e.cat;
+    });
+    if(esel.length){ saveBiz(); LS.set('wf_bizrules', bizRules); }
+    psel.forEach((e, i) => {
+        persExp.push({ id: t0 + 20000 + i, date: e.date, desc: e.desc.slice(0, 60), amount: e.amount, cat: e.pcat || 'sin', src: e.key, acct: S.acct });
+    });
+    if(psel.length){ savePers(); realMonthSel = null; }
+    if(S.last4 && prof() !== 'empleado'){ acctRules[S.last4] = S.acct; LS.set('wf_acctrules', acctRules); }
+    const dTot = dsel.reduce((s, d) => s + d.amount, 0), eTot = esel.reduce((s, e) => s + e.amount, 0), pTot = psel.reduce((s, e) => s + e.amount, 0);
     csvState = null;
     renderTaxes(); updatePill(); updateHome(); renderBudget();
-    document.getElementById('csvResult').innerHTML = `<div class="csv-ok">Listo: ${n} ${n === 1 ? 'pago importado' : 'pagos importados'} por ${fmt(total)}. Se apartaron ${fmt(tax)} para impuestos y se sumaron a tus ingresos de cada mes.</div>`;
+    const msg = [];
+    if(dsel.length) msg.push(`${dsel.length} ${dsel.length === 1 ? 'pago importado' : 'pagos importados'} por ${fmt(dTot)}${tax > 0 ? ` (se apartaron ${fmt(tax)} para impuestos)` : ''}`);
+    if(esel.length) msg.push(`${esel.length} ${esel.length === 1 ? 'gasto del negocio' : 'gastos del negocio'} por ${fmt(eTot)}`);
+    if(psel.length) msg.push(`${psel.length} ${psel.length === 1 ? 'gasto personal' : 'gastos personales'} por ${fmt(pTot)}`);
+    const last = msg.pop();
+    document.getElementById('csvResult').innerHTML = `<div class="csv-ok">Listo: ${msg.length ? msg.join(', ') + ' y ' : ''}${last}.${psel.length || esel.length ? ' Revísalos en la pestaña Gastos.' : ''}</div>`;
+}
+
+// ── Gastos del negocio ────────────────────────────────
+let bizExp     = LS.get('wf_bizexp',   []);   // [{id,date,desc,amount,cat,src?}]
+let bizRules   = LS.get('wf_bizrules', {});   // comercio → categoría que eligió el usuario
+let bizYearSel = +hoyISO().slice(0, 4);
+const BIZ_CATS = {
+    materiales:   { label:'Materiales y suministros',   ded:1 },
+    herramientas: { label:'Herramientas y equipo',      ded:1 },
+    vehiculo:     { label:'Vehículo y gasolina',        ded:1 },
+    telefono:     { label:'Teléfono e internet',        ded:1 },
+    seguros:      { label:'Seguros del negocio',        ded:1 },
+    publicidad:   { label:'Publicidad',                 ded:1 },
+    software:     { label:'Software y suscripciones',   ded:1 },
+    comisiones:   { label:'Comisiones de cobro',        ded:1 },
+    ayudantes:    { label:'Ayudantes y subcontratistas', ded:1 },
+    comidas:      { label:'Comidas de negocio (50%)',   ded:0.5 },
+    otros:        { label:'Otros gastos del negocio',   ded:1 },
+};
+// [categoría, patrón, marcado de entrada]
+const BIZ_PATTERNS = [
+    ['materiales',   /home ?depot|lowe'?s|menards|ace hardware|sherwin|floor ?& ?decor|ferguson|abc supply|84 lumber|lumber|builders? supply|beacon roofing|srs distribution|janitorial|cleaning supply|sally beauty|restaurant depot/i, true],
+    ['herramientas', /harbor freight|northern tool|tool ?(depot|supply)|grainger|snap-?on|zoro/i, true],
+    ['publicidad',   /facebk|facebook ads|meta ?ads|google ?ads|yelp|vistaprint|thumbtack|angi\b|angie'?s|homeadvisor|nextdoor/i, true],
+    ['comisiones',   /square fee|sq \*fee|stripe fee|paypal fee|processing fee|merchant fee/i, true],
+    ['software',     /quickbooks|intuit|jobber|housecall|canva|adobe|godaddy|wix\.com|squarespace|zoom\.us|google \*?(gsuite|workspace)|microsoft ?365/i, false],
+    ['vehiculo',     /shell|exxon|chevron|\bbp\b|marathon|speedway|circle k|quik ?trip|\bqt\b|pilot|love'?s travel|mapco|racetrac|valero|sunoco|murphy|\bgas\b|fuel|gasolina|autozone|o'?reilly|advance auto|jiffy lube|firestone|discount tire|toll|parking|u-?haul/i, false],
+    ['telefono',     /verizon|t-?mobile|at&t|\batt\b|cricket|metro ?(pcs|by)|boost mobile|spectrum|comcast|xfinity|google ?fi|mint mobile/i, false],
+    ['seguros',      /insurance|progressive|geico|state ?farm|allstate|next insurance|hiscox|seguro/i, false],
+];
+function merchantKey(d){
+    return String(d || '').toLowerCase()
+        .replace(/purchase authorized on|card purchase( with pin)?|debit card purchase|recurring (card )?(purchase|payment)|checkcard|pos (debit|purchase)|compra( con tarjeta)?/g, ' ')
+        .replace(/\d{1,2}\/\d{1,2}(\/\d{2,4})?/g, ' ')
+        .replace(/[#*]\S*/g, ' ').replace(/\d+/g, ' ')
+        .replace(/[^a-záéíóúñ&' ]/g, ' ').replace(/\s+/g, ' ').trim()
+        .split(' ').slice(0, 2).join(' ');
+}
+function bizSuggest(desc){
+    const mk = merchantKey(desc);
+    if(mk && bizRules[mk]) return { cat: bizRules[mk], strong: true, remembered: true };
+    for(const [cat, re, strong] of BIZ_PATTERNS) if(re.test(desc || '')) return { cat, strong };
+    return null;
+}
+const bizDed = e => e.amount * (BIZ_CATS[e.cat] || BIZ_CATS.otros).ded;
+function saveBiz(){ bizExp.sort((a, b) => b.date.localeCompare(a.date)); LS.set('wf_bizexp', bizExp); }
+function bizSetCat(id, cat){
+    const e = bizExp.find(x => x.id === id); if(!e) return;
+    const mk = merchantKey(e.desc);
+    if(cat === '__pers'){
+        bizExp = bizExp.filter(x => x.id !== id);
+        persExp.push({ id: e.id, date: e.date, desc: e.desc, amount: e.amount, cat: persSuggest(e.desc), src: e.src });
+        if(mk && bizRules[mk]){ delete bizRules[mk]; LS.set('wf_bizrules', bizRules); }
+        saveBiz(); savePers(); renderBiz(); renderReal();
+        return;
+    }
+    e.cat = cat; saveBiz();
+    if(e.src && mk){ bizRules[mk] = cat; LS.set('wf_bizrules', bizRules); }
+    renderBiz();
+}
+function removeBiz(id){ bizExp = bizExp.filter(x => x.id !== id); saveBiz(); renderBiz(); }
+function bizOfYear(y){ return bizExp.filter(e => e.date.startsWith(String(y))); }
+function renderBiz(){
+    const years = [...new Set([+hoyISO().slice(0, 4), bizYearSel, ...bizExp.map(e => +e.date.slice(0, 4))])].sort((a, b) => b - a);
+    const ySel = document.getElementById('bizYear');
+    ySel.innerHTML = years.map(y => `<option value="${y}"${y === bizYearSel ? ' selected' : ''}>${y}</option>`).join('');
+    const list = bizOfYear(bizYearSel);
+    const total = list.reduce((s, e) => s + bizDed(e), 0);
+    document.getElementById('bizYearLbl').textContent = bizYearSel;
+    document.getElementById('bizTotal').textContent = fmt(total);
+    document.getElementById('bizCount').textContent = list.length === 1 ? '1 gasto' : list.length + ' gastos';
+    document.getElementById('bizSave').textContent = fmt(total * taxRate / 100);
+    document.getElementById('bizSaveSub').textContent = 'aprox., según tu ' + taxRate + '% de impuestos';
+    const p = nextTaxPeriod();
+    const qTot = bizExp.filter(e => e.date >= p.start && e.date <= p.end).reduce((s, e) => s + bizDed(e), 0);
+    document.getElementById('bizQuarter').textContent = qTot > 0 ? `Este trimestre llevas ${fmt(qTot)} en gastos deducibles.` : '';
+
+    // Resultado del negocio en el año elegido
+    const yr = String(bizYearSel);
+    const inc = taxLog.filter(t => t.date.startsWith(yr) && incKind(t) === 'negocio');
+    const incTot = inc.reduce((s, t) => s + t.gross, 0), taxTot = inc.reduce((s, t) => s + t.tax, 0), net = incTot - total;
+    document.getElementById('brYear').textContent = yr;
+    document.getElementById('brIn').textContent = fmt(incTot);
+    document.getElementById('brInSub').textContent = inc.length === 1 ? '1 pago registrado' : inc.length + ' pagos registrados';
+    document.getElementById('brOut').textContent = fmt(total);
+    document.getElementById('brOutSub').textContent = list.length === 1 ? '1 gasto deducible' : list.length + ' gastos deducibles';
+    const nEl = document.getElementById('brNet');
+    nEl.textContent = fmt(net); nEl.style.color = net >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('brNetSub').textContent = incTot > 0 ? 'margen ' + fmtP(pctOf(net, incTot), 0) : '—';
+    document.getElementById('brNote').textContent = incTot || total
+        ? `Apartaste ${fmt(taxTot)} para impuestos en ${yr}. La ganancia es una estimación: tus pagos registrados en Pagos menos tus gastos deducibles.`
+        : `Cuando registres pagos en Pagos y gastos del negocio aquí, verás cuánto gana tu negocio en ${yr}.`;
+
+    const byCat = {};
+    list.forEach(e => { byCat[e.cat] = (byCat[e.cat] || 0) + bizDed(e); });
+    const cats = Object.entries(byCat).sort((a, b) => b[1] - a[1]);
+    const max = cats.length ? cats[0][1] : 1;
+    document.getElementById('bizCats').innerHTML = cats.map(([k, v]) => `
+        <div class="biz-cat-row"><span class="l">${(BIZ_CATS[k] || BIZ_CATS.otros).label}</span><span class="b"><span style="width:${clampW(v / max * 100)}%"></span></span><span class="v">${fmt(v)}</span></div>`).join('');
+
+    const catOpts = sel => Object.entries(BIZ_CATS).map(([k, c]) => `<option value="${k}"${k === sel ? ' selected' : ''}>${c.label}</option>`).join('') + '<optgroup label="Mover"><option value="__pers">← Es personal</option></optgroup>';
+    document.getElementById('bizList').innerHTML = list.length ? list.map(e => `
+        <div class="biz-row">
+            <div class="d">
+                <div class="t">${esc(e.desc)}</div>
+                <div class="s">${fechaCorta(e.date)} ${e.date.slice(0, 4)} · ${e.src ? 'estado de cuenta' : 'agregado a mano'}</div>
+                <select aria-label="Categoría" onchange="bizSetCat(${e.id}, this.value)">${catOpts(e.cat)}</select>
+            </div>
+            <div class="a">
+                <b>${fmt(e.amount)}</b>
+                ${(BIZ_CATS[e.cat] || BIZ_CATS.otros).ded < 1 ? `<div class="s">deducible ${fmt(bizDed(e))}</div>` : ''}
+                <button class="row-action" onclick="removeBiz(${e.id})">Quitar</button>
+            </div>
+        </div>`).join('')
+        : `<div class="empty-state"><div class="empty-icon">🧰</div><div class="empty-text">Aún no registras gastos del negocio en ${bizYearSel}.<br>Impórtalos de tu estado de cuenta o agrega uno con «+ Gasto».</div></div>`;
+}
+function bizMsg(t){ const m = document.getElementById('bizMsg'); m.textContent = t; }
+function exportBizCSV(){
+    const list = bizOfYear(bizYearSel);
+    if(!list.length) return bizMsg('No hay gastos en ' + bizYearSel + ' para exportar.');
+    const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+    const rows = [['Fecha', 'Descripción', 'Categoría', 'Monto', '% deducible', 'Deducible', 'Origen']]
+        .concat([...list].sort((a, b) => a.date.localeCompare(b.date)).map(e => {
+            const c = BIZ_CATS[e.cat] || BIZ_CATS.otros;
+            return [e.date, e.desc, c.label, e.amount.toFixed(2), Math.round(c.ded * 100) + '%', bizDed(e).toFixed(2), e.src ? 'Estado de cuenta' : 'Manual'];
+        }));
+    const csv = '﻿' + rows.map(r => r.map(q).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type:'text/csv' }), fn = 'Gastos_del_negocio_' + bizYearSel + '.csv';
+    deliverFile(blob, fn, () => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fn; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); });
+    bizMsg('');
+}
+function exportBizPDF(){
+    const list = [...bizOfYear(bizYearSel)].sort((a, b) => a.date.localeCompare(b.date));
+    if(!list.length) return bizMsg('No hay gastos en ' + bizYearSel + ' para exportar.');
+    if(!window.jspdf) return bizMsg('No se pudo cargar el generador de PDF. Revisa tu conexión y vuelve a intentarlo.');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation:'portrait', unit:'pt', format:'letter' });
+    const PW = 612, ML = 50, MR = 50, R = PW - MR;
+    const money = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
+    const font = (st, sz, c) => { doc.setFont('helvetica', st); doc.setFontSize(sz); doc.setTextColor(...(c || [30,30,30])); };
+    const fit = (t, w) => { t = String(t); while(t.length > 1 && doc.getTextWidth(t) > w) t = t.slice(0, -2) + '…'; return t; };
+    const line = (y, c) => { doc.setDrawColor(...(c || [220,220,220])); doc.setLineWidth(.5); doc.line(ML, y, R, y); };
+    const total = list.reduce((s, e) => s + e.amount, 0), ded = list.reduce((s, e) => s + bizDed(e), 0);
+    const hoy = new Date().toLocaleDateString('es-US', { year:'numeric', month:'long', day:'numeric' });
+
+    font('bold', 20, [10,10,10]); doc.text('Gastos del negocio ' + bizYearSel, ML, 70);
+    font('normal', 9, [110,110,110]); doc.text('Reporte para tu preparador de impuestos  ·  Preparado el ' + hoy, ML, 88);
+    line(100, [10,10,10]);
+    const tiles = [['TOTAL GASTADO', money(total)], ['TOTAL DEDUCIBLE', money(ded)], ['GASTOS', String(list.length)]];
+    tiles.forEach((t, i) => {
+        const x = ML + i * ((R - ML) / 3);
+        doc.setFillColor(246,246,244); doc.rect(x + (i ? 4 : 0), 112, (R - ML) / 3 - 4, 50, 'F');
+        font('normal', 7, [120,120,120]); doc.text(t[0], x + 12, 128);
+        font('bold', 15, i === 1 ? [0,120,80] : [20,20,20]); doc.text(t[1], x + 12, 150);
+    });
+
+    let y = 192;
+    font('bold', 10, [10,10,10]); doc.text('Resumen por categoría', ML, y); y += 14;
+    font('bold', 7, [120,120,120]); doc.text('CATEGORÍA', ML, y); doc.text('GASTOS', 330, y, { align:'right' }); doc.text('MONTO', 440, y, { align:'right' }); doc.text('DEDUCIBLE', R, y, { align:'right' });
+    y += 6; line(y);
+    const byCat = {};
+    list.forEach(e => { const k = BIZ_CATS[e.cat] ? e.cat : 'otros'; (byCat[k] = byCat[k] || { n:0, amt:0, ded:0 }); byCat[k].n++; byCat[k].amt += e.amount; byCat[k].ded += bizDed(e); });
+    Object.entries(byCat).sort((a, b) => b[1].ded - a[1].ded).forEach(([k, v]) => {
+        y += 15; font('normal', 9);
+        doc.text(BIZ_CATS[k].label, ML, y); doc.text(String(v.n), 330, y, { align:'right' }); doc.text(money(v.amt), 440, y, { align:'right' }); doc.text(money(v.ded), R, y, { align:'right' });
+        y += 5; line(y);
+    });
+    y += 15; font('bold', 9, [10,10,10]); doc.text('TOTAL', ML, y); doc.text(String(list.length), 330, y, { align:'right' }); doc.text(money(total), 440, y, { align:'right' }); doc.text(money(ded), R, y, { align:'right' });
+
+    const head = () => {
+        font('bold', 7, [120,120,120]);
+        doc.text('FECHA', ML, y); doc.text('DESCRIPCIÓN', ML + 62, y); doc.text('CATEGORÍA', 296, y); doc.text('MONTO', 482, y, { align:'right' }); doc.text('DEDUCIBLE', R, y, { align:'right' });
+        y += 6; line(y);
+    };
+    y += 34; font('bold', 10, [10,10,10]); doc.text('Detalle de gastos', ML, y); y += 14; head();
+    list.forEach(e => {
+        if(y > 730){ doc.addPage(); y = 60; head(); }
+        y += 14; font('normal', 8.5);
+        const [yy, mm, dd] = e.date.split('-');
+        doc.text(mm + '/' + dd + '/' + yy, ML, y);
+        doc.text(fit(e.desc, 226), ML + 62, y);
+        doc.text(fit((BIZ_CATS[e.cat] || BIZ_CATS.otros).label, 130), 296, y);
+        doc.text(money(e.amount), 482, y, { align:'right' });
+        doc.text(money(bizDed(e)), R, y, { align:'right' });
+        y += 5; line(y, [235,235,235]);
+    });
+    const pages = doc.getNumberOfPages();
+    for(let i = 1; i <= pages; i++){
+        doc.setPage(i); font('normal', 7, [140,140,140]);
+        doc.text('Lista preparada por el usuario con WealthFlow. La deducibilidad final la determina un profesional de impuestos. Conserve sus recibos.', ML, 770);
+        doc.text('Página ' + i + ' de ' + pages, R, 770, { align:'right' });
+    }
+    const fn = 'Gastos_del_negocio_' + bizYearSel + '.pdf';
+    deliverFile(doc.output('blob'), fn, () => doc.save(fn));
+    bizMsg('');
+}
+
+// ── Gastos personales reales ─────────────────────────
+let persExp   = LS.get('wf_persexp',   []);   // [{id,date,desc,amount,cat,src?}]
+let persRules = LS.get('wf_persrules', {});   // comercio → categoría que eligió el usuario
+let realMonthSel = null;
+const PERS_CATS = {
+    vivienda:        { label:'Vivienda',                      b:'needs' },
+    comida:          { label:'Comida y súper',                b:'needs' },
+    servicios:       { label:'Luz, agua y teléfono',          b:'needs' },
+    transporte:      { label:'Transporte y gasolina',         b:'needs' },
+    seguros:         { label:'Seguros',                       b:'needs' },
+    salud:           { label:'Salud',                         b:'needs' },
+    deudas:          { label:'Pagos de préstamos',            b:'needs' },
+    familia:         { label:'Envíos a la familia',           b:'needs' },
+    otras_nec:       { label:'Otras necesidades',             b:'needs' },
+    restaurantes:    { label:'Restaurantes y comida rápida',  b:'wants' },
+    compras:         { label:'Compras',                       b:'wants' },
+    suscripciones:   { label:'Suscripciones',                 b:'wants' },
+    entretenimiento: { label:'Entretenimiento',               b:'wants' },
+    viajes:          { label:'Viajes',                        b:'wants' },
+    otros_gustos:    { label:'Otros gustos',                  b:'wants' },
+    ahorro:          { label:'Ahorro e inversión',            b:'savings' },
+    extra_deuda:     { label:'Pago extra a deudas',           b:'savings' },
+    tarjeta:         { label:'Pago de tarjeta de crédito',    b:'skip' },
+    transferencia:   { label:'Transferencia entre mis cuentas', b:'skip' },
+    impuestos:       { label:'Impuestos',                     b:'skip' },
+    efectivo:        { label:'Retiro de efectivo',            b:'none' },
+    sin:             { label:'Sin clasificar',                b:'none' },
+};
+const PERS_GROUPS = [
+    ['Necesidades', 'needs'], ['Gustos', 'wants'], ['Ahorro', 'savings'], ['No contar', 'skip'], ['Por clasificar', 'none'],
+];
+const BUCKET_COLOR = { needs:'var(--ember)', wants:'var(--ice)', savings:'var(--green)', none:'var(--gold)', skip:'var(--dim)' };
+const PERS_PATTERNS = [
+    ['tarjeta',        /(credit )?card ?(payment|pmt)|crd epay|epayment|e-payment|autopay.*(card|chase|citi|discover|amex|capital one)|capital one.*(pmt|payment)|discover.*(pmt|payment)|\bamex\b|american express|citi.*(pmt|payment)|chase card|synchrony|pago (de )?tarjeta/i],
+    ['ahorro',         /transfer to sav|to savings|savings transfer|a ahorros|robinhood|fidelity|vanguard|schwab|acorns|stash|webull|coinbase|betterment|wealthfront/i],
+    ['transferencia',  /transfer to chk|to checking|between accounts|entre (mis )?cuentas/i],
+    ['impuestos',      /\birs\b|usataxpymt|us treasury|tax payment|dept of revenue|impuesto/i],
+    ['efectivo',       /\batm\b|cash withdrawal|retiro (de )?(cajero|efectivo)/i],
+    ['vivienda',       /\brent\b|renta|mortgage|hipoteca|apartment|\bapts?\b|property m(gm)?t|landlord|\bhoa\b|realty/i],
+    ['familia',        /remitly|western union|moneygram|xoom|viamericas|intermex|ria money|sendwave|elektra/i],
+    ['servicios',      /electric|energy|\bpower\b|\bnes\b|duke energy|\btva\b|water|agua|piedmont|atmos|utilit|verizon|t-?mobile|at&t|\batt\b|cricket|metro ?(pcs|by)|boost mobile|spectrum|comcast|xfinity|google ?fi|mint mobile/i],
+    ['comida',         /kroger|walmart|wal-mart|wm supercenter|aldi|publix|food lion|costco|sam'?s club|h-?e-?b\b|whole foods|trader joe|fiesta|michoacana|supermercado|mercado|grocery|carniceria|panaderia|dollar general|family dollar/i],
+    ['restaurantes',   /mcdonald|taco|pizza|restaurant|burger|wendy|chick-?fil|starbucks|doordash|uber ?eats|grubhub|dunkin|subway|popeyes|\bkfc\b|cafe|coffee|sonic drive|whataburger|chipotle|panda express|buffalo wild|waffle house|ihop|denny/i],
+    ['suscripciones',  /netflix|spotify|hulu|disney|hbo|\bmax\.com|youtube|apple\.com\/bill|apple music|icloud|prime video|paramount|peacock|audible|crunchyroll/i],
+    ['transporte',     /shell|exxon|chevron|\bbp\b|marathon|speedway|circle k|quik ?trip|\bqt\b|pilot|love'?s travel|mapco|racetrac|valero|sunoco|murphy|\bgas\b|fuel|gasolina|autozone|o'?reilly|advance auto|jiffy lube|firestone|discount tire|toll|parking|\buber\b|\blyft\b|car wash|\bdmv\b/i],
+    ['seguros',        /insurance|progressive|geico|state ?farm|allstate|seguro/i],
+    ['salud',          /pharmacy|farmacia|\bcvs\b|walgreens|doctor|clinic|hospital|dental|dentist|medical|urgent care|optometr/i],
+    ['deudas',         /\bloan\b|pr[eé]stamo|car payment|toyota financial|honda financial|\bally\b|santander consumer|navient|nelnet|mohela|sallie mae|aidvantage|westlake|credit acceptance/i],
+    ['compras',        /amazon|amzn|target|best buy|\bross\b|tj ?maxx|marshalls|shein|temu|\bnike\b|old navy|burlington|macy|kohl|ebay|etsy|home ?goods|five below/i],
+    ['entretenimiento',/cinema|theat(er|re)|ticketmaster|steam|playstation|xbox|nintendo|bowling|stubhub/i],
+    ['viajes',         /airline|delta air|american air|southwest|spirit air|frontier|united air|hotel|airbnb|expedia|booking\.com|volaris|aeromexico/i],
+];
+function persSuggest(desc){
+    const mk = merchantKey(desc);
+    if(mk && persRules[mk] && PERS_CATS[persRules[mk]]) return persRules[mk];
+    for(const [cat, re] of PERS_PATTERNS) if(re.test(desc || '')) return cat;
+    return 'sin';
+}
+const persBucket = e => (PERS_CATS[e.cat] || PERS_CATS.sin).b;
+function savePers(){ persExp.sort((a, b) => b.date.localeCompare(a.date)); LS.set('wf_persexp', persExp); }
+function persOptions(sel, withBiz){
+    return PERS_GROUPS.map(([g, b]) => `<optgroup label="${g}">` + Object.entries(PERS_CATS).filter(([, c]) => c.b === b)
+        .map(([k, c]) => `<option value="${k}"${k === sel ? ' selected' : ''}>${c.label}</option>`).join('') + '</optgroup>').join('')
+        + (withBiz ? '<optgroup label="Mover"><option value="__biz">→ Es del negocio</option></optgroup>' : '');
+}
+const mesCorto = ym => { const s = new Date(ym + '-15T12:00:00').toLocaleDateString('es-US', { month:'short', year:'numeric' }).replace('.', ''); return s.charAt(0).toUpperCase() + s.slice(1); };
+const mesLargo = ym => { const s = new Date(ym + '-15T12:00:00').toLocaleDateString('es-US', { month:'long', year:'numeric' }); return s.charAt(0).toUpperCase() + s.slice(1); };
+
+function setGastosView(v){
+    if(v !== 'negocio' || prof() === 'empleado') v = 'personal';
+    const pg = document.getElementById('budget');
+    pg.dataset.view = v;
+    [['vtPersonal', 'personal'], ['vtNegocio', 'negocio']].forEach(([id, k]) => {
+        const b = document.getElementById(id); b.classList.toggle('active', k === v); b.setAttribute('aria-selected', k === v);
+    });
+    LS.set('wf_gview', v);
+    if(v === 'negocio') renderBiz(); else renderReal();
+}
+function persSetCat(id, val){
+    const e = persExp.find(x => x.id === id); if(!e) return;
+    const mk = merchantKey(e.desc);
+    if(val === '__biz'){
+        persExp = persExp.filter(x => x.id !== id);
+        const s = bizSuggest(e.desc), cat = s ? s.cat : 'otros';
+        bizExp.push({ id: e.id, date: e.date, desc: e.desc, amount: e.amount, cat, src: e.src });
+        if(mk){ bizRules[mk] = cat; LS.set('wf_bizrules', bizRules); delete persRules[mk]; LS.set('wf_persrules', persRules); }
+        savePers(); saveBiz(); renderReal(); renderBiz();
+        return;
+    }
+    e.cat = val;
+    if(mk){
+        persRules[mk] = val; LS.set('wf_persrules', persRules);
+        // El mismo comercio sin clasificar se clasifica igual
+        persExp.forEach(x => { if(x !== e && x.cat === 'sin' && merchantKey(x.desc) === mk) x.cat = val; });
+    }
+    savePers(); renderReal();
+}
+function removePers(id){ persExp = persExp.filter(x => x.id !== id); savePers(); renderReal(); }
+function renderReal(){
+    const el = document.getElementById('realBody'); if(!el) return;
+    const cur = hoyISO().slice(0, 7);
+    const dataMonths = [...new Set(persExp.map(e => e.date.slice(0, 7)))].sort().reverse();
+    const months = [...new Set([cur, ...dataMonths])].sort().reverse();
+    if(!realMonthSel || !months.includes(realMonthSel)) realMonthSel = dataMonths[0] || cur;
+    document.getElementById('realMonth').innerHTML = months.map(m => `<option value="${m}"${m === realMonthSel ? ' selected' : ''}>${mesCorto(m)}</option>`).join('');
+    if(!persExp.length){
+        el.innerHTML = `<div class="real-sub" style="margin-top:0;">Aquí ves en qué se va tu dinero de verdad, mes por mes, comparado con tu presupuesto. Importa tu estado de cuenta en <b style="color:var(--text);font-weight:500;">Pagos → Importar del banco</b> y los retiros se clasifican solos en necesidades, gustos y ahorro.</div>
+            <button class="btn-cancel real-empty-btn" onclick="showPage('taxes', document.getElementById('navTaxes'))">Ir a importar mi estado de cuenta →</button>`;
+        return;
+    }
+    const list = persExp.filter(e => e.date.startsWith(realMonthSel));
+    const tot = b => list.filter(e => persBucket(e) === b).reduce((s, e) => s + e.amount, 0);
+    const T = { needs:tot('needs'), wants:tot('wants'), savings:tot('savings'), none:tot('none'), skip:tot('skip') };
+    const nNone = list.filter(e => persBucket(e) === 'none').length;
+    const spent = T.needs + T.wants + T.none;
+    const bg = getBudget();
+    const planOf = k => categories.filter(c => c.type === k).reduce((s, c) => s + c.amount, 0);
+
+    const rows = [['needs', 'Necesidades'], ['wants', 'Gustos'], ['savings', 'Ahorro']].map(([k, label]) => {
+        const real = T[k], alloc = bg.byKey[k].allocated, pct = pctOf(real, alloc), plan = planOf(k);
+        let color = BUCKET_COLOR[k], st = '';
+        if(alloc > 0){
+            if(k === 'savings'){
+                color = real >= alloc ? 'var(--green)' : 'var(--ember)';
+                st = real >= alloc ? 'Meta cumplida' : 'Faltan ' + fmt(alloc - real) + ' para la meta';
+            } else {
+                color = pct > 100 ? 'var(--red)' : pct > 90 ? 'var(--ember)' : 'var(--green)';
+                st = pct > 100 ? fmt(real - alloc) + ' de más' : 'Quedan ' + fmt(alloc - real);
+            }
+        }
+        return `<div class="real-row">
+            <div class="top"><span class="nm" style="color:${BUCKET_COLOR[k]};">${label}</span><span class="amt">${fmt(real)}${alloc > 0 ? ' <span style="color:var(--dim);">de ' + fmt(alloc) + '</span>' : ''}</span></div>
+            <div class="track"><span style="width:${alloc > 0 ? clampW(pct) : (real > 0 ? 100 : 0)}%;background:${color};"></span></div>
+            <div class="st"><span style="color:${color};">${alloc > 0 ? st : 'Configura tu ingreso para comparar'}</span><span>${plan > 0 ? 'plan ' + fmt(plan) : ''}</span></div>
+        </div>`;
+    }).join('');
+
+    const byCat = {};
+    list.filter(e => persBucket(e) !== 'skip').forEach(e => { byCat[e.cat] = (byCat[e.cat] || 0) + e.amount; });
+    const cats = Object.entries(byCat).sort((a, b) => b[1] - a[1]);
+    const max = cats.length ? cats[0][1] : 1;
+
+    el.innerHTML = `
+        <div class="pv-label">Gastaste en ${mesLargo(realMonthSel).toLowerCase()}</div>
+        <div class="real-big">${fmt(spent)}</div>
+        <div class="real-sub">${bg.income ? fmtP(pctOf(spent, bg.income), 0) + ' de tu ingreso mensual de ' + fmt(bg.income) + ' · ' : ''}ahorraste ${fmt(T.savings)}</div>
+        ${list.length ? rows : ''}
+        ${nNone ? `<div class="real-note" style="color:var(--gold);">${nNone === 1 ? '1 gasto sin clasificar' : nNone + ' gastos sin clasificar'} por ${fmt(T.none)}. Elige su categoría abajo; la próxima vez se clasifican solos.</div>` : ''}
+        ${T.skip ? `<div class="real-note" style="color:var(--dim);">No se cuentan ${fmt(T.skip)} en pagos de tarjeta, transferencias entre tus cuentas e impuestos.</div>` : ''}
+        ${cats.length ? `<div style="margin-top:14px;">${cats.map(([k, v]) => `
+            <div class="biz-cat-row"><span class="l">${(PERS_CATS[k] || PERS_CATS.sin).label}</span><span class="b"><span style="width:${clampW(v / max * 100)}%;background:${BUCKET_COLOR[(PERS_CATS[k] || PERS_CATS.sin).b]};"></span></span><span class="v">${fmt(v)}</span></div>`).join('')}</div>` : ''}
+        <div class="biz-list">${list.length ? list.map(e => `
+            <div class="biz-row${persBucket(e) === 'none' ? ' unc' : ''}">
+                <div class="d">
+                    <div class="t">${esc(e.desc)}</div>
+                    <div class="s">${fechaCorta(e.date)} ${e.date.slice(0, 4)} · ${e.src ? 'estado de cuenta' : 'agregado a mano'}</div>
+                    <select aria-label="Categoría" onchange="persSetCat(${e.id}, this.value)">${persOptions(e.cat, true)}</select>
+                </div>
+                <div class="a">
+                    <b style="color:${BUCKET_COLOR[persBucket(e)]};">${fmt(e.amount)}</b>
+                    <button class="row-action" onclick="removePers(${e.id})">Quitar</button>
+                </div>
+            </div>`).join('') : `<div class="empty-state"><div class="empty-text">No hay gastos registrados en ${mesLargo(realMonthSel).toLowerCase()}.</div></div>`}
+        </div>`;
+}
+
+// Agregar un gasto a mano (personal o del negocio)
+function openExpModal(kind){
+    const m = document.getElementById('bizModal');
+    m.dataset.kind = kind;
+    const biz = kind === 'negocio';
+    document.getElementById('bz_title').textContent = biz ? 'Agregar gasto del negocio' : 'Agregar gasto personal';
+    document.getElementById('bz_sub').textContent = biz ? 'Para compras en efectivo o que no salen en tu estado de cuenta. Guarda el recibo.' : 'Para lo que pagaste en efectivo o que no sale en tu estado de cuenta.';
+    document.getElementById('bz_cat').innerHTML = biz
+        ? Object.entries(BIZ_CATS).map(([k, c]) => `<option value="${k}">${c.label}</option>`).join('')
+        : persOptions('comida', false);
+    const d = document.getElementById('bz_date');
+    d.value = !biz && realMonthSel && realMonthSel !== hoyISO().slice(0, 7) ? realMonthSel + '-01' : hoyISO();
+    document.getElementById('bz_err').style.display = 'none';
+    openModal('bizModal');
+}
+function applyExp(){
+    const kind = document.getElementById('bizModal').dataset.kind || 'negocio';
+    const desc = document.getElementById('bz_desc').value.trim();
+    const amount = parseFloat(document.getElementById('bz_amount').value);
+    const date = document.getElementById('bz_date').value || hoyISO();
+    const cat = document.getElementById('bz_cat').value;
+    const err = document.getElementById('bz_err');
+    if(!desc || !(amount > 0)){ err.textContent = 'Escribe una descripción y un monto mayor a $0.'; err.style.display = 'block'; return; }
+    if(kind === 'negocio'){
+        bizExp.push({ id: Date.now(), date, desc: desc.slice(0, 60), amount, cat });
+        saveBiz(); bizYearSel = +date.slice(0, 4); renderBiz();
+    } else {
+        persExp.push({ id: Date.now(), date, desc: desc.slice(0, 60), amount, cat });
+        savePers(); realMonthSel = date.slice(0, 7); renderReal();
+    }
+    ['bz_desc', 'bz_amount'].forEach(i => document.getElementById(i).value = '');
+    closeModal('bizModal');
 }
 
 // ── Respaldo de datos ─────────────────────────────────
@@ -4271,8 +5282,10 @@ async function buildPDF(){
 
 // ── Init ──────────────────────────────────────────────
 window.onload=()=>{
-    updatePill(); renderBudget(); renderExtraIncome();
-    renderInvest(); renderDebt(); updateHome(); calculateWealth(); renderTaxes();
+    // Cada parte arranca por separado: si una falla (p. ej. sin internet para las gráficas), el resto sigue funcionando
+    [applyProfile, () => setGastosView(LS.get('wf_gview', 'personal')), updatePill, renderBudget, renderExtraIncome,
+     renderInvest, renderDebt, updateHome, calculateWealth, renderTaxes, applyProfile, maybeAskProfile]
+        .forEach(f => { try { f(); } catch(e){ console.error(e); } });
 };
 </script>
 </body>
