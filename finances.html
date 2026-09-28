@@ -720,6 +720,36 @@
             .set-right { border-left: 1px solid var(--border); padding-left: 32px; }
         }
 
+        /* ── IMPORTAR CSV ─────────────────────────── */
+        .csv-help { font-size:.64rem; color:var(--dim); line-height:1.75; margin-bottom:12px; }
+        .csv-pick { width:100%; flex:none; color:var(--ice); border-color:rgba(0,212,255,0.3); }
+        .csv-status { font-size:.66rem; color:var(--text); line-height:1.7; margin:14px 0 4px; }
+        .csv-warn { font-size:.62rem; color:var(--gold, #f5a623); line-height:1.7; margin:6px 0; }
+        .csv-map { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin:10px 0 4px; }
+        .csv-map select { padding:8px 10px; font-size:.72rem; }
+        .csv-details summary { font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); cursor:pointer; margin:10px 0 2px; }
+        .csv-check { display:flex; align-items:center; gap:8px; font-size:.64rem; color:var(--dim); margin-top:8px; cursor:pointer; }
+        .csv-bar { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:12px; }
+        .csv-bar .form-label { margin:0; }
+        .csv-link { background:none; border:none; color:var(--ice); font-family:'JetBrains Mono',monospace; font-size:.62rem; cursor:pointer; padding:2px 4px; }
+        .csv-list { max-height:340px; overflow:auto; border:1px solid var(--border); margin:6px 0 10px; }
+        .csv-row { display:flex; align-items:center; gap:10px; padding:9px 12px; border-bottom:1px solid var(--border); cursor:pointer; }
+        .csv-row:last-child { border-bottom:none; }
+        .csv-row input[type=checkbox], .csv-check input[type=checkbox] { width:16px; height:16px; padding:0; flex:none; accent-color:var(--ice); box-shadow:none; }
+        .csv-row .cd { flex:1; min-width:0; }
+        .csv-row .ct { font-size:.72rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .csv-row .cs { font-size:.56rem; color:var(--dim); margin-top:3px; }
+        .csv-row .ca { font-family:'Bebas Neue',sans-serif; font-size:1.15rem; letter-spacing:.03em; color:var(--green); white-space:nowrap; font-variant-numeric:tabular-nums; }
+        .csv-row.off .ca, .csv-row.off .ct { color:var(--dim); }
+        .csv-flag { font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; padding:2px 6px; margin-left:6px; border:1px solid var(--border); color:var(--dim); }
+        .csv-sum { font-size:.66rem; color:var(--dim); line-height:1.8; margin-bottom:10px; }
+        .csv-sum b { color:var(--text); font-weight:500; }
+        .csv-ok { font-size:.68rem; color:var(--green); line-height:1.7; margin-top:12px; }
+        .csv-err { font-size:.66rem; color:var(--red); line-height:1.7; margin-top:12px; }
+
+        /* Las tarjetas recortan su brillo decorativo sin poder desplazarse de lado */
+        .card, .card-ember, .card-ice, .card-red, .card-green, .card-networth, .bucket, .nw-card { overflow: clip; }
+
         /* ── MINI OVERRIDES ──────────────────────── */
         .mini-stat-dark {
             background:rgba(255,255,255,0.05);
@@ -1234,6 +1264,14 @@
             <div style="font-size:.6rem;color:var(--dim);margin-top:9px;position:relative;z-index:1;line-height:1.7;">Al registrarlo, el pago se suma a tus ingresos de ese mes (modo Independiente) y lo apartado para impuestos cuenta para tu próximo pago trimestral.</div>
         </div>
 
+        <div class="card" id="csvCard">
+            <div class="sub-header"><div class="sub-header-title">Importar del banco</div></div>
+            <div class="csv-help">Sube tu estado de cuenta mensual en PDF (el mismo que te manda el banco) o el CSV de movimientos. La app encuentra tus depósitos y tú eliges cuáles fueron pagos de trabajo. El archivo se lee solo en tu dispositivo y no se sube a ningún lado.</div>
+            <button class="btn-cancel csv-pick" onclick="document.getElementById('csvFile').click()">↑ Elegir estado de cuenta (PDF o CSV)</button>
+            <input type="file" id="csvFile" accept=".pdf,application/pdf,.csv,text/csv,text/plain" style="display:none" onchange="readBankFile(this)">
+            <div id="csvResult"></div>
+        </div>
+
         <div class="card-red">
             <div class="card-label-red">Próximo pago estimado al IRS</div>
             <div class="card-value-red" id="q_due" style="font-size:2.3rem;">—</div>
@@ -1454,7 +1492,7 @@
         </div>
 
         <!-- Editable projection settings -->
-        <div class="card" style="border-color:rgba(184,255,0,0.15);background:var(--deep);position:relative;overflow:hidden;">
+        <div class="card" style="border-color:rgba(184,255,0,0.15);background:var(--deep);position:relative;overflow:hidden;overflow:clip;">
             <div style="position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(184,255,0,0.05),transparent 70%);pointer-events:none;"></div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
                 <div style="font-size:.6rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,255,0,0.5);">Ajustes de la proyección</div>
@@ -1519,7 +1557,7 @@
         </div>
 
         <!-- ── CONTRIBUTION PROGRESS ── -->
-        <div class="card" style="border-color:rgba(0,200,117,0.15);background:var(--deep);position:relative;overflow:hidden;">
+        <div class="card" style="border-color:rgba(0,200,117,0.15);background:var(--deep);position:relative;overflow:hidden;overflow:clip;">
             <div style="position:absolute;top:-60px;left:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,117,0.06),transparent 70%);pointer-events:none;"></div>
 
             <!-- Header -->
@@ -2750,7 +2788,7 @@ function previewPaycheck(){
 function addToEarnings(month, delta){
     const e = earnings.find(x=>x.month===month);
     if(e) e.amount = Math.round((e.amount+delta)*100)/100;
-    else if(delta>0) earnings.push({id:Date.now()+1, month, amount:delta});
+    else if(delta>0) earnings.push({id:Math.max(Date.now(), ...earnings.map(x=>x.id+1)), month, amount:delta});
     earnings = earnings.filter(x=>x.amount>0).sort((a,b)=>b.month.localeCompare(a.month));
     LS.set('wf_earnings', earnings);
 }
@@ -2826,7 +2864,7 @@ function renderTaxes(){
             <div class="row-indicator ri-ice"></div>
             <div class="row-info">
                 <div class="row-name">${fmt(t.gross)} recibido</div>
-                <div class="contrib-date">${fechaCorta(t.date)} ${t.date.slice(0,4)}</div>
+                <div class="contrib-date">${fechaCorta(t.date)} ${t.date.slice(0,4)}${t.desc ? " · " + esc(t.desc) : ""}</div>
             </div>
             <div class="row-meta">
                 <div class="row-value c-red">${fmt(t.tax)}</div>
@@ -2834,6 +2872,426 @@ function renderTaxes(){
                 <button class="row-action" onclick="removePaycheck(${t.id})">Quitar</button>
             </div>
         </div>`).join('');
+}
+
+// ── Importar estado de cuenta (PDF o CSV) ────────────
+let csvState = null;
+
+/* ---------- CSV ---------- */
+function csvSplit(text){
+    text = text.replace(/^﻿/, '');
+    const sample = text.split(/\r?\n/).slice(0, 40).join('\n');
+    const count = d => sample.split(d).length - 1;
+    const delim = [',', ';', '\t'].sort((a,b)=>count(b)-count(a))[0];
+    const rows = []; let row = [], cell = '', q = false;
+    for(let i=0; i<text.length; i++){
+        const ch = text[i];
+        if(q){
+            if(ch === '"'){ if(text[i+1] === '"'){ cell += '"'; i++; } else q = false; }
+            else cell += ch;
+        } else if(ch === '"') q = true;
+        else if(ch === delim){ row.push(cell); cell = ''; }
+        else if(ch === '\n' || ch === '\r'){
+            if(ch === '\r' && text[i+1] === '\n') i++;
+            row.push(cell); rows.push(row); row = []; cell = '';
+        } else cell += ch;
+    }
+    if(cell !== '' || row.length){ row.push(cell); rows.push(row); }
+    return rows.map(r => r.map(c => c.trim())).filter(r => r.some(c => c !== ''));
+}
+function csvDate(s){
+    s = String(s || '').trim(); let m, y, mo, d;
+    if((m = s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/))){ y = +m[1]; mo = +m[2]; d = +m[3]; }
+    else if((m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})\b/))){
+        y = +m[3]; if(y < 100) y += 2000; mo = +m[1]; d = +m[2];
+        if(mo > 12 && d <= 12){ const t = mo; mo = d; d = t; }   // formato día/mes
+    } else return null;
+    if(mo < 1 || mo > 12 || d < 1 || d > 31 || y < 1990 || y > 2100) return null;
+    return y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+}
+function csvAmt(s){
+    s = String(s ?? '').trim(); if(!s) return null;
+    let neg = false;
+    if(/^\(.*\)$/.test(s)){ neg = true; s = s.slice(1, -1); }
+    s = s.replace(/US\$|USD|\$|\s/gi, '');
+    if(/^[-−]/.test(s)){ neg = !neg; s = s.slice(1); }
+    else if(s.startsWith('+')) s = s.slice(1);
+    if(/-$/.test(s)){ neg = !neg; s = s.slice(0, -1); }
+    if(/^\d{1,3}(\.\d{3})*,\d{1,2}$/.test(s)) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+    if(!/^\d+(\.\d+)?$/.test(s)) return null;
+    const v = parseFloat(s);
+    return neg ? -v : v;
+}
+function csvDetect(rows){
+    const H = {
+        date:   /date|fecha/i,
+        desc1:  /desc/i,
+        desc2:  /memo|payee|concepto|detalle|referencia|name|nombre/i,
+        amount: /^(amount|monto|importe|cantidad)$/i,
+        amount2:/amount|monto|importe/i,
+        credit: /credit|cr[eé]dito|deposit|dep[oó]sito|abono/i,
+        debit:  /debit|d[eé]bito|withdraw|retiro|cargo/i,
+        skip:   /balance|saldo|running/i,
+    };
+    const find = (hdr, re, not) => hdr.findIndex((h, i) => re.test(h) && !(not||[]).includes(i) && !H.skip.test(h));
+    for(let i = 0; i < Math.min(rows.length, 30); i++){
+        const hdr = rows[i];
+        const dateI = find(hdr, H.date);
+        if(dateI < 0) continue;
+        let amount = find(hdr, H.amount); if(amount < 0) amount = find(hdr, H.amount2);
+        let credit = find(hdr, H.credit), debit = find(hdr, H.debit);
+        if(amount < 0 && credit < 0 && debit < 0) continue;
+        let desc = find(hdr, H.desc1); if(desc < 0) desc = find(hdr, H.desc2, [dateI]);
+        const m = { header:i, date:dateI, desc, amount, debit:-1 };
+        if(amount < 0){ m.amount = credit >= 0 ? credit : debit; m.debit = credit >= 0 ? debit : -1; if(credit < 0) m.flipOnly = true; }
+        return m;
+    }
+    // Sin encabezado: deducir columnas por su contenido
+    const body = rows.slice(0, 60), n = Math.max(...body.map(r => r.length));
+    const score = f => Array.from({length:n}, (_, c) => body.filter(r => f(r[c])).length);
+    const ds = score(csvDate), dateI = ds.indexOf(Math.max(...ds));
+    const as = score(v => csvAmt(v) !== null && csvDate(v) === null && /\d/.test(v||'') && /[.,]\d{2}$|^-/.test(String(v).trim()));
+    as[dateI] = -1;
+    const amount = as.indexOf(Math.max(...as));
+    const lens = Array.from({length:n}, (_, c) => (c === dateI || c === amount) ? -1 : body.reduce((s, r) => s + (csvAmt(r[c]) === null ? (r[c]||'').length : 0), 0));
+    const desc = lens.indexOf(Math.max(...lens));
+    return { header:-1, date:dateI, desc, amount, debit:-1 };
+}
+function csvRaw(){
+    const S = csvState, m = S.map;
+    const body = S.rows.slice(m.header + 1);
+    // Columna de tipo (DEBIT/CREDIT) cuando todos los montos vienen en positivo
+    const TYPE = /^(debit|credit|dr|cr|withdrawal|deposit|d[eé]bito|cr[eé]dito|cargo|abono)$/i;
+    let typeCol = -1;
+    if(m.debit < 0){
+        const cols = Math.max(...body.map(r => r.length));
+        for(let c = 0; c < cols; c++){ if(c === m.amount) continue; if(body.filter(r => TYPE.test(r[c]||'')).length > body.length * 0.6){ typeCol = c; break; } }
+    }
+    const anyNeg = body.some(r => (csvAmt(r[m.amount]) || 0) < 0);
+    const out = [];
+    body.forEach(r => {
+        const date = csvDate(r[m.date]); if(!date) return;
+        let v;
+        if(m.debit >= 0){
+            const c = csvAmt(r[m.amount]), d = csvAmt(r[m.debit]);
+            v = (c ? Math.abs(c) : 0) - (d ? Math.abs(d) : 0);
+        } else {
+            v = csvAmt(r[m.amount]); if(v === null) return;
+            if(m.flipOnly) v = -Math.abs(v);
+            else if(!anyNeg && typeCol >= 0 && /^(debit|dr|withdrawal|d[eé]bito|cargo)$/i.test(r[typeCol]||'')) v = -Math.abs(v);
+        }
+        if(!v) return;
+        out.push({ date, desc: (m.desc >= 0 ? r[m.desc] : '') || '', amount: v });
+    });
+    return out;
+}
+
+/* ---------- PDF ---------- */
+const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+let pdfJsReady = null;
+function loadScript(src){
+    return new Promise((ok, bad) => {
+        const s = document.createElement('script');
+        s.src = src; s.onload = ok; s.onerror = () => bad(new Error('load'));
+        document.head.appendChild(s);
+    });
+}
+function loadPdfJs(){
+    if(!pdfJsReady){
+        // El lector corre en esta misma página: el PDF nunca sale del dispositivo
+        pdfJsReady = loadScript(PDFJS_CDN + 'pdf.min.js')
+            .then(() => loadScript(PDFJS_CDN + 'pdf.worker.min.js'))
+            .then(() => { window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + 'pdf.worker.min.js'; })
+            .catch(e => { pdfJsReady = null; throw e; });
+    }
+    return pdfJsReady;
+}
+const MON_RX = '(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)';
+const monNum = s => ({jan:1,ene:1,feb:2,mar:3,apr:4,abr:4,may:5,jun:6,jul:7,aug:8,ago:8,sep:9,set:9,oct:10,nov:11,dec:12,dic:12})[String(s).slice(0,3).toLowerCase()] || 0;
+const PDF_AMT = /^[-−]?\(?\$?[-−]?(\d{1,3}(,\d{3})+|\d+)\.\d{2}\)?-?$/;
+const PDF_DATE = /^(\d{1,2})[\/\-](\d{1,2})(?:[\/\-](\d{2,4}))?$/;
+const PDF_IN  = /\b(deposits?|additions?|credits?|dep[oó]sitos?|abonos?|cr[eé]ditos?)\b/i;
+const PDF_OUT = /\b(withdrawals?|subtractions?|debits?|checks?|fees?|charges?|purchases?|payments?|retiros?|cargos?|d[eé]bitos?|cheques?|comisi[oó]n(es)?|compras?|pagos?)\b/i;
+const PDF_BAL = /\b(balance|saldo)\b/i;
+const PDF_SKIP = /beginning balance|ending balance|opening balance|closing balance|saldo (inicial|anterior|final)|^total\b|daily balance summary/i;
+const PDF_LIKELY_IN = /deposit|dep[oó]sito|zelle.*from|payment from|transfer from|direct dep|payroll|n[oó]mina|cash ?app|venmo|cashout|stripe|square|refund|reembolso|credit/i;
+
+async function parseStatementPDF(data){
+    const doc = await window.pdfjsLib.getDocument({ data, isEvalSupported:false }).promise;
+    const lines = []; let chars = 0;
+    for(let p = 1; p <= doc.numPages; p++){
+        const tc = await (await doc.getPage(p)).getTextContent();
+        const toks = [];
+        tc.items.forEach(it => {
+            const s = it.str || ''; if(!s.trim()) return;
+            chars += s.trim().length;
+            const x = it.transform[4], y = it.transform[5], w = it.width || 0, re = /\S+/g; let m;
+            while((m = re.exec(s))) toks.push({ t:m[0], x: x + w*m.index/s.length, r: x + w*(m.index + m[0].length)/s.length, y });
+        });
+        toks.sort((a, b) => b.y - a.y || a.x - b.x);
+        let cur = null;
+        toks.forEach(t => {
+            if(!cur || Math.abs(cur.y - t.y) > 3){ cur = { page:p, y:t.y, toks:[] }; lines.push(cur); }
+            cur.toks.push(t);
+        });
+    }
+    if(chars < 20) return { tx:[], noText:true };
+    lines.forEach(l => { l.toks = l.toks.filter(t => t.t !== '$').sort((a, b) => a.x - b.x); l.text = l.toks.map(t => t.t).join(' '); });
+    const full = lines.map(l => l.text).join('\n');
+
+    // Periodo del estado de cuenta, para saber el año de fechas como "09/12"
+    let endY = 0, endM = 0, m;
+    if((m = full.match(new RegExp(MON_RX + '\\.?\\s+(\\d{1,2}),?\\s+(\\d{4})\\s*(?:-|–|—|to|through|thru|al|hasta|a)\\s*' + MON_RX + '\\.?\\s+(\\d{1,2}),?\\s+(\\d{4})', 'i')))){ endM = monNum(m[4]); endY = +m[6]; }
+    else if((m = full.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})\s*(?:-|–|—|to|through|thru|al|hasta)\s*(\d{1,2})\/(\d{1,2})\/(\d{2,4})/i))){ endM = +m[4]; endY = +m[6] < 100 ? 2000 + +m[6] : +m[6]; }
+    else if((m = full.match(/\b(20\d{2})\b/))) endY = +m[1];
+    const today = hoyISO();
+    const mkDate = (mo, d, y) => {
+        if(!y){
+            y = endY || +today.slice(0, 4);
+            if(endM && mo > endM) y--;
+        } else if(y < 100) y += 2000;
+        if(mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+        let iso = y + '-' + String(mo).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        if(!endY && iso > today) iso = (y - 1) + iso.slice(4);
+        return iso;
+    };
+    const lineDate = toks => {
+        let m = toks[0] && toks[0].t.match(PDF_DATE);
+        if(m) return { date: mkDate(+m[1], +m[2], m[3] ? +m[3] : 0), used: 1 };
+        if(toks[1] && monNum(toks[0].t) && new RegExp('^' + MON_RX + '\\.?$', 'i').test(toks[0].t) && /^\d{1,2},?$/.test(toks[1].t))
+            return { date: mkDate(monNum(toks[0].t), parseInt(toks[1].t), 0), used: 2 };
+        return null;
+    };
+
+    const tx = []; let section = null, cols = null, stmtIn = null, last = null;
+    lines.forEach(l => {
+        const toks = l.toks; if(!toks.length) return;
+        const amts = toks.map((t, i) => ({ ...t, i })).filter(t => PDF_AMT.test(t.t));
+        const ld = lineDate(toks);
+        if(!ld || !ld.date){
+            // Encabezado de tabla con columnas de depósitos y retiros
+            if(!amts.length && PDF_IN.test(l.text) && PDF_OUT.test(l.text) && toks.length <= 14){
+                const c = {};
+                const pick = re => { const t = toks.find(t => re.test(t.t)); return t ? (t.x + t.r) / 2 : undefined; };
+                c.in  = pick(PDF_IN);
+                c.out = pick(/withdraw|subtract|debit|d[eé]bito|retiro|cargo/i) ?? pick(PDF_OUT);
+                c.bal = pick(/balance|saldo|ending|daily/i);
+                if(c.in !== undefined && c.out !== undefined){ cols = c; section = null; last = null; return; }
+            }
+            // Total de depósitos que declara el propio estado de cuenta
+            if(amts.length && PDF_IN.test(l.text) && !PDF_OUT.test(l.text) && !PDF_BAL.test(l.text)){
+                const v = Math.abs(csvAmt(amts[amts.length - 1].t));
+                if(stmtIn === null || /total/i.test(l.text)) stmtIn = v;
+            }
+            // Título de sección
+            const short = toks.length <= 8 && !/\b(from|to|conf|ref|id:?)\b/i.test(l.text);
+            if(short){
+                const isIn = PDF_IN.test(l.text), isOut = PDF_OUT.test(l.text);
+                if(isIn && !isOut){ section = 'in'; cols = null; last = null; return; }
+                if(isOut && !isIn){ section = 'out'; cols = null; last = null; return; }
+            }
+            // Descripción que sigue en la línea de abajo
+            if(last && !amts.length && last.page === l.page && last.y - l.y < 16 && last.desc.length < 60 && !/page|p[aá]gina|continued|contin[uú]a/i.test(l.text))
+                last.desc = (last.desc + ' ' + l.text).trim();
+            else last = null;
+            return;
+        }
+        last = null;
+        if(PDF_SKIP.test(l.text) || !amts.length) return;
+        let k = ld.used;
+        if(toks[k] && (PDF_DATE.test(toks[k].t))) k++;   // fecha de publicación repetida
+        const desc = toks.slice(k, amts[0].i).map(t => t.t).join(' ');
+        let v = null;
+        if(cols){
+            for(const a of amts){
+                const mid = (a.x + a.r) / 2;
+                const cand = [['in', cols.in], ['out', cols.out], ['bal', cols.bal]].filter(c => c[1] !== undefined);
+                const best = cand.sort((p, q) => Math.abs(p[1] - mid) - Math.abs(q[1] - mid))[0][0];
+                if(best === 'bal') continue;
+                v = Math.abs(csvAmt(a.t)) * (best === 'in' ? 1 : -1); break;
+            }
+        } else {
+            const raw = csvAmt(amts[0].t);
+            if(raw !== null){
+                if(raw < 0) v = raw;
+                else if(section === 'in') v = raw;
+                else if(section === 'out') v = -raw;
+                else v = PDF_LIKELY_IN.test(desc) ? raw : -raw;
+            }
+        }
+        if(!v) return;
+        const t = { date: ld.date, desc, amount: v, page: l.page, y: l.y };
+        tx.push(t); last = t;
+    });
+    return { tx: tx.map(t => ({ date:t.date, desc:t.desc.replace(/\s+/g, ' ').slice(0, 80), amount:t.amount })), stmtIn, pages: doc.numPages };
+}
+
+/* ---------- Común ---------- */
+function csvExtract(){
+    const S = csvState;
+    const raw = S.kind === 'pdf' ? S.pdf.tx.map(t => ({ ...t })) : csvRaw();
+    const seen = {}, known = new Set(taxLog.map(t => t.src).filter(Boolean));
+    const manual = taxLog.filter(t => !t.src);
+    const out = raw.map(t => {
+        let v = S.invert ? -t.amount : t.amount;
+        const base = t.date + '|' + Math.abs(v).toFixed(2);
+        seen[base] = (seen[base] || 0) + 1;
+        const key = 'bank:' + base + '#' + seen[base];
+        return { date: t.date, desc: t.desc || '', amount: v, key, dup: known.has(key) };
+    });
+    const TRANSFER = /transfer|transf\b|transferencia|refund|reembolso|reversal|reverso|interest|inter[eé]s|from sav|savings|ahorros?\b|dividend/i;
+    const PEOPLE   = /zelle|cash ?app|venmo|paypal|payroll|n[oó]mina|direct dep|dep[oó]sito directo|stripe|square/i;
+    const day = 864e5;
+    S.all = out;
+    S.deposits = out.filter(t => t.amount > 0).sort((a, b) => b.date.localeCompare(a.date)).map(t => {
+        const transfer = TRANSFER.test(t.desc) && !PEOPLE.test(t.desc);
+        const byHand = !t.dup && manual.some(p => Math.abs(p.gross - t.amount) < 0.01 && Math.abs(new Date(p.date) - new Date(t.date)) <= 4 * day);
+        return { ...t, transfer, byHand, checked: !t.dup && !transfer && !byHand };
+    });
+}
+function readBankFile(input){
+    const f = input.files[0]; if(!f) return;
+    input.value = '';
+    const out = document.getElementById('csvResult');
+    const fail = msg => { csvState = null; out.innerHTML = '<div class="csv-err">' + msg + '</div>'; };
+    const isPdf = /\.pdf$/i.test(f.name) || f.type === 'application/pdf';
+    const rd = new FileReader();
+    if(isPdf){
+        out.innerHTML = '<div class="csv-status">Leyendo ' + esc(f.name) + '…</div>';
+        rd.onload = async () => {
+            try{
+                await loadPdfJs();
+                const res = await parseStatementPDF(new Uint8Array(rd.result));
+                if(res.noText) return fail('Ese PDF es una imagen escaneada y no tiene texto que se pueda leer. Descarga el estado de cuenta original desde la web o la app del banco, o el CSV de movimientos.');
+                if(!res.tx.length) return fail('No encontré movimientos en ese PDF. Si es un estado de cuenta, prueba con el CSV de movimientos del mismo banco.');
+                csvState = { kind:'pdf', name:f.name, pdf:res, invert:false };
+                csvExtract(); renderCSV();
+            }catch(e){
+                if(e && e.name === 'PasswordException') fail('Ese PDF tiene contraseña. Ábrelo, guárdalo sin contraseña (o descarga el CSV de movimientos) y vuelve a intentarlo.');
+                else if(e && e.message === 'load') fail('No se pudo cargar el lector de PDF. Revisa tu conexión a internet y vuelve a intentarlo.');
+                else fail('No pude abrir ese PDF. Revisa que sea el estado de cuenta del banco y no una foto o captura.');
+            }
+        };
+        rd.readAsArrayBuffer(f);
+        return;
+    }
+    rd.onload = () => {
+        try{
+            const rows = csvSplit(String(rd.result));
+            if(rows.length < 2) throw new Error('vacío');
+            csvState = { kind:'csv', name:f.name, rows, invert:false };
+            csvState.map = csvDetect(rows);
+            csvExtract();
+            if(!csvState.all.length) throw new Error('sin movimientos');
+            renderCSV();
+        }catch(e){
+            fail('No pude leer movimientos en ese archivo. Sube el estado de cuenta en PDF o el CSV de movimientos del banco (no una foto ni un Excel).');
+        }
+    };
+    rd.readAsText(f);
+}
+function csvSetMap(field, val){ csvState.map[field] = +val; csvState.map.flipOnly = false; csvExtract(); renderCSV(); }
+function csvSetInvert(on){ csvState.invert = on; csvExtract(); renderCSV(); }
+function csvToggle(i, on){ csvState.deposits[i].checked = on; renderCSVSummary(); document.getElementById('csvRow'+i).classList.toggle('off', !on); }
+function csvAll(on){ csvState.deposits.forEach(d => { if(!d.dup) d.checked = on; }); renderCSV(); }
+function csvClose(){ csvState = null; document.getElementById('csvResult').innerHTML = ''; }
+function renderCSVSummary(){
+    const sel = csvState.deposits.filter(d => d.checked);
+    const total = sel.reduce((s, d) => s + d.amount, 0);
+    const tax = sel.reduce((s, d) => s + paycheckSplit(d.amount).tax, 0);
+    document.getElementById('csvSum').innerHTML = sel.length
+        ? `Seleccionados: <b>${sel.length} ${sel.length === 1 ? 'pago' : 'pagos'}</b> por <b>${fmt(total)}</b> · para impuestos (${taxRate}%): <b style="color:var(--red)">${fmt(tax)}</b>`
+        : 'Marca los depósitos que fueron pagos por tu trabajo.';
+    const b = document.getElementById('csvGo');
+    b.disabled = !sel.length; b.style.opacity = sel.length ? 1 : .4;
+    b.textContent = sel.length ? `Importar ${sel.length} ${sel.length === 1 ? 'pago' : 'pagos'}` : 'Importar';
+}
+function renderCSV(){
+    const S = csvState, out = document.getElementById('csvResult');
+    const deps = S.deposits, wd = S.all.filter(t => t.amount < 0);
+    const depTotal = deps.reduce((s, t) => s + t.amount, 0);
+    const wdTotal = wd.reduce((s, t) => s + t.amount, 0);
+    const dates = S.all.map(t => t.date).sort();
+    const dups = deps.filter(d => d.dup).length, byHand = deps.filter(d => d.byHand).length;
+    const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+    const notes = [];
+
+    if(S.kind === 'pdf'){
+        const st = S.pdf.stmtIn;
+        if(st !== null && !S.invert){
+            if(Math.abs(st - depTotal) < 0.01) notes.push(`<div class="csv-ok" style="margin-top:6px;">✓ Los depósitos coinciden con el total del estado de cuenta (${fmt(st)}).</div>`);
+            else notes.push(`<div class="csv-warn">El estado de cuenta dice ${fmt(st)} en depósitos y encontré ${fmt(depTotal)}. Revisa la lista antes de importar.</div>`);
+        } else notes.push('<div class="csv-warn">Leí el PDF automáticamente. Compara la lista con tu estado de cuenta antes de importar.</div>');
+    } else if(S.all.length >= 6 && deps.length > S.all.length * 0.7){
+        notes.push('<div class="csv-warn">Casi todos los movimientos salen como depósitos. Si es un estado de tarjeta de crédito o los signos vienen al revés, marca "Invertir signos" abajo.</div>');
+    }
+    if(dups) notes.push(`<div class="csv-warn">${plural(dups, 'depósito ya estaba importado', 'depósitos ya estaban importados')} y no se volverán a sumar.</div>`);
+    if(byHand) notes.push(`<div class="csv-warn">${plural(byHand, 'depósito se parece a un pago que anotaste a mano', 'depósitos se parecen a pagos que anotaste a mano')}. Los dejé sin marcar para no contarlos dos veces.</div>`);
+
+    let mapHtml = '';
+    if(S.kind === 'csv'){
+        const cols = Math.max(...S.rows.map(r => r.length));
+        const hdr = S.map.header >= 0 ? S.rows[S.map.header] : [];
+        const colName = c => (hdr[c] || '').trim() || ('Columna ' + (c + 1));
+        const opts = (sel, none) => (none ? `<option value="-1"${sel < 0 ? ' selected' : ''}>— ninguna —</option>` : '')
+            + Array.from({length: cols}, (_, c) => `<option value="${c}"${c === sel ? ' selected' : ''}>${esc(colName(c))}</option>`).join('');
+        mapHtml = `
+        <details class="csv-details"${deps.length ? '' : ' open'}>
+            <summary>Ajustar columnas</summary>
+            <div class="csv-map">
+                <div><label class="form-label" for="csvMapDate">Fecha</label><select id="csvMapDate" onchange="csvSetMap('date', this.value)">${opts(S.map.date)}</select></div>
+                <div><label class="form-label" for="csvMapDesc">Descripción</label><select id="csvMapDesc" onchange="csvSetMap('desc', this.value)">${opts(S.map.desc, true)}</select></div>
+                <div><label class="form-label" for="csvMapAmt">${S.map.debit >= 0 ? 'Depósitos' : 'Monto'}</label><select id="csvMapAmt" onchange="csvSetMap('amount', this.value)">${opts(S.map.amount)}</select></div>
+                <div><label class="form-label" for="csvMapDebit">Retiros (otra columna)</label><select id="csvMapDebit" onchange="csvSetMap('debit', this.value)">${opts(S.map.debit, true)}</select></div>
+            </div>
+            <label class="csv-check"><input type="checkbox" id="csvInvert" ${S.invert ? 'checked' : ''} onchange="csvSetInvert(this.checked)"> Invertir signos (si los depósitos salen como gastos)</label>
+        </details>`;
+    } else if(!deps.length || S.invert){
+        mapHtml = `<label class="csv-check"><input type="checkbox" id="csvInvert" ${S.invert ? 'checked' : ''} onchange="csvSetInvert(this.checked)"> Invertir signos (si los depósitos salen como gastos)</label>`;
+    }
+
+    out.innerHTML = `
+        <div class="csv-status"><b>${esc(S.name)}</b><br>${plural(S.all.length, 'movimiento', 'movimientos')} del ${fechaCorta(dates[0])} ${dates[0].slice(0,4)} al ${fechaCorta(dates[dates.length-1])} ${dates[dates.length-1].slice(0,4)} · ${plural(deps.length, 'depósito', 'depósitos')} por ${fmt(depTotal)} · ${plural(wd.length, 'retiro', 'retiros')} por ${fmt(Math.abs(wdTotal))}</div>
+        ${notes.join('')}
+        ${mapHtml}
+        ${deps.length ? `
+        <div class="csv-bar">
+            <span class="form-label">Depósitos encontrados</span>
+            <span><button class="csv-link" onclick="csvAll(true)">Marcar todos</button><button class="csv-link" onclick="csvAll(false)">Ninguno</button></span>
+        </div>
+        <div class="csv-list">${deps.map((d, i) => `
+            <label class="csv-row${d.checked ? '' : ' off'}" id="csvRow${i}">
+                <input type="checkbox" ${d.checked ? 'checked' : ''} ${d.dup ? 'disabled' : ''} onchange="csvToggle(${i}, this.checked)">
+                <span class="cd">
+                    <span class="ct" style="display:block;">${esc(d.desc || 'Depósito')}</span>
+                    <span class="cs" style="display:block;">${fechaCorta(d.date)} ${d.date.slice(0,4)}${d.dup ? '<span class="csv-flag">ya importado</span>' : ''}${d.transfer ? '<span class="csv-flag">¿transferencia?</span>' : ''}${d.byHand ? '<span class="csv-flag">¿ya lo anotaste?</span>' : ''}</span>
+                </span>
+                <span class="ca">${fmt(d.amount)}</span>
+            </label>`).join('')}
+        </div>
+        <div class="csv-sum" id="csvSum"></div>
+        <div style="display:flex;gap:8px;">
+            <button class="btn-cancel" onclick="csvClose()">Cancelar</button>
+            <button class="btn-confirm" id="csvGo" style="background:var(--ice);" onclick="importCSV()">Importar</button>
+        </div>` : `<div class="csv-err">No encontré depósitos. ${S.kind === 'csv' ? 'Revisa las columnas arriba o marca' : 'Marca'} "Invertir signos".</div>`}`;
+    if(deps.length) renderCSVSummary();
+}
+function importCSV(){
+    const sel = csvState.deposits.filter(d => d.checked && !d.dup);
+    if(!sel.length) return;
+    let tax = 0;
+    sel.forEach((d, i) => {
+        const p = paycheckSplit(d.amount); tax += p.tax;
+        taxLog.push({ id: Date.now() + i, date: d.date, gross: d.amount, tax: p.tax, src: d.key, desc: d.desc.slice(0, 60) });
+        addToEarnings(d.date.slice(0, 7), d.amount);
+    });
+    taxLog.sort((a, b) => b.date.localeCompare(a.date));
+    LS.set('wf_taxlog', taxLog);
+    const n = sel.length, total = sel.reduce((s, d) => s + d.amount, 0);
+    csvState = null;
+    renderTaxes(); updatePill(); updateHome(); renderBudget();
+    document.getElementById('csvResult').innerHTML = `<div class="csv-ok">Listo: ${n} ${n === 1 ? 'pago importado' : 'pagos importados'} por ${fmt(total)}. Se apartaron ${fmt(tax)} para impuestos y se sumaron a tus ingresos de cada mes.</div>`;
 }
 
 // ── Respaldo de datos ─────────────────────────────────
