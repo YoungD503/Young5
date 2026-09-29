@@ -389,7 +389,7 @@
         .rule-badge { font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; padding:3px 9px; }
         .rule-line { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
         .rule-line:last-child { border-bottom:none; }
-        .rule-tag { width:62px; flex-shrink:0; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; }
+        .rule-tag { width:92px; flex-shrink:0; font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; }
         .rule-track { flex:1; height:5px; background:var(--dim2); overflow:hidden; position:relative; }
         .rule-fill { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
         .rule-num { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.03em; min-width:74px; text-align:right; }
@@ -905,6 +905,98 @@
         .csv-link { padding:8px 6px; min-height:32px; }
         .nav-item { letter-spacing:.06em; }
 
+        /* ── MINUTO SEMANAL Y RECORDATORIOS ──────── */
+        .wk-open { width:100%; flex:none; margin-top:12px; display:flex; justify-content:space-between; align-items:center; color:var(--ice); border-color:rgba(0,212,255,0.3); }
+        .wk-sec { padding:14px 0; border-bottom:1px solid var(--border); }
+        .wk-sec:last-of-type { border-bottom:none; }
+        .wk-h { font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:8px; }
+        .wk-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; }
+        .wk-tile { background:var(--surface); border:1px solid var(--border); padding:10px; min-width:0; }
+        .wk-tile .v { font-family:'Bebas Neue',sans-serif; font-size:1.35rem; letter-spacing:.03em; line-height:1.1; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variant-numeric:tabular-nums; }
+        .wk-tile .d { font-size:.62rem; color:var(--dim); margin-top:3px; }
+        .wk-line { display:flex; justify-content:space-between; gap:10px; font-size:.74rem; color:var(--text); padding:5px 0; }
+        .wk-line span:last-child { font-variant-numeric:tabular-nums; }
+        .wk-big { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:.03em; line-height:1; color:var(--lime); }
+        .wk-dots { display:flex; gap:6px; margin:8px 0 2px; }
+        .wk-dots span { width:22px; height:6px; background:var(--dim2); }
+        .wk-dots span.on { background:var(--green); }
+        .rem-opt { padding:12px; border:1px solid var(--border); background:var(--surface); margin-bottom:8px; }
+        .rem-opt label.chk { display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-size:.76rem; color:var(--text); line-height:1.5; }
+        .rem-opt label.chk input { width:18px; height:18px; padding:0; flex:none; margin-top:1px; accent-color:var(--ember); }
+        .rem-opt .sub { font-size:.64rem; color:var(--dim); margin:4px 0 0 28px; line-height:1.6; }
+        .rem-opt .row { display:flex; gap:8px; margin:10px 0 0 28px; }
+        .rem-opt .row select, .rem-opt .row input { padding:8px 10px; font-size:.76rem; }
+
+        /* ── INICIO ORGANIZADO ────────────────────── */
+        #home.page.active { column-count: auto !important; }
+        .hm-kpis { margin-bottom:12px; }
+        .hm-kpi-grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; }
+        .hm-kpi { background:var(--card); border:1px solid var(--border); padding:14px 16px; min-width:0; }
+        .hm-kpi .v { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:.03em; line-height:1; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variant-numeric:tabular-nums; }
+        .hm-kpi .s { font-size:.66rem; color:var(--dim); margin-top:6px; line-height:1.5; }
+        .hm-cov { font-size:.7rem; color:var(--dim); margin-top:8px; line-height:1.6; }
+        .hm-cov.warn { color:var(--gold); }
+        .nw-empty-cta { display:none; }
+        .card-networth.nw-empty .networth-value, .card-networth.nw-empty .networth-sub, .card-networth.nw-empty .networth-divider,
+        .card-networth.nw-empty .networth-breakdown, .card-networth.nw-empty .nw-bar-row, .card-networth.nw-empty .networth-badge { display:none; }
+        .card-networth.nw-empty .nw-empty-cta { display:block; }
+        .hm-base { font-size:.68rem; color:var(--dim); margin:-4px 0 10px; line-height:1.6; }
+        .hm-base button { background:none; border:none; color:var(--ice); font-family:'JetBrains Mono',monospace; font-size:.68rem; cursor:pointer; padding:4px 2px; text-decoration:underline; text-underline-offset:3px; }
+        @media (max-width: 899px){
+            #home.page.active { display:flex; flex-direction:column; }
+            .hm-col { display:contents; }
+            #hmKpis { order:1; } #home .paid-cta { order:2; } #homeTodoCard { order:3; } #homeMonthCard { order:4; } #homeRuleCard { order:5; }
+            #homeIncomeCard { order:6; } #home .home-plan { order:7; } #homeBizCard { order:8; } #home .card-networth { order:9; } #homePdf { order:10; }
+        }
+        @media (max-width: 600px){ .hm-kpi-grid { grid-template-columns:repeat(2, minmax(0,1fr)); } .hm-kpi .v { font-size:1.35rem; overflow:visible; text-overflow:clip; } .hm-kpi { padding:12px; } }
+        @media (min-width: 900px){
+            #home.page.active { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); grid-template-areas:"k k" "c b" "a b"; gap:0 14px; align-items:start; }
+            #hmKpis { grid-area:k; } .hm-col-a { grid-area:a; } .hm-col-b { grid-area:b; } .hm-col-c { grid-area:c; }
+            .hm-col { display:flex; flex-direction:column; min-width:0; }
+        }
+        @media (min-width: 1280px){
+            #home.page.active { grid-template-columns:repeat(3, minmax(0,1fr)); grid-template-areas:"k k k" "a b c"; }
+        }
+
+        /* ── PAGOS: TOTALES ──────────────────────── */
+        .pay-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; margin:4px 0 10px; }
+        .pay-note { font-size:.68rem; color:var(--dim); line-height:1.7; margin:0 0 10px; }
+        .pay-note b { color:var(--text); font-weight:500; }
+
+        /* ── GASTOS: REAL VS. ASIGNADO ───────────── */
+        .legacy-plan { display:none !important; }
+        @media (min-width: 900px){
+            #budget.page.active { column-count:auto !important; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:0 14px; align-items:start; }
+            #budget > .section-title, #budget > .section-divider, #budget > .view-toggle { grid-column:1 / -1; }
+        }
+        .cmp-month { font-size:.66rem; color:var(--dim); letter-spacing:.1em; text-transform:uppercase; }
+        .cmp-top-note { font-size:.68rem; color:var(--dim); line-height:1.7; margin:0 0 6px; }
+        .cmp-top-note b { color:var(--text); font-weight:500; }
+        .cmp-sec { padding:12px 0; border-bottom:1px solid var(--border); }
+        .cmp-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+        .cmp-head .nm { font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; }
+        .cmp-head .tot { font-size:.76rem; color:var(--text); font-variant-numeric:tabular-nums; text-align:right; }
+        .cmp-head .tot span { color:var(--dim); }
+        .cmp-rule { font-size:.66rem; color:var(--dim); margin:4px 0 4px; line-height:1.6; }
+        .cmp-rule.warn { color:var(--gold); }
+        .cmp-row { padding:9px 0 6px; }
+        .cmp-top { display:flex; align-items:center; gap:8px; }
+        .cmp-top .n { flex:1; min-width:0; font-size:.76rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .cmp-top .r { font-size:.78rem; color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap; }
+        .cmp-top .of { font-size:.66rem; color:var(--dim); }
+        .cmp-in-wrap { display:flex; align-items:center; border:1px solid var(--border); background:var(--surface); padding-left:8px; color:var(--dim); font-size:.74rem; flex:none; }
+        .cmp-in-wrap input { width:84px; padding:7px 8px; border:none; background:transparent; font-size:.78rem; box-shadow:none; }
+        .cmp-bar { height:5px; background:var(--dim2); margin-top:7px; overflow:hidden; }
+        .cmp-bar span { display:block; height:100%; }
+        .cmp-d { font-size:.66rem; margin-top:5px; }
+        .cmp-empty { font-size:.68rem; color:var(--dim); padding:8px 0 2px; }
+        .cmp-foot { padding-top:12px; }
+        .cmp-total { display:flex; justify-content:space-between; gap:10px; font-size:.8rem; color:var(--text); margin-bottom:8px; font-variant-numeric:tabular-nums; }
+        .cmp-add { display:flex; gap:8px; margin-top:10px; }
+        .cmp-add select { flex:1.4; padding:8px 10px; font-size:.74rem; min-width:0; }
+        .cmp-add input { flex:.8; padding:8px 10px; font-size:.76rem; min-width:0; }
+        .cmp-add button { flex:none; }
+
         /* ── MINI OVERRIDES ──────────────────────── */
         .mini-stat-dark {
             background:rgba(255,255,255,0.05);
@@ -1084,6 +1176,9 @@
             <button class="btn-cancel" onclick="document.getElementById('importFile').click()">↑ Restaurar</button>
         </div>
         <input type="file" id="importFile" accept="application/json,.json" style="display:none" onchange="importBackup(this)">
+        <div class="form-label">Recordatorios</div>
+        <div style="font-size:.7rem;color:var(--dim);line-height:1.7;margin-bottom:8px;">Agrega avisos al calendario de tu teléfono: tu minuto semanal, importar tu estado de cuenta y las fechas del IRS.</div>
+        <button class="btn-cancel" style="width:100%;flex:none;margin-bottom:14px;" onclick="closeModal('settingsModal'); openReminders()">Configurar recordatorios</button>
         <div class="form-label">Datos de ejemplo</div>
         <div style="font-size:.7rem;color:var(--dim);line-height:1.7;margin-bottom:8px;">Mira la app llena con datos inventados. Tus datos reales se guardan y vuelven al salir del ejemplo.</div>
         <button class="btn-cancel" id="demoBtn" style="width:100%;flex:none;margin-bottom:14px;" onclick="LS.get('wf_demo', false) ? exitDemo() : loadDemo()">Ver con datos de ejemplo</button>
@@ -1266,6 +1361,51 @@
     </div>
 </div>
 
+<!-- ═══ MI MINUTO SEMANAL ═══ -->
+<div class="modal-overlay" id="weekModal" onclick="closeIfOverlay(event,'weekModal')">
+    <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">Tu minuto semanal</div>
+        <div class="sheet-sub" id="wkRange"></div>
+        <div id="wkBody"></div>
+    </div>
+</div>
+
+<!-- ═══ RECORDATORIOS EN EL CALENDARIO ═══ -->
+<div class="modal-overlay" id="remModal" onclick="closeIfOverlay(event,'remModal')">
+    <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">Recordatorios en tu calendario</div>
+        <div class="sheet-sub">Descarga un archivo y ábrelo: tu teléfono agrega los recordatorios a su calendario y te avisa. No se manda ningún dato a ningún lado.</div>
+        <div class="rem-opt">
+            <label class="chk"><input type="checkbox" id="rm_week" checked> Mi minuto semanal</label>
+            <div class="sub">Un aviso a la semana para revisar cuánto gastaste y qué te queda.</div>
+            <div class="row">
+                <select id="rm_wday" aria-label="Día" style="flex:1.3;">
+                    <option value="SU">Domingo</option><option value="MO">Lunes</option><option value="TU">Martes</option><option value="WE">Miércoles</option><option value="TH">Jueves</option><option value="FR">Viernes</option><option value="SA">Sábado</option>
+                </select>
+                <input type="time" id="rm_wtime" aria-label="Hora" value="19:00" style="flex:1;">
+            </div>
+        </div>
+        <div class="rem-opt">
+            <label class="chk"><input type="checkbox" id="rm_month" checked> Importar mi estado de cuenta cada mes</label>
+            <div class="sub">Elige unos días después de la fecha en que tu banco cierra el estado.</div>
+            <div class="row">
+                <select id="rm_mday" aria-label="Día del mes" style="flex:1;"></select>
+            </div>
+        </div>
+        <div class="rem-opt only-biz">
+            <label class="chk"><input type="checkbox" id="rm_irs" checked> Pagos estimados al IRS</label>
+            <div class="sub">Las próximas 4 fechas, con aviso una semana antes y un día antes.</div>
+        </div>
+        <div id="rm_msg" class="csv-help" style="margin:8px 0 0;"></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('remModal')">Cerrar</button>
+            <button class="btn-confirm" onclick="downloadReminders()">Descargar recordatorios</button>
+        </div>
+    </div>
+</div>
+
 <!-- ═══ OTROS ACTIVOS ═══ -->
 <div class="modal-overlay" id="assetModal" onclick="closeIfOverlay(event,'assetModal')">
     <div class="modal-sheet">
@@ -1362,80 +1502,17 @@
     <div class="demo-bar" id="demoBar" role="status"><span>Estás viendo datos de ejemplo. Tus datos reales están guardados.</span><button onclick="exitDemo()">Salir del ejemplo</button></div>
 
     <div id="home" class="page active">
+        <div class="hm-kpis card" id="hmKpis" style="display:none;"></div>
 
-        <button class="paid-cta" onclick="showPage('taxes',document.getElementById('navTaxes'))">
-            <span><span class="paid-cta-k">Me pagaron</span><span class="paid-cta-s" id="ctaSub">¿Cuánto aparto para impuestos, gastos y ahorro?</span></span>
-            <span class="paid-cta-arrow">→</span>
-        </button>
-
+        <div class="hm-col hm-col-a">
         <!-- ── TU MES (datos reales) ── -->
         <div class="card" id="homeMonthCard">
-            <div class="sub-header" style="margin-bottom:2px;"><div class="sub-header-title" id="hmTitle">Tu mes</div></div>
+            <div class="sub-header" style="margin-bottom:2px;"><div class="sub-header-title" id="hmTitle">Flujo del mes</div></div>
             <div id="hmBody"></div>
         </div>
 
-        <!-- ── PENDIENTES ── -->
-        <div class="card" id="homeTodoCard">
-            <div class="card-label" style="margin-bottom:4px;">Pendientes</div>
-            <div id="hmTodo"></div>
-        </div>
-
-        <!-- ── NET WORTH CARD ── -->
-        <div class="card-networth">
-            <div class="networth-label">
-                Patrimonio neto total
-                <span class="networth-badge" id="nwBadge">CALCULANDO</span>
-            </div>
-            <div class="networth-value positive" id="networthValue">$0.00</div>
-            <div class="networth-sub" id="networthSub">Activos − Deudas</div>
-
-            <hr class="networth-divider">
-
-            <div class="networth-breakdown">
-                <div class="nw-tile nw-assets">
-                    <span class="nw-tile-icon">◈</span>
-                    <div class="nw-tile-label">Activos</div>
-                    <div class="nw-tile-value" id="nwPortfolio">$0.00</div>
-                    <div class="nw-tile-pct" id="nwPortfolioPct">0.0%</div>
-                </div>
-                <div class="nw-tile nw-debts">
-                    <span class="nw-tile-icon">⊘</span>
-                    <div class="nw-tile-label">Deudas</div>
-                    <div class="nw-tile-value" id="nwDebts">$0.00</div>
-                    <div class="nw-tile-pct" id="nwDebtsPct">0.0%</div>
-                </div>
-                <div class="nw-tile nw-cashflow">
-                    <span class="nw-tile-icon">≡</span>
-                    <div class="nw-tile-label">Flujo libre</div>
-                    <div class="nw-tile-value" id="nwCash">$0.00</div>
-                    <div class="nw-tile-pct" id="nwCashPct">0.0%</div>
-                </div>
-            </div>
-
-            <div class="nw-bar-row">
-                <div class="nw-bar-label">
-                    <span id="nwBarAssetsLabel">Activos 0%</span>
-                    <span id="nwBarDebtsLabel">Deuda 0%</span>
-                </div>
-                <div class="nw-bar-track" style="height:6px;">
-                    <div class="nw-bar-assets" id="nwBarAssets" style="width:0%"></div>
-                    <div class="nw-bar-debts"  id="nwBarDebts"  style="width:0%"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ── TU NEGOCIO ── -->
-        <div class="card hm-biz only-biz" id="homeBizCard" role="button" tabindex="0" onclick="goGastos('negocio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goGastos('negocio');}" style="display:none;">
-            <div class="sub-header" style="margin-bottom:8px;"><div class="sub-header-title">Tu negocio · <span id="hbYear"></span></div><span class="todo-arrow">→</span></div>
-            <div class="biz-top three" style="margin:0;">
-                <div class="biz-tile"><div class="pv-label">Ingresos</div><div class="biz-big" id="hbIn" style="color:var(--text);">$0.00</div></div>
-                <div class="biz-tile"><div class="pv-label">Gastos</div><div class="biz-big c-ember" id="hbOut">$0.00</div></div>
-                <div class="biz-tile"><div class="pv-label">Ganancia</div><div class="biz-big c-green" id="hbNet">$0.00</div></div>
-            </div>
-        </div>
-
         <!-- ── INCOME ── -->
-        <div class="card-ember">
+        <div class="card-ember home-plan" id="homeIncomeCard">
             <div class="card-label-ember">Ingreso mensual total</div>
             <div class="card-value-ember" id="monthlyTotal">$0.00</div>
             <div class="card-sub-ember" id="incomeBreakdown">Ingreso base · sin ingresos extra</div>
@@ -1483,25 +1560,104 @@
             <div id="miniChartPcts" style="margin-top:14px;"></div>
         </div>
 
+        <!-- ── TU NEGOCIO ── -->
+        <div class="card hm-biz only-biz" id="homeBizCard" role="button" tabindex="0" onclick="goGastos('negocio')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goGastos('negocio');}" style="display:none;">
+            <div class="sub-header" style="margin-bottom:8px;"><div class="sub-header-title">Tu negocio · <span id="hbYear"></span></div><span class="todo-arrow">→</span></div>
+            <div class="biz-top three" style="margin:0;">
+                <div class="biz-tile"><div class="pv-label">Ingresos</div><div class="biz-big" id="hbIn" style="color:var(--text);">$0.00</div></div>
+                <div class="biz-tile"><div class="pv-label">Gastos</div><div class="biz-big c-ember" id="hbOut">$0.00</div></div>
+                <div class="biz-tile"><div class="pv-label">Ganancia</div><div class="biz-big c-green" id="hbNet">$0.00</div></div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="hm-col hm-col-b">
         <!-- ── 50 / 30 / 20 SNAPSHOT ── -->
-        <div class="card">
+        <div class="card" id="homeRuleCard">
             <div class="sub-header" style="margin-bottom:4px;">
                 <div class="sub-header-title" id="ruleTitle">Presupuesto 50 / 30 / 20</div>
                 <div class="rule-badge" id="ruleBadge">SIN DATOS</div>
             </div>
             <div style="font-size:.72rem;color:var(--dim);letter-spacing:.04em;margin-bottom:10px;" id="ruleSub">Usado vs. asignado este mes</div>
+            <div class="hm-base" id="ruleBase"></div>
             <div id="ruleBars"></div>
             <div class="rule-verdict" id="ruleVerdict"></div>
             <button onclick="goGastos('personal')" style="width:100%;margin-top:14px;padding:10px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;">Ver mis gastos →</button>
         </div>
 
+        <!-- ── NET WORTH CARD ── -->
+        <div class="card-networth">
+            <div class="networth-label">
+                Patrimonio neto total
+                <span class="networth-badge" id="nwBadge">CALCULANDO</span>
+            </div>
+            <div class="networth-value positive" id="networthValue">$0.00</div>
+            <div class="networth-sub" id="networthSub">Activos − Deudas</div>
+
+            <hr class="networth-divider">
+
+            <div class="networth-breakdown">
+                <div class="nw-tile nw-assets">
+                    <span class="nw-tile-icon">◈</span>
+                    <div class="nw-tile-label">Activos</div>
+                    <div class="nw-tile-value" id="nwPortfolio">$0.00</div>
+                    <div class="nw-tile-pct" id="nwPortfolioPct">0.0%</div>
+                </div>
+                <div class="nw-tile nw-debts">
+                    <span class="nw-tile-icon">⊘</span>
+                    <div class="nw-tile-label">Deudas</div>
+                    <div class="nw-tile-value" id="nwDebts">$0.00</div>
+                    <div class="nw-tile-pct" id="nwDebtsPct">0.0%</div>
+                </div>
+                <div class="nw-tile nw-cashflow">
+                    <span class="nw-tile-icon">≡</span>
+                    <div class="nw-tile-label">Flujo libre</div>
+                    <div class="nw-tile-value" id="nwCash">$0.00</div>
+                    <div class="nw-tile-pct" id="nwCashPct">0.0%</div>
+                </div>
+            </div>
+
+            <div class="nw-empty-cta">
+                <div style="font-size:.74rem;color:var(--dim);line-height:1.7;margin:8px 0 12px;">Agrega tus ahorros, tu carro o tus deudas para ver cuánto vale tu patrimonio.</div>
+                <button class="btn-cancel" style="width:100%;flex:none;" onclick="showPage('invest', document.querySelector('.nav-item[onclick*=&quot;\'invest\'&quot;]'))">Agregar activos o deudas →</button>
+            </div>
+
+            <div class="nw-bar-row">
+                <div class="nw-bar-label">
+                    <span id="nwBarAssetsLabel">Activos 0%</span>
+                    <span id="nwBarDebtsLabel">Deuda 0%</span>
+                </div>
+                <div class="nw-bar-track" style="height:6px;">
+                    <div class="nw-bar-assets" id="nwBarAssets" style="width:0%"></div>
+                    <div class="nw-bar-debts"  id="nwBarDebts"  style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="hm-col hm-col-c">
+        <button class="paid-cta" onclick="showPage('taxes',document.getElementById('navTaxes'))">
+            <span><span class="paid-cta-k">Me pagaron</span><span class="paid-cta-s" id="ctaSub">¿Cuánto aparto para impuestos, gastos y ahorro?</span></span>
+            <span class="paid-cta-arrow">→</span>
+        </button>
+
+        <!-- ── PENDIENTES ── -->
+        <div class="card" id="homeTodoCard">
+            <div class="card-label" style="margin-bottom:4px;">Pendientes</div>
+            <div id="hmTodo"></div>
+            <button class="btn-cancel wk-open" onclick="openWeek()"><span>Mi minuto semanal</span><span id="wkStreakLbl" style="color:var(--dim);">→</span></button>
+        </div>
+
         <!-- DOWNLOAD PDF BUTTON -->
-        <div style="margin-top:4px;margin-bottom:4px;">
+        <div id="homePdf" style="margin-top:4px;margin-bottom:12px;">
             <button onclick="downloadBalanceSheet()" id="pdfBtn" style="width:100%;padding:16px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .25s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.28)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.background='transparent';">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Exportar estado financiero — PDF
             </button>
             <div style="text-align:center;font-size:.68rem;color:var(--dim);margin-top:8px;letter-spacing:.06em;">Resumen financiero formal con porcentajes<br>Herramienta educativa: no es asesoría financiera, legal ni fiscal.</div>
+        </div>
         </div>
     </div>
 
@@ -1562,6 +1718,7 @@
 
         <div class="card">
             <div class="sub-header"><div class="sub-header-title">Pagos registrados</div></div>
+            <div id="payTotals"></div>
             <div id="paycheckList"></div>
         </div>
 
@@ -1592,7 +1749,15 @@
             <div id="realBody"></div>
         </div>
 
-        <div class="card-ember pv-personal" style="padding:22px 20px;">
+        <div class="card pv-personal" id="cmpCard">
+            <div class="sub-header">
+                <div class="sub-header-title">Real vs. asignado</div>
+                <span class="cmp-month" id="cmpMonth"></span>
+            </div>
+            <div id="cmpBody"></div>
+        </div>
+
+        <div class="card-ember pv-personal legacy-plan" style="padding:22px 20px;">
             <div class="card-label-ember">Ingreso por asignar</div>
             <div class="card-value-ember" id="budIncome">$0.00</div>
             <div class="card-sub-ember" id="budRuleLine">Configura tu ingreso para armar el presupuesto</div>
@@ -1608,9 +1773,9 @@
             </div>
         </div>
 
-        <div id="bucketCards" class="pv-personal"></div>
+        <div id="bucketCards" class="pv-personal legacy-plan"></div>
 
-        <div class="card pv-personal">
+        <div class="card pv-personal legacy-plan">
             <div class="card-label" style="margin-bottom:14px;">Nueva partida</div>
             <div class="form-row"><label class="form-label">Descripción</label><input type="text" id="catName" placeholder="Ej. Renta, Comer fuera, Fondo de emergencia…"></div>
             <div class="form-row">
@@ -1629,7 +1794,7 @@
             <button class="btn-primary" onclick="addCategory()">+ Agregar al presupuesto</button>
         </div>
 
-        <div class="card pv-personal"><div class="card-label">Partidas del presupuesto</div><div id="categoryList"></div></div>
+        <div class="card pv-personal legacy-plan"><div class="card-label">Partidas del presupuesto</div><div id="categoryList"></div></div>
 
         <div class="disclaimer-card pv-personal">
             <div class="disclaimer-title">Cómo funciona la regla</div>
@@ -3143,7 +3308,7 @@ function renderHomeReal(){
 
     // Tu mes
     const body = document.getElementById('hmBody');
-    document.getElementById('hmTitle').textContent = ym ? 'Tu mes · ' + mesLargo(ym) : 'Tu mes';
+    document.getElementById('hmTitle').textContent = ym ? 'Flujo del mes · ' + mesLargo(ym) : 'Flujo del mes';
     if(!M || !M.hasAny){
         body.innerHTML = `<div class="hm-sub" style="margin-top:6px;">Aquí verás cuánto entró, cuánto salió y cuánto te quedó cada mes, con tus datos reales. Registra tus pagos en <b>Me pagaron</b> o importa tu estado de cuenta.</div>
             <button class="btn-cancel hm-cta" onclick="goPagos()">Importar mi estado de cuenta →</button>`;
@@ -3157,13 +3322,15 @@ function renderHomeReal(){
         const base = Math.max(M.income, parts.slice(0, -1).reduce((s, p) => s + p[1], 0)) || 1;
         const neg = M.free < 0;
         body.innerHTML = `
-            <div class="pv-label">${neg ? 'Saliste de más' : 'Te quedó libre'}</div>
+            <div class="pv-label">${neg ? 'Salió más de lo que entró' : 'Te quedó libre'}</div>
             <div class="hm-big" style="color:${neg ? 'var(--red)' : 'var(--lime)'};">${fmt(Math.abs(M.free))}</div>
             <div class="hm-sub">${M.income > 0
-                ? `De <b>${fmt(M.income)}</b> que entraron en ${mesLargo(ym).toLowerCase()}${prof() === 'ambos' && M.incSueldo > 0 && M.incSueldo < M.income ? ` (sueldo ${fmt(M.incSueldo)} · negocio ${fmt(M.income - M.incSueldo)})` : ''}${neg ? '; salió más de lo que entró' : ''}.`
+                ? (neg ? `Entraron <b>${fmt(M.income)}</b> y salieron <b>${fmt(M.income - M.free)}</b> en ${mesLargo(ym).toLowerCase()}.`
+                       : `De <b>${fmt(M.income)}</b> que entraron en ${mesLargo(ym).toLowerCase()}${prof() === 'ambos' && M.incSueldo > 0 && M.incSueldo < M.income ? ` (sueldo ${fmt(M.incSueldo)} · negocio ${fmt(M.income - M.incSueldo)})` : ''}.`)
                 : `No hay pagos registrados en ${mesLargo(ym).toLowerCase()}. Registra lo que te pagaron para ver cuánto te quedó.`}</div>
             <div class="hm-bar">${parts.filter(p => p[1] > 0).map(p => `<span style="width:${clampW(p[1] / base * 100)}%;background:${p[2]};" title="${p[0]}"></span>`).join('')}</div>
-            ${parts.map(p => `<div class="hm-line"><span class="legend-dot" style="background:${p[2]};"></span><span class="n">${p[0]}</span><span class="v">${fmt(p[1])}</span><span class="p" style="color:${p[2]};">${M.income > 0 ? fmtP(pctOf(p[1], M.income), 0) : '—'}</span></div>`).join('')}
+            ${parts.map(p => `<div class="hm-line"><span class="legend-dot" style="background:${p[2]};"></span><span class="n">${p[0]}</span><span class="v">${fmt(p[1])}</span><span class="p" style="color:${p[2]};">${base > 0 ? fmtP(pctOf(p[1], base), 0) : '—'}</span></div>`).join('')}
+            ${neg ? '<div class="hm-sub" style="margin:8px 0 0;">Porcentajes sobre el total que salió.</div>' : ''}
             ${M.none > 0 ? `<div class="hm-sub" style="margin:8px 0 0;">Los gastos personales incluyen ${fmt(M.none)} sin clasificar.</div>` : ''}`;
     }
 
@@ -3191,6 +3358,11 @@ function renderHomeReal(){
     const lastBk = LS.get('wf_lastbackup', null), bkAgo = lastBk ? -diasHasta(lastBk) : Infinity;
     if(!LS.get('wf_demo', false) && nRec >= 5 && bkAgo > 30) todo.push({ c:'var(--green)', t:'Descarga un respaldo de tus datos', s:'Tus datos viven solo en este dispositivo. ' + (lastBk ? `Tu último respaldo fue hace ${bkAgo} días.` : 'Aún no tienes ningún respaldo.'), go:'exportBackup()' });
     pendingLinks().slice(0, 3).forEach(l => todo.push({ c:'var(--violet)', t:`Falta el estado de tu ${esc(l.label.charAt(0).toLowerCase() + l.label.slice(1))}`, s: linkText(l, true) + ' Impórtalo para ver en qué se usó.', go:'goPagos()' }));
+    const nAll = taxLog.length + persExp.length + bizExp.length;
+    if(nAll && !weekDoneRecently()) todo.push({ c:'var(--ice)', t:'Haz tu minuto semanal', s:'Revisa en menos de un minuto cuánto gastaste esta semana y qué te queda.', go:'openWeek()' });
+    if(nAll >= 5 && !LS.get('wf_remdl', null) && !LS.get('wf_demo', false)) todo.push({ c:'var(--ice)', t:'Agrega recordatorios a tu calendario', s:'Tu teléfono te avisará cada semana, cada mes y antes de las fechas del IRS.', go:'openReminders()' });
+    const sl = document.getElementById('wkStreakLbl');
+    if(sl){ const n = weekStreak(); sl.textContent = n ? (n === 1 ? '1 semana →' : n + ' semanas seguidas →') : '→'; }
     const imported = [...taxLog, ...persExp, ...bizExp].filter(x => x.src).map(x => x.date).sort();
     if(!imported.length) todo.push({ c:'var(--ice)', t:'Importa tu estado de cuenta', s:'PDF o CSV del banco: tus pagos y gastos se registran solos.', go:'goPagos()' });
     else {
@@ -3238,14 +3410,62 @@ function renderHomeReal(){
         badge.style.border = '1px solid ' + (!bg.income ? 'rgba(90,87,80,0.3)' : ok ? 'rgba(0,200,117,0.3)' : 'rgba(255,69,0,0.3)');
         const v = document.getElementById('ruleVerdict');
         const bad = rows.filter(r => r.alloc && !r.good).map(r => r.k === 'savings' ? `al ahorro le faltan ${fmt(r.alloc - r.real)}` : `${r.label.toLowerCase()} se pasa por ${fmt(r.real - r.alloc)}`);
-        v.textContent = !bg.income ? 'Configura cómo te pagan para comparar tu gasto real con la regla.'
+        v.textContent = (!bg.income ? 'Configura cómo te pagan para comparar tu gasto real con la regla.'
             : bad.length ? 'Con tu gasto real: ' + bad.join(' y ') + '.'
-            : `Tu gasto real está dentro de la regla: necesidades ${fmtP(rows[0].u, 0)}, gustos ${fmtP(rows[1].u, 0)} y ahorro ${fmtP(rows[2].u, 0)} de la meta.`;
+            : `Tu gasto real está dentro de la regla: necesidades ${fmtP(rows[0].u, 0)}, gustos ${fmtP(rows[1].u, 0)} y ahorro ${fmtP(rows[2].u, 0)} de la meta.`)
+            + (M.none > 0 ? ` Aún faltan ${fmt(M.none)} sin clasificar, que no entran en esta cuenta.` : '');
         const vc = !bg.income ? 'var(--dim)' : bad.length ? 'var(--ember)' : 'var(--green)';
         v.style.color = vc; v.style.borderLeftColor = vc;
     } else {
         document.getElementById('ruleSub').textContent = 'Plan: usado vs. asignado este mes';
     }
+
+    // Con datos reales, Patrimonio e Ingreso mensual muestran lo mismo que "Tu mes" (no el plan)
+    const cashLbl = document.querySelector('.nw-cashflow .nw-tile-label');
+    if(M && M.hasAny){
+        if(cashLbl) cashLbl.textContent = 'Libre este mes';
+        const cashEl = document.getElementById('nwCash');
+        cashEl.textContent = (M.free < 0 ? '-' : '') + fmt(Math.abs(M.free));
+        cashEl.style.color = M.free < 0 ? 'var(--red)' : '';
+        document.getElementById('nwCashPct').textContent = M.income > 0 ? fmtP(pctOf(M.free, M.income), 1) + ' de lo que entró' : 'sin pagos este mes';
+        const inc = getBudget().income, sp = pctOf(M.pers, inc);
+        document.getElementById('usageBar').style.width = clampW(sp) + '%';
+        document.getElementById('usagePct').textContent = inc > 0 ? fmtP(sp, 1) + ' gastado en ' + mesLargo(ym).toLowerCase() : 'Configura tu ingreso para comparar';
+    } else {
+        if(cashLbl) cashLbl.textContent = 'Flujo libre';
+        document.getElementById('nwCash').style.color = '';
+    }
+    // ── Franja de resumen del mes y aviso de datos incompletos
+    const kp = document.getElementById('hmKpis');
+    if(kp){
+        if(!M || !M.hasAny){ kp.style.display = 'none'; }
+        else {
+            kp.style.display = '';
+            const bgK = getBudget();
+            const spentK = M.pers + (prof() === 'empleado' ? 0 : M.biz);
+            const leftK = bgK.byKey.needs.allocated + bgK.byKey.wants.allocated - (M.needs + M.wants + M.none);
+            const inDates = taxLog.filter(t => t.date.startsWith(ym)).map(t => t.date).sort();
+            const outDates = [...persExp, ...bizExp].filter(e => e.date.startsWith(ym)).map(e => e.date).sort();
+            const lastIn = inDates[inDates.length - 1] || null, lastOut = outDates[outDates.length - 1] || null;
+            const lastAll = [lastIn, lastOut].filter(Boolean).sort().pop();
+            const lag = lastOut && (!lastIn || (new Date(lastOut) - new Date(lastIn)) / 864e5 > 7);
+            const tile = (l, v, c, sub) => `<div class="hm-kpi"><div class="pv-label">${l}</div><div class="v" style="color:${c};">${v}</div><div class="s">${sub}</div></div>`;
+            kp.innerHTML = `<div class="hm-kpi-grid">
+                ${tile('Entró en ' + mesCorto(ym).toLowerCase(), fmt(M.income), 'var(--green)', prof() === 'ambos' && M.incSueldo > 0 && M.incSueldo < M.income ? 'sueldo ' + fmt(M.incSueldo) + ' · negocio ' + fmt(M.income - M.incSueldo) : (inDates.length === 1 ? '1 pago' : inDates.length + ' pagos'))}
+                ${tile('Gastaste', fmt(spentK), 'var(--ember)', prof() !== 'empleado' && M.biz > 0 ? 'personal ' + fmt(M.pers) + ' · negocio ' + fmt(M.biz) : 'gastos personales')}
+                ${tile('Ahorraste', fmt(M.savings), 'var(--green)', bgK.income ? 'meta ' + fmt(bgK.byKey.savings.allocated) : 'transferencias a ahorro')}
+                ${bgK.income ? tile(leftK >= 0 ? 'Te queda por gastar' : 'Te pasaste', fmt(Math.abs(leftK)), leftK >= 0 ? 'var(--lime)' : 'var(--red)', 'de tu presupuesto del mes') : tile(M.free >= 0 ? 'Libre' : 'Salió de más', fmt(Math.abs(M.free)), M.free >= 0 ? 'var(--lime)' : 'var(--red)', 'entró menos salió')}
+            </div>
+            <div class="hm-cov${lag ? ' warn' : ''}">${lastAll ? 'Datos de ' + mesLargo(ym).toLowerCase() + ' hasta el ' + fechaCorta(lastAll) + '.' : ''}${lag ? ` Tus pagos registrados llegan ${lastIn ? 'solo hasta el ' + fechaCorta(lastIn) : 'a ningún día de este mes'}, pero tus gastos hasta el ${fechaCorta(lastOut)}. Importa tu estado de cuenta más reciente para ver todo lo que entró.` : ''}</div>`;
+        }
+    }
+    // ── Patrimonio compacto cuando no hay activos ni deudas
+    const nwCard = document.querySelector('#home .card-networth');
+    if(nwCard){ const rr = getRatios(); nwCard.classList.toggle('nw-empty', rr.assetsTotal === 0 && rr.totalDebt === 0); }
+    // ── Base de ingreso del presupuesto
+    const rbEl = document.getElementById('ruleBase');
+    if(rbEl){ const bI = getBudget().income; rbEl.innerHTML = bI ? `Basado en tu ingreso de ${fmt(bI)} al mes. <button onclick="document.getElementById('wagePill').click()">Cambiar</button>` : `<button onclick="document.getElementById('wagePill').click()">Configura cómo te pagan</button> para comparar con tu presupuesto.`; }
+
 }
 
 // ── Perfil: empleado, por mi cuenta o ambos ──────────
@@ -3402,11 +3622,12 @@ function demoData(){
         pay(1, 9, 1100, 'negocio', 'Zelle payment from ROOFING PRO LLC'), pay(1, 22, 750, 'negocio', 'Zelle payment from ANA TORRES'),
         pay(2, 1, 1600, 'sueldo', 'DIRECT DEP ACME CONSTRUCTION PAYROLL'), pay(2, 15, 1600, 'sueldo', 'DIRECT DEP ACME CONSTRUCTION PAYROLL'),
         pay(2, 18, 1200, 'negocio', 'Zelle payment from ROOFING PRO LLC'),
+        { ...pay(0, 1, 600, 'negocio', 'Zelle payment from CARLOS MEJIA'), date: addDays(today, -4) },
     ].sort((a, b) => b.date.localeCompare(a.date));
     const biz = (n, d, amount, cat, desc) => ({ id: id++, date: at(n, d), desc, amount, cat, src: 'demo:' + id });
     const bizExp = [biz(0, 4, 184.30, 'materiales', 'HOME DEPOT #6522'), biz(0, 9, 58.20, 'vehiculo', 'SHELL OIL 57444'),
         biz(1, 5, 322.10, 'materiales', 'LOWES #1122'), biz(1, 10, 85, 'telefono', 'VERIZON WIRELESS'), biz(1, 14, 60, 'publicidad', 'FACEBK ADS'),
-        biz(2, 20, 129.99, 'herramientas', 'HARBOR FREIGHT TOOLS')].sort((a, b) => b.date.localeCompare(a.date));
+        biz(2, 20, 129.99, 'herramientas', 'HARBOR FREIGHT TOOLS'), { ...biz(0, 1, 45, 'vehiculo', 'CIRCLEK #2231'), date: addDays(today, -2) }].sort((a, b) => b.date.localeCompare(a.date));
     const per = (n, d, amount, cat, desc) => ({ id: id++, date: at(n, d), desc, amount, cat, src: 'demo:' + id });
     const persExp = [
         per(0, 1, 1300, 'vivienda', 'RENT PAYMENT'), per(0, 3, 142.55, 'comida', 'KROGER #455'), per(0, 8, 96.20, 'comida', 'WALMART SUPERCENTER'),
@@ -3415,6 +3636,8 @@ function demoData(){
         per(0, 2, 300, 'ahorro', 'ONLINE TRANSFER TO SAV ...7788'), per(0, 13, 250, 'tarjeta', 'CHASE CARD EPAY'),
         per(1, 1, 1300, 'vivienda', 'RENT PAYMENT'), per(1, 6, 188.40, 'comida', 'KROGER #455'), per(1, 9, 64.75, 'restaurantes', 'TAQUERIA EL SOL'),
         per(1, 12, 121, 'servicios', 'NES ELECTRIC'), per(1, 15, 200, 'familia', 'REMITLY* TRANSFER'), per(1, 2, 300, 'ahorro', 'ONLINE TRANSFER TO SAV ...7788'),
+        { ...per(0, 1, 64.10, 'comida', 'KROGER #455'), date: addDays(today, -1) }, { ...per(0, 1, 28.50, 'restaurantes', 'TAQUERIA EL SOL'), date: addDays(today, -3) },
+        { ...per(0, 1, 23.40, 'restaurantes', 'UBER *EATS'), date: addDays(today, -5) }, { ...per(0, 1, 89.99, 'compras', 'TARGET T-1234'), date: addDays(today, -6) },
     ].sort((a, b) => b.date.localeCompare(a.date));
     const byMonth = {};
     taxLog.filter(t => t.kind === 'negocio').forEach(t => { byMonth[t.date.slice(0, 7)] = (byMonth[t.date.slice(0, 7)] || 0) + t.gross; });
@@ -3525,6 +3748,255 @@ function saveEdit(){
     }
     closeModal('editModal'); editTarget = null;
     renderTaxes(); updatePill(); updateHome(); renderBudget();
+}
+
+// ── Recordatorios en el calendario (.ics) ────────────
+const icsEsc = t => String(t).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+function icsFold(line){
+    const out = []; let cur = '';
+    for(const ch of line){
+        if(new TextEncoder().encode(cur + ch).length > 73){ out.push(cur); cur = ' ' + ch; } else cur += ch;
+    }
+    out.push(cur); return out.join('\r\n');
+}
+const icsDate = iso => iso.replace(/-/g, '');
+function openReminders(){
+    const cfg = LS.get('wf_remcfg', { week: true, wday: 'SU', wtime: '19:00', month: true, mday: 10, irs: true });
+    const md = document.getElementById('rm_mday');
+    md.innerHTML = Array.from({ length: 28 }, (_, i) => `<option value="${i + 1}">El día ${i + 1} de cada mes</option>`).join('');
+    document.getElementById('rm_week').checked = cfg.week; document.getElementById('rm_wday').value = cfg.wday;
+    document.getElementById('rm_wtime').value = cfg.wtime; document.getElementById('rm_month').checked = cfg.month;
+    md.value = cfg.mday; document.getElementById('rm_irs').checked = cfg.irs;
+    document.getElementById('rm_msg').textContent = '';
+    openModal('remModal');
+}
+function buildICS(cfg){
+    const now = new Date(), stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const uid = n => 'wf-' + n + '-' + now.getTime() + '@wealthflow';
+    const link = /^https?:/.test(location.protocol) ? location.origin + location.pathname + '#semana' : '';
+    const ev = [];
+    const alarm = (trigger, text) => ['BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER' + trigger, 'DESCRIPTION:' + icsEsc(text), 'END:VALARM'];
+    if(cfg.week){
+        const days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'], target = days.indexOf(cfg.wday);
+        const d = new Date(hoyISO() + 'T12:00:00'); d.setDate(d.getDate() + ((target - d.getDay() + 7) % 7));
+        const start = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+        const [h, m] = (cfg.wtime || '19:00').split(':');
+        const endM = (+h * 60 + +m + 15), eh = String(Math.floor(endM / 60) % 24).padStart(2, '0'), em = String(endM % 60).padStart(2, '0');
+        ev.push(['BEGIN:VEVENT', 'UID:' + uid('semanal'), 'DTSTAMP:' + stamp, `DTSTART:${start}T${h}${m}00`, `DTEND:${start}T${eh}${em}00`,
+            'RRULE:FREQ=WEEKLY;BYDAY=' + cfg.wday, 'SUMMARY:' + icsEsc('WealthFlow · Tu minuto semanal'),
+            'DESCRIPTION:' + icsEsc('Abre WealthFlow y toca "Mi minuto semanal": cuánto gastaste esta semana, cuánto te queda y tus pendientes.' + (link ? '\n' + link : '')),
+            ...(link ? ['URL:' + link] : []), ...alarm(':PT0M', 'Tu minuto semanal de WealthFlow'), 'END:VEVENT']);
+    }
+    if(cfg.month){
+        const t = hoyISO(), day = String(cfg.mday).padStart(2, '0');
+        let [y, mo] = t.split('-').map(Number);
+        if(+t.slice(8, 10) > cfg.mday){ mo++; if(mo > 12){ mo = 1; y++; } }
+        const start = y + String(mo).padStart(2, '0') + day;
+        ev.push(['BEGIN:VEVENT', 'UID:' + uid('mensual'), 'DTSTAMP:' + stamp, `DTSTART:${start}T100000`, `DTEND:${start}T101500`,
+            'RRULE:FREQ=MONTHLY;BYMONTHDAY=' + cfg.mday, 'SUMMARY:' + icsEsc('WealthFlow · Importa tu estado de cuenta'),
+            'DESCRIPTION:' + icsEsc('Descarga el estado de cuenta de tu banco (PDF o CSV) y súbelo en WealthFlow → Pagos → Importar del banco.'),
+            ...alarm(':PT0M', 'Importa tu estado de cuenta en WealthFlow'), 'END:VEVENT']);
+    }
+    if(cfg.irs && prof() !== 'empleado'){
+        const t = hoyISO(), y = +t.slice(0, 4);
+        [...taxPeriods(y - 1), ...taxPeriods(y), ...taxPeriods(y + 1)].filter(p => p.due >= t).slice(0, 4).forEach(p => {
+            const next = new Date(p.due + 'T12:00:00'); next.setDate(next.getDate() + 1);
+            const endD = next.getFullYear() + String(next.getMonth() + 1).padStart(2, '0') + String(next.getDate()).padStart(2, '0');
+            ev.push(['BEGIN:VEVENT', 'UID:' + uid('irs-' + p.due), 'DTSTAMP:' + stamp, 'DTSTART;VALUE=DATE:' + icsDate(p.due), 'DTEND;VALUE=DATE:' + endD,
+                'SUMMARY:' + icsEsc('Pago estimado al IRS (trimestre ' + p.q + ')'),
+                'DESCRIPTION:' + icsEsc('Revisa en WealthFlow → Pagos cuánto llevas apartado para este trimestre. Si la fecha cae en fin de semana o feriado, se mueve al siguiente día hábil. Confírmalo con tu preparador de impuestos.'),
+                ...alarm(';RELATED=START:-P6DT15H', 'En una semana vence tu pago estimado al IRS'),
+                ...alarm(';RELATED=START:-PT15H', 'Mañana vence tu pago estimado al IRS'), 'END:VEVENT']);
+        });
+    }
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//WealthFlow//Recordatorios//ES', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:WealthFlow', ...ev.flat(), 'END:VCALENDAR'];
+    return { text: lines.map(icsFold).join('\r\n') + '\r\n', count: ev.length };
+}
+function downloadReminders(){
+    const cfg = {
+        week: document.getElementById('rm_week').checked, wday: document.getElementById('rm_wday').value,
+        wtime: document.getElementById('rm_wtime').value || '19:00', month: document.getElementById('rm_month').checked,
+        mday: +document.getElementById('rm_mday').value || 10, irs: document.getElementById('rm_irs').checked,
+    };
+    LS.set('wf_remcfg', cfg);
+    const msg = document.getElementById('rm_msg');
+    const { text, count } = buildICS(cfg);
+    if(!count){ msg.textContent = 'Marca al menos un recordatorio.'; msg.style.color = 'var(--red)'; return; }
+    const blob = new Blob([text], { type: 'text/calendar' }), fn = 'WealthFlow_recordatorios.ics';
+    deliverFile(blob, fn, () => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fn; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); });
+    LS.set('wf_remdl', hoyISO());
+    msg.style.color = 'var(--green)';
+    msg.textContent = `Listo: ${count} ${count === 1 ? 'recordatorio' : 'recordatorios'}. Abre el archivo descargado; en iPhone toca "Agregar todo" y en Android elige tu calendario.`;
+    try{ updateHome(); }catch(e){}
+}
+
+// ── Mi minuto semanal ────────────────────────────────
+const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const mondayOf = iso => { const d = new Date(iso + 'T12:00:00'); return addDays(iso, -((d.getDay() + 6) % 7)); };
+function weekStreak(){
+    const done = new Set(LS.get('wf_weeks', []));
+    let wk = mondayOf(hoyISO()), n = 0;
+    if(!done.has(wk)) wk = addDays(wk, -7);
+    while(done.has(wk)){ n++; wk = addDays(wk, -7); }
+    return n;
+}
+const weekDoneRecently = () => { const w = LS.get('wf_weeks', []); return w.includes(mondayOf(hoyISO())) || w.includes(mondayOf(addDays(hoyISO(), -3))); };
+function markWeekDone(){
+    const w = new Set(LS.get('wf_weeks', [])); w.add(mondayOf(hoyISO()));
+    LS.set('wf_weeks', [...w].sort().slice(-60));
+    renderWeek(); try{ updateHome(); }catch(e){}
+}
+function openWeek(){ renderWeek(); openModal('weekModal'); }
+function renderWeek(){
+    const t = hoyISO(), a = addDays(t, -6), pa = addDays(t, -13), pb = addDays(t, -7);
+    const inR = (d, x, y) => d >= x && d <= y;
+    const persSpend = (x, y) => persExp.filter(e => inR(e.date, x, y) && ['needs', 'wants', 'none'].includes(persBucket(e))).reduce((s, e) => s + e.amount, 0);
+    const inc = taxLog.filter(p => inR(p.date, a, t)).reduce((s, p) => s + p.gross, 0);
+    const pers = persSpend(a, t), prevPers = persSpend(pa, pb);
+    const biz = bizExp.filter(e => inR(e.date, a, t)).reduce((s, e) => s + e.amount, 0);
+    document.getElementById('wkRange').textContent = 'Del ' + fechaCorta(a) + ' al ' + fechaCorta(t) + ' · toma menos de un minuto';
+    const diff = prevPers > 0 ? pctOf(pers - prevPers, prevPers) : null;
+    const any = inc || pers || biz;
+
+    const ym = t.slice(0, 7), M = monthSummary(ym), bg = getBudget();
+    const dim = new Date(+ym.slice(0, 4), +ym.slice(5, 7), 0).getDate(), daysLeft = dim - +t.slice(8, 10) + 1;
+    const needsLeft = bg.byKey.needs.allocated - M.needs, wantsLeft = bg.byKey.wants.allocated - M.wants;
+    const top = persExp.filter(e => inR(e.date, a, t) && persBucket(e) !== 'skip' && persBucket(e) !== 'savings').sort((x, y) => y.amount - x.amount).slice(0, 3);
+
+    renderHomeReal();
+    const todoRows = [...document.querySelectorAll('#hmTodo .todo-row')].filter(r => !/openWeek|openReminders/.test(r.getAttribute('onclick') || '')).slice(0, 4).map(r => r.outerHTML).join('');
+    const streak = weekStreak(), done = new Set(LS.get('wf_weeks', []));
+    const dots = Array.from({ length: 8 }, (_, i) => `<span class="${done.has(addDays(mondayOf(t), -7 * (7 - i))) ? 'on' : ''}" title="${fechaCorta(addDays(mondayOf(t), -7 * (7 - i)))}"></span>`).join('');
+    const thisDone = done.has(mondayOf(t));
+
+    document.getElementById('wkBody').innerHTML = `
+        <div class="wk-sec">
+            <div class="wk-h">Esta semana</div>
+            ${any ? `<div class="wk-grid">
+                <div class="wk-tile"><div class="pv-label">Entró</div><div class="v" style="color:var(--green);">${fmt(inc)}</div></div>
+                <div class="wk-tile"><div class="pv-label">Gastaste</div><div class="v" style="color:var(--ember);">${fmt(pers)}</div><div class="d">${diff === null ? 'personal' : (diff > 0 ? '▲ ' : '▼ ') + fmtP(Math.abs(diff), 0) + ' vs. semana pasada'}</div></div>
+                <div class="wk-tile"><div class="pv-label">Negocio</div><div class="v" style="color:var(--gold);">${fmt(biz)}</div><div class="d">gastos</div></div>
+            </div>` : `<div class="csv-help" style="margin:0;">No hay movimientos registrados en estos 7 días. Importa tu estado de cuenta o registra lo que te pagaron para ver tu semana.</div>`}
+        </div>
+        ${bg.income ? `<div class="wk-sec">
+            <div class="wk-h">Lo que te queda en ${mesLargo(ym).toLowerCase()}</div>
+            <div class="wk-line"><span>Para gustos</span><span style="color:${wantsLeft >= 0 ? 'var(--ice)' : 'var(--red)'};">${wantsLeft >= 0 ? fmt(wantsLeft) : fmt(-wantsLeft) + ' de más'}</span></div>
+            <div class="wk-line"><span>Para necesidades</span><span style="color:${needsLeft >= 0 ? 'var(--text)' : 'var(--red)'};">${needsLeft >= 0 ? fmt(needsLeft) : fmt(-needsLeft) + ' de más'}</span></div>
+            ${wantsLeft > 0 ? `<div style="margin-top:10px;"><div class="pv-label">Puedes gastar en gustos, por día</div><div class="wk-big">${fmt(wantsLeft / daysLeft)}</div><div class="csv-help" style="margin:4px 0 0;">${daysLeft === 1 ? 'Queda 1 día' : 'Quedan ' + daysLeft + ' días'} en el mes.</div></div>` : ''}
+        </div>` : ''}
+        ${top.length ? `<div class="wk-sec">
+            <div class="wk-h">Tus gastos más grandes de la semana</div>
+            ${top.map(e => `<div class="wk-line"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(prettyDesc(e.desc))}</span><span>${fmt(e.amount)}</span></div>`).join('')}
+        </div>` : ''}
+        ${todoRows ? `<div class="wk-sec"><div class="wk-h">Pendientes</div><div id="wkTodo">${todoRows}</div></div>` : ''}
+        <div class="wk-sec">
+            <div class="wk-h">Tu racha</div>
+            <div style="font-size:.8rem;color:var(--text);">${streak ? (streak === 1 ? '1 semana revisada' : streak + ' semanas seguidas revisando tus finanzas') : 'Empieza tu racha hoy'}</div>
+            <div class="wk-dots" aria-hidden="true">${dots}</div>
+        </div>
+        <button class="btn-primary" style="margin-top:12px;${thisDone ? 'background:var(--surface);color:var(--green);border:1px solid rgba(0,200,117,0.35);' : 'background:var(--green);'}" ${thisDone ? 'disabled' : ''} onclick="markWeekDone()">${thisDone ? '✓ Semana revisada' : 'Listo, revisé mi semana'}</button>
+        ${LS.get('wf_remdl', null) ? '' : `<button class="btn-cancel" style="width:100%;flex:none;margin-top:8px;" onclick="closeModal('weekModal'); openReminders()">Recordármelo cada semana en mi calendario</button>`}`;
+    const wt = document.getElementById('wkTodo');
+    if(wt) wt.onclick = e => { if(e.target.closest('.todo-row')) closeModal('weekModal'); };
+}
+
+// ── Descripciones del banco más legibles ─────────────
+function prettyDesc(d){
+    return String(d || '')
+        .replace(/\s+INDN:.*$/i, '')
+        .replace(/\s+(ID|CO ID|PPD ID|WEB ID):\s*\S+/gi, '')
+        .replace(/\s+DES:\s*(\S+)/i, ' · $1')
+        .replace(/\s*Confirmation#\s*\S+/i, '')
+        .replace(/\s{2,}/g, ' ').trim();
+}
+
+// ── Gastos: real vs. asignado por categoría ──────────
+function setCatBudget(cat, v){
+    const amt = Math.max(0, Math.round((parseFloat(v) || 0) * 100) / 100);
+    const i = categories.findIndex(c => c.cat === cat);
+    if(amt > 0){
+        if(i >= 0) categories[i].amount = amt;
+        else categories.push({ id: Date.now(), name: PERS_CATS[cat].label, amount: amt, type: PERS_CATS[cat].b, cat });
+    } else if(i >= 0) categories.splice(i, 1);
+    LS.set('wf_cats', categories); renderBudget(); updateHome();
+}
+function setItemBudget(id, v){
+    const amt = Math.max(0, parseFloat(v) || 0);
+    const it = categories.find(c => c.id === id); if(!it) return;
+    if(amt > 0) it.amount = amt; else categories = categories.filter(c => c.id !== id);
+    LS.set('wf_cats', categories); renderBudget(); updateHome();
+}
+function addCmpCat(){
+    const cat = document.getElementById('cmpAddCat').value, amt = document.getElementById('cmpAddAmt').value;
+    if(!cat || !(parseFloat(amt) > 0)){ document.getElementById('cmpAddAmt').focus(); return; }
+    setCatBudget(cat, amt);
+}
+function fillFromReal(ym){
+    const byCat = {};
+    persExp.filter(e => e.date.startsWith(ym)).forEach(e => { byCat[e.cat] = (byCat[e.cat] || 0) + e.amount; });
+    Object.entries(byCat).forEach(([k, v]) => {
+        const b = (PERS_CATS[k] || {}).b;
+        if(['needs', 'wants', 'savings'].includes(b) && !categories.some(c => c.cat === k))
+            categories.push({ id: Date.now() + Math.floor(Math.random() * 1e6), name: PERS_CATS[k].label, amount: Math.ceil(v / 10) * 10, type: b, cat: k });
+    });
+    LS.set('wf_cats', categories); renderBudget(); updateHome();
+}
+function renderCmp(){
+    const el = document.getElementById('cmpBody'); if(!el) return;
+    const ym = realMonthSel || hoyISO().slice(0, 7);
+    document.getElementById('cmpMonth').textContent = mesCorto(ym);
+    const bg = getBudget();
+    const list = persExp.filter(e => e.date.startsWith(ym));
+    const realBy = {}; list.forEach(e => { realBy[e.cat] = (realBy[e.cat] || 0) + e.amount; });
+    const noneTot = list.filter(e => persBucket(e) === 'none').reduce((s, e) => s + e.amount, 0);
+    const asg = k => (categories.find(c => c.cat === k) || {}).amount || 0;
+    const legacy = categories.filter(c => !c.cat || !PERS_CATS[c.cat]);
+    const RULE = { needs: ruleNeeds, wants: ruleWants, savings: ruleSave };
+    let totA = 0, totR = 0;
+    const row = (label, a, r, b, input) => {
+        const pct = a > 0 ? r / a * 100 : (r > 0 ? 100 : 0);
+        const near = a > 0 && Math.abs(a - r) < Math.max(1, a * 0.01);
+        const color = a === 0 ? 'var(--gold)' : b === 'savings' ? (r >= a || near ? 'var(--green)' : 'var(--ember)') : near ? 'var(--gold)' : r > a ? 'var(--red)' : pct > 90 ? 'var(--ember)' : 'var(--green)';
+        const txt = a === 0 ? 'Sin monto asignado' : b === 'savings' ? (r >= a || near ? 'Meta cumplida' : 'Faltan ' + fmt(a - r)) : near ? 'Justo en tu límite' : r <= a ? 'Quedan ' + fmt(a - r) : 'Te pasaste ' + fmt(r - a);
+        return `<div class="cmp-row">
+            <div class="cmp-top"><span class="n">${label}</span><span class="r">${r === null ? '—' : fmt(r)}</span><span class="of">de</span><span class="cmp-in-wrap">$${input}</span></div>
+            ${r === null ? '<div class="cmp-d" style="color:var(--dim);">Partida sin categoría: no se compara con tu gasto real</div>' : `<div class="cmp-bar"><span style="width:${clampW(pct)}%;background:${color};"></span></div><div class="cmp-d" style="color:${color};">${txt}</div>`}
+        </div>`;
+    };
+    const secs = [['needs', 'Necesidades'], ['wants', 'Gustos'], ['savings', 'Ahorro']].map(([b, label]) => {
+        const cats = Object.keys(PERS_CATS).filter(k => PERS_CATS[k].b === b && (asg(k) > 0 || (realBy[k] || 0) > 0));
+        const leg = legacy.filter(c => c.type === b);
+        const a = cats.reduce((s, k) => s + asg(k), 0) + leg.reduce((s, c) => s + c.amount, 0);
+        const r = cats.reduce((s, k) => s + (realBy[k] || 0), 0);
+        totA += a; totR += r;
+        const rule = bg.byKey[b].allocated;
+        const rows = cats.map(k => row(PERS_CATS[k].label, asg(k), realBy[k] || 0, b,
+                `<input type="number" min="0" step="10" inputmode="decimal" value="${asg(k) || ''}" placeholder="0" aria-label="Monto asignado para ${PERS_CATS[k].label}" onchange="setCatBudget('${k}', this.value)">`)).join('')
+            + leg.map(c => row(esc(c.name), c.amount, null, b,
+                `<input type="number" min="0" step="10" inputmode="decimal" value="${c.amount}" aria-label="Monto asignado para ${esc(c.name)}" onchange="setItemBudget(${c.id}, this.value)">`)).join('');
+        return `<div class="cmp-sec">
+            <div class="cmp-head"><span class="nm" style="color:${BUCKET_COLOR[b]};">${label}</span><span class="tot">${fmt(r)} <span>real de</span> ${fmt(a)} <span>asignado</span></span></div>
+            ${rule ? `<div class="cmp-rule${a > rule ? ' warn' : ''}">Tu regla (${RULE[b]}%) permite ${fmt(rule)}${a > rule ? ' · asignaste ' + fmt(a - rule) + ' de más' : a ? ' · te quedan ' + fmt(rule - a) + ' por asignar' : ''}</div>` : ''}
+            ${rows || '<div class="cmp-empty">Sin gastos ni montos asignados este mes.</div>'}
+        </div>`;
+    }).join('');
+    const shown = new Set(categories.map(c => c.cat).filter(Boolean));
+    const addOpts = PERS_GROUPS.filter(([, b]) => ['needs', 'wants', 'savings'].includes(b)).map(([g, b]) => `<optgroup label="${g}">` +
+        Object.entries(PERS_CATS).filter(([k, c]) => c.b === b && !shown.has(k)).map(([k, c]) => `<option value="${k}">${c.label}</option>`).join('') + '</optgroup>').join('');
+    const canFill = Object.keys(realBy).some(k => ['needs', 'wants', 'savings'].includes((PERS_CATS[k] || {}).b) && !shown.has(k));
+    el.innerHTML = `
+        <div class="cmp-top-note">${bg.income ? `Tu ingreso de <b>${fmt(bg.income)}</b>/mes se divide con tu regla ${ruleNeeds}/${ruleWants}/${ruleSave}. Escribe cuánto quieres gastar en cada categoría y compáralo con lo que gastaste de verdad.` : 'Configura cómo te pagan para ver cuánto te permite la regla. Igual puedes asignar montos a cada categoría.'}</div>
+        ${secs}
+        <div class="cmp-foot">
+            <div class="cmp-total"><span>Total</span><span>${fmt(totR)} <span style="color:var(--dim);">real de</span> ${fmt(totA)} <span style="color:var(--dim);">asignado</span></span></div>
+            ${noneTot > 0 ? `<div class="cmp-rule warn">${fmt(noneTot)} sin clasificar no entran en la comparación. Clasifícalos en la lista de la izquierda.</div>` : ''}
+            ${canFill ? `<button class="btn-cancel" style="width:100%;flex:none;margin-top:8px;" onclick="fillFromReal('${ym}')">Usar mi gasto de ${mesLargo(ym).toLowerCase()} como punto de partida</button>` : ''}
+            <div class="cmp-add">
+                <select id="cmpAddCat" aria-label="Categoría para agregar">${addOpts}</select>
+                <input type="number" id="cmpAddAmt" min="0" step="10" placeholder="Monto" aria-label="Monto">
+                <button class="add-btn" onclick="addCmpCat()">+ Agregar</button>
+            </div>
+        </div>`;
 }
 
 // ── Me pagaron / Impuestos trimestrales ──────────────
@@ -3641,6 +4113,25 @@ function renderTaxes(){
         </div>`;
     }).join('');
 
+
+    // Totales de pagos
+    const ptEl = document.getElementById('payTotals');
+    if(ptEl){
+        const t0 = hoyISO(), ymNow = t0.slice(0, 7), yNow = t0.slice(0, 4);
+        const d0 = new Date(+ymNow.slice(0, 4), +ymNow.slice(5, 7) - 2, 1);
+        const ymPrev = d0.getFullYear() + '-' + String(d0.getMonth() + 1).padStart(2, '0');
+        const sumIn = pre => { const l = taxLog.filter(p => p.date.startsWith(pre)); return { n: l.length, tot: l.reduce((s, p) => s + p.gross, 0), tax: l.reduce((s, p) => s + p.tax, 0), sue: l.filter(p => incKind(p) === 'sueldo').reduce((s, p) => s + p.gross, 0) }; };
+        const A = sumIn(ymNow), B = sumIn(ymPrev), Y = sumIn(yNow);
+        const cnt = n => n === 1 ? '1 pago' : n + ' pagos';
+        ptEl.innerHTML = taxLog.length ? `<div class="pay-grid">
+            <div class="wk-tile"><div class="pv-label">Este mes</div><div class="v" style="color:var(--green);">${fmt(A.tot)}</div><div class="d">${cnt(A.n)} · ${mesCorto(ymNow).toLowerCase()}</div></div>
+            <div class="wk-tile"><div class="pv-label">Mes pasado</div><div class="v">${fmt(B.tot)}</div><div class="d">${cnt(B.n)} · ${mesCorto(ymPrev).toLowerCase()}</div></div>
+            <div class="wk-tile"><div class="pv-label">Este año</div><div class="v">${fmt(Y.tot)}</div><div class="d">${cnt(Y.n)} en ${yNow}</div></div>
+            <div class="wk-tile"><div class="pv-label">Promedio por pago</div><div class="v">${fmt(Y.n ? Y.tot / Y.n : 0)}</div><div class="d">en ${yNow}</div></div>
+        </div>
+        ${prof() === 'ambos' ? `<div class="pay-note">En ${yNow}: sueldo <b>${fmt(Y.sue)}</b> · negocio <b>${fmt(Y.tot - Y.sue)}</b></div>` : ''}
+        ${prof() !== 'empleado' && Y.tax > 0 ? `<div class="pay-note">Apartado para impuestos en ${yNow}: <b style="color:var(--red);">${fmt(Y.tax)}</b></div>` : ''}` : '';
+    }
     const list = document.getElementById('paycheckList');
     if(!taxLog.length){
         list.innerHTML = `<div class="empty-state"><div class="empty-icon">🧾</div><div class="empty-text">Aún no registras pagos.<br>Cada vez que te paguen, anótalo arriba.</div></div>`;
@@ -3651,7 +4142,7 @@ function renderTaxes(){
             <div class="row-indicator ri-ice"></div>
             <div class="row-info">
                 <div class="row-name">${fmt(t.gross)} recibido${prof() === 'ambos' ? `<span class="kind-tag ${incKind(t)}">${incKind(t)}</span>` : ''}</div>
-                <div class="contrib-date">${fechaCorta(t.date)} ${t.date.slice(0,4)}${t.desc ? " · " + esc(t.desc) : ""}</div>
+                <div class="contrib-date">${fechaCorta(t.date)} ${t.date.slice(0,4)}${t.desc ? " · " + esc(prettyDesc(t.desc)) : ""}</div>
             </div>
             <div class="row-meta">
                 ${incKind(t) === 'sueldo'
@@ -4208,7 +4699,7 @@ function renderCSV(){
             <label class="csv-row${d.checked ? '' : ' off'}" id="csvRow${i}">
                 <input type="checkbox" ${d.checked ? 'checked' : ''} ${d.dup ? 'disabled' : ''} onchange="csvToggle(${i}, this.checked)">
                 <span class="cd">
-                    <span class="ct" style="display:block;">${esc(d.desc || 'Depósito')}</span>
+                    <span class="ct" style="display:block;">${esc(prettyDesc(d.desc) || 'Depósito')}</span>
                     <span class="cs" style="display:block;">${fechaCorta(d.date)} ${d.date.slice(0,4)}${d.dup ? '<span class="csv-flag">ya importado</span>' : ''}${d.transfer ? '<span class="csv-flag">¿transferencia?</span>' : ''}${d.byHand ? '<span class="csv-flag">¿ya lo anotaste?</span>' : ''}</span>
                     ${prof() === 'ambos' ? `<select class="exp-cat" aria-label="Tipo de ingreso" ${d.dup ? 'disabled' : ''} onchange="depKind(${i}, this.value)"><option value="sueldo"${d.kind === 'sueldo' ? ' selected' : ''}>Sueldo (W-2)</option><option value="negocio"${d.kind === 'negocio' ? ' selected' : ''}>Negocio (1099)</option></select>` : ''}
                 </span>
@@ -4224,7 +4715,7 @@ function renderCSV(){
             <label class="csv-row${e.checked ? '' : ' off'}" id="expRow${i}">
                 <input type="checkbox" ${e.checked ? 'checked' : ''} ${e.dup ? 'disabled' : ''} onchange="expToggle(${i}, this.checked)">
                 <span class="cd">
-                    <span class="ct" style="display:block;">${esc(e.desc || 'Retiro')}</span>
+                    <span class="ct" style="display:block;">${esc(prettyDesc(e.desc) || 'Retiro')}</span>
                     <span class="cs" style="display:block;">${fechaCorta(e.date)} ${e.date.slice(0,4)}${e.dup ? '<span class="csv-flag">ya importado</span>' : ''}${e.remembered ? '<span class="csv-flag">como la vez pasada</span>' : ''}${e.notExpense ? '<span class="csv-flag">¿transferencia o pago de tarjeta?</span>' : ''}</span>
                     <select class="exp-cat" aria-label="Categoría" ${e.dup ? 'disabled' : ''} onchange="expCat(${i}, this.value)">${catOpts(e.cat)}</select>
                 </span>
@@ -4449,7 +4940,7 @@ function renderBiz(){
     document.getElementById('bizList').innerHTML = list.length ? list.map(e => `
         <div class="biz-row">
             <div class="d">
-                <div class="t">${esc(e.desc)}</div>
+                <div class="t">${esc(prettyDesc(e.desc))}</div>
                 <div class="s">${fechaCorta(e.date)} ${e.date.slice(0, 4)} · ${e.src ? 'estado de cuenta' : 'agregado a mano'}</div>
                 <select aria-label="Categoría" onchange="bizSetCat(${e.id}, this.value)">${catOpts(e.cat)}</select>
             </div>
@@ -4644,6 +5135,7 @@ function persSetCat(id, val){
 function removePers(id){ persExp = persExp.filter(x => x.id !== id); savePers(); renderReal(); }
 function renderReal(){
     const el = document.getElementById('realBody'); if(!el) return;
+    try{ setTimeout(renderCmp, 0); }catch(e){}
     const cur = hoyISO().slice(0, 7);
     const dataMonths = [...new Set(persExp.map(e => e.date.slice(0, 7)))].sort().reverse();
     const months = [...new Set([cur, ...dataMonths])].sort().reverse();
@@ -4698,7 +5190,7 @@ function renderReal(){
         <div class="biz-list">${list.length ? list.map(e => `
             <div class="biz-row${persBucket(e) === 'none' ? ' unc' : ''}">
                 <div class="d">
-                    <div class="t">${esc(e.desc)}</div>
+                    <div class="t">${esc(prettyDesc(e.desc))}</div>
                     <div class="s">${fechaCorta(e.date)} ${e.date.slice(0, 4)} · ${e.src ? 'estado de cuenta' : 'agregado a mano'}</div>
                     <select aria-label="Categoría" onchange="persSetCat(${e.id}, this.value)">${persOptions(e.cat, true)}</select>
                 </div>
@@ -5726,7 +6218,9 @@ async function buildPDF(){
 window.onload=()=>{
     // Cada parte arranca por separado: si una falla (p. ej. sin internet para las gráficas), el resto sigue funcionando
     [applyProfile, () => setGastosView(LS.get('wf_gview', 'personal')), updatePill, renderBudget, renderExtraIncome,
-     renderInvest, renderDebt, updateHome, calculateWealth, renderTaxes, applyProfile, maybeAskProfile]
+     renderInvest, renderDebt, updateHome, calculateWealth, renderTaxes, applyProfile, maybeAskProfile,
+     () => { if(location.hash === '#semana' && profile) openWeek(); },
+     () => window.addEventListener('hashchange', () => { if(location.hash === '#semana' && profile) openWeek(); })]
         .forEach(f => { try { f(); } catch(e){ console.error(e); } });
 };
 </script>
